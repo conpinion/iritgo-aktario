@@ -62,9 +62,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://aktario-simplelife.googlecode.com/svn/trunk</connection>
+		<connection>scm:svn:http://iritgo-aktario.googlecode.com/svn/trunk</connection>
 		<developerConnection>scm:svn:https://iritgo-aktario.googlecode.com/svn/trunk</developerConnection>
-		<url>http://code.google.com/p/aktario-simplelife/source/browse/</url>
+		<url>http://code.google.com/p/iritgo-aktario/source/browse/</url>
 	</scm>
 	<build>
 		<resources>
