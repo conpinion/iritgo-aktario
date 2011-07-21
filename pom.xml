@@ -185,6 +185,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.groovy.maven</groupId>
 										<artifactId>gmaven-plugin</artifactId>
+										<versionRange>[0.0.0,)</versionRange>
 										<goals>
 											<goal>testCompile</goal>
 										</goals>
@@ -197,6 +198,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.codehaus.mojo</groupId>
 										<artifactId>native2ascii-maven-plugin</artifactId>
+										<versionRange>[0.0.0,)</versionRange>
 										<goals>
 											<goal>native2ascii</goal>
 										</goals>
