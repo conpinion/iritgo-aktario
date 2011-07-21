@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+
+<!--
+    This file is part of the Iritgo/RTC Framework.
+
+    Copyright (C) 2004-2005 BueroByte.
+-->
+
+
+<panel layout="GridBagLayout">
+
+	<gridbagconstraints id="std" 
+		insets="1,1,1,1" ipadx="0" ipady="0" 
+		gridx="0" gridy="0" gridheight="1" gridwidth="1"
+		weightx="0.0" weighty="0.0" 
+		anchor="GridBagConstraints.NORTHWEST"
+		fill="GridBagConstraints.NONE"/>
+
+	<ititledpanel layout="GridBagLayout" title="systemmonitor.server">
+		<gridbagconstraints use="std" gridx="0" gridy="0" weighty="1.0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+
+		<ifieldlabel text="systemmonitor.registeredUsers">
+			<gridbagconstraints use="std" gridx="0" gridy="0"/>
+		</ifieldlabel>
+		<label text="unknown" id="registeredUsers">
+			<gridbagconstraints use="std" gridx="1" gridy="0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+
+		<ifieldlabel text="systemmonitor.onlineUsers">
+			<gridbagconstraints use="std" gridx="0" gridy="1"/>
+		</ifieldlabel>
+		<label text="unknown" id="onlineUsers">
+			<gridbagconstraints use="std" gridx="1" gridy="1" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+
+		<ifieldlabel text="systemmonitor.workingThreads">
+			<gridbagconstraints use="std" gridx="0" gridy="2"/>
+		</ifieldlabel>
+		<label text="unknown" id="workingThreads">
+			<gridbagconstraints use="std" gridx="1" gridy="2" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+
+		<ifieldlabel text="systemmonitor.freeThreads">
+			<gridbagconstraints use="std" gridx="0" gridy="3"/>
+		</ifieldlabel>
+		<label text="unknown" id="freeThreads">
+			<gridbagconstraints use="std" gridx="1" gridy="3" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+
+		<ifieldlabel text="systemmonitor.freeRam">
+			<gridbagconstraints use="std" gridx="0" gridy="4"/>
+		</ifieldlabel>
+		<label text="unknown" id="freeRam">
+			<gridbagconstraints use="std" gridx="1" gridy="4" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+		<label text="">
+			<gridbagconstraints use="std" gridx="0" gridy="5" weighty="1.0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+	</ititledpanel>
+
+	<ititledpanel layout="GridBagLayout" title="systemmonitor.client">
+		<gridbagconstraints use="std" gridx="0" gridy="1" weighty="1.0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+
+		<ifieldlabel text="systemmonitor.freeRam">
+			<gridbagconstraints use="std" gridx="0" gridy="0"/>
+		</ifieldlabel>
+		<label text="unknown" id="clientFreeRam">
+			<gridbagconstraints use="std" gridx="1" gridy="0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+		<label text="">
+			<gridbagconstraints use="std" gridx="0" gridy="1" weighty="1.0" weightx="1.0" fill="GridBagConstraints.BOTH"/>
+		</label>
+
+	</ititledpanel>
+
+	<separator>
+		<gridbagconstraints use="std" gridx="0" gridy="2" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+	</separator>
+
+	<panel layout="FlowLayout(FlowLayout.RIGHT)">
+		<gridbagconstraints use="std" gridx="0" gridy="3" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+
+		<ibutton action="update" text="systemmonitor.update"/>
+		<ibutton action="okAction" text="systemmonitor.ok" icon="resources/ok.png"/>
+	</panel>
+
+</panel>

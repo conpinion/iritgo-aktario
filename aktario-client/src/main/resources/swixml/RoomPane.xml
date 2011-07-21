@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+	This file is part of the Iritgo/Aktario Framework.
+
+	Copyright (C) 2005-2009 Iritgo Technologies.
+	Copyright (C) 2003-2005 BueroByte GbR.
+
+	Iritgo licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<panel layout="GridBagLayout">
+
+	<gridbagconstraints id="std"
+		insets="2,2,2,2" ipadx="0" ipady="0"
+		gridx="0" gridy="0" gridheight="1" gridwidth="1"
+		weightx="0.0" weighty="0.0"
+		anchor="GridBagConstraints.WEST"
+		fill="GridBagConstraints.NONE"/>
+
+	<panel layout="GridBagLayout">
+		<gridbagconstraints use="std" gridx="0" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+
+		<combobox id="applications">
+			<gridbagconstraints use="std" gridx="0" gridy="0" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+		</combobox>
+
+		<label>
+			<gridbagconstraints use="std" gridx="1" gridy="0" insets="0,32,0,0"/>
+		</label>
+
+		<combobox id="applicationMenu">
+			<gridbagconstraints use="std" gridx="2" gridy="0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+		</combobox>
+
+		<label>
+			<gridbagconstraints use="std" gridx="3" gridy="0" insets="0,32,0,0"/>
+		</label>
+
+		<button icon="resources/tool-settings.png" border="EmptyBorder" action="configureApplicationAction">
+			<gridbagconstraints use="std" gridx="4" gridy="0" insets="0,2,0,0"/>
+		</button>
+
+		<button icon="resources/tool-help.png" border="EmptyBorder" action="helpApplicationAction">
+			<gridbagconstraints use="std" gridx="5" gridy="0" insets="0,2,0,0"/>
+		</button>
+
+		<label>
+			<gridbagconstraints use="std" gridx="6" gridy="0" insets="0,8,0,0"/>
+		</label>
+
+		<button icon="resources/tool-delete.png" border="EmptyBorder" action="deleteApplicationAction">
+			<gridbagconstraints use="std" gridx="7" gridy="0" insets="0,2,0,0"/>
+		</button>
+
+		<label>
+			<gridbagconstraints use="std" gridx="8" gridy="0" insets="0,8,0,0"/>
+		</label>
+
+		<button icon="resources/tool-close.png" border="EmptyBorder" action="closeApplicationAction">
+			<gridbagconstraints use="std" gridx="9" gridy="0" insets="0,2,0,0"/>
+		</button>
+
+	</panel>
+
+	<desktoppane id="roomDesktop">
+		<gridbagconstraints use="std" gridx="0" gridy="1" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+	</desktoppane>
+
+</panel>

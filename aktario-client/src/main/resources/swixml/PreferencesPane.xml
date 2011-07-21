@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+	This file is part of the Iritgo/Aktario Framework.
+
+	Copyright (C) 2005-2009 Iritgo Technologies.
+	Copyright (C) 2003-2005 BueroByte GbR.
+
+	Iritgo licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<panel layout="GridBagLayout">
+
+	<gridbagconstraints id="std"
+		insets="4,4,4,4" ipadx="0" ipady="0"
+		gridx="0" gridy="0" gridheight="1" gridwidth="1"
+		weightx="0.0" weighty="0.0"
+		anchor="GridBagConstraints.WEST"
+		fill="GridBagConstraints.NONE"/>
+
+	<scrollpane horizontalScrollBarPolicy="JScrollPane.HORIZONTAL_SCROLLBAR_NEVER">
+		<gridbagconstraints use="std" gridx="0" gridy="0" weightx="0.2" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+		<list id="categoryList"/>
+	</scrollpane>
+
+	<panel layout="GridBagLayout">
+		<gridbagconstraints use="std" gridx="1" gridy="0" weightx="0.8" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+
+		<label id="categoryTitle">
+			<gridbagconstraints use="std" gridx="0" gridy="0"/>
+		</label>
+
+		<separator>
+			<gridbagconstraints use="std" gridx="0" gridy="1" fill="GridBagConstraints.HORIZONTAL"/>
+		</separator>
+
+		<panel id="category" layout="cardLayout">
+			<gridbagconstraints use="std" gridx="0" gridy="2" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+
+			<panel layout="GridBagLayout" constraints="0">
+
+				<icheckbox text="aktario.startMinimized" id="startMinimized">
+					<gridbagconstraints use="std" gridx="0" gridy="0" gridwidth="2"/>
+				</icheckbox>
+
+				<icheckbox text="aktario.autoLogin" id="autoLogin">
+					<gridbagconstraints use="std" gridx="0" gridy="1" gridwidth="2"/>
+				</icheckbox>
+
+				<ifieldlabel text="aktario.autoLoginUser">
+					<gridbagconstraints use="std" gridx="0" gridy="2"/>
+				</ifieldlabel>
+
+				<textfield id="autoLoginUser">
+					<gridbagconstraints use="std" gridx="1" gridy="2" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</textfield>
+
+				<ifieldlabel text="aktario.autoLoginServer">
+					<gridbagconstraints use="std" gridx="0" gridy="3"/>
+				</ifieldlabel>
+
+				<textfield id="autoLoginServer">
+					<gridbagconstraints use="std" gridx="1" gridy="3" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</textfield>
+
+				<ifieldlabel text="aktario.autoLoginPassword">
+					<gridbagconstraints use="std" gridx="0" gridy="4"/>
+				</ifieldlabel>
+
+				<passwordfield id="autoLoginPassword">
+					<gridbagconstraints use="std" gridx="1" gridy="4" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</passwordfield>
+
+				<ifieldlabel text="aktario.autoLoginPasswordRepeat">
+					<gridbagconstraints use="std" gridx="0" gridy="5"/>
+				</ifieldlabel>
+
+				<passwordfield id="autoLoginPasswordRepeat">
+					<gridbagconstraints use="std" gridx="1" gridy="5" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</passwordfield>
+
+				<label>
+					<gridbagconstraints use="std" gridx="0" gridy="6" gridwidth="2" weightx="1.0" weighty="1.0"/>
+				</label>
+
+			</panel>
+
+			<panel layout="GridBagLayout" constraints="1">
+
+				<ifieldlabel text="aktario.colorScheme">
+					<gridbagconstraints use="std" gridx="0" gridy="1"/>
+				</ifieldlabel>
+
+				<combobox id="colorScheme">
+					<gridbagconstraints use="std" gridx="1" gridy="1" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</combobox>
+
+				<icheckbox text="aktario.alwaysDrawWindowContent" id="alwaysDrawWindowContents">
+					<gridbagconstraints use="std" gridx="0" gridy="2" gridwidth="2"/>
+				</icheckbox>
+
+				<label>
+					<gridbagconstraints use="std" gridx="0" gridy="3" gridwidth="2" weightx="1.0" weighty="1.0"/>
+				</label>
+
+			</panel>
+
+			<panel layout="GridBagLayout" constraints="2">
+
+				<ifieldlabel text="aktario.language">
+					<gridbagconstraints use="std" gridx="0" gridy="0"/>
+				</ifieldlabel>
+
+				<combobox id="language">
+					<gridbagconstraints use="std" gridx="1" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+				</combobox>
+
+				<label>
+					<gridbagconstraints use="std" gridx="0" gridy="1" gridwidth="2" weightx="1.0" weighty="1.0"/>
+				</label>
+
+			</panel>
+
+		</panel>
+
+	</panel>
+
+	<separator>
+		<gridbagconstraints use="std" gridx="0" gridy="1" gridwidth="2" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+	</separator>
+
+	<panel layout="FlowLayout">
+		<gridbagconstraints use="std" gridx="0" gridy="2" gridwidth="2" anchor="GridBagConstraints.EAST"/>
+		<ibutton action="saveAction" text="aktario.save" icon="resources/ok.png"/>
+		<ibutton action="applyAction" text="aktario.apply" icon="resources/ok.png"/>
+		<ibutton action="cancelAction" text="aktario.cancel" icon="resources/cancel.png"/>
+	</panel>
+
+</panel>

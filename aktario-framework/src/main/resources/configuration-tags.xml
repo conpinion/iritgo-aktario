@@ -1,0 +1,28 @@
+<defines>
+
+	<tag name="iritgo" type="de.iritgo.aktario.core.config.Configuration" />
+	
+	<tag name="network" type="de.iritgo.aktario.core.config.NetworkConfig" setter="setNetwork" />
+	
+	<tag name="socket" type="de.iritgo.aktario.core.config.SocketConfig" setter="setSocket">
+		<attribute name="port" type="int" />
+		<attribute name="buffer" type="int" />
+		<attribute name="readTimeout" type="int" />
+		<attribute name="acceptTimeout" type="int" />
+	</tag>
+	
+	<tag name="threadpool" type="de.iritgo.aktario.core.config.ThreadPoolConfig" setter="setThreadPool">
+		<attribute name="id" type="java.lang.String" />
+		<attribute name="minThreads" type="int" />	
+	</tag>
+	
+	<tag name="datasource" type="de.iritgo.aktario.core.config.DatasourceConfig" setter="addDataSource">
+		<attribute name="id" type="java.lang.String" />
+		<attribute name="class" type="java.lang.String" setter="setDataSourceClass"/>
+		<attribute name="driverClass" type="java.lang.String" />
+		<attribute name="url" type="java.lang.String" />
+		<attribute name="user" type="java.lang.String" />
+		<attribute name="password" type="java.lang.String" />
+	</tag>
+
+</defines>

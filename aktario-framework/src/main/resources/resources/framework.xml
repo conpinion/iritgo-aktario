@@ -1,0 +1,23 @@
+<node treename="framework">
+
+	<classdef class="resourceobject">
+		de.iritgo.aktario.core.resource.resourcetypes.ResourceObject
+	</classdef>
+
+	<classdef class="resourceimage">
+		de.iritgo.aktario.core.resource.resourcetypes.ResourceImage
+	</classdef>
+
+	<classdef class="resourcestring">
+		de.iritgo.aktario.core.resource.resourcetypes.ResourceString
+	</classdef>
+
+	<node treename="system">
+		<node treename="config">
+			<resourcestring description="false" treename="server"/>
+			<resourcestring description="true" treename="client"/>
+			<resourcestring description="localhost" treename="serverip"/>
+		</node>
+	</node>
+
+</node>

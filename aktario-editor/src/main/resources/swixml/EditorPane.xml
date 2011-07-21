@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+	This file is part of the Iritgo/Aktario Framework.
+
+	Copyright (C) 2005-2009 Iritgo Technologies.
+	Copyright (C) 2003-2005 BueroByte GbR.
+
+	Iritgo licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<panel layout="GridBagLayout">
+
+	<gridbagconstraints id="std"
+		insets="2,2,2,2" ipadx="0" ipady="0"
+		gridx="0" gridy="0" gridheight="1" gridwidth="1"
+		weightx="0.0" weighty="0.0"
+		anchor="GridBagConstraints.WEST"
+		fill="GridBagConstraints.NONE"/>
+
+	<panel layout="GridBagLayout">
+
+		<gridbagconstraints use="std" gridx="0" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+
+		<ibutton id="btnBaseDir" text="aktario.baseDir" icon="resources/open.png" action="baseDirAction">
+			<gridbagconstraints use="std" gridx="0" gridy="0"/>
+		</ibutton>
+
+		<button icon="resources/editor.png" action="viewAction" name="0">
+			<gridbagconstraints use="std" gridx="1" gridy="0"/>
+		</button>
+
+		<button icon="resources/filetree.png" action="viewAction" name="1">
+			<gridbagconstraints use="std" gridx="2" gridy="0"/>
+		</button>
+
+		<button icon="resources/browser.png" action="viewAction" name="2">
+			<gridbagconstraints use="std" gridx="3" gridy="0"/>
+		</button>
+
+		<label>
+			<gridbagconstraints use="std" gridx="4" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+		</label>
+
+	</panel>
+
+	<panel layout="CardLayout" id="viewPanel">
+		<gridbagconstraints use="std" gridx="0" gridy="1" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+
+		<panel layout="GridBagLayout" constraints="0">
+
+			<ilabel text="aktario.file">
+				<gridbagconstraints use="std" gridx="0" gridy="0"/>
+			</ilabel>
+
+			<textfield id="fileNameDisplay" editable="false">
+				<gridbagconstraints use="std" gridx="1" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+			</textfield>
+
+			<jedit id="code">
+				<gridbagconstraints use="std" gridx="0" gridy="1" gridwidth="2" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+			</jedit>
+
+		</panel>
+
+		<panel layout="GridBagLayout" constraints="1">
+
+			<scrollpane>
+				<gridbagconstraints use="std" gridx="0" gridy="0" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+				<filebrowser id="fileBrowser" editable="false"/>
+			</scrollpane>
+
+		</panel>
+
+		<panel layout="GridBagLayout" constraints="2">
+
+			<ilabel text="aktario.url">
+				<gridbagconstraints use="std" gridx="0" gridy="0"/>
+			</ilabel>
+
+			<textfield id="urlDisplay" action="urlAction">
+				<gridbagconstraints use="std" gridx="1" gridy="0" weightx="1.0" fill="GridBagConstraints.HORIZONTAL"/>
+			</textfield>
+
+			<panel id="htmlPanel" layout="BorderLayout">
+				<gridbagconstraints use="std" gridx="0" gridy="1" gridwidth="2" weightx="1.0" weighty="1.0" fill="GridBagConstraints.BOTH"/>
+			</panel>
+
+		</panel>
+
+	</panel>
+
+</panel>

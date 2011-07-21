@@ -1,0 +1,460 @@
+<!--
+	This file is part of the Iritgo/Aktario Framework.
+
+	Copyright (C) 2005-2009 Iritgo Technologies.
+	Copyright (C) 2003-2005 BueroByte GbR.
+
+	Iritgo licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<project>
+
+	<!-- Deploy the web application -->
+
+	<target name="app">
+
+		<property name="app.dir" value="target/app" />
+		<property name="source.dir"
+		          value="target/${project.artifactId}-${project.version}" />
+		<echo message="Deploying webapp ${aktario.product.name} in directory ${app.dir}" />
+
+		<!-- Create all directories -->
+
+		<delete dir="${app.dir}" />
+		<mkdir dir="${app.dir}" />
+		<mkdir dir="${app.dir}/tmp" />
+		<mkdir dir="${app.dir}/plugins" />
+		<mkdir dir="${app.dir}/lib" />
+		<mkdir dir="${app.dir}/lib/native" />
+
+		<!-- Copy aktario plugins -->
+		<copy todir="${app.dir}/plugins">
+			<fileset dir="${source.dir}">
+				<include name="*-aktario-*.jar" />
+				<exclude name="iritgo-aktario-framework-*.jar" />
+				<exclude name="iritgo-aktera-aktario-*.jar" />
+			</fileset>
+			<fileset dir="${source.dir}">
+				<include name="iritgo-aktera-aktario-aktario-*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- Copy aktario libraries -->
+
+		<copy todir="${app.dir}/lib">
+			<fileset dir="${source.dir}">
+				<include name="*.jar" />
+				<exclude name="*-aktario-*" />
+				<exclude name="*-aktera-*" />
+				<exclude name="excalibur-*" />
+				<exclude name="avalon-*" />
+			</fileset>
+			<fileset dir="${source.dir}">
+				<include name="iritgo-aktario-framework-*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${app.dir}/lib">
+			<fileset dir="${source.dir}">
+				<include name="*.so" />
+				<include name="*.dll" />
+				<include name="*.jnilib" />
+			</fileset>
+			<!-- Remove version numbers from native library file names -->
+			<regexpmapper from="^(.+)-\d+\.\d+\.\d+\.(.+)$" to="\1.\2" />
+		</copy>
+		<unzip dest="${app.dir}/lib/native">
+			<patternset>
+				<include name="*.so" />
+				<include name="*.dll" />
+				<include name="*.jnilib" />
+			</patternset>
+			<fileset dir="${source.dir}">
+				<include name="**/*-linux-*.jar" />
+				<include name="**/*-win32-*.jar" />
+				<include name="**/*-macosx-*.jar" />
+			</fileset>
+		</unzip>
+
+		<!-- Unzip config files -->
+
+		<unzip dest="${app.dir}/tmp">
+			<patternset>
+				<include name="conf/**" />
+				<include name="jdbc-conf/**" />
+				<include name="aktario-conf/**" />
+			</patternset>
+			<fileset dir="${source.dir}">
+				<include name="**/iritgo-*.jar" />
+				<include name="**/${project.artifactId}-*.jar" />
+			</fileset>
+		</unzip>
+
+		<!-- Create Aktario config files -->
+
+		<copy todir="${app.dir}">
+			<fileset dir="${app.dir}/tmp/aktario-conf">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<echo message="iritgo.app.title = ${aktario.product.name}${line.separator}"
+		      file="${app.dir}/sys.properties" />
+		<echo message="iritgo.app.version = ${aktario.product.version}${line.separator}"
+		      file="${app.dir}/sys.properties"
+		      append="true" />
+		<echo message="iritgo.app.version.long = ${aktario.product.version.long}${line.separator}"
+		      file="${app.dir}/sys.properties"
+		      append="true" />
+		<echo message="iritgo.app.copyright = ${aktario.product.copyright}${line.separator}"
+		      file="${app.dir}/sys.properties"
+		      append="true" />
+
+		<!-- Remove temp dir -->
+
+		<!--<delete dir="${app.dir}/tmp" />-->
+
+	</target>
+
+	<!-- Sign the client jars -->
+
+	<target name="signclient">
+
+		<property name="app.dir" value="target/app" />
+
+		<signjar keystore="${aktario.keystore}"
+		         alias="${aktario.keystore.alias}"
+		         storepass="${aktario.keystore.password}">
+			<fileset dir="${app.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</signjar>
+
+	</target>
+
+	<!-- Run the client -->
+
+	<target name="runclient">
+
+		<property name="app.dir" value="target/app" />
+
+		<java classname="de.iritgo.aktario.framework.IritgoClient" fork="true">
+			<classpath>
+				<fileset dir="${app.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${app.dir}/plugins">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xms32m" />
+			<jvmarg value="-Xmx1024m" />
+			<sysproperty key="java.library.path" value="${app.dir}/lib/native" />
+			<sysproperty key="awt.useSystemAAFontSettings" value="lcd" />
+			<sysproperty key="iritgo.app.title" value="${project.name}" />
+			<sysproperty key="iritgo.app.version" value="${project.version}" />
+			<sysproperty key="iritgo.app.version.long"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.copyright" value="" />
+			<arg value="-s ${app.dir}" />
+			<arg value="-d 10" />
+		</java>
+
+	</target>
+
+	<target name="debugclient">
+
+		<property name="app.dir" value="target/app" />
+
+		<java classname="de.iritgo.aktario.framework.IritgoClient" fork="true">
+			<classpath>
+				<fileset dir="${app.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${app.dir}/plugins">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xms32m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y" />
+			<sysproperty key="java.library.path" value="${app.dir}/lib/native" />
+			<sysproperty key="awt.useSystemAAFontSettings" value="lcd" />
+			<sysproperty key="iritgo.app.title"
+			             value="${aktario.product.name}" />
+			<sysproperty key="iritgo.app.version"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.version.long"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.copyright" value="" />
+			<arg value="-s ${app.dir}" />
+			<arg value="-d 10" />
+		</java>
+
+	</target>
+
+	<target name="profileclient">
+
+		<property environment="env" />
+		<property name="app.dir" value="target/app" />
+
+		<java classname="de.iritgo.aktario.framework.IritgoClient" fork="true">
+			<classpath>
+				<fileset dir="${app.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${app.dir}/plugins">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xms32m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Dcom.sun.management.jmxremote=true" />
+			<jvmarg value="-agentlib:jprofilerti=port=8849" />
+			<jvmarg value="-Xbootclasspath/a:${env.JPROFILER_HOME}/bin/agent.jar" />
+			<env key="LD_LIBRARY_PATH"
+			     value="${env.JPROFILER_HOME}/bin/${env.JPROFILER_ARCH}" />
+			<sysproperty key="java.library.path" value="${app.dir}/lib/native" />
+			<sysproperty key="awt.useSystemAAFontSettings" value="lcd" />
+			<sysproperty key="iritgo.app.title"
+			             value="${aktario.product.name}" />
+			<sysproperty key="iritgo.app.version"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.version.long"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.copyright" value="" />
+			<arg value="-s ${aktario.dir}" />
+		</java>
+
+	</target>
+
+	<!-- Run the server -->
+
+	<target name="runserver">
+
+		<property name="app.dir" value="target/app" />
+
+		<java classname="de.iritgo.aktario.framework.IritgoServer" fork="true">
+			<classpath>
+				<fileset dir="${app.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${app.dir}/plugins">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx1024m" />
+			<sysproperty key="java.library.path" value="${app.dir}/lib/native" />
+			<sysproperty key="iritgo.app.title" value="${project.name}" />
+			<sysproperty key="iritgo.app.version" value="${project.version}" />
+			<sysproperty key="iritgo.app.version.long" value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.copyright" value="" />
+			<arg value="-s ${app.dir}" />
+			<arg value="-d 10" />
+		</java>
+
+	</target>
+
+	<target name="debugserver">
+
+		<property name="app.dir" value="target/app" />
+
+		<java classname="de.iritgo.aktario.framework.IritgoServer" fork="true">
+			<classpath>
+				<fileset dir="${app.dir}/lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${app.dir}/plugins">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+			<jvmarg value="-Xms64m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y" />
+			<sysproperty key="java.library.path" value="${app.dir}/lib/native" />
+			<sysproperty key="iritgo.app.title"
+			             value="${aktario.product.name}" />
+			<sysproperty key="iritgo.app.version"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.version.long"
+			             value="${aktario.product.version}" />
+			<sysproperty key="iritgo.app.copyright" value="" />
+			<arg value="-s ${app.dir}" />
+			<arg value="-d 10" />
+		</java>
+
+	</target>
+
+	<!-- Build a client installer -->
+
+	<target name="aktarioclientinstaller">
+
+		<property name="app.dir" value="target/app" />
+
+			<property environment="env" />
+		<property name="izpack.dir" value="${env.IZPACK_HOME}" />
+		<property name="launch4j.dir" value="${env.LAUNCH4J_HOME}" />
+		<property name="tmp.dir" value="tmp" />
+		<property name="target.dir" value="target" />
+		<property name="installer.dir" value="installer/aktarioclient" />
+		<property name="aktario.version" value="2.2.1" />
+
+		<taskdef name="izpack"
+		         classpath="${izpack.dir}/lib/compiler.jar"
+		         classname="com.izforge.izpack.ant.IzPackTask" />
+
+		<taskdef name="launch4j"
+		         classname="net.sf.launch4j.ant.Launch4jTask"
+		         classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+
+		<delete dir="${tmp.dir}" />
+		<mkdir dir="${tmp.dir}" />
+		<mkdir dir="${target.dir}" />
+
+		<copy file="${installer.dir}/installer.xml"
+		      toFile="${tmp.dir}/installer.xml">
+			<filterset>
+				<filter token="aktario.version" value="${aktario.version}" />
+				<filter token="aktario.dir" value="${app.dir}" />
+				<filter token="installer.dir" value="${installer.dir}" />
+				<filter token="tmp.dir" value="${tmp.dir}" />
+				<filter token="aktario.product.id"
+				        value="${aktario.product.id}" />
+				<filter token="aktario.product.name"
+				        value="${aktario.product.name}" />
+				<filter token="aktario.product.version"
+				        value="${aktario.product.version}" />
+				<filter token="aktario.product.manufacturer"
+				        value="${aktario.product.manufacturer}" />
+				<filter token="aktario.product.manufacturer.short"
+				        value="${aktario.product.manufacturer.short}" />
+				<filter token="aktario.product.manufacturer.email"
+				        value="${aktario.product.manufacturer.email}" />
+				<filter token="aktario.product.manufacturer.web"
+				        value="${aktario.product.manufacturer.web}" />
+			</filterset>
+		</copy>
+
+		<copy file="${installer.dir}/wininstaller.xml"
+		      toFile="${tmp.dir}/wininstaller.xml">
+			<filterset>
+				<filter token="aktario.version" value="${aktario.version}" />
+				<filter token="aktario.dir" value="${app.dir}" />
+				<filter token="installer.dir" value="${installer.dir}" />
+				<filter token="tmp.dir" value="${tmp.dir}" />
+				<filter token="aktario.product.id"
+				        value="${aktario.product.id}" />
+				<filter token="aktario.product.name"
+				        value="${aktario.product.name}" />
+				<filter token="aktario.product.version"
+				        value="${aktario.product.version}" />
+				<filter token="aktario.product.manufacturer"
+				        value="${aktario.product.manufacturer}" />
+				<filter token="aktario.product.manufacturer.short"
+				        value="${aktario.product.manufacturer.short}" />
+				<filter token="aktario.product.manufacturer.email"
+				        value="${aktario.product.manufacturer.email}" />
+				<filter token="aktario.product.manufacturer.web"
+				        value="${aktario.product.manufacturer.web}" />
+			</filterset>
+		</copy>
+
+		<copy file="${installer.dir}/windows/shortcuts-win.xml"
+		      toFile="${tmp.dir}/shortcuts-win.xml">
+			<filterset>
+				<filter token="aktario.version" value="${aktario.version}" />
+				<filter token="aktario.dir" value="${app.dir}" />
+				<filter token="installer.dir" value="${installer.dir}" />
+				<filter token="tmp.dir" value="${tmp.dir}" />
+				<filter token="aktario.product.id"
+				        value="${aktario.product.id}" />
+				<filter token="aktario.product.name"
+				        value="${aktario.product.name}" />
+				<filter token="aktario.product.version"
+				        value="${aktario.product.version}" />
+				<filter token="aktario.product.manufacturer"
+				        value="${aktario.product.manufacturer}" />
+				<filter token="aktario.product.manufacturer.short"
+				        value="${aktario.product.manufacturer.short}" />
+				<filter token="aktario.product.manufacturer.email"
+				        value="${aktario.product.manufacturer.email}" />
+				<filter token="aktario.product.manufacturer.web"
+				        value="${aktario.product.manufacturer.web}" />
+			</filterset>
+		</copy>
+
+		<copy file="${installer.dir}/linux/shortcuts-linux.xml"
+		      toFile="${tmp.dir}/shortcuts-unix.xml">
+			<filterset>
+				<filter token="aktario.version" value="${aktario.version}" />
+				<filter token="aktario.dir" value="${app.dir}" />
+				<filter token="installer.dir" value="${installer.dir}" />
+				<filter token="tmp.dir" value="${tmp.dir}" />
+				<filter token="aktario.product.id"
+				        value="${aktario.product.id}" />
+				<filter token="aktario.product.name"
+				        value="${aktario.product.name}" />
+				<filter token="aktario.product.version"
+				        value="${aktario.product.version}" />
+				<filter token="aktario.product.manufacturer"
+				        value="${aktario.product.manufacturer}" />
+				<filter token="aktario.product.manufacturer.short"
+				        value="${aktario.product.manufacturer.short}" />
+				<filter token="aktario.product.manufacturer.email"
+				        value="${aktario.product.manufacturer.email}" />
+				<filter token="aktario.product.manufacturer.web"
+				        value="${aktario.product.manufacturer.web}" />
+			</filterset>
+		</copy>
+
+		<copy file="${installer.dir}/windows/client.xml"
+		      toFile="${tmp.dir}/winclient.xml">
+			<filterset>
+				<filter token="aktario.version" value="${aktario.version}" />
+				<filter token="aktario.dir" value="${app.dir}" />
+				<filter token="installer.dir" value="${installer.dir}" />
+				<filter token="tmp.dir" value="${tmp.dir}" />
+				<filter token="aktario.product.id"
+				        value="${aktario.product.id}" />
+				<filter token="aktario.product.name"
+				        value="${aktario.product.name}" />
+				<filter token="aktario.product.version"
+				        value="${aktario.product.version}" />
+				<filter token="aktario.product.manufacturer"
+				        value="${aktario.product.manufacturer}" />
+				<filter token="aktario.product.manufacturer.short"
+				        value="${aktario.product.manufacturer.short}" />
+				<filter token="aktario.product.manufacturer.email"
+				        value="${aktario.product.manufacturer.email}" />
+				<filter token="aktario.product.manufacturer.web"
+				        value="${aktario.product.manufacturer.web}" />
+			</filterset>
+		</copy>
+
+		<launch4j configFile="${tmp.dir}/winclient.xml" />
+
+		<izpack input="${tmp.dir}/installer.xml"
+		        output="${target.dir}/${aktario.product.name}-Client-${aktario.product.version}-Install.jar"
+		        installerType="standard"
+		        basedir="${basedir}"
+		        izPackDir="${izpack.dir}/" />
+
+		<launch4j configFile="${tmp.dir}/wininstaller.xml" />
+
+		<delete dir="${tmp.dir}" />
+
+	</target>
+
+</project>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+	This file is part of the Iritgo/Aktario Framework.
+
+	Copyright (C) 2005-2009 Iritgo Technologies.
+	Copyright (C) 2003-2005 BueroByte GbR.
+
+	Iritgo licenses this file to You under the Apache License, Version 2.0
+	(the "License"); you may not use this file except in compliance with
+	the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+
+<panel layout="OverlayLayout" preferredSize="400,260">
+
+	<label id="title" text="app.title" location="10,140" size="380,20" foreground="737373" font="SansSerif-BOLDITALIC-12"/>
+	<label id="version" text="app.version" location="10,160" size="380,20" foreground="737373" font="SansSerif-BOLDITALIC-12"/>
+	<label id="copyright" text="app.copyright" location="10,180" size="380,20" foreground="737373" font="SansSerif-BOLDITALIC-12"/>
+
+	<separator location="4,220" size="392,2"/>
+
+	<ibutton action="closeAction" text="aktario.close" icon="resources/ok.png" location="280,228" size="110,20"/>
+
+	<label id="background" icon="resources/about-background.png" size="400,260"/>
+
+</panel>
