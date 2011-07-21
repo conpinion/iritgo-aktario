@@ -187,6 +187,9 @@
 										<artifactId>gmaven-plugin</artifactId>
 										<versionRange>[0.0.0,)</versionRange>
 										<goals>
+											<goal>generateStubs</goal>
+											<goal>compile</goal>
+											<goal>generateTestStubs</goal>
 											<goal>testCompile</goal>
 										</goals>
 									</pluginExecutionFilter>
