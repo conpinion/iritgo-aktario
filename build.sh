@@ -6,9 +6,11 @@ optClean=
 optStage=2
 optFormat=
 optSite=
+optSettings=
+optMavenSettings=
 
 shortOptions=c12h
-longOptions=format,site
+longOptions=format,site,settings:
 
 options=("$(getopt -u -o $shortOptions --long $longOptions -- $@)")
 
@@ -22,14 +24,20 @@ function processOptions
 			-2) optStage=2;;
 			--format) optFormat=1;;
 			--site) optSite=1;;
+			--settings) shift
+				optSettings="--settings $1"
+				optMavenSettings="-s $HOME/.m2/$1-settings.xml"
+				;;
 			-h) printf "Usage: %s: [options]\n" $0
 			    printf "Options:\n"
-			    printf " -c       Perform a clean build\n"
-			    printf " -1       Start from stage 1\n"
-			    printf " -2       Start from stage 2\n"
-			    printf " --format Format the source code\n"
-			    printf " --site   Update the project web site\n"
-			    printf " -h       Print this help\n"
+			    printf " -c                              Perform a clean build\n"
+			    printf " -1                              Start from stage 1\n"
+			    printf " -2                              Start from stage 2\n"
+			    printf " --format                        Format the source code\n"
+			    printf " --site                          Update the project web site\n"
+			    printf " --settings                      Alternate Maven settings file\n"
+			    printf "                                 (Leave out the path and the extension)\n"
+			    printf " -h                              Print this help\n"
 			    exit 0
 			    ;;
 		esac
@@ -39,19 +47,22 @@ function processOptions
 
 processOptions $options
 
+MVN="mvn $optMavenSettings"
+BUILD="./build.sh $settings"
+
 shift $(($OPTIND - 1))
 
 if [ ! -z "$optFormat" ]
 then
-	mvn java-formatter:format
-	mvn license:format
+	$MVN java-formatter:format
+	$MVN license:format
 	exit 0
 fi
 
 if [ ! -z "$optSite" ]
 then
-	mvn site:site
-	mvn site:deploy
+	$MVN site:site
+	$MVN site:deploy
 	exit 0
 fi
 
@@ -60,18 +71,18 @@ then
 	if [ ! -z "$optClean" ]
 	then
 		cd ../iritgo-simplelife
-		mvn clean
+		$MVN clean
 		cd ../iritgo-jdicext
-		mvn clean
+		$MVN clean
 	fi
 	cd ../iritgo-simplelife
-	mvn install
+	$MVN install
 	if [ $? != 0 ]
 	then
 		exit $?
 	fi
 	cd ../iritgo-jdicext
-	mvn install
+	$MVN install
 	if [ $? != 0 ]
 	then
 		exit $?
@@ -81,7 +92,7 @@ fi
 
 if [ ! -z "$optClean" ]
 then
-	mvn clean
+	$MVN clean
 fi
 
-mvn install
+$MVN install
