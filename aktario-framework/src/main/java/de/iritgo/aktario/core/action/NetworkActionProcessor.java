@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.*;
 
 
 /**
@@ -39,7 +40,7 @@ import java.util.List;
 public abstract class NetworkActionProcessor extends BaseObject implements ActionProcessor,
 				NetworkActionProcessorInterface, Cloneable
 {
-	protected HashMap channelProcessorMapping;
+	protected ConcurrentHashMap channelProcessorMapping;
 
 	protected List channelProcessors;
 
@@ -55,7 +56,7 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	{
 		super (typeId);
 
-		channelProcessorMapping = new HashMap ();
+		channelProcessorMapping = new ConcurrentHashMap ();
 		channelProcessors = new LinkedList ();
 		this.channel = channel;
 		this.parentNetworkActionProcessor = parentNetworkActionProcessor;
