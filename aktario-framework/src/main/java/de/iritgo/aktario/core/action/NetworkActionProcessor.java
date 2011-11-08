@@ -149,7 +149,7 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	{
 		Channel channel = ((ClientTransceiver) transceiver).getConnectedChannel ();
 
-		if (channelProcessorMapping.get (channel) != null)
+		if (channel != null && channelProcessorMapping.get (channel) != null)
 		{
 			((ActionProcessor) channelProcessorMapping.get (channel)).perform (action, transceiver);
 		}
