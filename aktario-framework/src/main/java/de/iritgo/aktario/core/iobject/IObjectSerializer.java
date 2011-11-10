@@ -40,7 +40,7 @@ public class IObjectSerializer extends BaseObject
 	/**
 	 * Create a new IObjectSerializer.
 	 */
-	public IObjectSerializer ()
+	public IObjectSerializer()
 	{
 	}
 
@@ -55,32 +55,31 @@ public class IObjectSerializer extends BaseObject
 	 * @throws ClassNotFoundException Is thrown if an invalid type id
 	 *   was transmitted.
 	 */
-	public IObject read (DataInputStream inputStream)
-		throws IOException, NoSuchIObjectException, ClassNotFoundException
+	public IObject read(DataInputStream inputStream) throws IOException, NoSuchIObjectException, ClassNotFoundException
 	{
 		IObject object = null;
 
-		classId = inputStream.readUTF ();
+		classId = inputStream.readUTF();
 
-		if (classId.length () == 0)
+		if (classId.length() == 0)
 		{
-			Log.log ("system", "Prototype.get", "ClassID is NULL", Log.FATAL);
+			Log.log("system", "Prototype.get", "ClassID is NULL", Log.FATAL);
 
 			return null;
 		}
 
-		object = Engine.instance ().getIObjectFactory ().newInstance (classId);
+		object = Engine.instance().getIObjectFactory().newInstance(classId);
 
 		if (object == null)
 		{
 			return null;
 		}
 
-		object.readObject (inputStream);
+		object.readObject(inputStream);
 
-		if (! classId.equals (object.getTypeId ()))
+		if (! classId.equals(object.getTypeId()))
 		{
-			Log.log ("system", "Prototype.get", "Wrong objecttype!!!!!", Log.FATAL);
+			Log.log("system", "Prototype.get", "Wrong objecttype!!!!!", Log.FATAL);
 
 			return null;
 		}
@@ -95,12 +94,12 @@ public class IObjectSerializer extends BaseObject
 	 * @param object The IritogObject to write.
 	 * @throws IOException Is thrown if an error occurred during writing.
 	 */
-	public void write (DataOutputStream outputStream, IObject object) throws IOException
+	public void write(DataOutputStream outputStream, IObject object) throws IOException
 	{
 		synchronized (outputStream)
 		{
-			outputStream.writeUTF (object.getTypeId ());
-			object.writeObject (outputStream);
+			outputStream.writeUTF(object.getTypeId());
+			object.writeObject(outputStream);
 		}
 	}
 }

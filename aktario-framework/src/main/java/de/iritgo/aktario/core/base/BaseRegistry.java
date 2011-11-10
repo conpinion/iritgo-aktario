@@ -40,9 +40,9 @@ public class BaseRegistry
 	/**
 	 * Create a new BaseRegistry.
 	 */
-	public BaseRegistry ()
+	public BaseRegistry()
 	{
-		typeObjectMapping = new HashMap ();
+		typeObjectMapping = new HashMap();
 	}
 
 	/**
@@ -51,18 +51,18 @@ public class BaseRegistry
 	 *
 	 * @param object The object to add.
 	 */
-	synchronized public void add (BaseObject object)
+	synchronized public void add(BaseObject object)
 	{
-		String objectTypeId = object.getTypeId ();
-		Map baseObjects = (Map) typeObjectMapping.get (objectTypeId);
+		String objectTypeId = object.getTypeId();
+		Map baseObjects = (Map) typeObjectMapping.get(objectTypeId);
 
 		if (baseObjects == null)
 		{
-			baseObjects = new HashMap ();
-			typeObjectMapping.put (objectTypeId, baseObjects);
+			baseObjects = new HashMap();
+			typeObjectMapping.put(objectTypeId, baseObjects);
 		}
 
-		baseObjects.put (new Long (object.getUniqueId ()), object);
+		baseObjects.put(new Long(object.getUniqueId()), object);
 	}
 
 	/**
@@ -72,16 +72,16 @@ public class BaseRegistry
 	 * @param typeId The type id of the object to retrieve.
 	 * @return The object or null if it wasn't found.
 	 */
-	public BaseObject get (long uniqueId, String typeId)
+	public BaseObject get(long uniqueId, String typeId)
 	{
-		Map baseObjects = (Map) typeObjectMapping.get (typeId);
+		Map baseObjects = (Map) typeObjectMapping.get(typeId);
 
 		if (baseObjects == null)
 		{
 			return null;
 		}
 
-		BaseObject baseObject = (BaseObject) baseObjects.get (new Long (uniqueId));
+		BaseObject baseObject = (BaseObject) baseObjects.get(new Long(uniqueId));
 
 		if (baseObject == null)
 		{
@@ -96,15 +96,15 @@ public class BaseRegistry
 	 *
 	 * @return object The object to add.
 	 */
-	synchronized public int size ()
+	synchronized public int size()
 	{
 		int size = 0;
 
-		for (Iterator i = typeObjectMapping.values ().iterator (); i.hasNext ();)
+		for (Iterator i = typeObjectMapping.values().iterator(); i.hasNext();)
 		{
-			Map baseObjects = (Map) i.next ();
+			Map baseObjects = (Map) i.next();
 
-			size += baseObjects.size ();
+			size += baseObjects.size();
 		}
 
 		return size;
@@ -115,16 +115,16 @@ public class BaseRegistry
 	 *
 	 * @param object The object to remove.
 	 */
-	synchronized public void remove (BaseObject object)
+	synchronized public void remove(BaseObject object)
 	{
-		Map baseObjects = (Map) typeObjectMapping.get (object.getTypeId ());
+		Map baseObjects = (Map) typeObjectMapping.get(object.getTypeId());
 
 		if (baseObjects == null)
 		{
 			return;
 		}
 
-		baseObjects.remove (new Long (object.getUniqueId ()));
+		baseObjects.remove(new Long(object.getUniqueId()));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class BaseRegistry
 	 *
 	 * @return The object iterator.
 	 */
-	synchronized public Iterator iterator ()
+	synchronized public Iterator iterator()
 	{
 		return null;
 
@@ -147,30 +147,30 @@ public class BaseRegistry
 	 *
 	 * @return The object iterator.
 	 */
-	synchronized public Iterator iterator (String typeId)
+	synchronized public Iterator iterator(String typeId)
 	{
-		Map baseObjects = (Map) typeObjectMapping.get (typeId);
+		Map baseObjects = (Map) typeObjectMapping.get(typeId);
 
 		if (baseObjects == null)
 		{
-			return new LinkedList ().iterator ();
+			return new LinkedList().iterator();
 		}
 
-		List tmpList = new LinkedList (baseObjects.values ());
+		List tmpList = new LinkedList(baseObjects.values());
 
-		return tmpList.iterator ();
+		return tmpList.iterator();
 	}
 
 	/**
 	 * Remove all base objects from this registry.
 	 */
-	synchronized public void clear ()
+	synchronized public void clear()
 	{
-		for (Iterator i = typeObjectMapping.values ().iterator (); i.hasNext ();)
+		for (Iterator i = typeObjectMapping.values().iterator(); i.hasNext();)
 		{
-			((Map) i.next ()).clear ();
+			((Map) i.next()).clear();
 		}
 
-		typeObjectMapping.clear ();
+		typeObjectMapping.clear();
 	}
 }

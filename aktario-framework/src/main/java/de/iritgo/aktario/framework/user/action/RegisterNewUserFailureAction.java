@@ -41,14 +41,14 @@ public class RegisterNewUserFailureAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserFailureAction ()
+	public RegisterNewUserFailureAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserFailureAction (int failure)
+	public RegisterNewUserFailureAction(int failure)
 	{
 		this.failure = failure;
 	}
@@ -56,24 +56,24 @@ public class RegisterNewUserFailureAction extends FrameworkAction
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		failure = stream.readInt ();
+		failure = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (failure);
+		stream.writeInt(failure);
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Engine.instance ().getFlowControl ().ruleFailure ("userregisted");
+		Engine.instance().getFlowControl().ruleFailure("userregisted");
 	}
 }

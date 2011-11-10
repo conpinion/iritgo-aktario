@@ -39,7 +39,7 @@ public class IRadioButton extends JRadioButton
 	/**
 	 * Create a radio button with no text or icon.
 	 */
-	public IRadioButton ()
+	public IRadioButton()
 	{
 	}
 
@@ -48,9 +48,9 @@ public class IRadioButton extends JRadioButton
 	 *
 	 * @param textKey The text of the label.
 	 */
-	public IRadioButton (String textKey)
+	public IRadioButton(String textKey)
 	{
-		super (textKey);
+		super(textKey);
 	}
 
 	/**
@@ -59,10 +59,9 @@ public class IRadioButton extends JRadioButton
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey)
-						+ (colon ? ":" : ""));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey) + (colon ? ":" : ""));
 	}
 
 	/**
@@ -70,7 +69,7 @@ public class IRadioButton extends JRadioButton
 	 *
 	 * @param colon If true a colon is appended to the label.
 	 */
-	public void setColon (boolean colon)
+	public void setColon(boolean colon)
 	{
 		this.colon = colon;
 	}

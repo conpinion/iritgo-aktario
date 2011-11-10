@@ -41,68 +41,66 @@ public class InfoItem
 
 	private String iObjectTypeId;
 
-	public InfoItem (String category, String icon, String message, String guiPaneId, long uniqueId,
+	public InfoItem(String category, String icon, String message, String guiPaneId, long uniqueId,
 					String iObjectTypeId, int level)
 	{
-		init (category, icon, message, guiPaneId, uniqueId, iObjectTypeId, level);
+		init(category, icon, message, guiPaneId, uniqueId, iObjectTypeId, level);
 	}
 
-	public InfoItem (String message)
+	public InfoItem(String message)
 	{
-		init ("", "", message, "", 0, "", 0);
+		init("", "", message, "", 0, "", 0);
 	}
 
-	public void init (String category, String icon, String message, String guiPaneId, long uniqueId,
+	public void init(String category, String icon, String message, String guiPaneId, long uniqueId,
 					String iObjectTypeId, int level)
 	{
 		this.guiPaneId = guiPaneId;
 		this.uniqueId = uniqueId;
 		this.iObjectTypeId = iObjectTypeId;
 
-		panel = new JPanel ();
+		panel = new JPanel();
 
-		GridBagLayout gridBagLayout = new GridBagLayout ();
+		GridBagLayout gridBagLayout = new GridBagLayout();
 
-		panel.setLayout (gridBagLayout);
+		panel.setLayout(gridBagLayout);
 
 		int row = 0;
 
-		JLabel label = new JLabel ("IC");
+		JLabel label = new JLabel("IC");
 
-		panel
-						.add (label, getConstraints (0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets (5,
-										15, 5, 15)));
+		panel.add(label, getConstraints(0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets(5, 15, 5, 15)));
 
-		JEditorPane messagePane = new JEditorPane ("text/html", message);
+		JEditorPane messagePane = new JEditorPane("text/html", message);
 
-		panel.add (messagePane, getConstraints (1, row, 1, 1, GridBagConstraints.BOTH, 100, 100, new Insets (5, 15, 5,
-						15)));
+		panel.add(messagePane,
+						getConstraints(1, row, 1, 1, GridBagConstraints.BOTH, 100, 100, new Insets(5, 15, 5, 15)));
 	}
 
-	public JPanel getPanel ()
+	public JPanel getPanel()
 	{
 		return panel;
 	}
 
-	public String getGuiPaneId ()
+	public String getGuiPaneId()
 	{
 		return guiPaneId;
 	}
 
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}
 
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return iObjectTypeId;
 	}
 
-	protected GridBagConstraints getConstraints (int x, int y, int width, int height, int fill, int wx, int wy,
+	protected GridBagConstraints getConstraints(int x, int y, int width, int height, int fill, int wx, int wy,
 					Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -115,7 +113,7 @@ public class InfoItem
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{

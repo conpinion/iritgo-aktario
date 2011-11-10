@@ -40,9 +40,9 @@ public class CommandTools
 	 * @param commandId The id of the command to check.
 	 * @return True if the command exists.
 	 */
-	public static boolean commandExists (String commandId)
+	public static boolean commandExists(String commandId)
 	{
-		return Engine.instance ().getCommandRegistry ().commandExists (commandId);
+		return Engine.instance().getCommandRegistry().commandExists(commandId);
 	}
 
 	/**
@@ -52,22 +52,9 @@ public class CommandTools
 	 * @param commandId The id of the command to execute.
 	 * @param properties The execution properties.
 	 */
-	public static Object performSimple (String commandId, Properties properties)
+	public static Object performSimple(String commandId, Properties properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, commandId, properties);
-	}
-
-	/**
-	 * Perform a command using the simple command processor of the currently
-	 * running engine.
-	 *
-	 * @param commandId The id of the command to execute.
-	 * @param properties The execution properties.
-	 * @return The command results.
-	 */
-	public static Object performSimple (String commandId, Object[] properties)
-	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, commandId, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, commandId, properties);
 	}
 
 	/**
@@ -78,9 +65,22 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performSimple (String commandId, Vector properties)
+	public static Object performSimple(String commandId, Object[] properties)
 	{
-		return performSimple (commandId, properties.toArray ());
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, commandId, properties);
+	}
+
+	/**
+	 * Perform a command using the simple command processor of the currently
+	 * running engine.
+	 *
+	 * @param commandId The id of the command to execute.
+	 * @param properties The execution properties.
+	 * @return The command results.
+	 */
+	public static Object performSimple(String commandId, Vector properties)
+	{
+		return performSimple(commandId, properties.toArray());
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performSimple (Command command, Properties properties)
+	public static Object performSimple(Command command, Properties properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, command, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, command, properties);
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performSimple (Command command, Object[] properties)
+	public static Object performSimple(Command command, Object[] properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, command, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, command, properties);
 	}
 
 	/**
@@ -117,9 +117,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performSimple (Command command, Vector properties)
+	public static Object performSimple(Command command, Vector properties)
 	{
-		return performSimple (command, properties.toArray ());
+		return performSimple(command, properties.toArray());
 	}
 
 	/**
@@ -129,9 +129,9 @@ public class CommandTools
 	 * @param commandId The id of the command to execute.
 	 * @return The command results.
 	 */
-	public static Object performSimple (String commandId)
+	public static Object performSimple(String commandId)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, commandId);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, commandId);
 	}
 
 	/**
@@ -141,9 +141,9 @@ public class CommandTools
 	 * @param command The command to execute.
 	 * @return The command results.
 	 */
-	public static Object performSimple (Command command)
+	public static Object performSimple(Command command)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.SIMPLE, command);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.SIMPLE, command);
 	}
 
 	/**
@@ -153,22 +153,9 @@ public class CommandTools
 	 * @param commandId The id of the command to execute.
 	 * @param properties The execution properties.
 	 */
-	public static Object performAsync (String commandId, Properties properties)
+	public static Object performAsync(String commandId, Properties properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, commandId, properties);
-	}
-
-	/**
-	 * Perform a command using the async command processor of the currently
-	 * running engine.
-	 *
-	 * @param commandId The id of the command to execute.
-	 * @param properties The execution properties.
-	 * @return The command results.
-	 */
-	public static Object performAsync (String commandId, Object[] properties)
-	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, commandId, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, commandId, properties);
 	}
 
 	/**
@@ -179,9 +166,22 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performAsync (String commandId, Vector properties)
+	public static Object performAsync(String commandId, Object[] properties)
 	{
-		return performAsync (commandId, properties.toArray ());
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, commandId, properties);
+	}
+
+	/**
+	 * Perform a command using the async command processor of the currently
+	 * running engine.
+	 *
+	 * @param commandId The id of the command to execute.
+	 * @param properties The execution properties.
+	 * @return The command results.
+	 */
+	public static Object performAsync(String commandId, Vector properties)
+	{
+		return performAsync(commandId, properties.toArray());
 	}
 
 	/**
@@ -192,9 +192,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performAsync (Command command, Properties properties)
+	public static Object performAsync(Command command, Properties properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, command, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, command, properties);
 	}
 
 	/**
@@ -205,9 +205,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performAsync (Command command, Object[] properties)
+	public static Object performAsync(Command command, Object[] properties)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, command, properties);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, command, properties);
 	}
 
 	/**
@@ -218,9 +218,9 @@ public class CommandTools
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public static Object performAsync (Command command, Vector properties)
+	public static Object performAsync(Command command, Vector properties)
 	{
-		return performAsync (command, properties.toArray ());
+		return performAsync(command, properties.toArray());
 	}
 
 	/**
@@ -230,9 +230,9 @@ public class CommandTools
 	 * @param commandId The id of the command to execute.
 	 * @return The command results.
 	 */
-	public static Object performAsync (String commandId)
+	public static Object performAsync(String commandId)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, commandId);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, commandId);
 	}
 
 	/**
@@ -242,9 +242,9 @@ public class CommandTools
 	 * @param command The command to execute.
 	 * @return The command results.
 	 */
-	public static Object performAsync (Command command)
+	public static Object performAsync(Command command)
 	{
-		return Engine.instance ().getCommandRegistry ().perform (CommandProcessor.ASYNC, command);
+		return Engine.instance().getCommandRegistry().perform(CommandProcessor.ASYNC, command);
 	}
 
 	/**
@@ -253,10 +253,10 @@ public class CommandTools
 	 * @param commandId The command id to execute.
 	 * @param properties The properties for this command.
 	 */
-	public static void performRemote (String commandId, Properties properties)
+	public static void performRemote(String commandId, Properties properties)
 	{
-		CommandServerAction csa = new CommandServerAction (commandId, properties);
+		CommandServerAction csa = new CommandServerAction(commandId, properties);
 
-		ActionTools.sendToServer (csa);
+		ActionTools.sendToServer(csa);
 	}
 }

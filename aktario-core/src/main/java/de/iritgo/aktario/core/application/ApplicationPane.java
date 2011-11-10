@@ -48,9 +48,9 @@ public abstract class ApplicationPane extends SwingGUIPane
 	/**
 	 * Create a new ApplicationPane.
 	 */
-	public ApplicationPane ()
+	public ApplicationPane()
 	{
-		super ("ApplicationPane");
+		super("ApplicationPane");
 	}
 
 	/**
@@ -58,9 +58,9 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 *
 	 * @param id The gui id.
 	 */
-	public ApplicationPane (String id)
+	public ApplicationPane(String id)
 	{
-		super (id);
+		super(id);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
 		return null;
 	}
@@ -79,7 +79,7 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
 		return null;
 	}
@@ -88,30 +88,30 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
-		final SwingWindowFrame frame = (SwingWindowFrame) ((IWindow) getDisplay ()).getWindowFrame ();
+		final SwingWindowFrame frame = (SwingWindowFrame) ((IWindow) getDisplay()).getWindowFrame();
 
-		glassPane = new ApplicationGlassPane ();
-		frame.setGlassPane (glassPane);
-		glassPane.setVisible (true);
+		glassPane = new ApplicationGlassPane();
+		frame.setGlassPane(glassPane);
+		glassPane.setVisible(true);
 
-		frame.addInternalFrameListener (new InternalFrameAdapter ()
+		frame.addInternalFrameListener(new InternalFrameAdapter()
 		{
 			@Override
-			public void internalFrameActivated (InternalFrameEvent e)
+			public void internalFrameActivated(InternalFrameEvent e)
 			{
-				((JComponent) frame.getGlassPane ()).setVisible (true);
+				((JComponent) frame.getGlassPane()).setVisible(true);
 			}
 		});
 
 		// 		setEnabled (false);
-		getDisplay ().setIcon (new ImageIcon (ApplicationPane.class.getResource ("/resources/lessondisplay.png")));
+		getDisplay().setIcon(new ImageIcon(ApplicationPane.class.getResource("/resources/lessondisplay.png")));
 
-		Long appInstanceId = (Long) getDisplay ().getProperties ().get ("aktario.applicationInstanceId");
+		Long appInstanceId = (Long) getDisplay().getProperties().get("aktario.applicationInstanceId");
 
-		AppContext.instance ().put ("applicationPane", this);
-		AppContext.instance ().put ("applicationPane." + appInstanceId, this);
+		AppContext.instance().put("applicationPane", this);
+		AppContext.instance().put("applicationPane." + appInstanceId, this);
 	}
 
 	/**
@@ -119,21 +119,21 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 *
 	 * @param enabled If true the gui pane will be enabled.
 	 */
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		glassPane.setEnabled (enabled);
+		glassPane.setEnabled(enabled);
 	}
 
 	/**
 	 * Close the display.
 	 */
 	@Override
-	public void close ()
+	public void close()
 	{
-		Long appInstanceId = (Long) getDisplay ().getProperties ().get ("aktario.applicationInstanceId");
+		Long appInstanceId = (Long) getDisplay().getProperties().get("aktario.applicationInstanceId");
 
-		AppContext.instance ().remove ("applicationPane");
-		AppContext.instance ().remove ("applicationPane." + appInstanceId);
+		AppContext.instance().remove("applicationPane");
+		AppContext.instance().remove("applicationPane." + appInstanceId);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 *
 	 * @return The glass pane.
 	 */
-	public ApplicationGlassPane getGlassPane ()
+	public ApplicationGlassPane getGlassPane()
 	{
 		return glassPane;
 	}
@@ -149,7 +149,7 @@ public abstract class ApplicationPane extends SwingGUIPane
 	/**
 	 * Context help lookup.
 	 */
-	public void contextHelp ()
+	public void contextHelp()
 	{
 	}
 
@@ -158,22 +158,21 @@ public abstract class ApplicationPane extends SwingGUIPane
 	 *
 	 * @param ready The ready state.
 	 */
-	protected void sendUserReadyAction (boolean ready)
+	protected void sendUserReadyAction(boolean ready)
 	{
-		AktarioUserReadyServerAction action = new AktarioUserReadyServerAction (AppContext.instance ().getUser (),
-						ready);
-		ClientTransceiver transceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+		AktarioUserReadyServerAction action = new AktarioUserReadyServerAction(AppContext.instance().getUser(), ready);
+		ClientTransceiver transceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-		transceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		action.setTransceiver (transceiver);
-		ActionTools.sendToServer (action);
+		transceiver.addReceiver(AppContext.instance().getChannelNumber());
+		action.setTransceiver(transceiver);
+		ActionTools.sendToServer(action);
 	}
 
 	/**
 	 * Send a user is ready action.
 	 */
-	protected void sendUserReadyAction ()
+	protected void sendUserReadyAction()
 	{
-		sendUserReadyAction (true);
+		sendUserReadyAction(true);
 	}
 }

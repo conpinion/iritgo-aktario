@@ -48,15 +48,15 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 
 		public int pointerId;
 
-		public Pointer (long userId)
+		public Pointer(long userId)
 		{
 			this.userId = userId;
-			pointerId = pointers.size ();
+			pointerId = pointers.size();
 		}
 	}
 
 	/** List of all pointers. */
-	static List pointers = new LinkedList ();
+	static List pointers = new LinkedList();
 
 	/** The id of the user who is sending this action. */
 	protected long userId;
@@ -79,9 +79,9 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	/**
 	 * Create a new action.
 	 */
-	public WhiteBoardServerAction ()
+	public WhiteBoardServerAction()
 	{
-		setTypeId ("WBS");
+		setTypeId("WBS");
 	}
 
 	/**
@@ -89,10 +89,10 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @param user The id of the user who is sending this action.
 	 */
-	public WhiteBoardServerAction (User user)
+	public WhiteBoardServerAction(User user)
 	{
-		this ();
-		this.userId = user.getUniqueId ();
+		this();
+		this.userId = user.getUniqueId();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The user id.
 	 */
-	public long getUserId ()
+	public long getUserId()
 	{
 		return userId;
 	}
@@ -110,7 +110,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The pointer id.
 	 */
-	public int getPointerId ()
+	public int getPointerId()
 	{
 		return pointerId;
 	}
@@ -120,7 +120,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The action type.
 	 */
-	public int getType ()
+	public int getType()
 	{
 		return type;
 	}
@@ -130,7 +130,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The mouse x coordinate.
 	 */
-	public int getX ()
+	public int getX()
 	{
 		return x;
 	}
@@ -140,7 +140,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The mouse y coordinate.
 	 */
-	public int getY ()
+	public int getY()
 	{
 		return y;
 	}
@@ -150,7 +150,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 *
 	 * @return The paint type.
 	 */
-	public int getPaint ()
+	public int getPaint()
 	{
 		return paint;
 	}
@@ -161,7 +161,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 * @param x The mouse x coordinate.
 	 * @param y The mouse y coordinate.
 	 */
-	public void sendMouseMove (int x, int y)
+	public void sendMouseMove(int x, int y)
 	{
 		type = WhiteBoardAction.ACTION_POINTER;
 		this.x = x;
@@ -175,7 +175,7 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 * @param y The mouse y coordinate.
 	 * @param paint The paint type.
 	 */
-	public void sendPaint (int x, int y, int paint)
+	public void sendPaint(int x, int y, int paint)
 	{
 		type = WhiteBoardAction.ACTION_PAINT;
 		this.x = x;
@@ -187,35 +187,35 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		pointerId = stream.readInt ();
-		type = stream.readInt ();
-		x = stream.readInt ();
-		y = stream.readInt ();
-		paint = stream.readInt ();
+		userId = stream.readLong();
+		pointerId = stream.readInt();
+		type = stream.readInt();
+		x = stream.readInt();
+		y = stream.readInt();
+		paint = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeInt (pointerId);
-		stream.writeInt (type);
-		stream.writeInt (x);
-		stream.writeInt (y);
-		stream.writeInt (paint);
+		stream.writeLong(userId);
+		stream.writeInt(pointerId);
+		stream.writeInt(type);
+		stream.writeInt(x);
+		stream.writeInt(y);
+		stream.writeInt(paint);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		if (type == WhiteBoardAction.ACTION_POINTER)
 		{
@@ -223,9 +223,9 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 
 			synchronized (pointers)
 			{
-				for (Iterator i = pointers.iterator (); i.hasNext ();)
+				for (Iterator i = pointers.iterator(); i.hasNext();)
 				{
-					Pointer p = (Pointer) i.next ();
+					Pointer p = (Pointer) i.next();
 
 					if (p.userId == userId)
 					{
@@ -237,8 +237,8 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 
 				if (pointer == null)
 				{
-					pointer = new Pointer (userId);
-					pointers.add (pointer);
+					pointer = new Pointer(userId);
+					pointers.add(pointer);
 				}
 			}
 
@@ -246,21 +246,21 @@ public class WhiteBoardServerAction extends FrameworkServerAction
 		}
 
 		ClientTransceiver ct = (ClientTransceiver) transceiver;
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			if (user.isOnline () && ((type == WhiteBoardAction.ACTION_PAINT) || (user.getUniqueId () != userId)))
+			if (user.isOnline() && ((type == WhiteBoardAction.ACTION_PAINT) || (user.getUniqueId() != userId)))
 			{
-				ct.addReceiver (user.getNetworkChannel ());
+				ct.addReceiver(user.getNetworkChannel());
 			}
 		}
 
-		WhiteBoardAction action = new WhiteBoardAction (this);
+		WhiteBoardAction action = new WhiteBoardAction(this);
 
-		action.setTransceiver (transceiver);
-		ActionTools.sendToClient (action);
+		action.setTransceiver(transceiver);
+		ActionTools.sendToClient(action);
 	}
 }

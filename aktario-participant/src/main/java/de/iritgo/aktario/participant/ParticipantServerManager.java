@@ -58,21 +58,21 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 	/**
 	 * Create a new client manager.
 	 */
-	public ParticipantServerManager ()
+	public ParticipantServerManager()
 	{
-		super ("ParticipantServerManager");
+		super("ParticipantServerManager");
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectcreated", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectmodified", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectremoved", this);
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
+		Engine.instance().getEventRegistry().addListener("objectcreated", this);
+		Engine.instance().getEventRegistry().addListener("objectmodified", this);
+		Engine.instance().getEventRegistry().addListener("objectremoved", this);
 	}
 
 	/**
@@ -80,50 +80,50 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 	 *
 	 * @param event The creation event.
 	 */
-	public void iObjectCreatedEvent (IObjectCreatedEvent event)
+	public void iObjectCreatedEvent(IObjectCreatedEvent event)
 	{
-		if (event.getCreatedObject () instanceof AktarioUser)
+		if (event.getCreatedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-								.getManager ("AktarioUserManager");
+				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+								.getManager("AktarioUserManager");
 
-				User user = userRegistry.getUser (((AktarioUser) event.getCreatedObject ()).getUserId ());
-				DynDataObject participantState = (DynDataObject) Engine.instance ().getIObjectFactory ().newInstance (
+				User user = userRegistry.getUser(((AktarioUser) event.getCreatedObject()).getUserId());
+				DynDataObject participantState = (DynDataObject) Engine.instance().getIObjectFactory().newInstance(
 								"ParticipantState");
 
-				participantState.setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
+				participantState.setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
 
-				participantState.setAttribute ("iritgoUserName", user.getName ());
+				participantState.setAttribute("iritgoUserName", user.getName());
 
-				if (aktarioUserManager.getUserByName (user.getName ()) != null)
+				if (aktarioUserManager.getUserByName(user.getName()) != null)
 				{
-					participantState.setAttribute ("aktarioUserName", aktarioUserManager
-									.getUserByName (user.getName ()).getFullName ());
+					participantState.setAttribute("aktarioUserName", aktarioUserManager.getUserByName(user.getName())
+									.getFullName());
 				}
 
-				participantState.setAttribute ("iritgoUserUniqueId", user.getUniqueId ());
-				participantState.setAttribute ("onlineUser", false);
+				participantState.setAttribute("iritgoUserUniqueId", user.getUniqueId());
+				participantState.setAttribute("onlineUser", false);
 
-				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-				proxy.setSampleRealObject ((IObject) participantState);
-				Engine.instance ().getBaseRegistry ().add ((BaseObject) participantState);
-				Engine.instance ().getProxyRegistry ().addProxy (proxy, participantState.getTypeId ());
+				proxy.setSampleRealObject((IObject) participantState);
+				Engine.instance().getBaseRegistry().add((BaseObject) participantState);
+				Engine.instance().getProxyRegistry().addProxy(proxy, participantState.getTypeId());
 
-				Engine.instance ().getEventRegistry ().fire ("objectcreated",
-								new IObjectCreatedEvent (participantState, null, null, null));
+				Engine.instance().getEventRegistry().fire("objectcreated",
+								new IObjectCreatedEvent(participantState, null, null, null));
 
-				ActionTools.sendServerBroadcast (new EditIObjectAction (EditIObjectAction.OK, participantState));
+				ActionTools.sendServerBroadcast(new EditIObjectAction(EditIObjectAction.OK, participantState));
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantServerManager:pluginEvent(Create participants)",
+				Log.logFatal("system", "ParicipantServerManager:pluginEvent(Create participants)",
 								"Can not create participant error.");
-				x.printStackTrace ();
+				x.printStackTrace();
 			}
 		}
 	}
@@ -133,26 +133,26 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 	 *
 	 * @param event The modification event.
 	 */
-	public void iObjectModifiedEvent (IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(IObjectModifiedEvent event)
 	{
-		if (event.getModifiedObject () instanceof AktarioUser)
+		if (event.getModifiedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-								.getManager ("AktarioUserManager");
+				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+								.getManager("AktarioUserManager");
 
-				User user = userRegistry.getUser (((AktarioUser) event.getModifiedObject ()).getUserId ());
+				User user = userRegistry.getUser(((AktarioUser) event.getModifiedObject()).getUserId());
 
 				DynDataObject participantState = null;
 
-				for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+				for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 				{
-					DynDataObject ps = (DynDataObject) i.next ();
+					DynDataObject ps = (DynDataObject) i.next();
 
-					if (ps.getLongAttribute ("iritgoUserUniqueId") == user.getUniqueId ())
+					if (ps.getLongAttribute("iritgoUserUniqueId") == user.getUniqueId())
 					{
 						participantState = ps;
 
@@ -162,26 +162,26 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 
 				if (participantState != null)
 				{
-					participantState.setAttribute ("iritgoUserName", user.getName ());
+					participantState.setAttribute("iritgoUserName", user.getName());
 
-					if (aktarioUserManager.getUserByName (user.getName ()) != null)
+					if (aktarioUserManager.getUserByName(user.getName()) != null)
 					{
-						participantState.setAttribute ("aktarioUserName", aktarioUserManager.getUserByName (
-										user.getName ()).getFullName ());
+						participantState.setAttribute("aktarioUserName", aktarioUserManager.getUserByName(
+										user.getName()).getFullName());
 					}
 
-					IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+					IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-					proxy.setSampleRealObject ((IObject) participantState);
-					Engine.instance ().getBaseRegistry ().add ((BaseObject) participantState);
-					Engine.instance ().getProxyRegistry ().addProxy (proxy, participantState.getTypeId ());
+					proxy.setSampleRealObject((IObject) participantState);
+					Engine.instance().getBaseRegistry().add((BaseObject) participantState);
+					Engine.instance().getProxyRegistry().addProxy(proxy, participantState.getTypeId());
 
-					ActionTools.sendServerBroadcast (new EditIObjectAction (EditIObjectAction.OK, participantState));
+					ActionTools.sendServerBroadcast(new EditIObjectAction(EditIObjectAction.OK, participantState));
 				}
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantServerManager:pluginEvent(Modify participants)",
+				Log.logFatal("system", "ParicipantServerManager:pluginEvent(Modify participants)",
 								"Can not modify participant error.");
 			}
 		}
@@ -192,117 +192,117 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 	 *
 	 * @param event The delete event.
 	 */
-	public void iObjectDeletedEvent (IObjectDeletedEvent event)
+	public void iObjectDeletedEvent(IObjectDeletedEvent event)
 	{
-		if (event.getDeletedObject () instanceof AktarioUser)
+		if (event.getDeletedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-								.getManager ("AktarioUserManager");
+				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+								.getManager("AktarioUserManager");
 
-				User user = userRegistry.getUser (((AktarioUser) event.getDeletedObject ()).getUserId ());
+				User user = userRegistry.getUser(((AktarioUser) event.getDeletedObject()).getUserId());
 
 				DynDataObject participantState = null;
 
-				for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+				for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 				{
-					participantState = (DynDataObject) i.next ();
+					participantState = (DynDataObject) i.next();
 
-					if (participantState.getStringAttribute ("iritgoUserName").equals (user.getName ()))
+					if (participantState.getStringAttribute("iritgoUserName").equals(user.getName()))
 					{
 						break;
 					}
 				}
 
-				Engine.instance ().getEventRegistry ().fire ("objectremoved",
-								new IObjectDeletedEvent (participantState, null, null, null));
-				Engine.instance ().getBaseRegistry ().remove (participantState);
+				Engine.instance().getEventRegistry().fire("objectremoved",
+								new IObjectDeletedEvent(participantState, null, null, null));
+				Engine.instance().getBaseRegistry().remove(participantState);
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantServerManager:pluginEvent(delete participants)",
+				Log.logFatal("system", "ParicipantServerManager:pluginEvent(delete participants)",
 								"Can not delete participant error.");
 			}
 		}
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
-		if (event.allPluginsInitialized ())
+		if (event.allPluginsInitialized())
 		{
-			DataObjectTools.registerOnStartupDynDataObject (participant);
+			DataObjectTools.registerOnStartupDynDataObject(participant);
 
-			UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-			AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-							.getManager ("AktarioUserManager");
+			UserRegistry userRegistry = Server.instance().getUserRegistry();
+			AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+							.getManager("AktarioUserManager");
 
-			for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+			for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 			{
 				try
 				{
-					User user = (User) i.next ();
-					DynDataObject participantState = (DynDataObject) Engine.instance ().getIObjectFactory ()
-									.newInstance ("ParticipantState");
+					User user = (User) i.next();
+					DynDataObject participantState = (DynDataObject) Engine.instance().getIObjectFactory().newInstance(
+									"ParticipantState");
 
-					participantState.setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
+					participantState.setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
 
-					participantState.setAttribute ("iritgoUserName", user.getName ());
+					participantState.setAttribute("iritgoUserName", user.getName());
 
-					if (aktarioUserManager.getUserByName (user.getName ()) != null)
+					if (aktarioUserManager.getUserByName(user.getName()) != null)
 					{
-						participantState.setAttribute ("aktarioUserName", aktarioUserManager.getUserByName (
-										user.getName ()).getFullName ());
+						participantState.setAttribute("aktarioUserName", aktarioUserManager.getUserByName(
+										user.getName()).getFullName());
 					}
 
-					participantState.setAttribute ("iritgoUserUniqueId", user.getUniqueId ());
-					participantState.setAttribute ("onlineUser", false);
+					participantState.setAttribute("iritgoUserUniqueId", user.getUniqueId());
+					participantState.setAttribute("onlineUser", false);
 
-					IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+					IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-					proxy.setSampleRealObject ((IObject) participantState);
+					proxy.setSampleRealObject((IObject) participantState);
 
-					Engine.instance ().getBaseRegistry ().add ((BaseObject) participantState);
-					Engine.instance ().getProxyRegistry ().addProxy (proxy, participantState.getTypeId ());
+					Engine.instance().getBaseRegistry().add((BaseObject) participantState);
+					Engine.instance().getProxyRegistry().addProxy(proxy, participantState.getTypeId());
 				}
 				catch (NoSuchIObjectException x)
 				{
-					Log.logFatal ("system", "ParicipantServerManager:pluginEvent(Create participants)",
+					Log.logFatal("system", "ParicipantServerManager:pluginEvent(Create participants)",
 									"Can not create participant error.");
 				}
 			}
 		}
 	}
 
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		User user = event.getUser ();
+		User user = event.getUser();
 
 		if (user == null)
 		{
 			return;
 		}
 
-		long userUniqueId = user.getUniqueId ();
+		long userUniqueId = user.getUniqueId();
 
-		for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+		for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 		{
-			DynDataObject participantState = (DynDataObject) i.next ();
+			DynDataObject participantState = (DynDataObject) i.next();
 
-			if (participantState.getLongAttribute ("iritgoUserUniqueId") == user.getUniqueId ())
+			if (participantState.getLongAttribute("iritgoUserUniqueId") == user.getUniqueId())
 			{
-				participantState.setAttribute ("onlineUser", user.isOnline ());
-				ActionTools.sendServerBroadcast (new EditIObjectAction (EditIObjectAction.OK, participantState));
+				participantState.setAttribute("onlineUser", user.isOnline());
+				ActionTools.sendServerBroadcast(new EditIObjectAction(EditIObjectAction.OK, participantState));
 			}
 		}
 
-		if (event.isLoggedIn ())
+		if (event.isLoggedIn())
 		{
 		}
 
-		if (event.isLoggedOut ())
+		if (event.isLoggedOut())
 		{
 		}
 	}
@@ -310,7 +310,7 @@ public class ParticipantServerManager extends ParticipantManager implements IObj
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

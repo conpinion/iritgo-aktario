@@ -30,13 +30,13 @@ public class TextResource_en extends TextResource
 	/**
 	 * Standard constructor
 	 */
-	public TextResource_en ()
+	public TextResource_en()
 	{
-		super ();
+		super();
 		textResource = this;
 	}
 
-	static public TextResource_en getTextResource ()
+	static public TextResource_en getTextResource()
 	{
 		return textResource;
 	}

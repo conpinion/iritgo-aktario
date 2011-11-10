@@ -49,10 +49,10 @@ public class DialogLogger implements Logger
 	/**
 	 * Create a new dialog logger.
 	 */
-	public DialogLogger ()
+	public DialogLogger()
 	{
-		currentTime = new Date ();
-		timeFormat = DateFormat.getDateTimeInstance (DateFormat.SHORT, DateFormat.SHORT);
+		currentTime = new Date();
+		timeFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class DialogLogger implements Logger
 	 *
 	 * @return The logger id.
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "Dialog";
 	}
@@ -70,17 +70,17 @@ public class DialogLogger implements Logger
 	 *
 	 * @param category The logger category.
 	 */
-	public void init (String category)
+	public void init(String category)
 	{
 	}
 
 	/**
 	 * Free all logger resources.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
-		dialog.setVisible (false);
-		dialog.dispose ();
+		dialog.setVisible(false);
+		dialog.dispose();
 	}
 
 	/**
@@ -91,36 +91,36 @@ public class DialogLogger implements Logger
 	 * @param message The log message.
 	 * @param level The logging level.
 	 */
-	public void log (String category, String source, String message, int level)
+	public void log(String category, String source, String message, int level)
 	{
 		if (dialog == null)
 		{
-			createDialog ();
+			createDialog();
 		}
 
-		messages.setCaretPosition (messages.getDocument ().getLength ());
+		messages.setCaretPosition(messages.getDocument().getLength());
 
-		currentTime.setTime (System.currentTimeMillis ());
-		messages.replaceSelection ("" + timeFormat.format (currentTime) + " " + Log.logLevelName (level) + " ["
-						+ category + "] [" + source + "] " + message + "\n");
+		currentTime.setTime(System.currentTimeMillis());
+		messages.replaceSelection("" + timeFormat.format(currentTime) + " " + Log.logLevelName(level) + " [" + category
+						+ "] [" + source + "] " + message + "\n");
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	protected void createDialog ()
+	protected void createDialog()
 	{
-		dialog = new JDialog ((Frame) null, "Iritgo Log Messages");
+		dialog = new JDialog((Frame) null, "Iritgo Log Messages");
 
-		dialog.getContentPane ().setLayout (new BorderLayout ());
-		messages = new JTextPane ();
+		dialog.getContentPane().setLayout(new BorderLayout());
+		messages = new JTextPane();
 
-		JScrollPane scroll = new JScrollPane (messages, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane scroll = new JScrollPane(messages, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 						JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		dialog.add (BorderLayout.CENTER, scroll);
+		dialog.add(BorderLayout.CENTER, scroll);
 
-		dialog.setSize (800, 600);
-		dialog.setVisible (true);
+		dialog.setSize(800, 600);
+		dialog.setVisible(true);
 	}
 }

@@ -34,22 +34,22 @@ public interface IDGenerator extends IObject
 	 *
 	 * @return The new unique id.
 	 */
-	public long createId ();
+	public long createId();
 
 	/**
 	 * Get the value of the next id that createId() will return.
 	 *
 	 * @return The next id value.
 	 */
-	public long peekNextId ();
+	public long peekNextId();
 
 	/**
 	 * Load the last generator state.
 	 */
-	public void load ();
+	public void load();
 
 	/**
 	 * Store the generator state.
 	 */
-	public void save ();
+	public void save();
 }

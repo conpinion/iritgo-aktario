@@ -60,14 +60,14 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	/**
 	 * Create a new DynDataObjectGUIPane.
 	 */
-	public DataObjectGUIPane ()
+	public DataObjectGUIPane()
 	{
-		super ("DataObjectGUIPane");
+		super("DataObjectGUIPane");
 		loadFromObjectMustFiredAgain = false;
 
 		if (iritgoWaitImage == null)
 		{
-			iritgoWaitImage = new ImageIcon (getClass ().getResource ("/resources/app-wait.gif"));
+			iritgoWaitImage = new ImageIcon(getClass().getResource("/resources/app-wait.gif"));
 		}
 	}
 
@@ -75,46 +75,46 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 * Initialize the gui. Subclasses should override this method to create a
 	 * custom gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		if (getIObject () == null)
+		if (getIObject() == null)
 		{
 			return;
 		}
 
-		getDisplay ().setEnabled (false);
+		getDisplay().setEnabled(false);
 
-		rendererTypeId = properties.getProperty ("renderer", getIObject ().getTypeId ());
-		controllerTypeId = properties.getProperty ("controller", getIObject ().getTypeId ());
+		rendererTypeId = properties.getProperty("renderer", getIObject().getTypeId());
+		controllerTypeId = properties.getProperty("controller", getIObject().getTypeId());
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		guiManager.registerGUIPane (this);
+		guiManager.registerGUIPane(this);
 
-		Controller controller = guiManager.getController (controllerTypeId);
+		Controller controller = guiManager.getController(controllerTypeId);
 
 		if (controller == null)
 		{
-			GUIControllerRequest guiControllerRequest = new GUIControllerRequest (controllerTypeId,
+			GUIControllerRequest guiControllerRequest = new GUIControllerRequest(controllerTypeId,
 							GUIControllerRequest.DATAOBJECT);
 
-			ActionTools.sendToServer (guiControllerRequest);
+			ActionTools.sendToServer(guiControllerRequest);
 		}
 		else
 		{
-			if (controller.isValid ())
+			if (controller.isValid())
 			{
-				updateGUI ();
+				updateGUI();
 			}
 		}
 	}
 
-	public String getControllerTypeId ()
+	public String getControllerTypeId()
 	{
 		return controllerTypeId;
 	}
 
-	public String getRendererTypeId ()
+	public String getRendererTypeId()
 	{
 		return controllerTypeId;
 	}
@@ -124,41 +124,41 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new DataObjectGUIPane ();
+		return new DataObjectGUIPane();
 	}
 
 	/**
 	 * Update the gui if a widget or command description is changed. All descriptions must have a
 	 * valid state.
 	 */
-	public void updateGUI ()
+	public void updateGUI()
 	{
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		Controller controller = guiManager.getController (controllerTypeId);
+		Controller controller = guiManager.getController(controllerTypeId);
 
-		renderer = guiManager.getRenderer (rendererTypeId);
+		renderer = guiManager.getRenderer(rendererTypeId);
 
 		if (panel != null)
 		{
-			content.remove (panel);
+			content.remove(panel);
 		}
 
-		panel = new JPanel ();
+		panel = new JPanel();
 
-		renderer.workOn (controller, (DataObject) getIObject (), panel, this);
+		renderer.workOn(controller, (DataObject) getIObject(), panel, this);
 
-		content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
 		guiRendered = true;
 
-		content.revalidate ();
+		content.revalidate();
 
 		if (loadFromObjectMustFiredAgain)
 		{
-			loadFromObject ();
+			loadFromObject();
 		}
 	}
 
@@ -166,7 +166,7 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 * This method is called when the gui pane starts waiting
 	 * for the attributes of it's iobject.
 	 */
-	public void waitingForNewObject ()
+	public void waitingForNewObject()
 	{
 		loadFinished = false;
 	}
@@ -175,13 +175,13 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 * This method is called when the attributes of the gui pane's
 	 * iobject are received.
 	 */
-	public void waitingForNewObjectFinished ()
+	public void waitingForNewObjectFinished()
 	{
-		super.waitingForNewObjectFinished ();
+		super.waitingForNewObjectFinished();
 
-		if (! getDisplay ().isEnabled ())
+		if (! getDisplay().isEnabled())
 		{
-			getDisplay ().setEnabled (true);
+			getDisplay().setEnabled(true);
 		}
 	}
 
@@ -190,25 +190,25 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 *
 	 * @param IObject The loaded object.
 	 */
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		if (guiRendered)
 		{
 			//Do controlls
-			GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+			GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-			Controller controller = guiManager.getController (controllerTypeId);
+			Controller controller = guiManager.getController(controllerTypeId);
 
-			for (Iterator i = controller.getWidgetDescriptions ().iterator (); i.hasNext ();)
+			for (Iterator i = controller.getWidgetDescriptions().iterator(); i.hasNext();)
 			{
-				WidgetDescription wd = (WidgetDescription) i.next ();
+				WidgetDescription wd = (WidgetDescription) i.next();
 
-				fillControls (wd, (DataObject) iobject);
+				fillControls(wd, (DataObject) iobject);
 			}
 
-			if (! getDisplay ().isEnabled ())
+			if (! getDisplay().isEnabled())
 			{
-				getDisplay ().setEnabled (true);
+				getDisplay().setEnabled(true);
 			}
 
 			return;
@@ -223,49 +223,49 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 * @param WidgetDescription Hold a description of all gui elements.
 	 * @param DataObject  The data object to get the content.
 	 */
-	private void fillControls (WidgetDescription wd, DataObject dataObject)
+	private void fillControls(WidgetDescription wd, DataObject dataObject)
 	{
-		ResourceService resources = Engine.instance ().getResourceService ();
+		ResourceService resources = Engine.instance().getResourceService();
 
-		for (Iterator i = wd.getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = wd.getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			WidgetDescription wdItem = (WidgetDescription) i.next ();
+			WidgetDescription wdItem = (WidgetDescription) i.next();
 
-			if (wdItem.getWidgetDescriptions ().size () > 0)
+			if (wdItem.getWidgetDescriptions().size() > 0)
 			{
-				fillControls (wdItem, dataObject);
+				fillControls(wdItem, dataObject);
 			}
 
-			Object object = dataObject.getAttribute (wdItem.getWidgetId ());
+			Object object = dataObject.getAttribute(wdItem.getWidgetId());
 
 			if (object != null)
 			{
-				if (wdItem.getRendererId ().equals ("textarea"))
+				if (wdItem.getRendererId().equals("textarea"))
 				{
-					((JTextArea) wdItem.getControl (wdItem.getWidgetId ())).setText ("" + object);
+					((JTextArea) wdItem.getControl(wdItem.getWidgetId())).setText("" + object);
 				}
-				else if (wdItem.getRendererId ().equals ("salutation") || wdItem.getRendererId ().equals ("country"))
+				else if (wdItem.getRendererId().equals("salutation") || wdItem.getRendererId().equals("country"))
 				{
-					JComboBox combobox = (JComboBox) wdItem.getControl (wdItem.getWidgetId ());
+					JComboBox combobox = (JComboBox) wdItem.getControl(wdItem.getWidgetId());
 
-					for (int j = 0; j < combobox.getItemCount (); ++j)
+					for (int j = 0; j < combobox.getItemCount(); ++j)
 					{
-						DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) combobox.getItemAt (j);
+						DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) combobox.getItemAt(j);
 
-						if (item.getId ().equals (object))
+						if (item.getId().equals(object))
 						{
-							combobox.setSelectedIndex (j);
+							combobox.setSelectedIndex(j);
 
 							break;
 						}
 					}
 				}
-				else if (wdItem.getRendererId ().equals ("combo"))
+				else if (wdItem.getRendererId().equals("combo"))
 				{
-					JComboBox combobox = (JComboBox) wdItem.getControl (wdItem.getWidgetId ());
+					JComboBox combobox = (JComboBox) wdItem.getControl(wdItem.getWidgetId());
 
-					String[] validValues = ((String) dataObject.getAttribute (wdItem.getWidgetId () + "ValidValues"))
-									.split ("\\|");
+					String[] validValues = ((String) dataObject.getAttribute(wdItem.getWidgetId() + "ValidValues"))
+									.split("\\|");
 
 					for (int j = 0; j < validValues.length; ++j)
 					{
@@ -275,22 +275,22 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 						{
 							String value = validValues[j];
 
-							combobox.addItem (new DefaultRenderer.ComboboxItem (key, value));
+							combobox.addItem(new DefaultRenderer.ComboboxItem(key, value));
 						}
 					}
 
 					if (validValues.length >= 2)
 					{
-						combobox.setSelectedIndex (0);
+						combobox.setSelectedIndex(0);
 					}
 
-					for (int j = 0; j < combobox.getItemCount (); ++j)
+					for (int j = 0; j < combobox.getItemCount(); ++j)
 					{
-						DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) combobox.getItemAt (j);
+						DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) combobox.getItemAt(j);
 
-						if (item.getId ().equals (object))
+						if (item.getId().equals(object))
 						{
-							combobox.setSelectedIndex (j);
+							combobox.setSelectedIndex(j);
 
 							break;
 						}
@@ -298,7 +298,7 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 				}
 				else
 				{
-					((JTextField) wdItem.getControl (wdItem.getWidgetId ())).setText ("" + object);
+					((JTextField) wdItem.getControl(wdItem.getWidgetId())).setText("" + object);
 				}
 			}
 		}
@@ -309,17 +309,17 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 *
 	 * @param The data object
 	 */
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		Controller controller = guiManager.getController (controllerTypeId);
+		Controller controller = guiManager.getController(controllerTypeId);
 
-		for (Iterator i = controller.getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = controller.getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			WidgetDescription wd = (WidgetDescription) i.next ();
+			WidgetDescription wd = (WidgetDescription) i.next();
 
-			fillObject (wd, (DataObject) iobject);
+			fillObject(wd, (DataObject) iobject);
 		}
 	}
 
@@ -329,69 +329,68 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 	 * @param WidgetDescription Hold a description of all gui elements.
 	 * @param DataObject  The data object to get the content.
 	 */
-	private void fillObject (WidgetDescription wd, DataObject dataObject)
+	private void fillObject(WidgetDescription wd, DataObject dataObject)
 	{
-		for (Iterator i = wd.getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = wd.getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			WidgetDescription wdItem = (WidgetDescription) i.next ();
+			WidgetDescription wdItem = (WidgetDescription) i.next();
 
-			if (wdItem.getWidgetDescriptions ().size () > 0)
+			if (wdItem.getWidgetDescriptions().size() > 0)
 			{
-				fillObject (wdItem, dataObject);
+				fillObject(wdItem, dataObject);
 			}
 
-			if (wdItem.getRendererId ().equals ("textarea"))
+			if (wdItem.getRendererId().equals("textarea"))
 			{
-				dataObject.setAttribute (wdItem.getWidgetId (), ((JTextArea) wdItem.getControl (wdItem.getWidgetId ()))
-								.getText ());
+				dataObject.setAttribute(wdItem.getWidgetId(), ((JTextArea) wdItem.getControl(wdItem.getWidgetId()))
+								.getText());
 			}
-			else if (wdItem.getRendererId ().equals ("salutation") || wdItem.getRendererId ().equals ("country")
-							|| wdItem.getRendererId ().equals ("combo"))
+			else if (wdItem.getRendererId().equals("salutation") || wdItem.getRendererId().equals("country")
+							|| wdItem.getRendererId().equals("combo"))
 			{
-				dataObject.setAttribute (wdItem.getWidgetId (), ((DefaultRenderer.ComboboxItem) ((JComboBox) wdItem
-								.getControl (wdItem.getWidgetId ())).getSelectedItem ()).getId ());
+				dataObject.setAttribute(wdItem.getWidgetId(), ((DefaultRenderer.ComboboxItem) ((JComboBox) wdItem
+								.getControl(wdItem.getWidgetId())).getSelectedItem()).getId());
 			}
 			else
 			{
-				dataObject.setAttribute (wdItem.getWidgetId (),
-								((JTextField) wdItem.getControl (wdItem.getWidgetId ())).getText ());
+				dataObject.setAttribute(wdItem.getWidgetId(), ((JTextField) wdItem.getControl(wdItem.getWidgetId()))
+								.getText());
 			}
 		}
 	}
 
-	public boolean checkClientErrors ()
+	public boolean checkClientErrors()
 	{
 		boolean errors = false;
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		Controller controller = guiManager.getController (getIObject ().getTypeId ());
+		Controller controller = guiManager.getController(getIObject().getTypeId());
 
 		if (controller != null)
 		{
-			for (Iterator i = controller.getWidgetDescriptions ().iterator (); i.hasNext ();)
+			for (Iterator i = controller.getWidgetDescriptions().iterator(); i.hasNext();)
 			{
-				WidgetDescription wd = (WidgetDescription) i.next ();
+				WidgetDescription wd = (WidgetDescription) i.next();
 
-				if (wd.getRendererId ().equals ("group"))
+				if (wd.getRendererId().equals("group"))
 				{
-					for (Iterator j = wd.getWidgetDescriptions ().iterator (); j.hasNext ();)
+					for (Iterator j = wd.getWidgetDescriptions().iterator(); j.hasNext();)
 					{
-						WidgetDescription wdGroupItem = (WidgetDescription) j.next ();
+						WidgetDescription wdGroupItem = (WidgetDescription) j.next();
 
-						if (wdGroupItem.isMandatoryField ())
+						if (wdGroupItem.isMandatoryField())
 						{
-							if (((DataObject) getIObject ()).getStringAttribute (wdGroupItem.getWidgetId ())
-											.equals (""))
+							if (((DataObject) getIObject()).getStringAttribute(wdGroupItem.getWidgetId()).equals(""))
 							{
 								errors = true;
-								setError (wdGroupItem.getWidgetId ());
+								setError(wdGroupItem.getWidgetId());
 
 								continue;
 							}
 							else
 							{
-								setNoError (wdGroupItem.getWidgetId ());
+								setNoError(wdGroupItem.getWidgetId());
 							}
 						}
 					}
@@ -399,64 +398,64 @@ public class DataObjectGUIPane extends SwingGUIPane implements DynPane
 			}
 		}
 
-		DataObjectGUIValidatorEvent e = new DataObjectGUIValidatorEvent ((DataObject) getIObject (), controller);
+		DataObjectGUIValidatorEvent e = new DataObjectGUIValidatorEvent((DataObject) getIObject(), controller);
 
-		Engine.instance ().getEventRegistry ().fire ("system", e);
+		Engine.instance().getEventRegistry().fire("system", e);
 
-		return errors || e.isError ();
+		return errors || e.isError();
 	}
 
-	public void setError (String widgetId)
+	public void setError(String widgetId)
 	{
-		renderer.setError (widgetId);
-		content.revalidate ();
+		renderer.setError(widgetId);
+		content.revalidate();
 	}
 
-	public void setNoError (String widgetId)
+	public void setNoError(String widgetId)
 	{
-		renderer.setNoError (widgetId);
-		content.revalidate ();
-	}
-
-	/**
-	 * Close the display.
-	 */
-	public void close ()
-	{
-		if (renderer != null)
-		{
-			renderer.close ();
-		}
-
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
-
-		guiManager.unregisterGUIPane (this);
-
-		renderer = null;
-		super.close ();
+		renderer.setNoError(widgetId);
+		content.revalidate();
 	}
 
 	/**
 	 * Close the display.
 	 */
-	public void systemClose ()
+	public void close()
 	{
 		if (renderer != null)
 		{
-			renderer.close ();
+			renderer.close();
 		}
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		guiManager.unregisterGUIPane (this);
+		guiManager.unregisterGUIPane(this);
+
+		renderer = null;
+		super.close();
+	}
+
+	/**
+	 * Close the display.
+	 */
+	public void systemClose()
+	{
+		if (renderer != null)
+		{
+			renderer.close();
+		}
+
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
+
+		guiManager.unregisterGUIPane(this);
 
 		renderer = null;
 
-		super.systemClose ();
+		super.systemClose();
 	}
 
-	public boolean isToCloseAfterSave ()
+	public boolean isToCloseAfterSave()
 	{
-		return properties.getProperty ("closeaftersave", "yes").equals ("yes");
+		return properties.getProperty("closeaftersave", "yes").equals("yes");
 	}
 }

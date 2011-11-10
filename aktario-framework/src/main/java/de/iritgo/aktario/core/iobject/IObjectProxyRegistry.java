@@ -37,25 +37,25 @@ public class IObjectProxyRegistry
 	 * Constructor
 	 *
 	 */
-	public IObjectProxyRegistry ()
+	public IObjectProxyRegistry()
 	{
-		typeProxyMapping = new HashMap ();
+		typeProxyMapping = new HashMap();
 	}
 
 	/**
 	 * Add a Proxy.
 	 */
-	public void addProxy (IObjectProxy proxy, String typeId)
+	public void addProxy(IObjectProxy proxy, String typeId)
 	{
-		Map proxys = (Map) typeProxyMapping.get (typeId);
+		Map proxys = (Map) typeProxyMapping.get(typeId);
 
 		if (proxys == null)
 		{
-			proxys = new HashMap ();
-			typeProxyMapping.put (typeId, proxys);
+			proxys = new HashMap();
+			typeProxyMapping.put(typeId, proxys);
 		}
 
-		proxys.put (new Long (proxy.getUniqueId ()), proxy);
+		proxys.put(new Long(proxy.getUniqueId()), proxy);
 	}
 
 	/**
@@ -63,16 +63,16 @@ public class IObjectProxyRegistry
 	 *
 	 * @param uniqueId The uniqueid of the proxy.
 	 */
-	public IObjectProxy getProxy (long uniqueId, String typeId)
+	public IObjectProxy getProxy(long uniqueId, String typeId)
 	{
-		Map proxys = (Map) typeProxyMapping.get (typeId);
+		Map proxys = (Map) typeProxyMapping.get(typeId);
 
 		if (proxys == null)
 		{
 			return null;
 		}
 
-		IObjectProxy proxy = (IObjectProxy) proxys.get (new Long (uniqueId));
+		IObjectProxy proxy = (IObjectProxy) proxys.get(new Long(uniqueId));
 
 		return proxy;
 	}
@@ -80,35 +80,35 @@ public class IObjectProxyRegistry
 	/**
 	 * Remove a Proxy.
 	 */
-	public void removeProxy (IObjectProxy proxy, String typeId)
+	public void removeProxy(IObjectProxy proxy, String typeId)
 	{
-		Map proxys = (Map) typeProxyMapping.get (typeId);
+		Map proxys = (Map) typeProxyMapping.get(typeId);
 
 		if (proxys == null)
 		{
 			return;
 		}
 
-		proxys.remove (new Long (proxy.getUniqueId ()));
+		proxys.remove(new Long(proxy.getUniqueId()));
 	}
 
-	public void setInvalidState ()
+	public void setInvalidState()
 	{
-		for (Iterator i = typeProxyMapping.values ().iterator (); i.hasNext ();)
+		for (Iterator i = typeProxyMapping.values().iterator(); i.hasNext();)
 		{
-			Map proxys = (Map) i.next ();
+			Map proxys = (Map) i.next();
 
-			for (Iterator j = proxys.values ().iterator (); j.hasNext ();)
+			for (Iterator j = proxys.values().iterator(); j.hasNext();)
 			{
-				IObjectProxy proxy = (IObjectProxy) j.next ();
+				IObjectProxy proxy = (IObjectProxy) j.next();
 
-				proxy.setUpToDate (false);
+				proxy.setUpToDate(false);
 			}
 		}
 	}
 
-	public void clear ()
+	public void clear()
 	{
-		typeProxyMapping.clear ();
+		typeProxyMapping.clear();
 	}
 }

@@ -49,14 +49,14 @@ public class ObjectStream extends StreamOrganizer
 	 *
 	 * @param socket The communication socket.
 	 */
-	public ObjectStream (Socket socket) throws IOException
+	public ObjectStream(Socket socket) throws IOException
 	{
-		super (socket);
+		super(socket);
 
-		objectSerializer = new IObjectSerializer ();
+		objectSerializer = new IObjectSerializer();
 
-		in = new DataInputStream (streamIn);
-		out = new DataOutputStream (streamOut);
+		in = new DataInputStream(streamIn);
+		out = new DataOutputStream(streamOut);
 	}
 
 	/**
@@ -65,13 +65,13 @@ public class ObjectStream extends StreamOrganizer
 	 * @param object The object to send.
 	 */
 	@Override
-	public void send (Object object) throws IOException
+	public void send(Object object) throws IOException
 	{
 		IObject sendObject = (IObject) object;
 
 		synchronized (out)
 		{
-			objectSerializer.write (out, sendObject);
+			objectSerializer.write(out, sendObject);
 		}
 	}
 
@@ -81,12 +81,12 @@ public class ObjectStream extends StreamOrganizer
 	 * @return the received object.
 	 */
 	@Override
-	public Object receive () throws IOException, ClassNotFoundException, NoSuchIObjectException
+	public Object receive() throws IOException, ClassNotFoundException, NoSuchIObjectException
 	{
 		IObject object;
 
-		object = objectSerializer.read (in);
-		Log.logDebug ("system", "ObjectStream", "Object created and received: " + object);
+		object = objectSerializer.read(in);
+		Log.logDebug("system", "ObjectStream", "Object created and received: " + object);
 
 		return object;
 	}
@@ -95,26 +95,26 @@ public class ObjectStream extends StreamOrganizer
 	 * Close the connection.
 	 */
 	@Override
-	public void close () throws IOException
+	public void close() throws IOException
 	{
-		if (! socket.isClosed ())
+		if (! socket.isClosed())
 		{
-			socket.shutdownInput ();
-			socket.shutdownOutput ();
-			socket.close ();
+			socket.shutdownInput();
+			socket.shutdownOutput();
+			socket.close();
 		}
 
-		out.close ();
-		in.close ();
+		out.close();
+		in.close();
 	}
 
 	/**
 	 * Flush all data.
 	 */
 	@Override
-	public void flush () throws IOException
+	public void flush() throws IOException
 	{
-		out.flush ();
+		out.flush();
 	}
 
 	/**
@@ -124,8 +124,8 @@ public class ObjectStream extends StreamOrganizer
 	 * @return The new StreamOrganizer.
 	 */
 	@Override
-	public StreamOrganizer create (Socket socket) throws IOException
+	public StreamOrganizer create(Socket socket) throws IOException
 	{
-		return new ObjectStream (socket);
+		return new ObjectStream(socket);
 	}
 }

@@ -41,9 +41,9 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @param guiPaneId The id of the new gui pane.
 	 */
-	public SwingGUIPane (String guiPaneId)
+	public SwingGUIPane(String guiPaneId)
 	{
-		super (guiPaneId, guiPaneId);
+		super(guiPaneId, guiPaneId);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @param content The new content pane.
 	 */
-	public void setContentPane (Object content)
+	public void setContentPane(Object content)
 	{
 		this.content = (JPanel) content;
 	}
@@ -61,15 +61,15 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @param display The new display.
 	 */
-	public void setIDisplayImpl (IDisplay display)
+	public void setIDisplayImpl(IDisplay display)
 	{
 		if (display instanceof IWindow)
 		{
-			setContentPane (((SwingWindowFrame) (((IWindow) display).getWindowFrame ())).getContentPanel ());
+			setContentPane(((SwingWindowFrame) (((IWindow) display).getWindowFrame())).getContentPanel());
 		}
 		else if (display instanceof IDialog)
 		{
-			setContentPane (((SwingDialogFrame) (((IDialog) display).getDialogFrame ())).getContentPanel ());
+			setContentPane(((SwingDialogFrame) (((IDialog) display).getDialogFrame())).getContentPanel());
 		}
 	}
 
@@ -78,19 +78,19 @@ public abstract class SwingGUIPane extends GUIPane
 	 * received.
 	 */
 	@Override
-	public void waitingForNewObjectFinished ()
+	public void waitingForNewObjectFinished()
 	{
 		try
 		{
-			SwingUtilities.invokeAndWait (new Runnable ()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					IObject iObject = getIObject ();
+					IObject iObject = getIObject();
 
-					if (iObject.isValid ())
+					if (iObject.isValid())
 					{
-						loadFromObject (iObject);
+						loadFromObject(iObject);
 					}
 				}
 			});
@@ -113,10 +113,10 @@ public abstract class SwingGUIPane extends GUIPane
 	 * @param insets The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, int fill, int wx, int wy,
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, int fill, int wx, int wy,
 					Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -129,7 +129,7 @@ public abstract class SwingGUIPane extends GUIPane
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{
@@ -153,10 +153,10 @@ public abstract class SwingGUIPane extends GUIPane
 	 * @param insets The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, double wx, double wy,
-					int fill, int anchor, Insets insets)
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, double wx, double wy, int fill,
+					int anchor, Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -169,7 +169,7 @@ public abstract class SwingGUIPane extends GUIPane
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{
@@ -184,15 +184,15 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @param icon The new icon.
 	 */
-	public void setIcon (Icon icon)
+	public void setIcon(Icon icon)
 	{
 		if (display instanceof IWindow)
 		{
-			((IWindow) display).setIcon (icon);
+			((IWindow) display).setIcon(icon);
 		}
 		else if (display instanceof IDialog)
 		{
-			((IDialog) display).setIcon (icon);
+			((IDialog) display).setIcon(icon);
 		}
 	}
 
@@ -201,15 +201,15 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @return The display's icon.
 	 */
-	public Icon getIcon ()
+	public Icon getIcon()
 	{
 		if (display instanceof IWindow)
 		{
-			return ((IWindow) display).getIcon ();
+			return ((IWindow) display).getIcon();
 		}
 		else if (display instanceof IDialog)
 		{
-			return ((IDialog) display).getIcon ();
+			return ((IDialog) display).getIcon();
 		}
 
 		return null;
@@ -220,7 +220,7 @@ public abstract class SwingGUIPane extends GUIPane
 	 *
 	 * @return The content panel.
 	 */
-	public JPanel getPanel ()
+	public JPanel getPanel()
 	{
 		return content;
 	}
@@ -231,7 +231,7 @@ public abstract class SwingGUIPane extends GUIPane
 	 * @return The content panel.
 	 */
 	@Override
-	public JPanel getContentPane ()
+	public JPanel getContentPane()
 	{
 		return content;
 	}
@@ -241,7 +241,7 @@ public abstract class SwingGUIPane extends GUIPane
 	 * @param iObject The iobject.
 	 */
 	@Override
-	public abstract void loadFromObject (IObject iObject);
+	public abstract void loadFromObject(IObject iObject);
 
 	/**
 	 * Store the current gui values into the data object attributes.
@@ -249,5 +249,5 @@ public abstract class SwingGUIPane extends GUIPane
 	 * @param iObject The iobject.
 	 */
 	@Override
-	public abstract void storeToObject (IObject iObject);
+	public abstract void storeToObject(IObject iObject);
 }

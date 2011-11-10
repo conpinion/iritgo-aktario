@@ -51,16 +51,16 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 
 	private JPanel panel;
 
-	public TaskGroup (BuddyListGroup buddyListGroup)
+	public TaskGroup(BuddyListGroup buddyListGroup)
 	{
 		this.buddyListGroup = buddyListGroup;
-		Engine.instance ().getProxyEventRegistry ().addEventListener (buddyListGroup, this);
-		panel = new JPanel ();
-		panel.setLayout (new GridBagLayout ());
+		Engine.instance().getProxyEventRegistry().addEventListener(buddyListGroup, this);
+		panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
 		// 		getContentPane ().setLayout (new GridBagLayout ());
-		setExpanded (true);
-		setScrollOnExpand (true);
-		setIcon (new ImageIcon (BuddyListPlugin.class.getResource ("/resources/admin-group-16.png")));
+		setExpanded(true);
+		setScrollOnExpand(true);
+		setIcon(new ImageIcon(BuddyListPlugin.class.getResource("/resources/admin-group-16.png")));
 	}
 
 	/**
@@ -68,47 +68,47 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 	 *
 	 * @param event The EventOject.
 	 */
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
-		if (event.isWaitingForNewObject ())
+		if (event.isWaitingForNewObject())
 		{
 			return;
 		}
 
-		final BuddyListGroup buddyListGroup = (BuddyListGroup) event.getObject ();
+		final BuddyListGroup buddyListGroup = (BuddyListGroup) event.getObject();
 
 		try
 		{
-			setTitle (buddyListGroup.getName ());
+			setTitle(buddyListGroup.getName());
 
-			SwingUtilities.invokeAndWait (new Runnable ()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					GUIPane guiPane = (GUIPane) GUIPaneRegistry.instance ().create ("ParticipantStatePane");
+					GUIPane guiPane = (GUIPane) GUIPaneRegistry.instance().create("ParticipantStatePane");
 
-					guiPane.setOnScreenUniqueId (buddyListGroup.getName ());
-					guiPane.setContentPane (panel);
-					guiPane.setObject (buddyListGroup);
-					guiPane.initGUI ();
-					guiPane.loadFromObject (buddyListGroup);
+					guiPane.setOnScreenUniqueId(buddyListGroup.getName());
+					guiPane.setContentPane(panel);
+					guiPane.setObject(buddyListGroup);
+					guiPane.initGUI();
+					guiPane.loadFromObject(buddyListGroup);
 
-					add (panel);
+					add(panel);
 
-					revalidate ();
-					repaint ();
+					revalidate();
+					repaint();
 				}
 			});
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 
-	public void dispose ()
+	public void dispose()
 	{
-		Engine.instance ().getProxyEventRegistry ().removeEventListener (buddyListGroup, this);
+		Engine.instance().getProxyEventRegistry().removeEventListener(buddyListGroup, this);
 	}
 
 	/**
@@ -124,10 +124,10 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 	 * @param insets The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, int fill, int wx, int wy,
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, int fill, int wx, int wy,
 					Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -140,7 +140,7 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{
@@ -164,10 +164,10 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 	 * @param insets The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, double wx, double wy,
-					int fill, int anchor, Insets insets)
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, double wx, double wy, int fill,
+					int anchor, Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -180,7 +180,7 @@ public class TaskGroup extends JTaskPaneGroup implements IObjectProxyListener
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{

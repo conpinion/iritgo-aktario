@@ -36,36 +36,36 @@ public class AddAttributeToParticipantStateCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public AddAttributeToParticipantStateCommand ()
+	public AddAttributeToParticipantStateCommand()
 	{
-		super ("AddAttributeToParticipantState");
+		super("AddAttributeToParticipantState");
 	}
 
 	/**
 	 *
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ParticipantManager participantManager = null;
 
-		participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+		participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 						"ParticipantServerManager");
 
 		if (participantManager == null)
 		{
-			participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+			participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 							"ParticipantClientManager");
 		}
 
 		try
 		{
-			participantManager.addAttribute (properties.getProperty ("attribute"), properties.get ("attributeType"));
+			participantManager.addAttribute(properties.getProperty("attribute"), properties.get("attributeType"));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "AddAttributeToParticipantCommand:perform",
+			Log.logFatal("system", "AddAttributeToParticipantCommand:perform",
 							"Class not found Exception, Attribute type unknown: "
-											+ properties.getProperty ("attributeType"));
+											+ properties.getProperty("attributeType"));
 		}
 	}
 }

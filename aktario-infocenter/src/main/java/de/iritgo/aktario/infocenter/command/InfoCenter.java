@@ -29,17 +29,17 @@ public class InfoCenter extends CommonInfoCenterCommand
 	 * Standard constructor
 	 *
 	 */
-	public InfoCenter ()
+	public InfoCenter()
 	{
-		super ("infocenter");
+		super("infocenter");
 	}
 
 	/**
 	 * EditPrototype
 	 */
-	public void perform ()
+	public void perform()
 	{
-		de.iritgo.aktario.infocenter.infocenter.InfoCenter.info (user, context, category, icon, message, guiPaneId,
+		de.iritgo.aktario.infocenter.infocenter.InfoCenter.info(user, context, category, icon, message, guiPaneId,
 						uniqueId, iObjectTypeId, level);
 	}
 }

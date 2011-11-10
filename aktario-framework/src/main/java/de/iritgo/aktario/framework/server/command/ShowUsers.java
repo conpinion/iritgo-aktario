@@ -32,29 +32,29 @@ import java.util.Iterator;
  */
 public class ShowUsers extends Command
 {
-	public ShowUsers ()
+	public ShowUsers()
 	{
 	}
 
 	/**
 	 * Execute the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		UserRegistry users = Server.instance ().getUserRegistry ();
+		UserRegistry users = Server.instance().getUserRegistry();
 
-		for (Iterator i = users.userIterator (); i.hasNext ();)
+		for (Iterator i = users.userIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
 			char stateChar = '-';
 
-			if (user.isOnline ())
+			if (user.isOnline())
 			{
 				stateChar = '*';
 			}
 
-			System.out.println ("(" + stateChar + ") " + user.getName ());
+			System.out.println("(" + stateChar + ") " + user.getName());
 		}
 	}
 }

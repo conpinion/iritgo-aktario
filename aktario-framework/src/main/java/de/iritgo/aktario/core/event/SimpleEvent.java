@@ -32,7 +32,7 @@ public class SimpleEvent implements Event
 
 	private Properties eventProperties;
 
-	public SimpleEvent ()
+	public SimpleEvent()
 	{
 	}
 
@@ -42,7 +42,7 @@ public class SimpleEvent implements Event
 	 * @param eventName The event name for this event.
 	 * @param properties The properties for this event.
 	 */
-	public SimpleEvent (String eventName, Properties properties)
+	public SimpleEvent(String eventName, Properties properties)
 	{
 		this.eventProperties = properties;
 	}
@@ -52,7 +52,7 @@ public class SimpleEvent implements Event
 	 *
 	 * @return String The event name
 	 */
-	public String getEventName ()
+	public String getEventName()
 	{
 		return eventName;
 	}
@@ -62,7 +62,7 @@ public class SimpleEvent implements Event
 	 *
 	 * @return Properties The event properties.
 	 */
-	public Properties getEventProperties ()
+	public Properties getEventProperties()
 	{
 		return eventProperties;
 	}

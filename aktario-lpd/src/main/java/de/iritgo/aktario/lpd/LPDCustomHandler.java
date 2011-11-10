@@ -37,11 +37,11 @@ import java.util.*;
  */
 public class LPDCustomHandler implements HandlerInterface
 {
-	static Logger log = Logger.getLogger (FileHandler.class);
+	static Logger log = Logger.getLogger(FileHandler.class);
 
-	public LPDCustomHandler ()
+	public LPDCustomHandler()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -49,16 +49,16 @@ public class LPDCustomHandler implements HandlerInterface
 	 * @param printJob the PrintJob we are processing
 	 * @return the result of our work, true for success or false for non-success
 	 */
-	public boolean process (PrintJob printJob)
+	public boolean process(PrintJob printJob)
 	{
 		final String METHOD_NAME = "process(): ";
 		boolean result = false;
 
-		if (null != printJob && null != printJob.getControlFile () && null != printJob.getDataFile ())
+		if (null != printJob && null != printJob.getControlFile() && null != printJob.getDataFile())
 		{
 			try
 			{
-				Properties properties = new Properties ();
+				Properties properties = new Properties();
 
 				//				if (printJob.getDataFile ().isSpooledToFile ())
 				//				{
@@ -81,24 +81,24 @@ public class LPDCustomHandler implements HandlerInterface
 				//				else
 				//				{
 				// create file name, pjb == print job
-				String fileName = printJob.getName () + printJob.getControlFile ().getJobNumber () + ".pjb";
+				String fileName = printJob.getName() + printJob.getControlFile().getJobNumber() + ".pjb";
 
-				FileUtil.writeFile (printJob.getDataFile ().getContents (), fileName);
+				FileUtil.writeFile(printJob.getDataFile().getContents(), fileName);
 
-				System.out.println (METHOD_NAME + "Wrote data for jobName: " + printJob.getName () + " jobNumber: "
-								+ printJob.getControlFile ().getJobNumber () + " to " + fileName);
+				System.out.println(METHOD_NAME + "Wrote data for jobName: " + printJob.getName() + " jobNumber: "
+								+ printJob.getControlFile().getJobNumber() + " to " + fileName);
 				//				}
-				Engine.instance ().getEventRegistry ().fire ("lpd", new SimpleEvent ("LPD", properties));
+				Engine.instance().getEventRegistry().fire("lpd", new SimpleEvent("LPD", properties));
 				result = true;
 			}
 			catch (IOException e)
 			{
-				log.error (METHOD_NAME + e.getMessage ());
+				log.error(METHOD_NAME + e.getMessage());
 			}
 		}
 		else
 		{
-			log.error (METHOD_NAME + "The printJob or printJob.getControlFile() or printJob.getDataFile() were empty");
+			log.error(METHOD_NAME + "The printJob or printJob.getControlFile() or printJob.getDataFile() were empty");
 		}
 
 		return result;

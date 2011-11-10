@@ -44,41 +44,41 @@ public class LoadAllUsers extends Command
 	/**
 	 * Create a new <code>LoadAllUsers</code> command.
 	 */
-	public LoadAllUsers ()
+	public LoadAllUsers()
 	{
-		super ("persist.LoadAllUsers");
+		super("persist.LoadAllUsers");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
-		final UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		final UserRegistry userRegistry = Server.instance().getUserRegistry();
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
-			List userIds = (List) query.query ("select id from IritgoUser", new ArrayListHandler ());
+			QueryRunner query = new QueryRunner(dataSource);
+			List userIds = (List) query.query("select id from IritgoUser", new ArrayListHandler());
 
-			for (Iterator i = userIds.iterator (); i.hasNext ();)
+			for (Iterator i = userIds.iterator(); i.hasNext();)
 			{
-				Long userId = (Long) ((Object[]) i.next ())[0];
+				Long userId = (Long) ((Object[]) i.next())[0];
 
-				Properties props = new Properties ();
+				Properties props = new Properties();
 
-				props.put ("id", userId);
-				CommandTools.performSimple ("persist.LoadUser", props);
+				props.put("id", userId);
+				CommandTools.performSimple("persist.LoadUser", props);
 			}
 
-			Log.logVerbose ("persist", "LoadAllUsers", "Successfully loaded " + userIds.size () + " users");
+			Log.logVerbose("persist", "LoadAllUsers", "Successfully loaded " + userIds.size() + " users");
 		}
 		catch (Exception x)
 		{
-			Log.logError ("persist", "LoadAllUsers", "Error while loading the users: " + x);
+			Log.logError("persist", "LoadAllUsers", "Error while loading the users: " + x);
 		}
 	}
 }

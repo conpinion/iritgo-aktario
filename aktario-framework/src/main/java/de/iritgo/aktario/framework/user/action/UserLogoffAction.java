@@ -33,16 +33,15 @@ public class UserLogoffAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public UserLogoffAction ()
+	public UserLogoffAction()
 	{
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		((ShutdownManager) Engine.instance ().getManagerRegistry ().getManager ("shutdown"))
-						.userLogoffActionPerformend ();
+		((ShutdownManager) Engine.instance().getManagerRegistry().getManager("shutdown")).userLogoffActionPerformend();
 	}
 }

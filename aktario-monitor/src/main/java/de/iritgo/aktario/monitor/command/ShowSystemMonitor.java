@@ -43,33 +43,31 @@ public class ShowSystemMonitor extends Command
 	/**
 	 * Create a new ShowSystemMonitor command.
 	 */
-	public ShowSystemMonitor ()
+	public ShowSystemMonitor()
 	{
-		super ("ShowSystemMonitor");
+		super("ShowSystemMonitor");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		BaseRegistry baseRegistry = Engine.instance ().getBaseRegistry ();
+		BaseRegistry baseRegistry = Engine.instance().getBaseRegistry();
 
-		SystemMonitor systemMonitor = (SystemMonitor) baseRegistry.get (SystemMonitor.SYSTEM_MONITOR_ID,
-						"SystemMonitor");
+		SystemMonitor systemMonitor = (SystemMonitor) baseRegistry
+						.get(SystemMonitor.SYSTEM_MONITOR_ID, "SystemMonitor");
 
 		if (systemMonitor == null)
 		{
-			systemMonitor = new SystemMonitor ();
-			systemMonitor.setUniqueId (SystemMonitor.SYSTEM_MONITOR_ID);
-			baseRegistry.add (systemMonitor);
-			Engine.instance ().getProxyRegistry ().addProxy (new FrameworkProxy (systemMonitor),
-							systemMonitor.getTypeId ());
+			systemMonitor = new SystemMonitor();
+			systemMonitor.setUniqueId(SystemMonitor.SYSTEM_MONITOR_ID);
+			baseRegistry.add(systemMonitor);
+			Engine.instance().getProxyRegistry().addProxy(new FrameworkProxy(systemMonitor), systemMonitor.getTypeId());
 		}
 
-		Engine.instance ().getProxyRegistry ().getProxy (systemMonitor.getUniqueId (), systemMonitor.getTypeId ())
-						.reset ();
+		Engine.instance().getProxyRegistry().getProxy(systemMonitor.getUniqueId(), systemMonitor.getTypeId()).reset();
 
-		CommandTools.performAsync (new ShowWindow ("SystemMonitor", systemMonitor));
+		CommandTools.performAsync(new ShowWindow("SystemMonitor", systemMonitor));
 	}
 }

@@ -47,7 +47,7 @@ public class ExtendedPanel extends JPanel
 
 		public JPanel panel4;
 
-		public ErrorItem (JPanel panel1, JPanel panel2, JPanel panel3, JPanel panel4)
+		public ErrorItem(JPanel panel1, JPanel panel2, JPanel panel3, JPanel panel4)
 		{
 			this.panel1 = panel1;
 			this.panel2 = panel2;
@@ -60,105 +60,105 @@ public class ExtendedPanel extends JPanel
 
 	private Map errorMap;
 
-	public ExtendedPanel ()
+	public ExtendedPanel()
 	{
-		super ();
-		setLayout (new GridBagLayout ());
+		super();
+		setLayout(new GridBagLayout());
 		row = 0;
-		errorMap = new HashMap ();
+		errorMap = new HashMap();
 	}
 
-	public void addComp (String errorId, JComponent label, JComponent control, WidgetDescription wd)
+	public void addComp(String errorId, JComponent label, JComponent control, WidgetDescription wd)
 	{
-		addComp (errorId, label, control, wd, GridBagConstraints.BOTH);
+		addComp(errorId, label, control, wd, GridBagConstraints.BOTH);
 	}
 
-	public void addComp (String errorId, JComponent label, JComponent control, WidgetDescription wd, int horzfill)
+	public void addComp(String errorId, JComponent label, JComponent control, WidgetDescription wd, int horzfill)
 	{
-		JPanel panel1 = new JPanel ();
-		JPanel panel2 = new JPanel ();
-		JPanel panel3 = new JPanel ();
-		JPanel panel4 = new JPanel ();
+		JPanel panel1 = new JPanel();
+		JPanel panel2 = new JPanel();
+		JPanel panel3 = new JPanel();
+		JPanel panel4 = new JPanel();
 
-		panel1.setLayout (new GridBagLayout ());
-		panel2.setLayout (new GridBagLayout ());
-		panel3.setLayout (new GridBagLayout ());
-		panel4.setLayout (new GridBagLayout ());
+		panel1.setLayout(new GridBagLayout());
+		panel2.setLayout(new GridBagLayout());
+		panel3.setLayout(new GridBagLayout());
+		panel4.setLayout(new GridBagLayout());
 
-		panel1.setBackground (Color.WHITE);
-		panel2.setBackground (Color.WHITE);
-		panel3.setBackground (Color.WHITE);
-		panel4.setVisible (false);
+		panel1.setBackground(Color.WHITE);
+		panel2.setBackground(Color.WHITE);
+		panel3.setBackground(Color.WHITE);
+		panel4.setVisible(false);
 
-		errorMap.put (errorId, new ErrorItem (panel1, panel2, panel3, panel4));
+		errorMap.put(errorId, new ErrorItem(panel1, panel2, panel3, panel4));
 
-		panel1.add (label, createConstraints (0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
-						GridBagConstraints.NORTHWEST, new Insets (4, 8, 4, 0)));
+		panel1.add(label, createConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
+						GridBagConstraints.NORTHWEST, new Insets(4, 8, 4, 0)));
 
-		if (wd.isMandatoryField ())
+		if (wd.isMandatoryField())
 		{
-			panel2.add (new JLabel ("*"), createConstraints (0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
-							GridBagConstraints.NORTHWEST, new Insets (4, 0, 4, 0)));
+			panel2.add(new JLabel("*"), createConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
+							GridBagConstraints.NORTHWEST, new Insets(4, 0, 4, 0)));
 		}
 
-		panel3.add (control, createConstraints (0, 0, 1, 1, 1.0, 1.0, horzfill, GridBagConstraints.NORTHWEST,
-						new Insets (4, 4, 4, 0)));
+		panel3.add(control, createConstraints(0, 0, 1, 1, 1.0, 1.0, horzfill, GridBagConstraints.NORTHWEST, new Insets(
+						4, 4, 4, 0)));
 
-		panel4.add (new JLabel ("Dieses Pflichtfeld m�ssen Sie ausf�llen!"), createConstraints (0, 0, 1, 1, 1.0, 1.0,
-						GridBagConstraints.BOTH, GridBagConstraints.NORTHWEST, new Insets (0, 4, 0, 0)));
+		panel4.add(new JLabel("Dieses Pflichtfeld m�ssen Sie ausf�llen!"), createConstraints(0, 0, 1, 1, 1.0, 1.0,
+						GridBagConstraints.BOTH, GridBagConstraints.NORTHWEST, new Insets(0, 4, 0, 0)));
 
-		super.add (panel4, createConstraints (0, row, 3, 1, 0.1, 0.0, GridBagConstraints.HORIZONTAL,
-						GridBagConstraints.NORTHWEST, new Insets (0, 32, 0, 8)));
+		super.add(panel4, createConstraints(0, row, 3, 1, 0.1, 0.0, GridBagConstraints.HORIZONTAL,
+						GridBagConstraints.NORTHWEST, new Insets(0, 32, 0, 8)));
 		++row;
 
-		super.add (panel1, createConstraints (0, row, 1, 1, 0.1, 0.0, GridBagConstraints.HORIZONTAL,
-						GridBagConstraints.NORTHWEST, new Insets (4, 32, 0, 0)));
+		super.add(panel1, createConstraints(0, row, 1, 1, 0.1, 0.0, GridBagConstraints.HORIZONTAL,
+						GridBagConstraints.NORTHWEST, new Insets(4, 32, 0, 0)));
 
-		super.add (panel2, createConstraints (1, row, 1, 1, 0.0, 0.0, GridBagConstraints.NONE,
-						GridBagConstraints.NORTHWEST, new Insets (4, 0, 0, 0)));
+		super.add(panel2, createConstraints(1, row, 1, 1, 0.0, 0.0, GridBagConstraints.NONE,
+						GridBagConstraints.NORTHWEST, new Insets(4, 0, 0, 0)));
 
-		super.add (panel3, createConstraints (2, row, 1, 1, 0.9, 0.0, GridBagConstraints.HORIZONTAL,
-						GridBagConstraints.NORTHWEST, new Insets (4, 0, 0, 8)));
-		++row;
-	}
-
-	public void add (Component component, Object object)
-	{
-		super.add (component, object);
+		super.add(panel3, createConstraints(2, row, 1, 1, 0.9, 0.0, GridBagConstraints.HORIZONTAL,
+						GridBagConstraints.NORTHWEST, new Insets(4, 0, 0, 8)));
 		++row;
 	}
 
-	public void setError (String widgetId)
+	public void add(Component component, Object object)
 	{
-		ErrorItem errorItem = (ErrorItem) errorMap.get (widgetId);
+		super.add(component, object);
+		++row;
+	}
+
+	public void setError(String widgetId)
+	{
+		ErrorItem errorItem = (ErrorItem) errorMap.get(widgetId);
 
 		if (errorItem != null)
 		{
-			errorItem.panel1.setBackground (Color.RED);
-			errorItem.panel2.setBackground (Color.RED);
-			errorItem.panel3.setBackground (Color.RED);
-			((JLabel) errorItem.panel4.getComponent (0)).setText ("Dieses Pflichtfeld m�ssen Sie ausf�llen!");
+			errorItem.panel1.setBackground(Color.RED);
+			errorItem.panel2.setBackground(Color.RED);
+			errorItem.panel3.setBackground(Color.RED);
+			((JLabel) errorItem.panel4.getComponent(0)).setText("Dieses Pflichtfeld m�ssen Sie ausf�llen!");
 
-			errorItem.panel4.setVisible (true);
+			errorItem.panel4.setVisible(true);
 		}
 	}
 
-	public void setNoError (String widgetId)
+	public void setNoError(String widgetId)
 	{
-		ErrorItem errorItem = (ErrorItem) errorMap.get (widgetId);
+		ErrorItem errorItem = (ErrorItem) errorMap.get(widgetId);
 
 		if (errorItem != null)
 		{
-			errorItem.panel1.setBackground (Color.WHITE);
-			errorItem.panel2.setBackground (Color.WHITE);
-			errorItem.panel3.setBackground (Color.WHITE);
-			errorItem.panel4.setVisible (false);
+			errorItem.panel1.setBackground(Color.WHITE);
+			errorItem.panel2.setBackground(Color.WHITE);
+			errorItem.panel3.setBackground(Color.WHITE);
+			errorItem.panel4.setVisible(false);
 		}
 	}
 
-	public void close ()
+	public void close()
 	{
-		errorMap.clear ();
+		errorMap.clear();
 		errorMap = null;
 	}
 
@@ -176,10 +176,10 @@ public class ExtendedPanel extends JPanel
 	 * @param insets The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, double wx, double wy,
-					int fill, int anchor, Insets insets)
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, double wx, double wy, int fill,
+					int anchor, Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -192,7 +192,7 @@ public class ExtendedPanel extends JPanel
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{

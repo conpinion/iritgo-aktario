@@ -47,9 +47,9 @@ public class UserGUIPane extends SwingGUIPane
 	/**
 	 * Standard constructor
 	 */
-	public UserGUIPane ()
+	public UserGUIPane()
 	{
-		super ("common.userview");
+		super("common.userview");
 	}
 
 	/**
@@ -57,56 +57,56 @@ public class UserGUIPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new User ();
+		return new User();
 	}
 
 	/**
 	 * Init GUI
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		JPanel allPanel = new JPanel ();
+		JPanel allPanel = new JPanel();
 
-		allPanel.setLayout (new GridBagLayout ());
+		allPanel.setLayout(new GridBagLayout());
 
 		int row = 0;
 
-		ILabel userNameLabel = new ILabel ("common.username");
+		ILabel userNameLabel = new ILabel("common.username");
 
-		allPanel.add (userNameLabel, createConstraints (0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets (
-						5, 15, 5, 15)));
-		userName = new JTextField ();
-		allPanel.add (userName, createConstraints (1, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets (
-						5, 15, 5, 15)));
-
-		ILabel emailLabel = new ILabel ("common.email");
-
-		allPanel.add (emailLabel, createConstraints (0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets (5,
+		allPanel.add(userNameLabel, createConstraints(0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets(5,
 						15, 5, 15)));
-		eMail = new JTextField ();
-		allPanel.add (eMail, createConstraints (1, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets (5,
+		userName = new JTextField();
+		allPanel.add(userName, createConstraints(1, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets(5,
 						15, 5, 15)));
 
-		content.add (allPanel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		ILabel emailLabel = new ILabel("common.email");
+
+		allPanel.add(emailLabel, createConstraints(0, row, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets(5, 15,
+						5, 15)));
+		eMail = new JTextField();
+		allPanel.add(eMail, createConstraints(1, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets(5, 15,
+						5, 15)));
+
+		content.add(allPanel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 	}
 
 	/**
 	 * LoadFormObject, load the Data form Object.
 	 */
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 		User user = (User) iObject;
 
-		userName.setText (user.getName ());
-		eMail.setText (user.getEmail ());
+		userName.setText(user.getName());
+		eMail.setText(user.getEmail());
 	}
 
 	/**
 	 * StoreFormObject, load the Data form Object.
 	 */
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 		User user = (User) iObject;
 	}
@@ -114,32 +114,32 @@ public class UserGUIPane extends SwingGUIPane
 	/**
 	 * Close it.
 	 */
-	public void close ()
+	public void close()
 	{
-		super.close ();
+		super.close();
 	}
 
 	/**
 	 * Register a new User.
 	 */
-	public void onRegister (ActionEvent event)
+	public void onRegister(ActionEvent event)
 	{
 	}
 
 	/**
 	 * Cancel
 	 */
-	public void onCancel (ActionEvent event)
+	public void onCancel(ActionEvent event)
 	{
-		display.close ();
+		display.close();
 	}
 
 	/**
 	 * Return a new instance.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		UserGUIPane userGUIPane = new UserGUIPane ();
+		UserGUIPane userGUIPane = new UserGUIPane();
 
 		return userGUIPane;
 	}

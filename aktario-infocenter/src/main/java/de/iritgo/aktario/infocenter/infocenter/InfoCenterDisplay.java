@@ -32,24 +32,24 @@ public interface InfoCenterDisplay
 	 * Get the Id of the InfoCenterDisplay
 	 *
 	 */
-	public String getId ();
+	public String getId();
 
 	/**
 	 * Init InfoCenterDisplay, called any time you add a logger to any category
 	 *
 	 *        @param category
 	 */
-	public void init (String category, int context, User user);
+	public void init(String category, int context, User user);
 
 	/**
 	 * release
 	 *
 	 */
-	public void release ();
+	public void release();
 
 	/**
 	 * Info
 	 */
-	public void info (User user, int context, String category, String icon, String message, String guiPaneId,
+	public void info(User user, int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level);
 }

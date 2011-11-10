@@ -37,9 +37,9 @@ public class ResourceString extends ResourceNode
 	 * @param desciption The description of the resource.
 	 * @param nodeName The node Name
 	 */
-	public ResourceString (String desciption, String nodeName)
+	public ResourceString(String desciption, String nodeName)
 	{
-		super (desciption, nodeName);
+		super(desciption, nodeName);
 	}
 
 	/**
@@ -48,8 +48,8 @@ public class ResourceString extends ResourceNode
 	 * @return The node.
 	 */
 	@Override
-	public String getValue ()
+	public String getValue()
 	{
-		return getDescription ();
+		return getDescription();
 	}
 }

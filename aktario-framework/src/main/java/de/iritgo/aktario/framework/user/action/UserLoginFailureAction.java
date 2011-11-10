@@ -47,7 +47,7 @@ public class UserLoginFailureAction extends FrameworkAction
 	/**
 	 * Create a new UserLoginFailureAction.
 	 */
-	public UserLoginFailureAction ()
+	public UserLoginFailureAction()
 	{
 	}
 
@@ -56,7 +56,7 @@ public class UserLoginFailureAction extends FrameworkAction
 	 *
 	 * @param failure The failure type.
 	 */
-	public UserLoginFailureAction (int failure)
+	public UserLoginFailureAction(int failure)
 	{
 		this.failure = failure;
 	}
@@ -65,27 +65,27 @@ public class UserLoginFailureAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		failure = stream.readInt ();
+		failure = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (failure);
+		stream.writeInt(failure);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		Engine.instance ().getFlowControl ().ruleFailure ("UserLogin", new Integer (failure));
+		Engine.instance().getFlowControl().ruleFailure("UserLogin", new Integer(failure));
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class UserLoginFailureAction extends FrameworkAction
 	 *
 	 * @return The failure type.
 	 */
-	public int getFailure ()
+	public int getFailure()
 	{
 		return failure;
 	}

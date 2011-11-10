@@ -52,63 +52,63 @@ public class ConnectToServerGUIPane extends SwingGUIPane implements ConnectObser
 	 *
 	 * @param guiPaneId The guiPaneId
 	 */
-	public ConnectToServerGUIPane (String guiPaneId)
+	public ConnectToServerGUIPane(String guiPaneId)
 	{
-		super (guiPaneId);
+		super(guiPaneId);
 	}
 
 	/**
 	 * Init GUI
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		JPanel allPanel = new JPanel ();
+		JPanel allPanel = new JPanel();
 
-		allPanel.setLayout (new GridBagLayout ());
+		allPanel.setLayout(new GridBagLayout());
 
 		int row = 0;
 
-		ILabel connectTotServer = new ILabel (getTypeId ());
+		ILabel connectTotServer = new ILabel(getTypeId());
 
-		allPanel.add (connectTotServer, createConstraints (0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0,
-						new Insets (5, 15, 5, 15)));
+		allPanel.add(connectTotServer, createConstraints(0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0,
+						new Insets(5, 15, 5, 15)));
 
-		progress = new JProgressBar (0, 100);
-		allPanel.add (progress, createConstraints (0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets (
-						5, 15, 5, 15)));
+		progress = new JProgressBar(0, 100);
+		allPanel.add(progress, createConstraints(0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 100, 0, new Insets(5,
+						15, 5, 15)));
 
-		content.add (allPanel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		content.add(allPanel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
 		state = 0;
 
-		getDisplay ().putProperty ("weightx", new Double (2.0));
+		getDisplay().putProperty("weightx", new Double(2.0));
 	}
 
 	/**
 	 * LoadFormObject, load the Data form Object.
 	 */
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 	}
 
 	/**
 	 * StoreFormObject, store the data from the gui components.
 	 */
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 	}
 
 	/**
 	 * Close it.
 	 */
-	public void close ()
+	public void close()
 	{
-		super.close ();
+		super.close();
 	}
 
-	public void notice ()
+	public void notice()
 	{
-		progress.setValue (state++);
+		progress.setValue(state++);
 
 		if (state == 100)
 		{
@@ -119,17 +119,17 @@ public class ConnectToServerGUIPane extends SwingGUIPane implements ConnectObser
 	/**
 	 * Cancel
 	 */
-	public void onCancel (ActionEvent event)
+	public void onCancel(ActionEvent event)
 	{
-		display.close ();
+		display.close();
 	}
 
 	/**
 	 * Return a new instance.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		ConnectToServerGUIPane pane = new ConnectToServerGUIPane (getTypeId ());
+		ConnectToServerGUIPane pane = new ConnectToServerGUIPane(getTypeId());
 
 		return pane;
 	}

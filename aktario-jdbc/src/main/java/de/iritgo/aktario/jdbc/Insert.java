@@ -48,117 +48,117 @@ public class Insert extends Command
 	/**
 	 * Create a new <code>Insert</code> command.
 	 */
-	public Insert ()
+	public Insert()
 	{
-		super ("persist.Insert");
+		super("persist.Insert");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("table") == null)
+		if (properties.get("table") == null)
 		{
-			Log.logError ("persist", "Insert", "Missing table name");
+			Log.logError("persist", "Insert", "Missing table name");
 
 			return;
 		}
 
 		int size = 0;
 
-		if (properties.get ("size") != null)
+		if (properties.get("size") != null)
 		{
-			size = ((Integer) properties.get ("size")).intValue ();
+			size = ((Integer) properties.get("size")).intValue();
 		}
 
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
-		ArrayList columns = new ArrayList (8);
-		ArrayList columnValues = new ArrayList (8);
+		ArrayList columns = new ArrayList(8);
+		ArrayList columnValues = new ArrayList(8);
 
-		for (Iterator i = properties.entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = properties.entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry entry = (Map.Entry) i.next ();
+			Map.Entry entry = (Map.Entry) i.next();
 
-			if (((String) entry.getKey ()).indexOf ("column.") == 0)
+			if (((String) entry.getKey()).indexOf("column.") == 0)
 			{
-				columns.add (((String) entry.getKey ()).substring (7));
-				columnValues.add (entry.getValue ());
+				columns.add(((String) entry.getKey()).substring(7));
+				columnValues.add(entry.getValue());
 			}
 		}
 
-		int numColumns = columns.size ();
+		int numColumns = columns.size();
 
-		StringBuffer sqlColumns = new StringBuffer ("(id");
-
-		for (int i = 0; i < numColumns; ++i)
-		{
-			sqlColumns.append (", " + (String) columns.get (i));
-		}
-
-		sqlColumns.append (")");
-
-		StringBuffer sqlValues = new StringBuffer ("(?");
+		StringBuffer sqlColumns = new StringBuffer("(id");
 
 		for (int i = 0; i < numColumns; ++i)
 		{
-			sqlValues.append (", ?");
+			sqlColumns.append(", " + (String) columns.get(i));
 		}
 
-		sqlValues.append (")");
+		sqlColumns.append(")");
 
-		String sql = "insert into " + properties.getProperty ("table") + " " + sqlColumns.toString () + " values "
-						+ sqlValues.toString ();
+		StringBuffer sqlValues = new StringBuffer("(?");
+
+		for (int i = 0; i < numColumns; ++i)
+		{
+			sqlValues.append(", ?");
+		}
+
+		sqlValues.append(")");
+
+		String sql = "insert into " + properties.getProperty("table") + " " + sqlColumns.toString() + " values "
+						+ sqlValues.toString();
 
 		try
 		{
-			connection = dataSource.getConnection ();
+			connection = dataSource.getConnection();
 
-			stmt = connection.prepareStatement (sql);
+			stmt = connection.prepareStatement(sql);
 
 			if (size <= 0)
 			{
-				stmt.setLong (1, Engine.instance ().getPersistentIDGenerator ().createId ());
+				stmt.setLong(1, Engine.instance().getPersistentIDGenerator().createId());
 
 				for (int col = 0; col < numColumns; ++col)
 				{
-					stmt.setObject (col + 2, columnValues.get (col));
+					stmt.setObject(col + 2, columnValues.get(col));
 				}
 
-				stmt.execute ();
+				stmt.execute();
 			}
 			else
 			{
 				for (int row = 0; row < size; ++row)
 				{
-					stmt.setLong (1, Engine.instance ().getPersistentIDGenerator ().createId ());
+					stmt.setLong(1, Engine.instance().getPersistentIDGenerator().createId());
 
 					for (int col = 0; col < numColumns; ++col)
 					{
-						stmt.setObject (col + 2, ((Object[]) columnValues.get (col))[row]);
+						stmt.setObject(col + 2, ((Object[]) columnValues.get(col))[row]);
 					}
 
-					stmt.execute ();
+					stmt.execute();
 				}
 			}
 
-			stmt.close ();
+			stmt.close();
 
-			Log.logVerbose ("persist", "Insert", "INSERT |" + sql + "|");
+			Log.logVerbose("persist", "Insert", "INSERT |" + sql + "|");
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "Insert", "Error while executing sql |" + sql + "|: " + x);
+			Log.logError("persist", "Insert", "Error while executing sql |" + sql + "|: " + x);
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 }

@@ -38,53 +38,53 @@ public class CadeneContextRegistry
 	 * Constructor
 	 *
 	 */
-	public CadeneContextRegistry ()
+	public CadeneContextRegistry()
 	{
-		turnContexts = new HashMap ();
+		turnContexts = new HashMap();
 	}
 
 	/**
 	 * Add a CadenceContext.
 	 */
-	public void add (CadenceContext turnContext)
+	public void add(CadenceContext turnContext)
 	{
-		turnContexts.put (turnContext.getUser (), turnContext);
+		turnContexts.put(turnContext.getUser(), turnContext);
 	}
 
 	/**
 	 * Get a CadenceContext.
 	 */
-	public CadenceContext get (User user)
+	public CadenceContext get(User user)
 	{
-		return (CadenceContext) turnContexts.get (user);
+		return (CadenceContext) turnContexts.get(user);
 	}
 
 	/**
 	 * Remove a CadenceContext.
 	 */
-	public void remove (CadenceContext turnContext)
+	public void remove(CadenceContext turnContext)
 	{
-		turnContexts.remove (turnContext.getUser ());
+		turnContexts.remove(turnContext.getUser());
 	}
 
 	/**
 	 * Remove a CadenceContext.
 	 */
-	public void remove (User user)
+	public void remove(User user)
 	{
-		turnContexts.remove (user);
+		turnContexts.remove(user);
 	}
 
 	/**
 	 * Remove all turncontexts.
 	 */
-	public void clear ()
+	public void clear()
 	{
-		turnContexts.clear ();
+		turnContexts.clear();
 	}
 
-	public Iterator getTurnContextIterator ()
+	public Iterator getTurnContextIterator()
 	{
-		return turnContexts.values ().iterator ();
+		return turnContexts.values().iterator();
 	}
 }

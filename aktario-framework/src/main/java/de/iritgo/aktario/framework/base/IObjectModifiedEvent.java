@@ -37,7 +37,7 @@ public class IObjectModifiedEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public IObjectModifiedEvent (IObject modifiedObject, ClientTransceiver clientTransceiver)
+	public IObjectModifiedEvent(IObject modifiedObject, ClientTransceiver clientTransceiver)
 	{
 		this.modifiedObject = modifiedObject;
 		this.clientTransceiver = clientTransceiver;
@@ -46,17 +46,17 @@ public class IObjectModifiedEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public IObjectModifiedEvent (IObject modifiedObject)
+	public IObjectModifiedEvent(IObject modifiedObject)
 	{
-		this (modifiedObject, null);
+		this(modifiedObject, null);
 	}
 
-	public IObject getModifiedObject ()
+	public IObject getModifiedObject()
 	{
 		return modifiedObject;
 	}
 
-	public ClientTransceiver getClientTransceiver ()
+	public ClientTransceiver getClientTransceiver()
 	{
 		return clientTransceiver;
 	}

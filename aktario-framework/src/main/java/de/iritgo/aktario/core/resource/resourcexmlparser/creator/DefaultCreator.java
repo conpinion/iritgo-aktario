@@ -38,25 +38,25 @@ public class DefaultCreator extends BaseCreator
 
 	CreateDirNode createDirNode;
 
-	public DefaultCreator ()
+	public DefaultCreator()
 	{
-		createNode = new CreateNode ();
-		callMethod = new CallMethod ();
-		createDirNode = new CreateDirNode ();
+		createNode = new CreateNode();
+		callMethod = new CallMethod();
+		createDirNode = new CreateDirNode();
 	}
 
 	@Override
-	public void work (NodeContainer nodeContainer, ElementIterator i) throws ContinueException
+	public void work(NodeContainer nodeContainer, ElementIterator i) throws ContinueException
 	{
 		@SuppressWarnings("unused")
-		ElementContainer e = (ElementContainer) i.current ();
+		ElementContainer e = (ElementContainer) i.current();
 
-		super.work (nodeContainer, i);
+		super.work(nodeContainer, i);
 
-		createNode.work (nodeContainer, i);
+		createNode.work(nodeContainer, i);
 
-		callMethod.work (nodeContainer, i);
+		callMethod.work(nodeContainer, i);
 
-		createDirNode.work (nodeContainer, i);
+		createDirNode.work(nodeContainer, i);
 	}
 }

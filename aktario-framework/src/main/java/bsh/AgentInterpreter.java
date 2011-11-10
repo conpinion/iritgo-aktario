@@ -47,56 +47,56 @@ public class AgentInterpreter extends Interpreter
 
 	private boolean eof;
 
-	public AgentInterpreter ()
+	public AgentInterpreter()
 	{
 		eof = false;
 	}
 
-	public AgentInterpreter (Reader reader, PrintStream printstream, PrintStream printstream1, boolean flag,
+	public AgentInterpreter(Reader reader, PrintStream printstream, PrintStream printstream1, boolean flag,
 					NameSpace namespace, Interpreter interpreter, String s)
 	{
-		super (reader, printstream, printstream1, flag, namespace, interpreter, s);
+		super(reader, printstream, printstream1, flag, namespace, interpreter, s);
 		eof = false;
 	}
 
-	public void init (Reader reader, NameSpace namespace, String s)
+	public void init(Reader reader, NameSpace namespace, String s)
 	{
 		retVal = null;
-		localInterpreter = new AgentInterpreter (reader, out, err, false, namespace, this, s);
-		callstack = new CallStack (namespace);
+		localInterpreter = new AgentInterpreter(reader, out, err, false, namespace, this, s);
+		callstack = new CallStack(namespace);
 		node = null;
 	}
 
-	public NameSpace getGlobalNameSpace ()
+	public NameSpace getGlobalNameSpace()
 	{
 		return globalNameSpace;
 	}
 
-	public Object evalSingleLine (@SuppressWarnings("unused") Reader reader, NameSpace namespace, String s)
+	public Object evalSingleLine(@SuppressWarnings("unused") Reader reader, NameSpace namespace, String s)
 		throws EvalError
 	{
 		try
 		{
-			if (! localInterpreter.Line ())
+			if (! localInterpreter.Line())
 			{
 				eof = true;
 			}
 
-			if (localInterpreter.get_jjtree ().nodeArity () > 0)
+			if (localInterpreter.get_jjtree().nodeArity() > 0)
 			{
-				node = (SimpleNode) localInterpreter.get_jjtree ().rootNode ();
-				node.setSourceFile (s);
+				node = (SimpleNode) localInterpreter.get_jjtree().rootNode();
+				node.setSourceFile(s);
 
 				if (TRACE)
 				{
-					println ("// " + node.getText ());
+					println("// " + node.getText());
 				}
 
-				retVal = node.eval (callstack, localInterpreter);
+				retVal = node.eval(callstack, localInterpreter);
 
-				if (callstack.depth () > 1)
+				if (callstack.depth() > 1)
 				{
-					throw new InterpreterError ("Callstack growing: " + callstack);
+					throw new InterpreterError("Callstack growing: " + callstack);
 				}
 
 				if (retVal instanceof ReturnControl)
@@ -109,80 +109,80 @@ public class AgentInterpreter extends Interpreter
 		{
 			if (DEBUG)
 			{
-				error (parseexception.getMessage (DEBUG));
+				error(parseexception.getMessage(DEBUG));
 			}
 
-			parseexception.setErrorSourceFile (s);
+			parseexception.setErrorSourceFile(s);
 			throw parseexception;
 		}
 		catch (InterpreterError interpretererror)
 		{
-			interpretererror.printStackTrace ();
-			throw new EvalError ("Sourced file: " + s + " internal Error: " + interpretererror.getMessage (), node,
+			interpretererror.printStackTrace();
+			throw new EvalError("Sourced file: " + s + " internal Error: " + interpretererror.getMessage(), node,
 							callstack);
 		}
 		catch (TargetError targeterror)
 		{
-			if (targeterror.getNode () == null)
+			if (targeterror.getNode() == null)
 			{
-				targeterror.setNode (node);
+				targeterror.setNode(node);
 			}
 
-			targeterror.reThrow ("Sourced file: " + s);
+			targeterror.reThrow("Sourced file: " + s);
 		}
 		catch (EvalError evalerror)
 		{
 			if (DEBUG)
 			{
-				evalerror.printStackTrace ();
+				evalerror.printStackTrace();
 			}
 
-			if (evalerror.getNode () == null)
+			if (evalerror.getNode() == null)
 			{
-				evalerror.setNode (node);
+				evalerror.setNode(node);
 			}
 
-			evalerror.reThrow ("Sourced file: " + s);
+			evalerror.reThrow("Sourced file: " + s);
 		}
 		catch (Exception exception)
 		{
 			if (DEBUG)
 			{
-				exception.printStackTrace ();
+				exception.printStackTrace();
 			}
 
-			throw new EvalError ("Sourced file: " + s + " unknown error: " + exception.getMessage (), node, callstack);
+			throw new EvalError("Sourced file: " + s + " unknown error: " + exception.getMessage(), node, callstack);
 		}
 		catch (TokenMgrError tokenmgrerror)
 		{
-			throw new EvalError ("Sourced file: " + s + " Token Parsing Error: " + tokenmgrerror.getMessage (), node,
+			throw new EvalError("Sourced file: " + s + " Token Parsing Error: " + tokenmgrerror.getMessage(), node,
 							callstack);
 		}
 		finally
 		{
-			localInterpreter.get_jjtree ().reset ();
+			localInterpreter.get_jjtree().reset();
 
-			if (callstack.depth () > 1)
+			if (callstack.depth() > 1)
 			{
-				callstack.clear ();
-				callstack.push (namespace);
+				callstack.clear();
+				callstack.push(namespace);
 			}
 		}
 
 		return null;
 	}
 
-	public boolean isEOF ()
+	public boolean isEOF()
 	{
 		return eof;
 	}
 
-	private boolean Line () throws ParseException
+	private boolean Line() throws ParseException
 	{
-		return parser.Line ();
+		return parser.Line();
 	}
 
-	private JJTParserState get_jjtree ()
+	private JJTParserState get_jjtree()
 	{
 		return parser.jjtree;
 	}

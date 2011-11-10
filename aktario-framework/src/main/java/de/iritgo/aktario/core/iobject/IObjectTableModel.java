@@ -46,10 +46,10 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 	/**
 	 * Create a new IObjectTableModel.
 	 */
-	public IObjectTableModel ()
+	public IObjectTableModel()
 	{
-		super ();
-		mapping = new HashMap ();
+		super();
+		mapping = new HashMap();
 	}
 
 	/**
@@ -57,11 +57,11 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 	 *
 	 * @return The row count.
 	 */
-	public int getRowCount ()
+	public int getRowCount()
 	{
 		if (list != null)
 		{
-			return list.size ();
+			return list.size();
 		}
 
 		return 0;
@@ -72,19 +72,19 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 	 *
 	 * @param event The EventOject.
 	 */
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
-		if (event.isWaitingForNewObject ())
+		if (event.isWaitingForNewObject())
 		{
 			return;
 		}
 
-		final IObjectTableModelItem item = (IObjectTableModelItem) mapping.get (event.getObject ());
-		int row = list.indexOf (event.getObject ());
+		final IObjectTableModelItem item = (IObjectTableModelItem) mapping.get(event.getObject());
+		int row = list.indexOf(event.getObject());
 
 		if (row >= 0)
 		{
-			list.set (row, event.getObject ());
+			list.set(row, event.getObject());
 		}
 		else
 		{
@@ -93,11 +93,11 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 
 		try
 		{
-			SwingUtilities.invokeLater (new Runnable ()
+			SwingUtilities.invokeLater(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					fireTableRowsUpdated (item.row, item.row);
+					fireTableRowsUpdated(item.row, item.row);
 				}
 			});
 		}
@@ -109,16 +109,16 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 	/**
 	 * Dispose the model.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
-		for (Iterator i = mapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = mapping.keySet().iterator(); i.hasNext();)
 		{
-			IObject prototypeable = (IObject) i.next ();
+			IObject prototypeable = (IObject) i.next();
 
-			Engine.instance ().getProxyEventRegistry ().removeEventListener (prototypeable, this);
+			Engine.instance().getProxyEventRegistry().removeEventListener(prototypeable, this);
 		}
 
-		mapping.clear ();
+		mapping.clear();
 	}
 
 	/**
@@ -126,34 +126,34 @@ public abstract class IObjectTableModel extends AbstractTableModel implements IO
 	 *
 	 * @param linkedList The new list.
 	 */
-	public void update (IObjectList linkedList)
+	public void update(IObjectList linkedList)
 	{
-		dispose ();
+		dispose();
 
-		this.list = new LinkedList ();
+		this.list = new LinkedList();
 
 		int row = 0;
 
-		for (IObjectIterator i = (IObjectIterator) linkedList.iterator (); i.hasNext ();)
+		for (IObjectIterator i = (IObjectIterator) linkedList.iterator(); i.hasNext();)
 		{
-			IObject object = (IObject) i.next (this);
-			long uniqueId = object.getUniqueId ();
+			IObject object = (IObject) i.next(this);
+			long uniqueId = object.getUniqueId();
 
-			list.add (object);
-			mapping.put (object, new IObjectTableModelItem (row, uniqueId));
+			list.add(object);
+			mapping.put(object, new IObjectTableModelItem(row, uniqueId));
 
-			fireTableDataChanged ();
+			fireTableDataChanged();
 			++row;
 		}
 	}
 
-	public LinkedList getModelList ()
+	public LinkedList getModelList()
 	{
 		return list;
 	}
 
-	public IObject getObjectByRow (int row)
+	public IObject getObjectByRow(int row)
 	{
-		return (IObject) list.get (row);
+		return (IObject) list.get(row);
 	}
 }

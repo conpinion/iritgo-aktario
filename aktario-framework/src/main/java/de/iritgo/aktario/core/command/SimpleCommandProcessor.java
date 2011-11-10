@@ -31,7 +31,7 @@ public class SimpleCommandProcessor implements CommandProcessor
 	 *
 	 * @return The type id.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "SimpleCommandProcessor";
 	}
@@ -42,11 +42,11 @@ public class SimpleCommandProcessor implements CommandProcessor
 	 * @param command The command to execute.
 	 * @return The command results.
 	 */
-	public Object perform (Command command)
+	public Object perform(Command command)
 	{
-		if (command.canPerform ())
+		if (command.canPerform())
 		{
-			return command.performWithResult ();
+			return command.performWithResult();
 		}
 
 		return null;

@@ -37,7 +37,7 @@ public class ConsoleCommand
 
 	private Command command;
 
-	public ConsoleCommand (String commandId, Command command, String helpId, int numParam)
+	public ConsoleCommand(String commandId, Command command, String helpId, int numParam)
 	{
 		this.commandId = commandId;
 		this.command = command;
@@ -45,27 +45,27 @@ public class ConsoleCommand
 		this.numParam = numParam;
 	}
 
-	public ConsoleCommand (String commandId, Command command, String helpId)
+	public ConsoleCommand(String commandId, Command command, String helpId)
 	{
-		this (commandId, command, helpId, - 1);
+		this(commandId, command, helpId, - 1);
 	}
 
-	public String getCommandId ()
+	public String getCommandId()
 	{
 		return commandId;
 	}
 
-	public Command getCommand ()
+	public Command getCommand()
 	{
 		return command;
 	}
 
-	public String getHelpId ()
+	public String getHelpId()
 	{
 		return helpId;
 	}
 
-	public int getNumParam ()
+	public int getNumParam()
 	{
 		return numParam;
 	}

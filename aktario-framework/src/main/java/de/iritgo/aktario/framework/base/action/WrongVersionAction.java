@@ -32,7 +32,7 @@ public class WrongVersionAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public WrongVersionAction ()
+	public WrongVersionAction()
 	{
 	}
 
@@ -40,7 +40,7 @@ public class WrongVersionAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
 	}
 
@@ -48,7 +48,7 @@ public class WrongVersionAction extends FrameworkAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
 	}
 
@@ -56,8 +56,8 @@ public class WrongVersionAction extends FrameworkAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		Engine.instance ().getFlowControl ().ruleSuccess ("WrongVersion");
+		Engine.instance().getFlowControl().ruleSuccess("WrongVersion");
 	}
 }

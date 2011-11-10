@@ -35,7 +35,7 @@ public class Command extends BaseObject
 	/**
 	 * Create a new anonymous command.
 	 */
-	public Command ()
+	public Command()
 	{
 	}
 
@@ -44,9 +44,9 @@ public class Command extends BaseObject
 	 *
 	 * @param typeId The command id.
 	 */
-	public Command (String typeId)
+	public Command(String typeId)
 	{
-		super (typeId);
+		super(typeId);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class Command extends BaseObject
 	 *
 	 * @param properties The new command properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 		this.properties = properties;
 	}
@@ -64,7 +64,7 @@ public class Command extends BaseObject
 	 *
 	 * @return The command properties.
 	 */
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}
@@ -75,7 +75,7 @@ public class Command extends BaseObject
 	 * Override this method if you do not want to return a command result (The
 	 * return value defaults to null).
 	 */
-	public void perform ()
+	public void perform()
 	{
 	}
 
@@ -86,9 +86,9 @@ public class Command extends BaseObject
 	 *
 	 * @return The command results.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		perform ();
+		perform();
 
 		return null;
 	}
@@ -100,7 +100,7 @@ public class Command extends BaseObject
 	 *
 	 * @return True if the command can be executed.
 	 */
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}

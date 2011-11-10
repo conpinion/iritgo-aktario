@@ -56,58 +56,58 @@ public class PluginManager extends BaseObject
 	 *
 	 * @param engine The Iritgo engine.
 	 */
-	public PluginManager (Engine engine)
+	public PluginManager(Engine engine)
 	{
 		this.engine = engine;
-		plugins = new LinkedList<PluginContext> ();
+		plugins = new LinkedList<PluginContext>();
 	}
 
 	/**
 	 * Load all plugins.
 	 */
-	public void loadPlugins ()
+	public void loadPlugins()
 	{
-		String pluginList = System.getProperty ("iritgo.plugins");
+		String pluginList = System.getProperty("iritgo.plugins");
 
 		if (pluginList != null)
 		{
-			loadPluginsFromClassPath (pluginList);
+			loadPluginsFromClassPath(pluginList);
 
 			return;
 		}
 
-		InputStream in = Engine.class.getResourceAsStream ("/plugin.properties");
+		InputStream in = Engine.class.getResourceAsStream("/plugin.properties");
 
 		if (in != null)
 		{
-			Properties pluginProperties = new Properties ();
+			Properties pluginProperties = new Properties();
 
 			try
 			{
-				pluginProperties.load (in);
+				pluginProperties.load(in);
 
-				if (pluginProperties.get ("plugin.names") != null)
+				if (pluginProperties.get("plugin.names") != null)
 				{
-					loadPluginsFromClassPath (pluginProperties.getProperty ("plugin.names"));
+					loadPluginsFromClassPath(pluginProperties.getProperty("plugin.names"));
 
 					return;
 				}
 			}
 			catch (IOException x)
 			{
-				Log.log ("plugin", "PluginManager", "Unable to load plugin descriptor /plugin.properties: " + x,
+				Log.log("plugin", "PluginManager", "Unable to load plugin descriptor /plugin.properties: " + x,
 								Log.ERROR);
 			}
 		}
 
-		String directory = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator () + "plugins"
-						+ Engine.instance ().getFileSeparator ();
+		String directory = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator() + "plugins"
+						+ Engine.instance().getFileSeparator();
 
-		File dir = new File (directory);
+		File dir = new File(directory);
 
-		if (dir.exists ())
+		if (dir.exists())
 		{
-			loadPluginsFromFile (directory);
+			loadPluginsFromFile(directory);
 
 			return;
 		}
@@ -118,23 +118,23 @@ public class PluginManager extends BaseObject
 	 *
 	 * @param directory The directory containing the plugins.
 	 */
-	public void loadPluginsFromFile (String directory)
+	public void loadPluginsFromFile(String directory)
 	{
 		try
 		{
-			final File pluginDir = new File (Engine.instance ().getSystemDir (), "plugins");
+			final File pluginDir = new File(Engine.instance().getSystemDir(), "plugins");
 
-			File[] pluginFiles = pluginDir.listFiles (new FilenameFilter ()
+			File[] pluginFiles = pluginDir.listFiles(new FilenameFilter()
 			{
-				public boolean accept (File dir, String name)
+				public boolean accept(File dir, String name)
 				{
-					return name.endsWith (".jar");
+					return name.endsWith(".jar");
 				}
 			});
 
 			if (pluginFiles == null)
 			{
-				Log.log ("plugin", "PluginManager", "No plugins found in directory " + directory, Log.WARN);
+				Log.log("plugin", "PluginManager", "No plugins found in directory " + directory, Log.WARN);
 
 				return;
 			}
@@ -146,42 +146,42 @@ public class PluginManager extends BaseObject
 				String pluginClass = "";
 				String displayName = "";
 
-				String fileName = pluginFiles[i].getName ();
-				String pluginName = fileName.substring (0, fileName.lastIndexOf ('-'));
-				Properties properties = getPluginPropertiesFromFile (directory, fileName, pluginName);
+				String fileName = pluginFiles[i].getName();
+				String pluginName = fileName.substring(0, fileName.lastIndexOf('-'));
+				Properties properties = getPluginPropertiesFromFile(directory, fileName, pluginName);
 
 				if (properties == null)
 				{
 					continue;
 				}
 
-				for (Enumeration<String> e = (Enumeration<String>) properties.propertyNames (); e.hasMoreElements ();)
+				for (Enumeration<String> e = (Enumeration<String>) properties.propertyNames(); e.hasMoreElements();)
 				{
 					dependency = "";
 					pluginClass = "";
 					name = "";
 
-					String key = (String) e.nextElement ();
+					String key = (String) e.nextElement();
 
-					if (key.startsWith ("name"))
+					if (key.startsWith("name"))
 					{
-						name = properties.getProperty (key);
+						name = properties.getProperty(key);
 					}
 
-					dependency = properties.getProperty (name + ".dependency");
-					pluginClass = properties.getProperty (name + ".pluginclass");
-					displayName = properties.getProperty ("displayName");
+					dependency = properties.getProperty(name + ".dependency");
+					pluginClass = properties.getProperty(name + ".pluginclass");
+					displayName = properties.getProperty("displayName");
 
-					if (name.length () != 0)
+					if (name.length() != 0)
 					{
-						loadPluginFromFile (directory, fileName, pluginClass, name, displayName, dependency);
+						loadPluginFromFile(directory, fileName, pluginClass, name, displayName, dependency);
 					}
 				}
 			}
 		}
 		catch (IOException x)
 		{
-			Log.log ("plugin", "PluginManager", "Error while loading plugins from directory " + directory + ": " + x,
+			Log.log("plugin", "PluginManager", "Error while loading plugins from directory " + directory + ": " + x,
 							Log.ERROR);
 		}
 	}
@@ -195,40 +195,40 @@ public class PluginManager extends BaseObject
 	 * @param name The display name of the plugin.
 	 * @param dependency Dependencies to other plugins.
 	 */
-	public void loadPluginFromFile (String directory, String fileName, String pluginName, String name,
+	public void loadPluginFromFile(String directory, String fileName, String pluginName, String name,
 					String displayName, String dependency) throws IOException
 	{
-		Log.log ("plugin", "PluginManager", "Loading plugin: " + fileName, Log.INFO);
+		Log.log("plugin", "PluginManager", "Loading plugin: " + fileName, Log.INFO);
 
-		File dir = new File (directory + fileName);
+		File dir = new File(directory + fileName);
 
-		if (pluginName.length () == 0)
+		if (pluginName.length() == 0)
 		{
-			Log.log ("plugin", "PluginManager", "No plugin name specified in descriptor " + fileName, Log.ERROR);
+			Log.log("plugin", "PluginManager", "No plugin name specified in descriptor " + fileName, Log.ERROR);
 
 			return;
 		}
 
 		try
 		{
-			URLClassLoader loader = new URLClassLoader (new URL[]
+			URLClassLoader loader = new URLClassLoader(new URL[]
 			{
-				dir.toURI ().toURL ()
-			}, Thread.currentThread ().getContextClassLoader ());
+				dir.toURI().toURL()
+			}, Thread.currentThread().getContextClassLoader());
 
-			Plugin plugin = (Plugin) (loader.loadClass (pluginName).newInstance ());
+			Plugin plugin = (Plugin) (loader.loadClass(pluginName).newInstance());
 
-			plugin.setClassName (pluginName);
-			plugin.setName (name);
-			plugin.setClassLoader (loader);
-			plugin.setDisplayName (displayName);
-			plugin.setDependency (dependency);
+			plugin.setClassName(pluginName);
+			plugin.setName(name);
+			plugin.setClassLoader(loader);
+			plugin.setDisplayName(displayName);
+			plugin.setDependency(dependency);
 
-			plugins.add (new PluginContext (plugin, loader));
+			plugins.add(new PluginContext(plugin, loader));
 		}
 		catch (Exception x)
 		{
-			Log.log ("plugin", "PluginManager", "Unable to load plugin " + pluginName + ": " + x, Log.ERROR);
+			Log.log("plugin", "PluginManager", "Unable to load plugin " + pluginName + ": " + x, Log.ERROR);
 		}
 	}
 
@@ -239,26 +239,26 @@ public class PluginManager extends BaseObject
 	 * @param fileName The name of the jar file.
 	 * @param pluginName TODO
 	 */
-	public Properties getPluginPropertiesFromFile (String directory, String fileName, String pluginName)
+	public Properties getPluginPropertiesFromFile(String directory, String fileName, String pluginName)
 	{
 		try
 		{
-			JarFile jarFile = new JarFile (directory + fileName);
-			ZipEntry entry = jarFile.getEntry ("resources/" + pluginName + "-plugin.properties");
+			JarFile jarFile = new JarFile(directory + fileName);
+			ZipEntry entry = jarFile.getEntry("resources/" + pluginName + "-plugin.properties");
 
 			if (entry != null)
 			{
-				Properties properties = new Properties ();
-				InputStream is = jarFile.getInputStream (entry);
+				Properties properties = new Properties();
+				InputStream is = jarFile.getInputStream(entry);
 
-				properties.load (is);
+				properties.load(is);
 
 				return properties;
 			}
 		}
 		catch (Exception x)
 		{
-			Log.log ("plugin", "PluginManager", "Unable to read plugin descriptor " + fileName + ": " + x, Log.ERROR);
+			Log.log("plugin", "PluginManager", "Unable to read plugin descriptor " + fileName + ": " + x, Log.ERROR);
 		}
 
 		return null;
@@ -269,43 +269,43 @@ public class PluginManager extends BaseObject
 	 *
 	 * @param pluginList A comma separated list of plugins to load.
 	 */
-	public void loadPluginsFromClassPath (String pluginList)
+	public void loadPluginsFromClassPath(String pluginList)
 	{
-		StringTokenizer st = new StringTokenizer (pluginList, ",");
+		StringTokenizer st = new StringTokenizer(pluginList, ",");
 
-		while (st.hasMoreTokens ())
+		while (st.hasMoreTokens())
 		{
-			String pluginName = st.nextToken ();
+			String pluginName = st.nextToken();
 
-			Log.log ("plugin", "PluginManager", "Loading plugin " + pluginName, Log.INFO);
+			Log.log("plugin", "PluginManager", "Loading plugin " + pluginName, Log.INFO);
 
 			try
 			{
-				Properties properties = getPluginPropertiesFromClassPath (pluginName);
+				Properties properties = getPluginPropertiesFromClassPath(pluginName);
 
 				if (properties == null)
 				{
 					continue;
 				}
 
-				String name = properties.getProperty ("name");
-				String displayName = properties.getProperty ("displayName");
-				String className = properties.getProperty (name + ".pluginclass");
-				String dependency = properties.getProperty (name + ".dependency");
+				String name = properties.getProperty("name");
+				String displayName = properties.getProperty("displayName");
+				String className = properties.getProperty(name + ".pluginclass");
+				String dependency = properties.getProperty(name + ".dependency");
 
-				Plugin plugin = (Plugin) (getClass ().getClassLoader ().loadClass (className).newInstance ());
+				Plugin plugin = (Plugin) (getClass().getClassLoader().loadClass(className).newInstance());
 
-				plugin.setClassName (pluginName);
-				plugin.setName (name);
-				plugin.setClassLoader (getClass ().getClassLoader ());
-				plugin.setDisplayName (displayName);
-				plugin.setDependency (dependency);
+				plugin.setClassName(pluginName);
+				plugin.setName(name);
+				plugin.setClassLoader(getClass().getClassLoader());
+				plugin.setDisplayName(displayName);
+				plugin.setDependency(dependency);
 
-				plugins.add (new PluginContext (plugin, getClass ().getClassLoader ()));
+				plugins.add(new PluginContext(plugin, getClass().getClassLoader()));
 			}
 			catch (Exception x)
 			{
-				Log.log ("plugin", "PluginManager", "Unable to load plugin " + pluginName + ": " + x, Log.ERROR);
+				Log.log("plugin", "PluginManager", "Unable to load plugin " + pluginName + ": " + x, Log.ERROR);
 			}
 		}
 	}
@@ -315,19 +315,19 @@ public class PluginManager extends BaseObject
 	 *
 	 * @param pluginName The plugin name.
 	 */
-	public Properties getPluginPropertiesFromClassPath (String pluginName)
+	public Properties getPluginPropertiesFromClassPath(String pluginName)
 	{
 		try
 		{
-			Properties properties = new Properties ();
+			Properties properties = new Properties();
 
-			properties.load (getClass ().getResourceAsStream ("/resources/" + pluginName + "-plugin.properties"));
+			properties.load(getClass().getResourceAsStream("/resources/" + pluginName + "-plugin.properties"));
 
 			return properties;
 		}
 		catch (Exception x)
 		{
-			Log.log ("plugin", "PluginManager", "Unable to read descriptor of plugin " + pluginName + ": " + x,
+			Log.log("plugin", "PluginManager", "Unable to read descriptor of plugin " + pluginName + ": " + x,
 							Log.ERROR);
 		}
 
@@ -337,61 +337,60 @@ public class PluginManager extends BaseObject
 	/**
 	 * Initialize all plugins.
 	 */
-	public void initPlugins (final Splash splash)
+	public void initPlugins(final Splash splash)
 	{
-		PluginProcessor processor = new PluginProcessor (plugins);
+		PluginProcessor processor = new PluginProcessor(plugins);
 
-		processor.doPlugins (new PluginProcess ()
+		processor.doPlugins(new PluginProcess()
 		{
-			public void doPlugin (Plugin plugin)
+			public void doPlugin(Plugin plugin)
 			{
-				Log.log ("plugin", "PluginManager", "Initializing plugin: " + plugin.getClassName (), Log.INFO);
-				plugin.init (engine);
+				Log.log("plugin", "PluginManager", "Initializing plugin: " + plugin.getClassName(), Log.INFO);
+				plugin.init(engine);
 
 				if (splash != null)
 				{
-					splash.setText ("Initializing: " + plugin.getDisplayName ());
+					splash.setText("Initializing: " + plugin.getDisplayName());
 				}
 			}
 		}, PluginProcessor.FORWARD);
 
-		Engine.instance ().getEventRegistry ().fire ("Plugin",
-						new PluginStateEvent (null, PluginStateEvent.ALL_PLUGINS_INITIALIZED));
+		Engine.instance().getEventRegistry().fire("Plugin",
+						new PluginStateEvent(null, PluginStateEvent.ALL_PLUGINS_INITIALIZED));
 	}
 
 	/**
 	 * Unload all plugins
 	 */
-	public void unloadPlugins ()
+	public void unloadPlugins()
 	{
-		PluginProcessor processor = new PluginProcessor (plugins);
+		PluginProcessor processor = new PluginProcessor(plugins);
 
-		processor.doPlugins (new PluginProcess ()
+		processor.doPlugins(new PluginProcess()
 		{
-			public void doPlugin (Plugin plugin)
+			public void doPlugin(Plugin plugin)
 			{
-				Log.log ("plugin", "PluginManager", "Unloading plugin: " + plugin.getClassName (), Log.INFO);
-				plugin.unloadPlugin (engine);
+				Log.log("plugin", "PluginManager", "Unloading plugin: " + plugin.getClassName(), Log.INFO);
+				plugin.unloadPlugin(engine);
 			}
 		}, PluginProcessor.BACKWARD);
 
-		plugins.clear ();
+		plugins.clear();
 	}
 
 	/**
 	 * Load the text resources of all plugins.
 	 */
-	public void loadTranslationResources ()
+	public void loadTranslationResources()
 	{
-		PluginProcessor processor = new PluginProcessor (plugins);
+		PluginProcessor processor = new PluginProcessor(plugins);
 
-		processor.doPlugins (new PluginProcess ()
+		processor.doPlugins(new PluginProcess()
 		{
-			public void doPlugin (Plugin plugin)
+			public void doPlugin(Plugin plugin)
 			{
-				Log.log ("plugin", "PluginManager", "Loading plugin text resources: " + plugin.getClassName (),
-								Log.INFO);
-				plugin.loadTranslationResources ();
+				Log.log("plugin", "PluginManager", "Loading plugin text resources: " + plugin.getClassName(), Log.INFO);
+				plugin.loadTranslationResources();
 			}
 		}, PluginProcessor.FORWARD);
 	}
@@ -399,18 +398,16 @@ public class PluginManager extends BaseObject
 	/**
 	 * Unload the text resources of all plugins.
 	 */
-	public void unloadTranslationResources ()
+	public void unloadTranslationResources()
 	{
-		PluginProcessor processor = new PluginProcessor (plugins);
+		PluginProcessor processor = new PluginProcessor(plugins);
 
-		processor.doPlugins (new PluginProcess ()
+		processor.doPlugins(new PluginProcess()
 		{
-			public void doPlugin (Plugin plugin)
+			public void doPlugin(Plugin plugin)
 			{
-				Log
-								.log ("plugin", "PluginManager", "Unload plugin text resources: "
-												+ plugin.getClassName (), Log.INFO);
-				plugin.unloadTranslationResources ();
+				Log.log("plugin", "PluginManager", "Unload plugin text resources: " + plugin.getClassName(), Log.INFO);
+				plugin.unloadTranslationResources();
 			}
 		}, PluginProcessor.BACKWARD);
 	}
@@ -421,15 +418,15 @@ public class PluginManager extends BaseObject
 	 * @param name The plugin name.
 	 * @return The plugin or null if it wasn't found.
 	 */
-	public Plugin getPlugin (String name)
+	public Plugin getPlugin(String name)
 	{
-		for (Iterator<PluginContext> i = plugins.iterator (); i.hasNext ();)
+		for (Iterator<PluginContext> i = plugins.iterator(); i.hasNext();)
 		{
-			PluginContext context = (PluginContext) i.next ();
+			PluginContext context = (PluginContext) i.next();
 
-			if (context.getPlugin ().getName ().equals (name))
+			if (context.getPlugin().getName().equals(name))
 			{
-				return context.getPlugin ();
+				return context.getPlugin();
 			}
 		}
 
@@ -442,15 +439,15 @@ public class PluginManager extends BaseObject
 	 * @param name The plugin name.
 	 * @return The class loader from the plugin.
 	 */
-	public ClassLoader getClassLoaderByPlugin (String name)
+	public ClassLoader getClassLoaderByPlugin(String name)
 	{
-		for (Iterator<PluginContext> i = plugins.iterator (); i.hasNext ();)
+		for (Iterator<PluginContext> i = plugins.iterator(); i.hasNext();)
 		{
-			PluginContext context = (PluginContext) i.next ();
+			PluginContext context = (PluginContext) i.next();
 
-			if (context.getPlugin ().getName ().equals (name))
+			if (context.getPlugin().getName().equals(name))
 			{
-				return context.getClassLoader ();
+				return context.getClassLoader();
 			}
 		}
 

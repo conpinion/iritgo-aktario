@@ -26,20 +26,20 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
 
 public class InstantMessagePlugin extends FrameworkPlugin
 {
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new InstantMessageSendPane ());
-		registerGUIPane (new InstantMessageReceivePane ());
-		registerGUIPane (new ArchivInstantMessagePane ());
+		registerGUIPane(new InstantMessageSendPane());
+		registerGUIPane(new InstantMessageReceivePane());
+		registerGUIPane(new ArchivInstantMessagePane());
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (Plugin.CLIENT, new InstantMessageCommand ());
+		registerCommand(Plugin.CLIENT, new InstantMessageCommand());
 	}
 
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new InstantMessageAgent ());
+		registerDataObject(new InstantMessageAgent());
 	}
 }

@@ -34,9 +34,9 @@ public class NetworkFrameworkServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public NetworkFrameworkServerAction ()
+	public NetworkFrameworkServerAction()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -44,16 +44,16 @@ public class NetworkFrameworkServerAction extends FrameworkServerAction
 	 *
 	 * @param userUniqueId
 	 */
-	public NetworkFrameworkServerAction (long userUniqueId)
+	public NetworkFrameworkServerAction(long userUniqueId)
 	{
-		super (userUniqueId);
+		super(userUniqueId);
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
 	}
 
@@ -61,7 +61,7 @@ public class NetworkFrameworkServerAction extends FrameworkServerAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
 	}
 
@@ -69,32 +69,32 @@ public class NetworkFrameworkServerAction extends FrameworkServerAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-		FrameworkAction action = getAction (clientTransceiver);
+		FrameworkAction action = getAction(clientTransceiver);
 
 		if (action == null)
 		{
 			return;
 		}
 
-		action.setTransceiver (clientTransceiver);
+		action.setTransceiver(clientTransceiver);
 
 		// The direct answer of a action have the same uniqueId, its import for the blocked networkprocessors, its a fact...
-		action.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (action);
+		action.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(action);
 	}
 
-	public User getUser ()
+	public User getUser()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-		return (User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ();
+		return (User) clientTransceiver.getConnectedChannel().getCustomerContextObject();
 	}
 
-	public FrameworkAction getAction (@SuppressWarnings("unused") ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(@SuppressWarnings("unused") ClientTransceiver clientTransceiver)
 	{
 		return null;
 	}

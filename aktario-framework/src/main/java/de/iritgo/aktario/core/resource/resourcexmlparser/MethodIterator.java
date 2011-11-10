@@ -32,22 +32,22 @@ public class MethodIterator implements Iterator
 
 	private Object[] methodList;
 
-	public MethodIterator (Object[] methodList)
+	public MethodIterator(Object[] methodList)
 	{
 		this.methodList = methodList;
 	}
 
-	public boolean hasNext ()
+	public boolean hasNext()
 	{
 		return pos < methodList.length;
 	}
 
-	public Object next ()
+	public Object next()
 	{
 		return methodList[pos++];
 	}
 
-	public void remove ()
+	public void remove()
 	{
 	}
 }

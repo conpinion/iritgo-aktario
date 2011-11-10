@@ -44,9 +44,9 @@ public class RegisterNewUser extends Command
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUser (String nickname, String email)
+	public RegisterNewUser(String nickname, String email)
 	{
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 		this.nickname = nickname;
 		this.email = email;
 	}
@@ -56,37 +56,37 @@ public class RegisterNewUser extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		IDisplay display = Client.instance ().getClientGUI ().getDesktopManager ().getDisplay ("main.connect");
+		IDisplay display = Client.instance().getClientGUI().getDesktopManager().getDisplay("main.connect");
 
 		if (display != null)
 		{
-			display.close ();
-			Client.instance ().getClientGUI ().getDesktopManager ().removeDisplay (display);
+			display.close();
+			Client.instance().getClientGUI().getDesktopManager().removeDisplay(display);
 		}
 
-		double channelNumber = appContext.getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = appContext.getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		RegisterNewUserServerAction registerNewUserServerAction = new RegisterNewUserServerAction (nickname, email);
+		RegisterNewUserServerAction registerNewUserServerAction = new RegisterNewUserServerAction(nickname, email);
 
-		registerNewUserServerAction.setTransceiver (clientTransceiver);
+		registerNewUserServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (registerNewUserServerAction);
+		ActionTools.sendToServer(registerNewUserServerAction);
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
-		return appContext.isConnectedWithServer ();
+		return appContext.isConnectedWithServer();
 	}
 }

@@ -56,50 +56,50 @@ public class UserLoginFailurePane extends SwingGUIPane
 	/**
 	 * Close the dialog and reopen the login dialog.
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
-			CommandTools.performAsync (new ShowDialog ("AktarioUserLoginDialog"));
+			display.close();
+			CommandTools.performAsync(new ShowDialog("AktarioUserLoginDialog"));
 		}
 	};
 
 	/**
 	 * Create a new login failure dialog.
 	 */
-	public UserLoginFailurePane ()
+	public UserLoginFailurePane()
 	{
-		super ("AktarioUserLoginFailureDialog");
+		super("AktarioUserLoginFailureDialog");
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (UserLoginFailurePane.class.getClassLoader ());
+			swingEngine.setClassLoader(UserLoginFailurePane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/UserLoginFailurePane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/UserLoginFailurePane.xml"));
 
-			int failure = ((Integer) getDisplay ().getProperties ().get ("failure")).intValue ();
+			int failure = ((Integer) getDisplay().getProperties().get("failure")).intValue();
 
 			String msg;
 
 			if (failure == UserLoginFailureAction.USER_ALREADY_ONLINE)
 			{
-				msg = Engine.instance ().getResourceService ().getString ("aktario.userLoginFailureUserAlreadyOnline");
+				msg = Engine.instance().getResourceService().getString("aktario.userLoginFailureUserAlreadyOnline");
 
-				button.setEnabled (false);
+				button.setEnabled(false);
 
-				new Thread (new Runnable ()
+				new Thread(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
 						int i = 0;
 
@@ -109,42 +109,42 @@ public class UserLoginFailurePane extends SwingGUIPane
 
 							try
 							{
-								Thread.sleep (1000);
+								Thread.sleep(1000);
 							}
 							catch (Exception x)
 							{
 							}
 
-							button.setText ("" + (10 - i));
+							button.setText("" + (10 - i));
 						}
 
-						display.close ();
+						display.close();
 					}
-				}).start ();
+				}).start();
 			}
 			else if (failure == UserLoginFailureAction.LOGIN_NOT_ALLOWED)
 			{
-				msg = Engine.instance ().getResourceService ().getString ("aktario.userLoginNotAllowed");
+				msg = Engine.instance().getResourceService().getString("aktario.userLoginNotAllowed");
 			}
 			else
 			{
-				msg = Engine.instance ().getResourceService ().getString ("aktario.userLoginFailureBadNameOrPassword");
+				msg = Engine.instance().getResourceService().getString("aktario.userLoginFailureBadNameOrPassword");
 			}
 
-			StringTokenizer st = new StringTokenizer (msg, "\n");
+			StringTokenizer st = new StringTokenizer(msg, "\n");
 
-			while (st.hasMoreTokens ())
+			while (st.hasMoreTokens())
 			{
-				messagePanel.add (new JLabel (st.nextToken ()));
+				messagePanel.add(new JLabel(st.nextToken()));
 			}
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 
-			Log.logError ("client", "UserLoginFailureDialog", x.toString ());
+			Log.logError("client", "UserLoginFailureDialog", x.toString());
 		}
 	}
 
@@ -154,19 +154,19 @@ public class UserLoginFailurePane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new UserLoginFailurePane ();
+		return new UserLoginFailurePane();
 	}
 
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		/* empty */
 	}
 
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		/* empty */
 	}

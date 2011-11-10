@@ -58,14 +58,14 @@ public class EditUserPane extends SwingGUIPane
 
 		public int role;
 
-		public RoleItem (String name, int role)
+		public RoleItem(String name, int role)
 		{
 			this.name = name;
 			this.role = role;
 		}
 
 		@Override
-		public String toString ()
+		public String toString()
 		{
 			return name;
 		}
@@ -92,29 +92,29 @@ public class EditUserPane extends SwingGUIPane
 	/**
 	 * Save the data object and close the display.
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			if (new String (password.getPassword ()).equals (new String (passwordRepeat.getPassword ())))
+			if (new String(password.getPassword()).equals(new String(passwordRepeat.getPassword())))
 			{
-				if (username.getText ().equals (""))
+				if (username.getText().equals(""))
 				{
-					JOptionPane.showMessageDialog (content, Engine.instance ().getResourceService ().getString (
-									"aktario-user.noname"), Engine.instance ().getResourceService ().getString (
+					JOptionPane.showMessageDialog(content, Engine.instance().getResourceService().getString(
+									"aktario-user.noname"), Engine.instance().getResourceService().getString(
 									"app.title"), JOptionPane.OK_OPTION);
 
 					return;
 				}
 
-				storeToObject ();
-				display.close ();
+				storeToObject();
+				display.close();
 			}
 			else
 			{
-				JOptionPane.showMessageDialog (content, Engine.instance ().getResourceService ().getString (
-								"aktario-user.passwordrepeatfailure"), Engine.instance ().getResourceService ()
-								.getString ("app.title"), JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(content, Engine.instance().getResourceService().getString(
+								"aktario-user.passwordrepeatfailure"), Engine.instance().getResourceService()
+								.getString("app.title"), JOptionPane.OK_OPTION);
 			}
 		}
 	};
@@ -122,27 +122,27 @@ public class EditUserPane extends SwingGUIPane
 	/**
 	 * Close the display.
 	 */
-	public Action cancelAction = new AbstractAction ()
+	public Action cancelAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 			if (sessionContext != null)
 			{
-				AktarioUserRegistry list = (AktarioUserRegistry) sessionContext.get ("userlist");
+				AktarioUserRegistry list = (AktarioUserRegistry) sessionContext.get("userlist");
 
-				list.removeUser ((AktarioUser) getIObject ());
+				list.removeUser((AktarioUser) getIObject());
 			}
 
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new EditUserGUIPane.
 	 */
-	public EditUserPane ()
+	public EditUserPane()
 	{
-		super ("EditUserGUIPane");
+		super("EditUserGUIPane");
 	}
 
 	/**
@@ -150,26 +150,26 @@ public class EditUserPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (AktarioClientPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(AktarioClientPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/EditUserPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/EditUserPane.xml"));
 
-			ResourceService resources = Engine.instance ().getResourceService ();
+			ResourceService resources = Engine.instance().getResourceService();
 
-			role.addItem (new RoleItem (resources.getString ("aktario.roleAdmin"), AktarioUser.ROLE_ADMIN));
-			role.addItem (new RoleItem (resources.getString ("aktario.roleUser"), AktarioUser.ROLE_USER));
+			role.addItem(new RoleItem(resources.getString("aktario.roleAdmin"), AktarioUser.ROLE_ADMIN));
+			role.addItem(new RoleItem(resources.getString("aktario.roleUser"), AktarioUser.ROLE_USER));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "EditUserGUIPane.initGUI", x.toString ());
+			Log.logError("client", "EditUserGUIPane.initGUI", x.toString());
 		}
 	}
 
@@ -177,42 +177,42 @@ public class EditUserPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		AktarioUser user = (AktarioUser) iobject;
 
-		username.setText (user.getName ());
-		password.setText (user.getPassword ());
-		passwordRepeat.setText (user.getPassword ());
-		email.setText (user.getEmail ());
-		fullName.setText (user.getFullName ());
+		username.setText(user.getName());
+		password.setText(user.getPassword());
+		passwordRepeat.setText(user.getPassword());
+		email.setText(user.getEmail());
+		fullName.setText(user.getFullName());
 
-		for (int i = 0; i < role.getItemCount (); ++i)
+		for (int i = 0; i < role.getItemCount(); ++i)
 		{
-			if (((RoleItem) role.getItemAt (i)).role == user.getRole ())
+			if (((RoleItem) role.getItemAt(i)).role == user.getRole())
 			{
-				role.setSelectedIndex (i);
+				role.setSelectedIndex(i);
 			}
 		}
 
-		username.selectAll ();
+		username.selectAll();
 	}
 
 	/**
 	 * StoreFormObject, load the Data form Object.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		AktarioUser user = (AktarioUser) iobject;
 
-		user.setName (username.getText ());
-		user.setPassword (new String (password.getPassword ()));
-		user.setEmail (email.getText ());
-		user.setFullName (fullName.getText ());
-		user.setRole (((RoleItem) role.getSelectedItem ()).role);
+		user.setName(username.getText());
+		user.setPassword(new String(password.getPassword()));
+		user.setEmail(email.getText());
+		user.setFullName(fullName.getText());
+		user.setRole(((RoleItem) role.getSelectedItem()).role);
 
-		user.update ();
+		user.update();
 	}
 
 	/**
@@ -221,8 +221,8 @@ public class EditUserPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new EditUserPane ();
+		return new EditUserPane();
 	}
 }

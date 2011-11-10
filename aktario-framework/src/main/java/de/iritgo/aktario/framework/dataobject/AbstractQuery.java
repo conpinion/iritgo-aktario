@@ -41,112 +41,112 @@ public class AbstractQuery extends DataObject implements Query
 {
 	private DataObject dataObject;
 
-	public AbstractQuery (String queryName)
+	public AbstractQuery(String queryName)
 	{
-		super (queryName);
-		addAttribute ("dataObjectTypeId", "none");
-		addAttribute ("userUniqueId", new Long (0));
-		addAttribute ("searchCondition", "");
-		addAttribute ("results", new IObjectList ("results", new FrameworkProxy (new DataObject ("dummy")), this));
+		super(queryName);
+		addAttribute("dataObjectTypeId", "none");
+		addAttribute("userUniqueId", new Long(0));
+		addAttribute("searchCondition", "");
+		addAttribute("results", new IObjectList("results", new FrameworkProxy(new DataObject("dummy")), this));
 	}
 
-	public void setDataObject (DataObject dataObject)
+	public void setDataObject(DataObject dataObject)
 	{
 		this.dataObject = dataObject;
-		setAttribute ("dataObjectTypeId", dataObject.getTypeId ());
+		setAttribute("dataObjectTypeId", dataObject.getTypeId());
 	}
 
-	public void setDataObjectTypeId (String dataObjectTypeId)
+	public void setDataObjectTypeId(String dataObjectTypeId)
 	{
-		setAttribute ("dataObjectTypeId", dataObjectTypeId);
+		setAttribute("dataObjectTypeId", dataObjectTypeId);
 	}
 
-	public String getDataObjectTypeId ()
+	public String getDataObjectTypeId()
 	{
-		return getStringAttribute ("dataObjectTypeId");
+		return getStringAttribute("dataObjectTypeId");
 	}
 
-	public void setSearchCondition (String searchCondition)
+	public void setSearchCondition(String searchCondition)
 	{
-		setAttribute ("searchCondition", searchCondition);
+		setAttribute("searchCondition", searchCondition);
 	}
 
-	public String getSearchCondition ()
+	public String getSearchCondition()
 	{
-		return getStringAttribute ("searchCondition");
+		return getStringAttribute("searchCondition");
 	}
 
-	public void setUserUniqueId (long uniqueId)
+	public void setUserUniqueId(long uniqueId)
 	{
-		setAttribute ("userUniqueId", uniqueId);
+		setAttribute("userUniqueId", uniqueId);
 	}
 
-	public long getUserUniqueId ()
+	public long getUserUniqueId()
 	{
-		return getLongAttribute ("userUniqueId");
+		return getLongAttribute("userUniqueId");
 	}
 
-	public Iterator getResults ()
+	public Iterator getResults()
 	{
-		return getIObjectListAttribute ("results").iterator ();
+		return getIObjectListAttribute("results").iterator();
 	}
 
-	public IObjectList getIObjectListResults ()
+	public IObjectList getIObjectListResults()
 	{
-		return getIObjectListAttribute ("results");
+		return getIObjectListAttribute("results");
 	}
 
-	public boolean workingWithThisDataObjectTypeId (String dataObjectTypeId)
+	public boolean workingWithThisDataObjectTypeId(String dataObjectTypeId)
 	{
-		return getDataObjectTypeId ().equals (dataObjectTypeId);
+		return getDataObjectTypeId().equals(dataObjectTypeId);
 	}
 
-	public void doQuery ()
-	{
-	}
-
-	public void doCreatedDataObjectQuery (DataObject dataObject)
+	public void doQuery()
 	{
 	}
 
-	public void doDeletedDataObjectQuery (DataObject dataObject)
+	public void doCreatedDataObjectQuery(DataObject dataObject)
 	{
 	}
 
-	public void refresh ()
+	public void doDeletedDataObjectQuery(DataObject dataObject)
 	{
 	}
 
-	public void createdUpdateOwner ()
+	public void refresh()
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		User user = userRegistry.getUser (getUserUniqueId ());
-
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
-
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
-
-		EditIObjectAction editPrototypeAction = new EditIObjectAction (EditIObjectAction.OK, this);
-
-		editPrototypeAction.setTransceiver (clientTransceiver);
-		editPrototypeAction.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (editPrototypeAction);
 	}
 
-	public void removedUpdateOwner (IObject iObject)
+	public void createdUpdateOwner()
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		User user = userRegistry.getUser (getUserUniqueId ());
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		User user = userRegistry.getUser(getUserUniqueId());
 
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
+		clientTransceiver.addReceiver(user.getNetworkChannel());
 
-		ProxyLinkedListRemoveAction action = new ProxyLinkedListRemoveAction (iObject.getUniqueId (), iObject
-						.getTypeId (), getUniqueId (), getTypeId (), "results");
+		EditIObjectAction editPrototypeAction = new EditIObjectAction(EditIObjectAction.OK, this);
 
-		action.setTransceiver (clientTransceiver);
-		action.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (action);
+		editPrototypeAction.setTransceiver(clientTransceiver);
+		editPrototypeAction.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(editPrototypeAction);
+	}
+
+	public void removedUpdateOwner(IObject iObject)
+	{
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		User user = userRegistry.getUser(getUserUniqueId());
+
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
+
+		clientTransceiver.addReceiver(user.getNetworkChannel());
+
+		ProxyLinkedListRemoveAction action = new ProxyLinkedListRemoveAction(iObject.getUniqueId(),
+						iObject.getTypeId(), getUniqueId(), getTypeId(), "results");
+
+		action.setTransceiver(clientTransceiver);
+		action.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(action);
 	}
 }

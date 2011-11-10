@@ -40,10 +40,10 @@ public class ITitledPanel extends JPanel
 	/**
 	 * Create a new ITitledPanel.
 	 */
-	public ITitledPanel ()
+	public ITitledPanel()
 	{
-		border = new TitledBorder (" ");
-		setBorder (border);
+		border = new TitledBorder(" ");
+		setBorder(border);
 	}
 
 	/**
@@ -51,8 +51,8 @@ public class ITitledPanel extends JPanel
 	 *
 	 * @param titleKey The title specified by a resource key.
 	 */
-	public void setTitle (String titleKey)
+	public void setTitle(String titleKey)
 	{
-		border.setTitle (Engine.instance ().getResourceService ().getStringWithoutException (titleKey));
+		border.setTitle(Engine.instance().getResourceService().getStringWithoutException(titleKey));
 	}
 }

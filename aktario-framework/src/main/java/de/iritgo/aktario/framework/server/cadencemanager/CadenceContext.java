@@ -42,9 +42,9 @@ public class CadenceContext extends BaseObject
 	 *
 	 * @param user The user for this turncontext.
 	 */
-	public CadenceContext (User user)
+	public CadenceContext(User user)
 	{
-		super ("turncontext");
+		super("turncontext");
 		this.user = user;
 		isTurnFired = false;
 	}
@@ -54,53 +54,53 @@ public class CadenceContext extends BaseObject
 	 *
 	 * @param user The user for this turncontext.
 	 */
-	public CadenceContext (User user, boolean isTurnFired)
+	public CadenceContext(User user, boolean isTurnFired)
 	{
-		this (user);
+		this(user);
 		this.isTurnFired = isTurnFired;
 	}
 
 	/**
 	 * Get the Ping time from this user.
 	 */
-	public long getPingTime ()
+	public long getPingTime()
 	{
-		long pingTime = user.getPingTime ();
+		long pingTime = user.getPingTime();
 
 		if ((pingTime <= 10) || (pingTime >= 200))
 		{
-			return CadenceManager.TURN_INTERVAL - Math.round (user.getLastRealPingTime () / 2);
+			return CadenceManager.TURN_INTERVAL - Math.round(user.getLastRealPingTime() / 2);
 		}
 
-		return CadenceManager.TURN_INTERVAL - Math.round (pingTime / 2);
+		return CadenceManager.TURN_INTERVAL - Math.round(pingTime / 2);
 	}
 
-	public void turn ()
+	public void turn()
 	{
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
+		clientTransceiver.addReceiver(user.getNetworkChannel());
 
-		FrameworkAction action = new TurnAction (1);
+		FrameworkAction action = new TurnAction(1);
 
-		action.setTransceiver (clientTransceiver);
+		action.setTransceiver(clientTransceiver);
 
 		isTurnFired = true;
 
-		ActionTools.sendToClient (action);
+		ActionTools.sendToClient(action);
 	}
 
-	public boolean isTurnFired ()
+	public boolean isTurnFired()
 	{
 		return isTurnFired;
 	}
 
-	public User getUser ()
+	public User getUser()
 	{
 		return user;
 	}
 
-	public void reset ()
+	public void reset()
 	{
 		isTurnFired = false;
 	}

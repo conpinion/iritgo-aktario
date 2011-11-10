@@ -26,19 +26,19 @@ import javax.swing.JPanel;
 
 public interface PreferencesPaneInterface
 {
-	public String getName ();
+	public String getName();
 
-	public ImageIcon getIcon ();
+	public ImageIcon getIcon();
 
-	public JPanel getPanel ();
+	public JPanel getPanel();
 
-	public void init ();
+	public void init();
 
-	public PreferencesPaneInterface clone ();
+	public PreferencesPaneInterface clone();
 
-	public void applyAction ();
+	public void applyAction();
 
-	public void cancleAction ();
+	public void cancleAction();
 
-	public void saveAction ();
+	public void saveAction();
 }

@@ -39,9 +39,9 @@ public class GUIPaneRegistry extends BaseObject
 	/**
 	 * Create a new gui pane registry.
 	 */
-	public GUIPaneRegistry ()
+	public GUIPaneRegistry()
 	{
-		guiPanes = new HashMap ();
+		guiPanes = new HashMap();
 	}
 
 	/**
@@ -49,9 +49,9 @@ public class GUIPaneRegistry extends BaseObject
 	 *
 	 * @param guiPane The gui pane to add.
 	 */
-	public void add (GUIPane guiPane)
+	public void add(GUIPane guiPane)
 	{
-		guiPanes.put (guiPane.getTypeId (), guiPane);
+		guiPanes.put(guiPane.getTypeId(), guiPane);
 	}
 
 	/**
@@ -59,9 +59,9 @@ public class GUIPaneRegistry extends BaseObject
 	 *
 	 * @param guiPaneId The id of the gui pane to remove.
 	 */
-	public void remove (String guiPaneId)
+	public void remove(String guiPaneId)
 	{
-		guiPanes.remove (guiPaneId);
+		guiPanes.remove(guiPaneId);
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class GUIPaneRegistry extends BaseObject
 	 *
 	 * @param guiPane The gui pane to remove.
 	 */
-	public void remove (GUIPane guiPane)
+	public void remove(GUIPane guiPane)
 	{
-		guiPanes.remove (guiPane);
+		guiPanes.remove(guiPane);
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class GUIPaneRegistry extends BaseObject
 	 *
 	 * @param guiPaneId The id of the gui pane to retrieve.
 	 */
-	public GUIPane create (String guiPaneId)
+	public GUIPane create(String guiPaneId)
 	{
-		return ((GUIPane) guiPanes.get (guiPaneId)).cloneGUIPane ();
+		return ((GUIPane) guiPanes.get(guiPaneId)).cloneGUIPane();
 	}
 
 	/**
@@ -91,11 +91,11 @@ public class GUIPaneRegistry extends BaseObject
 	 *
 	 * @return The gui pane registry.
 	 */
-	static public GUIPaneRegistry instance ()
+	static public GUIPaneRegistry instance()
 	{
 		if (guiPaneRegistry == null)
 		{
-			guiPaneRegistry = new GUIPaneRegistry ();
+			guiPaneRegistry = new GUIPaneRegistry();
 		}
 
 		return guiPaneRegistry;

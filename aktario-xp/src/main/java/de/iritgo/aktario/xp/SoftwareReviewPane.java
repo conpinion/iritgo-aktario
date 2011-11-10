@@ -157,265 +157,263 @@ public class SoftwareReviewPane extends ApplicationPane
 	/**
 	 * Select the base directory.
 	 */
-	public Action baseDirAction = new AbstractAction ()
+	public Action baseDirAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			showBaseDirChooser ();
+			showBaseDirChooser();
 		}
 	};
 
 	/**
 	 * Browse to a new url.
 	 */
-	public Action urlAction = new AbstractAction ()
+	public Action urlAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			controlUrl (urlDisplay.getText ());
-			remoteControlUrl (urlDisplay.getText ());
+			controlUrl(urlDisplay.getText());
+			remoteControlUrl(urlDisplay.getText());
 		}
 	};
 
 	/**
 	 * Browse to a new url.
 	 */
-	public Action viewAction = new AbstractAction ()
+	public Action viewAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			int viewType = NumberTools.toInt (((Component) e.getSource ()).getName (), 0);
+			int viewType = NumberTools.toInt(((Component) e.getSource()).getName(), 0);
 
-			controlView (viewType);
-			remoteControlView (viewType);
+			controlView(viewType);
+			remoteControlView(viewType);
 		}
 	};
 
 	/**
 	 * Create a new SoftwareReviewPane.
 	 */
-	public SoftwareReviewPane ()
+	public SoftwareReviewPane()
 	{
-		super ("SoftwareReviewPane");
+		super("SoftwareReviewPane");
 
-		tokenMarkerByExtension = new HashMap ();
-		tokenMarkerByExtension.put ("java", new JavaTokenMarker ());
-		tokenMarkerByExtension.put ("xml", new XMLTokenMarker ());
-		tokenMarkerByExtension.put ("jsp", new XMLTokenMarker ());
-		tokenMarkerByExtension.put ("html", new HTMLTokenMarker ());
-		tokenMarkerByExtension.put ("properties", new PropsTokenMarker ());
-		tokenMarkerByExtension.put ("sql", new TSQLTokenMarker ());
+		tokenMarkerByExtension = new HashMap();
+		tokenMarkerByExtension.put("java", new JavaTokenMarker());
+		tokenMarkerByExtension.put("xml", new XMLTokenMarker());
+		tokenMarkerByExtension.put("jsp", new XMLTokenMarker());
+		tokenMarkerByExtension.put("html", new HTMLTokenMarker());
+		tokenMarkerByExtension.put("properties", new PropsTokenMarker());
+		tokenMarkerByExtension.put("sql", new TSQLTokenMarker());
 
 		try
 		{
-			reJavaImport = Pattern.compile ("import\\s+(\\w+(\\.\\w+)*)\\s*;");
+			reJavaImport = Pattern.compile("import\\s+(\\w+(\\.\\w+)*)\\s*;");
 		}
 		catch (PatternSyntaxException x)
 		{
-			Log.logError ("client", "SoftwareReviewPane", x.toString ());
+			Log.logError("client", "SoftwareReviewPane", x.toString());
 		}
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		super.initGUI ();
+		super.initGUI();
 
-		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction (AppContext
-						.instance ().getUser (), false);
+		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction(AppContext
+						.instance().getUser(), false);
 
-		ActionTools.sendToServer (aktarioUserReadyServerAction);
+		ActionTools.sendToServer(aktarioUserReadyServerAction);
 
 		try
 		{
-			SwingTagLibrary.getInstance ().registerTag ("jedit", CodeEditor.class);
+			SwingTagLibrary.getInstance().registerTag("jedit", CodeEditor.class);
 
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (SoftwareReviewPane.class.getClassLoader ());
+			swingEngine.setClassLoader(SoftwareReviewPane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/SoftwareReviewPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/SoftwareReviewPane.xml"));
 
-			code.addCaretListener (new CaretListener ()
+			code.addCaretListener(new CaretListener()
 			{
-				public void caretUpdate (CaretEvent e)
+				public void caretUpdate(CaretEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlCaret (e.getDot (), e.getMark ());
+						remoteControlCaret(e.getDot(), e.getMark());
 					}
 				}
 			});
 
-			code.addHorizontalAdjustmentListener (new AdjustmentListener ()
+			code.addHorizontalAdjustmentListener(new AdjustmentListener()
 			{
-				public void adjustmentValueChanged (AdjustmentEvent e)
+				public void adjustmentValueChanged(AdjustmentEvent e)
 				{
-					if (! ignoreEvents && ! e.getValueIsAdjusting ())
+					if (! ignoreEvents && ! e.getValueIsAdjusting())
 					{
-						remoteControlScroll (code.getFirstVisibleLine (), code.getFirstVisibleColumn ());
+						remoteControlScroll(code.getFirstVisibleLine(), code.getFirstVisibleColumn());
 					}
 				}
 			});
 
-			code.addVerticalAdjustmentListener (new AdjustmentListener ()
+			code.addVerticalAdjustmentListener(new AdjustmentListener()
 			{
-				public void adjustmentValueChanged (AdjustmentEvent e)
+				public void adjustmentValueChanged(AdjustmentEvent e)
 				{
-					if (! ignoreEvents && ! e.getValueIsAdjusting ())
+					if (! ignoreEvents && ! e.getValueIsAdjusting())
 					{
-						remoteControlScroll (code.getFirstVisibleLine (), code.getFirstVisibleColumn ());
+						remoteControlScroll(code.getFirstVisibleLine(), code.getFirstVisibleColumn());
 					}
 				}
 			});
 
-			DefaultInputHandler codeInputHandler = new DefaultInputHandler ()
+			DefaultInputHandler codeInputHandler = new DefaultInputHandler()
 			{
-				public void keyTyped (KeyEvent e)
+				public void keyTyped(KeyEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlKeyType (e.getKeyCode (), e.getKeyChar (), e.getModifiers ());
+						remoteControlKeyType(e.getKeyCode(), e.getKeyChar(), e.getModifiers());
 					}
 
-					super.keyTyped (e);
+					super.keyTyped(e);
 				}
 
-				public void keyPressed (KeyEvent e)
+				public void keyPressed(KeyEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlKeyPress (e.getKeyCode (), e.getKeyChar (), e.getModifiers ());
+						remoteControlKeyPress(e.getKeyCode(), e.getKeyChar(), e.getModifiers());
 					}
 
-					super.keyPressed (e);
+					super.keyPressed(e);
 				}
 
-				public void keyReleased (KeyEvent e)
+				public void keyReleased(KeyEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlKeyRelease (e.getKeyCode (), e.getKeyChar (), e.getModifiers ());
+						remoteControlKeyRelease(e.getKeyCode(), e.getKeyChar(), e.getModifiers());
 					}
 
-					super.keyReleased (e);
+					super.keyReleased(e);
 				}
 			};
 
-			codeInputHandler.addDefaultKeyBindings ();
-			code.setInputHandler (codeInputHandler);
+			codeInputHandler.addDefaultKeyBindings();
+			code.setInputHandler(codeInputHandler);
 
 			SyntaxStyle[] styles = new SyntaxStyle[Token.ID_COUNT];
 
-			styles[Token.COMMENT1] = new SyntaxStyle (new Color (0x3F7F5F), true, false);
-			styles[Token.COMMENT2] = new SyntaxStyle (new Color (0x3F7F5F), true, false);
-			styles[Token.KEYWORD1] = new SyntaxStyle (new Color (0x7F0055), false, true);
-			styles[Token.KEYWORD2] = new SyntaxStyle (new Color (0x7F0055), false, true);
-			styles[Token.KEYWORD3] = new SyntaxStyle (new Color (0x7F0055), false, true);
-			styles[Token.LITERAL1] = new SyntaxStyle (new Color (0x2A00FF), false, false);
-			styles[Token.LITERAL2] = new SyntaxStyle (new Color (0x2A00FF), false, true);
-			styles[Token.LABEL] = new SyntaxStyle (new Color (0x990033), false, true);
-			styles[Token.OPERATOR] = new SyntaxStyle (Color.black, false, true);
-			styles[Token.INVALID] = new SyntaxStyle (Color.red, false, true);
+			styles[Token.COMMENT1] = new SyntaxStyle(new Color(0x3F7F5F), true, false);
+			styles[Token.COMMENT2] = new SyntaxStyle(new Color(0x3F7F5F), true, false);
+			styles[Token.KEYWORD1] = new SyntaxStyle(new Color(0x7F0055), false, true);
+			styles[Token.KEYWORD2] = new SyntaxStyle(new Color(0x7F0055), false, true);
+			styles[Token.KEYWORD3] = new SyntaxStyle(new Color(0x7F0055), false, true);
+			styles[Token.LITERAL1] = new SyntaxStyle(new Color(0x2A00FF), false, false);
+			styles[Token.LITERAL2] = new SyntaxStyle(new Color(0x2A00FF), false, true);
+			styles[Token.LABEL] = new SyntaxStyle(new Color(0x990033), false, true);
+			styles[Token.OPERATOR] = new SyntaxStyle(Color.black, false, true);
+			styles[Token.INVALID] = new SyntaxStyle(Color.red, false, true);
 
-			code.getPainter ().setStyles (styles);
+			code.getPainter().setStyles(styles);
 
-			html.addHyperlinkListener (new HyperlinkListener ()
+			html.addHyperlinkListener(new HyperlinkListener()
 			{
-				public void hyperlinkUpdate (HyperlinkEvent e)
+				public void hyperlinkUpdate(HyperlinkEvent e)
 				{
-					if (e.getEventType () == HyperlinkEvent.EventType.ACTIVATED)
+					if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
 					{
-						controlUrl (e.getURL ().toString ());
-						remoteControlUrl (e.getURL ().toString ());
+						controlUrl(e.getURL().toString());
+						remoteControlUrl(e.getURL().toString());
 					}
 				}
 			});
 
-			fileBrowser.addMouseListener (new MouseAdapter ()
+			fileBrowser.addMouseListener(new MouseAdapter()
 			{
-				public void mouseClicked (MouseEvent e)
+				public void mouseClicked(MouseEvent e)
 				{
-					if (e.getClickCount () == 2)
+					if (e.getClickCount() == 2)
 					{
-						if (fileBrowser.getSelectionPath () == null
-										|| (FileNode) fileBrowser.getSelectionPath ().getLastPathComponent () == null)
+						if (fileBrowser.getSelectionPath() == null
+										|| (FileNode) fileBrowser.getSelectionPath().getLastPathComponent() == null)
 						{
 							return;
 						}
 
-						File file = ((FileNode) fileBrowser.getSelectionPath ().getLastPathComponent ()).getFile ();
+						File file = ((FileNode) fileBrowser.getSelectionPath().getLastPathComponent()).getFile();
 
-						if (! file.isFile ())
+						if (! file.isFile())
 						{
 							return;
 						}
 
-						String fileName = createRelativeFilePath (file);
+						String fileName = createRelativeFilePath(file);
 
-						controlFile (fileName);
-						remoteControlFile (fileName);
-						controlView (VIEW_EDITOR);
-						remoteControlView (VIEW_EDITOR);
+						controlFile(fileName);
+						remoteControlFile(fileName);
+						controlView(VIEW_EDITOR);
+						remoteControlView(VIEW_EDITOR);
 					}
 				}
 			});
 
-			fileBrowser.addTreeExpansionListener (new TreeExpansionListener ()
+			fileBrowser.addTreeExpansionListener(new TreeExpansionListener()
 			{
-				public void treeExpanded (TreeExpansionEvent e)
+				public void treeExpanded(TreeExpansionEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlFileTreeExpansion (((FileNode) e.getPath ().getLastPathComponent ()).getFile (),
-										true);
+						remoteControlFileTreeExpansion(((FileNode) e.getPath().getLastPathComponent()).getFile(), true);
 					}
 				}
 
-				public void treeCollapsed (TreeExpansionEvent e)
+				public void treeCollapsed(TreeExpansionEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						remoteControlFileTreeExpansion (((FileNode) e.getPath ().getLastPathComponent ()).getFile (),
-										false);
+						remoteControlFileTreeExpansion(((FileNode) e.getPath().getLastPathComponent()).getFile(), false);
 					}
 				}
 			});
 
-			fileBrowser.getSelectionModel ().addTreeSelectionListener (new TreeSelectionListener ()
+			fileBrowser.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener()
 			{
-				public void valueChanged (TreeSelectionEvent e)
+				public void valueChanged(TreeSelectionEvent e)
 				{
 					if (! ignoreEvents)
 					{
 						File file = null;
 
-						if (fileBrowser.getSelectionPath () != null)
+						if (fileBrowser.getSelectionPath() != null)
 						{
-							file = ((FileNode) fileBrowser.getSelectionPath ().getLastPathComponent ()).getFile ();
+							file = ((FileNode) fileBrowser.getSelectionPath().getLastPathComponent()).getFile();
 						}
 
-						remoteControlFileTreeSelection (file);
+						remoteControlFileTreeSelection(file);
 					}
 				}
 			});
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			CommandTools.performAsync (new BaseDirCommand (this));
+			CommandTools.performAsync(new BaseDirCommand(this));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "SoftwareReviewPane", x.toString ());
+			Log.logError("client", "SoftwareReviewPane", x.toString());
 		}
 	}
 
 	/**
 	 * Load the gui values from the data object attributes.
 	 */
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		// 		SoftwareReviewData data = (SoftwareReviewData) iobject;
 
@@ -438,16 +436,16 @@ public class SoftwareReviewPane extends ApplicationPane
 	/**
 	 * Store the current gui values into the data object attributes.
 	 */
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
-	public void setWorking (int working)
+	public void setWorking(int working)
 	{
 		this.working = working;
 	}
 
-	public int getWorking ()
+	public int getWorking()
 	{
 		return working;
 	}
@@ -457,9 +455,9 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new SoftwareReviewData ();
+		return new SoftwareReviewData();
 	}
 
 	/**
@@ -467,9 +465,9 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new SoftwareReviewPane ();
+		return new SoftwareReviewPane();
 	}
 
 	/**
@@ -478,12 +476,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param dot Caret position.
 	 * @param mark Caret mark position.
 	 */
-	protected void remoteControlCaret (int dot, int mark)
+	protected void remoteControlCaret(int dot, int mark)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlCaret (dot, mark);
-		sendRemoteControlAction (action);
+		action.controlCaret(dot, mark);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -492,12 +490,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param firstLine The first visible line.
 	 * @param firstColumn The first visible line.
 	 */
-	protected void remoteControlScroll (int firstLine, int firstColumn)
+	protected void remoteControlScroll(int firstLine, int firstColumn)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlScroll (firstLine, firstColumn);
-		sendRemoteControlAction (action);
+		action.controlScroll(firstLine, firstColumn);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -505,12 +503,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param view The view type.
 	 */
-	protected void remoteControlView (int view)
+	protected void remoteControlView(int view)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlView (view);
-		sendRemoteControlAction (action);
+		action.controlView(view);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -518,12 +516,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param url The new url.
 	 */
-	protected void remoteControlUrl (String url)
+	protected void remoteControlUrl(String url)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlUrl (url);
-		sendRemoteControlAction (action);
+		action.controlUrl(url);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -533,12 +531,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void remoteControlKeyPress (int keyCode, char keyChar, int keyModifiers)
+	public void remoteControlKeyPress(int keyCode, char keyChar, int keyModifiers)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlKeyPress (keyCode, keyChar, keyModifiers);
-		sendRemoteControlAction (action);
+		action.controlKeyPress(keyCode, keyChar, keyModifiers);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -548,12 +546,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void remoteControlKeyRelease (int keyCode, char keyChar, int keyModifiers)
+	public void remoteControlKeyRelease(int keyCode, char keyChar, int keyModifiers)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlKeyRelease (keyCode, keyChar, keyModifiers);
-		sendRemoteControlAction (action);
+		action.controlKeyRelease(keyCode, keyChar, keyModifiers);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -563,12 +561,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void remoteControlKeyType (int keyCode, char keyChar, int keyModifiers)
+	public void remoteControlKeyType(int keyCode, char keyChar, int keyModifiers)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlKeyType (keyCode, keyChar, keyModifiers);
-		sendRemoteControlAction (action);
+		action.controlKeyType(keyCode, keyChar, keyModifiers);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -577,12 +575,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param file The expanded or collapsed file node.
 	 * @param expanded True for an expanded, false for a collapsed path.
 	 */
-	public void remoteControlFileTreeExpansion (File file, boolean expanded)
+	public void remoteControlFileTreeExpansion(File file, boolean expanded)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlFileTreeExpansion (createRelativeFilePath (file), expanded);
-		sendRemoteControlAction (action);
+		action.controlFileTreeExpansion(createRelativeFilePath(file), expanded);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -590,12 +588,12 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param file The expanded file node.
 	 */
-	public void remoteControlFileTreeSelection (File file)
+	public void remoteControlFileTreeSelection(File file)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.controlFileTreeSelection (createRelativeFilePath (file));
-		sendRemoteControlAction (action);
+		action.controlFileTreeSelection(createRelativeFilePath(file));
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -603,16 +601,16 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param fileName The name of the new file.
 	 */
-	protected void remoteControlFile (String fileName)
+	protected void remoteControlFile(String fileName)
 	{
-		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction ();
+		RemoteControlCodeServerAction action = new RemoteControlCodeServerAction();
 
-		action.setWorking (1);
-		sendRemoteControlAction (action);
+		action.setWorking(1);
+		sendRemoteControlAction(action);
 
-		action = new RemoteControlCodeServerAction ();
-		action.controlFile (fileName);
-		sendRemoteControlAction (action);
+		action = new RemoteControlCodeServerAction();
+		action.controlFile(fileName);
+		sendRemoteControlAction(action);
 	}
 
 	/**
@@ -620,13 +618,13 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param action The action to send.
 	 */
-	protected void sendRemoteControlAction (RemoteControlCodeServerAction action)
+	protected void sendRemoteControlAction(RemoteControlCodeServerAction action)
 	{
-		ClientTransceiver transceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+		ClientTransceiver transceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-		transceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		action.setTransceiver (transceiver);
-		ActionTools.sendToServer (action);
+		transceiver.addReceiver(AppContext.instance().getChannelNumber());
+		action.setTransceiver(transceiver);
+		ActionTools.sendToServer(action);
 	}
 
 	/**
@@ -635,14 +633,14 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param dot The caret position.
 	 * @param mark The mark position.
 	 */
-	public void controlCaret (final int dot, final int mark)
+	public void controlCaret(final int dot, final int mark)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
-				code.select (dot, mark);
+				code.select(dot, mark);
 				ignoreEvents = false;
 			}
 		});
@@ -654,18 +652,18 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param firstLine The first visible line.
 	 * @param firstColumn The first visible line.
 	 */
-	public void controlScroll (int firstLine, int firstColumn)
+	public void controlScroll(int firstLine, int firstColumn)
 	{
 		final int fl = firstLine;
 		final int fc = firstColumn;
 
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
 				//					code.setVerticalOffset (fl);
-				code.setHorizontalOffset (- fc);
+				code.setHorizontalOffset(- fc);
 				ignoreEvents = false;
 			}
 		});
@@ -676,32 +674,32 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param fileName The name of the file to open (realitve to the base directory).
 	 */
-	public void controlFile (String fileName)
+	public void controlFile(String fileName)
 	{
 		try
 		{
-			currentFile = new File (baseDir, fileName);
+			currentFile = new File(baseDir, fileName);
 
-			BufferedReader in = new BufferedReader (new FileReader (currentFile));
-			final StringBuffer content = new StringBuffer ();
+			BufferedReader in = new BufferedReader(new FileReader(currentFile));
+			final StringBuffer content = new StringBuffer();
 			String line = null;
 
-			while ((line = in.readLine ()) != null)
+			while ((line = in.readLine()) != null)
 			{
-				content.append (line + "\n");
+				content.append(line + "\n");
 			}
 
-			String extension = fileName.substring (fileName.lastIndexOf ('.') + 1);
-			final TokenMarker tokenMarker = (TokenMarker) tokenMarkerByExtension.get (extension);
+			String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+			final TokenMarker tokenMarker = (TokenMarker) tokenMarkerByExtension.get(extension);
 
-			SwingUtilities.invokeLater (new Runnable ()
+			SwingUtilities.invokeLater(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
 					ignoreEvents = true;
-					code.setTokenMarker (tokenMarker);
-					code.setText (content.toString ());
-					fileNameDisplay.setText (currentFile.getAbsolutePath ());
+					code.setTokenMarker(tokenMarker);
+					code.setText(content.toString());
+					fileNameDisplay.setText(currentFile.getAbsolutePath());
 					ignoreEvents = false;
 					isFileOpen = true;
 				}
@@ -709,8 +707,8 @@ public class SoftwareReviewPane extends ApplicationPane
 		}
 		catch (IOException x)
 		{
-			code.setTokenMarker (null);
-			code.setText ("Unable to open file: " + fileName);
+			code.setTokenMarker(null);
+			code.setText("Unable to open file: " + fileName);
 		}
 	}
 
@@ -719,11 +717,11 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param url The name of the url to browse.
 	 */
-	public void controlUrl (final String url)
+	public void controlUrl(final String url)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
 
@@ -731,38 +729,38 @@ public class SoftwareReviewPane extends ApplicationPane
 				{
 					String urlSpec = url;
 
-					html.getDocument ().putProperty (Document.StreamDescriptionProperty, null);
+					html.getDocument().putProperty(Document.StreamDescriptionProperty, null);
 
-					if (! urlSpec.startsWith ("http://") && ! urlSpec.startsWith ("https://"))
+					if (! urlSpec.startsWith("http://") && ! urlSpec.startsWith("https://"))
 					{
 						urlSpec = "http://" + urlSpec;
 					}
 
-					URL aUrl = new URL (urlSpec);
-					URLConnection urlConnection = aUrl.openConnection ();
+					URL aUrl = new URL(urlSpec);
+					URLConnection urlConnection = aUrl.openConnection();
 
-					if ("text/html".equals (urlConnection.getContentType ()))
+					if ("text/html".equals(urlConnection.getContentType()))
 					{
-						html.setPage (aUrl);
+						html.setPage(aUrl);
 					}
 					else
 					{
-						html.setContentType ("text/html");
-						html.setText ("<html><body><img src=\"" + urlSpec + "\"></body></html>");
+						html.setContentType("text/html");
+						html.setText("<html><body><img src=\"" + urlSpec + "\"></body></html>");
 					}
 				}
 				catch (Exception x)
 				{
 					try
 					{
-						html.setText (x.toString ());
+						html.setText(x.toString());
 					}
 					catch (Exception xx)
 					{
 					}
 				}
 
-				urlDisplay.setText (url);
+				urlDisplay.setText(url);
 				ignoreEvents = false;
 			}
 		});
@@ -773,14 +771,14 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param view The view to select.
 	 */
-	public void controlView (final int view)
+	public void controlView(final int view)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
-				((CardLayout) (viewPanel.getLayout ())).show (viewPanel, String.valueOf (view));
+				((CardLayout) (viewPanel.getLayout())).show(viewPanel, String.valueOf(view));
 				ignoreEvents = false;
 			}
 		});
@@ -793,15 +791,15 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void controlKeyPress (final int keyCode, final char keyChar, final int keyModifiers)
+	public void controlKeyPress(final int keyCode, final char keyChar, final int keyModifiers)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
-				code.getInputHandler ().keyPressed (
-								new KeyEvent (code, KeyEvent.KEY_PRESSED, System.currentTimeMillis (), keyModifiers,
+				code.getInputHandler().keyPressed(
+								new KeyEvent(code, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), keyModifiers,
 												keyCode, keyChar));
 				ignoreEvents = false;
 			}
@@ -815,15 +813,15 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void controlKeyRelease (final int keyCode, final char keyChar, final int keyModifiers)
+	public void controlKeyRelease(final int keyCode, final char keyChar, final int keyModifiers)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
-				code.getInputHandler ().keyReleased (
-								new KeyEvent (code, KeyEvent.KEY_RELEASED, System.currentTimeMillis (), keyModifiers,
+				code.getInputHandler().keyReleased(
+								new KeyEvent(code, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), keyModifiers,
 												keyCode, keyChar));
 				ignoreEvents = false;
 			}
@@ -837,15 +835,15 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param keyChar The key char.
 	 * @param keyModifiers The key modifiers.
 	 */
-	public void controlKeyType (final int keyCode, final char keyChar, final int keyModifiers)
+	public void controlKeyType(final int keyCode, final char keyChar, final int keyModifiers)
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
-				code.getInputHandler ().keyTyped (
-								new KeyEvent (code, KeyEvent.KEY_TYPED, System.currentTimeMillis (), keyModifiers,
+				code.getInputHandler().keyTyped(
+								new KeyEvent(code, KeyEvent.KEY_TYPED, System.currentTimeMillis(), keyModifiers,
 												keyCode, keyChar));
 				ignoreEvents = false;
 			}
@@ -858,38 +856,38 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param fileName The path name of the expanded or collapsed file node.
 	 * @param expanded True if the node is expanded.
 	 */
-	public void controlFileTreeExpansion (final String fileName, final boolean expanded)
+	public void controlFileTreeExpansion(final String fileName, final boolean expanded)
 	{
-		if (StringTools.isEmpty (fileName))
+		if (StringTools.isEmpty(fileName))
 		{
 			return;
 		}
 
-		File file = new File (baseDir + Engine.instance ().getFileSeparator () + fileName);
-		final TreePath path = ((FileNode) fileBrowser.getModel ().getRoot ()).findTreePath (file);
+		File file = new File(baseDir + Engine.instance().getFileSeparator() + fileName);
+		final TreePath path = ((FileNode) fileBrowser.getModel().getRoot()).findTreePath(file);
 
-		System.out.println ("F: " + baseDir + ":" + fileName);
+		System.out.println("F: " + baseDir + ":" + fileName);
 
 		if (path == null)
 		{
-			System.out.println ("ERRRRRRRRRRRO " + baseDir + ":" + fileName);
+			System.out.println("ERRRRRRRRRRRO " + baseDir + ":" + fileName);
 
 			return;
 		}
 
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
 
 				if (expanded)
 				{
-					fileBrowser.expandPath (path);
+					fileBrowser.expandPath(path);
 				}
 				else
 				{
-					fileBrowser.collapsePath (path);
+					fileBrowser.collapsePath(path);
 				}
 
 				ignoreEvents = false;
@@ -902,25 +900,25 @@ public class SoftwareReviewPane extends ApplicationPane
 	 *
 	 * @param fileName The path name of the selected node.
 	 */
-	public void controlFileTreeSelection (final String fileName)
+	public void controlFileTreeSelection(final String fileName)
 	{
-		File file = new File (baseDir, fileName);
-		final TreePath path = ((FileNode) fileBrowser.getModel ().getRoot ()).findTreePath (file);
+		File file = new File(baseDir, fileName);
+		final TreePath path = ((FileNode) fileBrowser.getModel().getRoot()).findTreePath(file);
 
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
 				ignoreEvents = true;
 
 				if (path != null)
 				{
-					fileBrowser.setSelectionPath (path);
-					fileBrowser.scrollPathToVisible (path);
+					fileBrowser.setSelectionPath(path);
+					fileBrowser.scrollPathToVisible(path);
 				}
 				else
 				{
-					fileBrowser.clearSelection ();
+					fileBrowser.clearSelection();
 				}
 
 				ignoreEvents = false;
@@ -928,54 +926,54 @@ public class SoftwareReviewPane extends ApplicationPane
 		});
 	}
 
-	private void showBaseDirChooser ()
+	private void showBaseDirChooser()
 	{
-		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction (AppContext
-						.instance ().getUser (), false);
+		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction(AppContext
+						.instance().getUser(), false);
 
-		ActionTools.sendToServer (aktarioUserReadyServerAction);
+		ActionTools.sendToServer(aktarioUserReadyServerAction);
 
-		JFileChooser chooser = new JFileChooser ();
+		JFileChooser chooser = new JFileChooser();
 
-		chooser.setDialogTitle (Engine.instance ().getResourceService ().getString ("chooseBaseDir"));
+		chooser.setDialogTitle(Engine.instance().getResourceService().getString("chooseBaseDir"));
 
 		if (baseDir != null)
 		{
-			chooser.setCurrentDirectory (baseDir);
+			chooser.setCurrentDirectory(baseDir);
 		}
 
-		chooser.setFileSelectionMode (JFileChooser.DIRECTORIES_ONLY);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		int result = chooser.showOpenDialog (content.getTopLevelAncestor ());
+		int result = chooser.showOpenDialog(content.getTopLevelAncestor());
 
 		if (result == JFileChooser.APPROVE_OPTION)
 		{
-			baseDir = chooser.getSelectedFile ();
-			fileNameDisplay.setText (baseDir.getAbsolutePath ());
-			fileBrowser.setRoot (baseDir);
+			baseDir = chooser.getSelectedFile();
+			fileNameDisplay.setText(baseDir.getAbsolutePath());
+			fileBrowser.setRoot(baseDir);
 
-			Properties props = new Properties ();
-			Integer role = (Integer) CommandTools.performSimple ("GetUserRole", props);
+			Properties props = new Properties();
+			Integer role = (Integer) CommandTools.performSimple("GetUserRole", props);
 
 			basedirSelected = true;
 
-			aktarioUserReadyServerAction = new AktarioUserReadyServerAction (AppContext.instance ().getUser (), true);
+			aktarioUserReadyServerAction = new AktarioUserReadyServerAction(AppContext.instance().getUser(), true);
 
-			ActionTools.sendToServer (aktarioUserReadyServerAction);
+			ActionTools.sendToServer(aktarioUserReadyServerAction);
 		}
 	}
 
-	public boolean isBasedirSelected ()
+	public boolean isBasedirSelected()
 	{
 		return basedirSelected;
 	}
 
-	public void setBasedirSelected (boolean value)
+	public void setBasedirSelected(boolean value)
 	{
 		basedirSelected = value;
 	}
 
-	public boolean isFileOpen ()
+	public boolean isFileOpen()
 	{
 		return isFileOpen;
 	}
@@ -983,19 +981,19 @@ public class SoftwareReviewPane extends ApplicationPane
 	/**
 	 * Context help lookup.
 	 */
-	public void contextHelp ()
+	public void contextHelp()
 	{
-		String line = code.getLineText (code.getMarkLine ());
-		Matcher matcher = reJavaImport.matcher (line);
+		String line = code.getLineText(code.getMarkLine());
+		Matcher matcher = reJavaImport.matcher(line);
 
-		if (matcher.matches ())
+		if (matcher.matches())
 		{
-			String url = "http://java.sun.com/j2se/1.4.2/docs/api/" + matcher.group (1).replace ('.', '/') + ".html";
+			String url = "http://java.sun.com/j2se/1.4.2/docs/api/" + matcher.group(1).replace('.', '/') + ".html";
 
-			controlView (VIEW_WEB_BROWSER);
-			remoteControlView (VIEW_WEB_BROWSER);
-			controlUrl (url);
-			remoteControlUrl (url);
+			controlView(VIEW_WEB_BROWSER);
+			remoteControlView(VIEW_WEB_BROWSER);
+			controlUrl(url);
+			remoteControlUrl(url);
 		}
 	}
 
@@ -1006,60 +1004,60 @@ public class SoftwareReviewPane extends ApplicationPane
 	 * @param file The file to convert.
 	 * @return The relative file path.
 	 */
-	protected String createRelativeFilePath (File file)
+	protected String createRelativeFilePath(File file)
 	{
 		if (file == null)
 		{
 			return null;
 		}
 
-		String pathName = file.getAbsolutePath ();
-		String basePathName = baseDir.getAbsolutePath ();
+		String pathName = file.getAbsolutePath();
+		String basePathName = baseDir.getAbsolutePath();
 
-		if (! pathName.startsWith (basePathName))
+		if (! pathName.startsWith(basePathName))
 		{
 			return null;
 		}
 
-		if (pathName.equals (basePathName))
+		if (pathName.equals(basePathName))
 		{
 			return null;
 		}
 
-		return pathName.substring (basePathName.length () + 1).replace ('\\', '/');
+		return pathName.substring(basePathName.length() + 1).replace('\\', '/');
 	}
 
-	public JPanel getContent ()
+	public JPanel getContent()
 	{
 		return content;
 	}
 
-	public File getBaseDir ()
+	public File getBaseDir()
 	{
 		return baseDir;
 	}
 
-	public void setBaseDir (File baseDir)
+	public void setBaseDir(File baseDir)
 	{
 		this.baseDir = baseDir;
 	}
 
-	public FileBrowser getFileBrowser ()
+	public FileBrowser getFileBrowser()
 	{
 		return fileBrowser;
 	}
 
-	public void setFileBrowser (FileBrowser fileBrowser)
+	public void setFileBrowser(FileBrowser fileBrowser)
 	{
 		this.fileBrowser = fileBrowser;
 	}
 
-	public JTextField getFileNameDisplay ()
+	public JTextField getFileNameDisplay()
 	{
 		return fileNameDisplay;
 	}
 
-	public void setFileNameDisplay (JTextField fileNameDisplay)
+	public void setFileNameDisplay(JTextField fileNameDisplay)
 	{
 		this.fileNameDisplay = fileNameDisplay;
 	}

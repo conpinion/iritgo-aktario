@@ -47,11 +47,11 @@ public class ResourceService extends BaseObject
 
 	private ResourceBundle resourceBundle;
 
-	public ResourceService (ResourceNode baseNode)
+	public ResourceService(ResourceNode baseNode)
 	{
 		this.baseNode = baseNode;
 		locale = Locale.GERMAN;
-		resourceBundle = getResourceBundle ();
+		resourceBundle = getResourceBundle();
 	}
 
 	/**
@@ -59,12 +59,12 @@ public class ResourceService extends BaseObject
 	 *
 	 * @param url The URL to load
 	 */
-	public void loadResources (URL url)
+	public void loadResources(URL url)
 	{
 		@SuppressWarnings("unused")
-		XMLParser parser = new XMLParser (url, this);
+		XMLParser parser = new XMLParser(url, this);
 
-		Log.logInfo ("system", "ResourceService", "Resources loaded from URL '" + url + "'");
+		Log.logInfo("system", "ResourceService", "Resources loaded from URL '" + url + "'");
 	}
 
 	/**
@@ -72,12 +72,12 @@ public class ResourceService extends BaseObject
 	 *
 	 * @param fileName The filename to load
 	 */
-	public void loadResources (String fileName)
+	public void loadResources(String fileName)
 	{
 		@SuppressWarnings("unused")
-		XMLParser parser = new XMLParser (fileName, this);
+		XMLParser parser = new XMLParser(fileName, this);
 
-		Log.logInfo ("system", "ResourceService", "Resources loaded from file '" + fileName + "'");
+		Log.logInfo("system", "ResourceService", "Resources loaded from file '" + fileName + "'");
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The base node of resources.
 	 */
-	public ResourceNode getBaseNode ()
+	public ResourceNode getBaseNode()
 	{
 		return baseNode;
 	}
@@ -97,17 +97,17 @@ public class ResourceService extends BaseObject
 	 * @param resourceLoader The ResourceLoader for the resource.
 	 * @param newNode The Node.
 	 */
-	public void addNode (String name, String resourceLoader, ResourcePersistent newNode)
+	public void addNode(String name, String resourceLoader, ResourcePersistent newNode)
 	{
 		try
 		{
-			newNode.setResourceLoader (getResourceLoader (resourceLoader));
+			newNode.setResourceLoader(getResourceLoader(resourceLoader));
 		}
 		catch (ResourceNotFoundException e)
 		{
 		}
 
-		addNode (name, newNode);
+		addNode(name, newNode);
 	}
 
 	/**
@@ -116,32 +116,32 @@ public class ResourceService extends BaseObject
 	 * @param treePos The absloute treePos (Offset) of the Node.
 	 * @param newNode The Node.
 	 */
-	public void addNode (String treePos, ResourceNode newNode)
+	public void addNode(String treePos, ResourceNode newNode)
 	{
-		NamePartIterator i = new NamePartIterator (treePos);
+		NamePartIterator i = new NamePartIterator(treePos);
 		ResourceNode node = baseNode;
 		ResourceNode lastNode = baseNode;
 
-		while (i.hasNext ())
+		while (i.hasNext())
 		{
-			String partName = (String) i.next ();
+			String partName = (String) i.next();
 
 			lastNode = node;
-			node = node.getNodeByName (partName);
+			node = node.getNodeByName(partName);
 
 			if (node == null)
 			{
-				if (i.hasNext ())
+				if (i.hasNext())
 				{
-					node = new ResourceNode ("directory." + partName, partName);
-					lastNode.addNode (node);
+					node = new ResourceNode("directory." + partName, partName);
+					lastNode.addNode(node);
 
 					continue;
 				}
 			}
 		}
 
-		lastNode.addNode (newNode);
+		lastNode.addNode(newNode);
 	}
 
 	/**
@@ -149,18 +149,18 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The node of resources by name.
 	 */
-	public ResourceNode getNode (String name) throws ResourceNotFoundException
+	public ResourceNode getNode(String name) throws ResourceNotFoundException
 	{
-		NamePartIterator i = new NamePartIterator (name);
+		NamePartIterator i = new NamePartIterator(name);
 		ResourceNode node = baseNode;
 
-		while (i.hasNext ())
+		while (i.hasNext())
 		{
-			node = node.getNodeByName ((String) i.next ());
+			node = node.getNodeByName((String) i.next());
 
 			if (node == null)
 			{
-				throw new ResourceNotFoundException (name);
+				throw new ResourceNotFoundException(name);
 			}
 		}
 
@@ -172,9 +172,9 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The resource by name.
 	 */
-	public String getResourceDescription (String name) throws ResourceNotFoundException
+	public String getResourceDescription(String name) throws ResourceNotFoundException
 	{
-		return getNode (name).getDescription ();
+		return getNode(name).getDescription();
 	}
 
 	/**
@@ -184,13 +184,13 @@ public class ResourceService extends BaseObject
 	 * @param fireException
 	 * @return The resource by name.
 	 */
-	public String getString (String name, boolean fireException) throws ResourceNotFoundException
+	public String getString(String name, boolean fireException) throws ResourceNotFoundException
 	{
-		name = name.replace (":", ".");
+		name = name.replace(":", ".");
 
 		try
 		{
-			return resourceBundle.getString (name);
+			return resourceBundle.getString(name);
 		}
 		catch (MissingResourceException x)
 		{
@@ -198,13 +198,13 @@ public class ResourceService extends BaseObject
 
 		try
 		{
-			return ((ResourceString) getNode (name)).getValue ();
+			return ((ResourceString) getNode(name)).getValue();
 		}
 		catch (ResourceNotFoundException x)
 		{
 			if (fireException)
 			{
-				throw new ResourceNotFoundException (name);
+				throw new ResourceNotFoundException(name);
 			}
 		}
 
@@ -217,9 +217,9 @@ public class ResourceService extends BaseObject
 	 * @param name The name/key of the resource.
 	 * @return The resource by name.
 	 */
-	public String getString (String name)
+	public String getString(String name)
 	{
-		return getStringWithoutException (name);
+		return getStringWithoutException(name);
 	}
 
 	/**
@@ -228,9 +228,9 @@ public class ResourceService extends BaseObject
 	 * @param name The name/key of the resource.
 	 * @return The resource by name, int.
 	 */
-	public int getInt (String name) throws ResourceNotFoundException
+	public int getInt(String name) throws ResourceNotFoundException
 	{
-		return Integer.parseInt (getString (name, true));
+		return Integer.parseInt(getString(name, true));
 	}
 
 	/**
@@ -239,22 +239,22 @@ public class ResourceService extends BaseObject
 	 * @param name The name/key of the resource.
 	 * @return The resource by name.
 	 */
-	public String getStringWithoutException (String name)
+	public String getStringWithoutException(String name)
 	{
-		if (StringTools.isEmpty (name))
+		if (StringTools.isEmpty(name))
 		{
 			return "";
 		}
 
 		try
 		{
-			if (name.startsWith ("$"))
+			if (name.startsWith("$"))
 			{
-				return getString (name.substring (1), false);
+				return getString(name.substring(1), false);
 			}
 			else
 			{
-				return getString (name, false);
+				return getString(name, false);
 			}
 		}
 		catch (ResourceNotFoundException x)
@@ -271,20 +271,20 @@ public class ResourceService extends BaseObject
 	 * @param keyWithParams The resource key
 	 * @return The translated string
 	 */
-	public String getStringWithParams (String keyWithParams)
+	public String getStringWithParams(String keyWithParams)
 	{
-		if (StringTools.isEmpty (keyWithParams))
+		if (StringTools.isEmpty(keyWithParams))
 		{
 			return "";
 		}
 
-		String[] parts = keyWithParams.split ("\\|");
+		String[] parts = keyWithParams.split("\\|");
 
-		String text = getString (parts[0]);
+		String text = getString(parts[0]);
 
 		for (int i = 0; i < parts.length - 1; ++i)
 		{
-			text = text.replaceAll ("\\{" + i + "\\}", parts[i + 1]);
+			text = text.replaceAll("\\{" + i + "\\}", parts[i + 1]);
 		}
 
 		return text;
@@ -298,18 +298,18 @@ public class ResourceService extends BaseObject
 	 * @param params The string parameters
 	 * @return The translated string
 	 */
-	public String getStringWithParams (String key, Object... params)
+	public String getStringWithParams(String key, Object... params)
 	{
-		if (StringTools.isEmpty (key))
+		if (StringTools.isEmpty(key))
 		{
 			return "";
 		}
 
-		String text = getString (key);
+		String text = getString(key);
 
 		for (int i = 0; i < params.length; ++i)
 		{
-			text = text.replaceAll ("\\{" + i + "\\}", params[i].toString ());
+			text = text.replaceAll("\\{" + i + "\\}", params[i].toString());
 		}
 
 		return text;
@@ -320,9 +320,9 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The ResourceLoader by name.
 	 */
-	public ResourceLoader getResourceLoader (String name) throws ResourceNotFoundException
+	public ResourceLoader getResourceLoader(String name) throws ResourceNotFoundException
 	{
-		return (ResourceLoader) ((ResourceObject) getNode (name)).getClone ();
+		return (ResourceLoader) ((ResourceObject) getNode(name)).getClone();
 	}
 
 	/**
@@ -330,9 +330,9 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The ResourceLoader by name.
 	 */
-	public Object getObject (String name) throws ResourceNotFoundException
+	public Object getObject(String name) throws ResourceNotFoundException
 	{
-		return ((ResourceObject) getNode (name)).getClone ();
+		return ((ResourceObject) getNode(name)).getClone();
 	}
 
 	/**
@@ -340,9 +340,9 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The imageobject.
 	 */
-	public Image getImage (String name) throws ResourceNotFoundException
+	public Image getImage(String name) throws ResourceNotFoundException
 	{
-		return ((ResourceImage) getNode (name)).getImage ();
+		return ((ResourceImage) getNode(name)).getImage();
 	}
 
 	/**
@@ -350,9 +350,9 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return The imagecomponentobject.
 	 */
-	public ImageComponent getImageComponent (String name) throws ResourceNotFoundException
+	public ImageComponent getImageComponent(String name) throws ResourceNotFoundException
 	{
-		return ((ResourceImage) getNode (name)).getImageComponent ();
+		return ((ResourceImage) getNode(name)).getImageComponent();
 	}
 
 	/**
@@ -360,7 +360,7 @@ public class ResourceService extends BaseObject
 	 *
 	 * @param locale The locale.
 	 */
-	public void setLocale (Locale locale)
+	public void setLocale(Locale locale)
 	{
 		this.locale = locale;
 	}
@@ -370,11 +370,11 @@ public class ResourceService extends BaseObject
 	 *
 	 * @return Return the new ResourceBundle.
 	 */
-	public ResourceBundle getResourceBundle ()
+	public ResourceBundle getResourceBundle()
 	{
 		if (resourceBundle == null)
 		{
-			resourceBundle = ResourceBundle.getBundle ("de.iritgo.aktario.core.resource.locale.TextResource", locale);
+			resourceBundle = ResourceBundle.getBundle("de.iritgo.aktario.core.resource.locale.TextResource", locale);
 		}
 
 		return resourceBundle;
@@ -385,10 +385,10 @@ public class ResourceService extends BaseObject
 	 *
 	 * @param locale The new Locale.
 	 */
-	public void updateResourceBundle (Locale locale)
+	public void updateResourceBundle(Locale locale)
 	{
-		setLocale (locale);
-		resourceBundle = ResourceBundle.getBundle ("de.iritgo.aktario.core.resource.locale.TextResource", locale);
+		setLocale(locale);
+		resourceBundle = ResourceBundle.getBundle("de.iritgo.aktario.core.resource.locale.TextResource", locale);
 	}
 
 	/**
@@ -397,11 +397,11 @@ public class ResourceService extends BaseObject
 	 * @param resourceDir The dir that contains the resource file.
 	 * @param filePrefix The prefix of the translation file.
 	 */
-	public void loadTranslationsFromFile (String resourceDir, String filePrefix)
+	public void loadTranslationsFromFile(String resourceDir, String filePrefix)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource.loadFromFile (resourceDir, filePrefix + "_" + locale.getLanguage () + ".properties");
+		textResource.loadFromFile(resourceDir, filePrefix + "_" + locale.getLanguage() + ".properties");
 	}
 
 	/**
@@ -410,11 +410,11 @@ public class ResourceService extends BaseObject
 	 * @param resourceDir The dir that contains the resource file.
 	 * @param filePrefix The prefix of the translation file.
 	 */
-	public void unloadTranslationsFromFile (String resourceDir, String filePrefix)
+	public void unloadTranslationsFromFile(String resourceDir, String filePrefix)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource.unloadFromFile (resourceDir, filePrefix + "_" + locale.getLanguage () + ".properties");
+		textResource.unloadFromFile(resourceDir, filePrefix + "_" + locale.getLanguage() + ".properties");
 	}
 
 	/**
@@ -424,13 +424,11 @@ public class ResourceService extends BaseObject
 	 * @param filename The name of the jar file.
 	 * @param resourceName The name/path of the resource file.
 	 */
-	public void loadTranslationsFromJarFile (String resourceDir, String filename, String resourceName)
+	public void loadTranslationsFromJarFile(String resourceDir, String filename, String resourceName)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource
-						.loadFromJarFile (resourceDir, filename, resourceName + "_" + locale.getLanguage ()
-										+ ".properties");
+		textResource.loadFromJarFile(resourceDir, filename, resourceName + "_" + locale.getLanguage() + ".properties");
 	}
 
 	/**
@@ -440,12 +438,13 @@ public class ResourceService extends BaseObject
 	 * @param filename The name of the jar file.
 	 * @param resourceName The name/path of the resource file.
 	 */
-	public void unloadTranslationsFromJarFile (String resourceDir, String filename, String resourceName)
+	public void unloadTranslationsFromJarFile(String resourceDir, String filename, String resourceName)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource.unloadFromJarFile (resourceDir, filename, resourceName + "_" + locale.getLanguage ()
-						+ ".properties");
+		textResource
+						.unloadFromJarFile(resourceDir, filename, resourceName + "_" + locale.getLanguage()
+										+ ".properties");
 	}
 
 	/**
@@ -454,11 +453,11 @@ public class ResourceService extends BaseObject
 	 * @param klass The class which class loader should be used.
 	 * @param resourceName The name of the resource file.
 	 */
-	public void loadTranslationsWithClassLoader (Class klass, String resourceName)
+	public void loadTranslationsWithClassLoader(Class klass, String resourceName)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource.loadWithClassLoader (klass, resourceName + "_" + locale.getLanguage () + ".properties");
+		textResource.loadWithClassLoader(klass, resourceName + "_" + locale.getLanguage() + ".properties");
 	}
 
 	/**
@@ -467,10 +466,10 @@ public class ResourceService extends BaseObject
 	 * @param klass The class which class loader should be used.
 	 * @param resourceName The name of the resource file.
 	 */
-	public void unloadTranslationsWithClassLoader (Class klass, String resourceName)
+	public void unloadTranslationsWithClassLoader(Class klass, String resourceName)
 	{
 		TextResource textResource = (TextResource) resourceBundle;
 
-		textResource.unloadWithClassLoader (klass, resourceName + "_" + locale.getLanguage () + ".properties");
+		textResource.unloadWithClassLoader(klass, resourceName + "_" + locale.getLanguage() + ".properties");
 	}
 }

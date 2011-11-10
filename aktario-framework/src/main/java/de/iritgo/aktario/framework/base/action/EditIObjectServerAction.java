@@ -53,39 +53,39 @@ public class EditIObjectServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public EditIObjectServerAction ()
+	public EditIObjectServerAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public EditIObjectServerAction (IObject iObject)
+	public EditIObjectServerAction(IObject iObject)
 	{
 		this.iObject = iObject;
-		iObjectUniqueId = iObject.getUniqueId ();
-		iObjectTypeId = iObject.getTypeId ();
+		iObjectUniqueId = iObject.getUniqueId();
+		iObjectTypeId = iObject.getTypeId();
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
 		try
 		{
-			iObjectUniqueId = stream.readLong ();
-			iObjectTypeId = stream.readUTF ();
+			iObjectUniqueId = stream.readLong();
+			iObjectTypeId = stream.readUTF();
 
-			iObject = Engine.instance ().getIObjectFactory ().newInstance (iObjectTypeId);
+			iObject = Engine.instance().getIObjectFactory().newInstance(iObjectTypeId);
 
-			iObject.readObject (stream);
+			iObject.readObject(stream);
 		}
 		catch (NoSuchIObjectException x)
 		{
-			Log.logError ("system", "EditIObjectServerAction.readObject", "No such protoptye registered "
-							+ x.getMessage ());
+			Log.logError("system", "EditIObjectServerAction.readObject", "No such protoptye registered "
+							+ x.getMessage());
 		}
 	}
 
@@ -93,18 +93,18 @@ public class EditIObjectServerAction extends FrameworkServerAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (iObject.getUniqueId ());
-		stream.writeUTF (iObjectTypeId);
-		iObject.writeObject (stream);
+		stream.writeLong(iObject.getUniqueId());
+		stream.writeUTF(iObjectTypeId);
+		iObject.writeObject(stream);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
@@ -112,54 +112,54 @@ public class EditIObjectServerAction extends FrameworkServerAction
 		{
 			// Its a new object and the client has always the wrong id;
 			// Look in the Mapping
-			User user = (User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ();
+			User user = (User) clientTransceiver.getConnectedChannel().getCustomerContextObject();
 
-			DataObject org = (DataObject) Engine.instance ().getBaseRegistry ().get (
-							user.getNewObjectsMapping (new Long (iObjectUniqueId)).longValue (), iObjectTypeId);
+			DataObject org = (DataObject) Engine.instance().getBaseRegistry().get(
+							user.getNewObjectsMapping(new Long(iObjectUniqueId)).longValue(), iObjectTypeId);
 
-			iObject.setUniqueId (org.getUniqueId ());
+			iObject.setUniqueId(org.getUniqueId());
 		}
 		else
 		{
-			iObject.setUniqueId (iObjectUniqueId);
+			iObject.setUniqueId(iObjectUniqueId);
 		}
 
-		IObject updatediObject = assignCachedObjectToRealiObject ();
+		IObject updatediObject = assignCachedObjectToRealiObject();
 
-		Engine.instance ().getEventRegistry ().fire ("objectmodified",
-						new IObjectModifiedEvent (updatediObject, clientTransceiver));
+		Engine.instance().getEventRegistry().fire("objectmodified",
+						new IObjectModifiedEvent(updatediObject, clientTransceiver));
 
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			if (user.isOnline ())
+			if (user.isOnline())
 			{
-				clientTransceiver.addReceiver (user.getNetworkChannel ());
+				clientTransceiver.addReceiver(user.getNetworkChannel());
 			}
 		}
 
-		EditIObjectAction editiObjectAction = new EditIObjectAction (EditIObjectAction.OK, iObject);
+		EditIObjectAction editiObjectAction = new EditIObjectAction(EditIObjectAction.OK, iObject);
 
-		editiObjectAction.setTransceiver (clientTransceiver);
-		editiObjectAction.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (editiObjectAction);
+		editiObjectAction.setTransceiver(clientTransceiver);
+		editiObjectAction.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(editiObjectAction);
 	}
 
-	public IObject assignCachedObjectToRealiObject ()
+	public IObject assignCachedObjectToRealiObject()
 	{
 		try
 		{
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-			iObject.writeObject (new DataOutputStream (buffer));
+			iObject.writeObject(new DataOutputStream(buffer));
 
-			IObject updatediObject = (IObject) Engine.instance ().getBaseRegistry ().get (iObject.getUniqueId (),
+			IObject updatediObject = (IObject) Engine.instance().getBaseRegistry().get(iObject.getUniqueId(),
 							iObjectTypeId);
 
-			updatediObject.readObject (new DataInputStream (new ByteArrayInputStream (buffer.toByteArray ())));
+			updatediObject.readObject(new DataInputStream(new ByteArrayInputStream(buffer.toByteArray())));
 
 			return updatediObject;
 		}

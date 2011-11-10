@@ -25,8 +25,8 @@ package de.iritgo.aktario.framework.console;
  */
 public class CommandNotFoundException extends Exception
 {
-	public CommandNotFoundException (String message)
+	public CommandNotFoundException(String message)
 	{
-		super (message);
+		super(message);
 	}
 }

@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface IObjectProxyListener extends EventListener
 {
-	public void proxyEvent (IObjectProxyEvent event);
+	public void proxyEvent(IObjectProxyEvent event);
 }

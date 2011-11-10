@@ -37,32 +37,31 @@ public class MessagingToolBarItem extends IAction
 {
 	private boolean firstActivation = true;
 
-	public MessagingToolBarItem ()
+	public MessagingToolBarItem()
 	{
-		setSmallIcon (new ImageIcon (getClass ().getResource ("/resources/tool-messanger.png")));
-		setToolTipText ("messangerArchivButton");
+		setSmallIcon(new ImageIcon(getClass().getResource("/resources/tool-messanger.png")));
+		setToolTipText("messangerArchivButton");
 	}
 
-	public void actionPerformed (ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
 		if (firstActivation)
 		{
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.put ("closable", false);
-			props.put ("iconifiable", false);
-			props.put ("maximizable", false);
-			props.put ("maximized", false);
-			props.put ("titlebar", false);
-			props.put ("visible", true);
-			CommandTools.performAsync (new ShowWindow ("ArchivInstantMessagePane"), props);
+			props.put("closable", false);
+			props.put("iconifiable", false);
+			props.put("maximizable", false);
+			props.put("maximized", false);
+			props.put("titlebar", false);
+			props.put("visible", true);
+			CommandTools.performAsync(new ShowWindow("ArchivInstantMessagePane"), props);
 			firstActivation = true;
 		}
 		else
 		{
-			Client.instance ().getClientGUI ().getDesktopManager ().getDisplay ("ArchivInstantMessagePane")
-							.bringToFront ();
-			Client.instance ().getClientGUI ().getDesktopManager ().getDisplay ("ArchivInstantMessagePane").show ();
+			Client.instance().getClientGUI().getDesktopManager().getDisplay("ArchivInstantMessagePane").bringToFront();
+			Client.instance().getClientGUI().getDesktopManager().getDisplay("ArchivInstantMessagePane").show();
 		}
 	}
 }

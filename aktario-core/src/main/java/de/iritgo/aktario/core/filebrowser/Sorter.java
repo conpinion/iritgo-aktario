@@ -28,19 +28,19 @@ import java.util.Vector;
 
 public class Sorter
 {
-	private static int compare (File file1, File file2)
+	private static int compare(File file1, File file2)
 	{
-		if (file1.isDirectory () && file2.isFile ())
+		if (file1.isDirectory() && file2.isFile())
 		{
 			return - 1;
 		}
-		else if (file1.isFile () && file2.isDirectory ())
+		else if (file1.isFile() && file2.isDirectory())
 		{
 			return 1;
 		}
 		else
 		{
-			return file1.compareTo (file2);
+			return file1.compareTo(file2);
 		}
 	}
 
@@ -50,10 +50,10 @@ public class Sorter
 	 * @param file The File used to sort.
 	 * @param into The target sorted vector.
 	 */
-	public static void orderedFileInsert (File file, Vector into)
+	public static void orderedFileInsert(File file, Vector into)
 	{
 		int lo = 0;
-		int hi = into.size () - 1;
+		int hi = into.size() - 1;
 		int idx = - 1;
 		File item = null;
 		int cmp = 0;
@@ -63,8 +63,8 @@ public class Sorter
 			while ((hi - lo) > 1)
 			{
 				idx = ((hi - lo) / 2) + lo;
-				item = (File) into.elementAt (idx);
-				cmp = compare (item, file);
+				item = (File) into.elementAt(idx);
+				cmp = compare(item, file);
 
 				if (cmp == 0)
 				{
@@ -83,37 +83,37 @@ public class Sorter
 			switch (hi - lo)
 			{
 				case 0:
-					item = (File) into.elementAt (hi);
+					item = (File) into.elementAt(hi);
 
-					if (item.equals (file))
+					if (item.equals(file))
 					{
 						return;
 					}
 
-					idx = (compare (item, file) < 0) ? (hi + 1) : hi;
+					idx = (compare(item, file) < 0) ? (hi + 1) : hi;
 
 					break;
 
 				case 1:
 
-					File loitem = (File) into.elementAt (lo);
-					File hiitem = (File) into.elementAt (hi);
+					File loitem = (File) into.elementAt(lo);
+					File hiitem = (File) into.elementAt(hi);
 
-					if (loitem.equals (file))
+					if (loitem.equals(file))
 					{
 						return;
 					}
 
-					if (hiitem.equals (file))
+					if (hiitem.equals(file))
 					{
 						return;
 					}
 
-					if (compare (file, loitem) < 0)
+					if (compare(file, loitem) < 0)
 					{
 						idx = lo;
 					}
-					else if (compare (file, hiitem) < 0)
+					else if (compare(file, hiitem) < 0)
 					{
 						idx = hi;
 					}
@@ -125,7 +125,7 @@ public class Sorter
 					break;
 
 				default:
-					throw new RuntimeException ("implementation bug.");
+					throw new RuntimeException("implementation bug.");
 			}
 		}
 
@@ -135,7 +135,7 @@ public class Sorter
 			idx = 0;
 		}
 
-		into.insertElementAt (file, idx);
+		into.insertElementAt(file, idx);
 
 		return;
 	}
@@ -145,10 +145,10 @@ public class Sorter
 	 * @param key The string to insert.
 	 * @param into The target sorted vector.
 	 */
-	static void orderedStringInsert (String key, Vector into)
+	static void orderedStringInsert(String key, Vector into)
 	{
 		int lo = 0;
-		int hi = into.size () - 1;
+		int hi = into.size() - 1;
 		int idx = - 1;
 		String item = null;
 		int cmp = 0;
@@ -158,8 +158,8 @@ public class Sorter
 			while ((hi - lo) > 1)
 			{
 				idx = ((hi - lo) / 2) + lo;
-				item = (String) into.elementAt (idx);
-				cmp = item.compareTo (key);
+				item = (String) into.elementAt(idx);
+				cmp = item.compareTo(key);
 
 				if (cmp == 0)
 				{
@@ -178,37 +178,37 @@ public class Sorter
 			switch (hi - lo)
 			{
 				case 0:
-					item = (String) into.elementAt (hi);
+					item = (String) into.elementAt(hi);
 
-					if (item.equals (key))
+					if (item.equals(key))
 					{
 						return;
 					}
 
-					idx = (item.compareTo (key) < 0) ? (hi + 1) : hi;
+					idx = (item.compareTo(key) < 0) ? (hi + 1) : hi;
 
 					break;
 
 				case 1:
 
-					String loitem = (String) into.elementAt (lo);
-					String hiitem = (String) into.elementAt (hi);
+					String loitem = (String) into.elementAt(lo);
+					String hiitem = (String) into.elementAt(hi);
 
-					if (loitem.equals (key))
+					if (loitem.equals(key))
 					{
 						return;
 					}
 
-					if (hiitem.equals (key))
+					if (hiitem.equals(key))
 					{
 						return;
 					}
 
-					if (key.compareTo (loitem) < 0)
+					if (key.compareTo(loitem) < 0)
 					{
 						idx = lo;
 					}
-					else if (key.compareTo (hiitem) < 0)
+					else if (key.compareTo(hiitem) < 0)
 					{
 						idx = hi;
 					}
@@ -220,7 +220,7 @@ public class Sorter
 					break;
 
 				default:
-					throw new RuntimeException ("implementation bug.");
+					throw new RuntimeException("implementation bug.");
 			}
 		}
 
@@ -230,7 +230,7 @@ public class Sorter
 			idx = 0;
 		}
 
-		into.insertElementAt (key, idx);
+		into.insertElementAt(key, idx);
 
 		return;
 	}
@@ -241,7 +241,7 @@ public class Sorter
 	 * @param lo0 The low bound of the chunk of the array to sort.
 	 * @param hi0 The high bound of the array to sort.
 	 */
-	static void quickSortStringArray (String[] array, int lo0, int hi0)
+	static void quickSortStringArray(String[] array, int lo0, int hi0)
 	{
 		int lo = lo0;
 		int hi = hi0;
@@ -253,12 +253,12 @@ public class Sorter
 
 			while (lo <= hi)
 			{
-				while ((lo < hi0) && (array[lo].compareTo (mid) < 0))
+				while ((lo < hi0) && (array[lo].compareTo(mid) < 0))
 				{
 					++lo;
 				}
 
-				while ((hi > lo0) && (array[hi].compareTo (mid) > 0))
+				while ((hi > lo0) && (array[hi].compareTo(mid) > 0))
 				{
 					--hi;
 				}
@@ -276,12 +276,12 @@ public class Sorter
 
 			if (lo0 < hi)
 			{
-				quickSortStringArray (array, lo0, hi);
+				quickSortStringArray(array, lo0, hi);
 			}
 
 			if (lo < hi0)
 			{
-				quickSortStringArray (array, lo, hi0);
+				quickSortStringArray(array, lo, hi0);
 			}
 		}
 	}
@@ -290,25 +290,25 @@ public class Sorter
 	 * Get the keys of this hashtable, sorted.
 	 * @param h The hashtable whose String keys are wanted.
 	 */
-	public static Vector sortStringKeys (Hashtable h)
+	public static Vector sortStringKeys(Hashtable h)
 	{
-		return sortStringEnumeration (h.keys ());
+		return sortStringEnumeration(h.keys());
 	}
 
 	/**
 	 * Sort the given String enumeration.
 	 * @return A sorted vector of String.
 	 */
-	public static Vector sortStringEnumeration (Enumeration enumeration)
+	public static Vector sortStringEnumeration(Enumeration enumeration)
 	{
-		Vector sorted = new Vector ();
+		Vector sorted = new Vector();
 
-		while (enumeration.hasMoreElements ())
+		while (enumeration.hasMoreElements())
 		{
-			orderedStringInsert ((String) enumeration.nextElement (), sorted);
+			orderedStringInsert((String) enumeration.nextElement(), sorted);
 		}
 
-		sorted.trimToSize ();
+		sorted.trimToSize();
 
 		return sorted;
 	}
@@ -318,10 +318,10 @@ public class Sorter
 	 * @param key The string to insert.
 	 * @param into The target sorted vector.
 	 */
-	static void orderedComparableInsert (Comparable key, Vector into)
+	static void orderedComparableInsert(Comparable key, Vector into)
 	{
 		int lo = 0;
-		int hi = into.size () - 1;
+		int hi = into.size() - 1;
 		int idx = - 1;
 		Comparable item = null;
 
@@ -330,9 +330,9 @@ public class Sorter
 			while ((hi - lo) > 1)
 			{
 				idx = ((hi - lo) / 2) + lo;
-				item = (Comparable) into.elementAt (idx);
+				item = (Comparable) into.elementAt(idx);
 
-				if (item.greaterThan (key))
+				if (item.greaterThan(key))
 				{
 					hi = idx;
 				}
@@ -345,21 +345,21 @@ public class Sorter
 			switch (hi - lo)
 			{
 				case 0:
-					item = (Comparable) into.elementAt (hi);
-					idx = (item.greaterThan (key)) ? hi : (hi + 1);
+					item = (Comparable) into.elementAt(hi);
+					idx = (item.greaterThan(key)) ? hi : (hi + 1);
 
 					break;
 
 				case 1:
 
-					Comparable loitem = (Comparable) into.elementAt (lo);
-					Comparable hiitem = (Comparable) into.elementAt (hi);
+					Comparable loitem = (Comparable) into.elementAt(lo);
+					Comparable hiitem = (Comparable) into.elementAt(hi);
 
-					if (loitem.greaterThan (key))
+					if (loitem.greaterThan(key))
 					{
 						idx = lo;
 					}
-					else if (hiitem.greaterThan (key))
+					else if (hiitem.greaterThan(key))
 					{
 						idx = hi;
 					}
@@ -371,7 +371,7 @@ public class Sorter
 					break;
 
 				default:
-					throw new RuntimeException ("implementation bug.");
+					throw new RuntimeException("implementation bug.");
 			}
 		}
 
@@ -381,7 +381,7 @@ public class Sorter
 			idx = 0;
 		}
 
-		into.insertElementAt (key, idx);
+		into.insertElementAt(key, idx);
 
 		return;
 	}
@@ -390,25 +390,25 @@ public class Sorter
 	 * Get the keys of this hashtable, sorted.
 	 * @param h The hashtable whose Comparable keys are wanted.
 	 */
-	public static Vector sortComparableKeys (Hashtable h)
+	public static Vector sortComparableKeys(Hashtable h)
 	{
-		return sortComparableEnumeration (h.keys ());
+		return sortComparableEnumeration(h.keys());
 	}
 
 	/**
 	 * Sort the given Comparable enumeration.
 	 * @return A sorted vector of Comparable instance.
 	 */
-	public static Vector sortComparableEnumeration (Enumeration enumeration)
+	public static Vector sortComparableEnumeration(Enumeration enumeration)
 	{
-		Vector sorted = new Vector ();
+		Vector sorted = new Vector();
 
-		while (enumeration.hasMoreElements ())
+		while (enumeration.hasMoreElements())
 		{
-			orderedComparableInsert ((Comparable) enumeration.nextElement (), sorted);
+			orderedComparableInsert((Comparable) enumeration.nextElement(), sorted);
 		}
 
-		sorted.trimToSize ();
+		sorted.trimToSize();
 
 		return sorted;
 	}
@@ -420,17 +420,17 @@ public class Sorter
 	 *    allocate a fresh array for the result otherwise.
 	 * @return The same array, with string sorted.
 	 */
-	public static String[] sortStringArray (String[] array, boolean inplace)
+	public static String[] sortStringArray(String[] array, boolean inplace)
 	{
 		String[] tosort = array;
 
 		if (! inplace)
 		{
 			tosort = new String[array.length];
-			System.arraycopy (array, 0, tosort, 0, array.length);
+			System.arraycopy(array, 0, tosort, 0, array.length);
 		}
 
-		quickSortStringArray (tosort, 0, tosort.length - 1);
+		quickSortStringArray(tosort, 0, tosort.length - 1);
 
 		return tosort;
 	}
@@ -441,7 +441,7 @@ public class Sorter
 	 * @param lo0 The low bound of the chunk of the array to sort.
 	 * @param hi0 The high bound of the array to sort.
 	 */
-	static void quickSortCompArray (Comparable[] array, int lo0, int hi0)
+	static void quickSortCompArray(Comparable[] array, int lo0, int hi0)
 	{
 		int lo = lo0;
 		int hi = hi0;
@@ -453,12 +453,12 @@ public class Sorter
 
 			while (lo <= hi)
 			{
-				while ((lo < hi0) && (mid.greaterThan (array[lo])))
+				while ((lo < hi0) && (mid.greaterThan(array[lo])))
 				{
 					++lo;
 				}
 
-				while ((hi > lo0) && (array[hi].greaterThan (mid)))
+				while ((hi > lo0) && (array[hi].greaterThan(mid)))
 				{
 					--hi;
 				}
@@ -476,27 +476,27 @@ public class Sorter
 
 			if (lo0 < hi)
 			{
-				quickSortCompArray (array, lo0, hi);
+				quickSortCompArray(array, lo0, hi);
 			}
 
 			if (lo < hi0)
 			{
-				quickSortCompArray (array, lo, hi0);
+				quickSortCompArray(array, lo, hi0);
 			}
 		}
 	}
 
-	public static Comparable[] sortComparableArray (Comparable[] array, boolean inplace)
+	public static Comparable[] sortComparableArray(Comparable[] array, boolean inplace)
 	{
 		Comparable[] tosort = array;
 
 		if (! inplace)
 		{
 			tosort = new Comparable[array.length];
-			System.arraycopy (array, 0, tosort, 0, array.length);
+			System.arraycopy(array, 0, tosort, 0, array.length);
 		}
 
-		quickSortCompArray (tosort, 0, tosort.length - 1);
+		quickSortCompArray(tosort, 0, tosort.length - 1);
 
 		return tosort;
 	}

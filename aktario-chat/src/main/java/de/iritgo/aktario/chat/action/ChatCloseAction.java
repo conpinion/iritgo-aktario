@@ -32,40 +32,40 @@ public class ChatCloseAction extends FrameworkAction
 {
 	private int channel;
 
-	public ChatCloseAction ()
+	public ChatCloseAction()
 	{
 	}
 
-	public ChatCloseAction (long userUniqueId, int channel)
+	public ChatCloseAction(long userUniqueId, int channel)
 	{
-		super (userUniqueId);
+		super(userUniqueId);
 		this.channel = channel;
 	}
 
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.chatclose";
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		channel = stream.readInt ();
+		channel = stream.readInt();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (channel);
+		stream.writeInt(channel);
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
-		chatManager.leaveChannel (new Integer (channel), userUniqueId, "");
+		chatManager.leaveChannel(new Integer(channel), userUniqueId, "");
 	}
 }

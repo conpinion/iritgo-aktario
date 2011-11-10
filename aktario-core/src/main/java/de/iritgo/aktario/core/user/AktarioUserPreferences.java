@@ -33,13 +33,13 @@ public class AktarioUserPreferences extends DataObject
 	/**
 	 * Create a new UserPreferences.
 	 */
-	public AktarioUserPreferences ()
+	public AktarioUserPreferences()
 	{
-		super ("AktarioUserPreferences");
+		super("AktarioUserPreferences");
 
-		addAttribute ("colorScheme", "com.jgoodies.looks.plastic.theme.KDE");
-		addAttribute ("language", "de");
-		addAttribute ("alwaysDrawWindowContents", true);
+		addAttribute("colorScheme", "com.jgoodies.looks.plastic.theme.KDE");
+		addAttribute("language", "de");
+		addAttribute("alwaysDrawWindowContents", true);
 	}
 
 	/**
@@ -47,10 +47,10 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @param uniqueId The unique id.
 	 */
-	public AktarioUserPreferences (long uniqueId)
+	public AktarioUserPreferences(long uniqueId)
 	{
-		this ();
-		setUniqueId (uniqueId);
+		this();
+		setUniqueId(uniqueId);
 	}
 
 	/**
@@ -58,9 +58,9 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @param language The language specified by a locale id.
 	 */
-	public void setLanguage (String language)
+	public void setLanguage(String language)
 	{
-		setAttribute ("language", language);
+		setAttribute("language", language);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @return The language specified by a locale id.
 	 */
-	public String getLanguage ()
+	public String getLanguage()
 	{
-		return getStringAttribute ("language");
+		return getStringAttribute("language");
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @param colorScheme The color scheme name.
 	 */
-	public void setColorScheme (String colorScheme)
+	public void setColorScheme(String colorScheme)
 	{
-		setAttribute ("colorScheme", colorScheme);
+		setAttribute("colorScheme", colorScheme);
 	}
 
 	/**
@@ -88,9 +88,9 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @return The color scheme name.
 	 */
-	public String getColorScheme ()
+	public String getColorScheme()
 	{
-		return getStringAttribute ("colorScheme");
+		return getStringAttribute("colorScheme");
 	}
 
 	/**
@@ -98,9 +98,9 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @param alwaysDrawWindowContents True if the windows contents should always be drawn.
 	 */
-	public void setAlwaysDrawWindowContents (boolean alwaysDrawWindowContents)
+	public void setAlwaysDrawWindowContents(boolean alwaysDrawWindowContents)
 	{
-		setAttribute ("alwaysDrawWindowContents", alwaysDrawWindowContents);
+		setAttribute("alwaysDrawWindowContents", alwaysDrawWindowContents);
 	}
 
 	/**
@@ -108,8 +108,8 @@ public class AktarioUserPreferences extends DataObject
 	 *
 	 * @return True if the windows contents should always be drawn.
 	 */
-	public boolean getAlwaysDrawWindowContents ()
+	public boolean getAlwaysDrawWindowContents()
 	{
-		return getBooleanAttribute ("alwaysDrawWindowContents");
+		return getBooleanAttribute("alwaysDrawWindowContents");
 	}
 }

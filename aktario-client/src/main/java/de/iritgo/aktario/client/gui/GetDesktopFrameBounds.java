@@ -31,14 +31,14 @@ import de.iritgo.aktario.framework.client.Client;
  */
 public class GetDesktopFrameBounds extends Command
 {
-	public GetDesktopFrameBounds ()
+	public GetDesktopFrameBounds()
 	{
-		super ("AktarioGetDesktopFrameBounds");
+		super("AktarioGetDesktopFrameBounds");
 	}
 
 	@Override
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		return ((AktarioGUI) Client.instance ().getClientGUI ()).getDesktopPane ().getBounds ();
+		return ((AktarioGUI) Client.instance().getClientGUI()).getDesktopPane().getBounds();
 	}
 }

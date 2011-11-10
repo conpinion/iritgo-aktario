@@ -35,7 +35,7 @@ public class CodeEditor extends JEditTextArea
 	/**
 	 * Creates a new CodeEditor with the default settings.
 	 */
-	public CodeEditor ()
+	public CodeEditor()
 	{
 	}
 
@@ -44,9 +44,9 @@ public class CodeEditor extends JEditTextArea
 	 *
 	 * @param AdjustmentListener The listener to add.
 	 */
-	public void addHorizontalAdjustmentListener (AdjustmentListener listener)
+	public void addHorizontalAdjustmentListener(AdjustmentListener listener)
 	{
-		horizontal.addAdjustmentListener (listener);
+		horizontal.addAdjustmentListener(listener);
 	}
 
 	/**
@@ -54,9 +54,9 @@ public class CodeEditor extends JEditTextArea
 	 *
 	 * @param AdjustmentListener The listener to add.
 	 */
-	public void addVerticalAdjustmentListener (AdjustmentListener listener)
+	public void addVerticalAdjustmentListener(AdjustmentListener listener)
 	{
-		vertical.addAdjustmentListener (listener);
+		vertical.addAdjustmentListener(listener);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class CodeEditor extends JEditTextArea
 	 *
 	 * @return The first visible line.
 	 */
-	public int getFirstVisibleLine ()
+	public int getFirstVisibleLine()
 	{
-		return vertical.getValue ();
+		return vertical.getValue();
 	}
 
 	/**
@@ -74,9 +74,9 @@ public class CodeEditor extends JEditTextArea
 	 *
 	 * @return The first visible column.
 	 */
-	public int getFirstVisibleColumn ()
+	public int getFirstVisibleColumn()
 	{
-		return horizontal.getValue ();
+		return horizontal.getValue();
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class CodeEditor extends JEditTextArea
 	 * @param start The start offset
 	 * @param end The end offset
 	 */
-	public void select (int start, int end)
+	public void select(int start, int end)
 	{
 		int newStart;
 		int newEnd;
@@ -106,11 +106,11 @@ public class CodeEditor extends JEditTextArea
 			newBias = true;
 		}
 
-		if (newStart < 0 || newEnd > getDocumentLength ())
+		if (newStart < 0 || newEnd > getDocumentLength())
 		{
 			return;
 		}
 
-		super.select (start, end);
+		super.select(start, end);
 	}
 }

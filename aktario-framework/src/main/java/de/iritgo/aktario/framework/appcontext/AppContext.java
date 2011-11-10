@@ -73,14 +73,14 @@ public class AppContext extends BaseObject
 	/**
 	 * Standard constructor
 	 */
-	public AppContext ()
+	public AppContext()
 	{
-		super ("appcontext");
-		lockObject = new Object ();
+		super("appcontext");
+		lockObject = new Object();
 		user = null;
 		connectedWithServer = false;
-		locale = new Locale ("de");
-		data = new EasyHashMap ();
+		locale = new Locale("de");
+		data = new EasyHashMap();
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param channelNumber The channelNumber.
 	 */
-	public void setChannelNumber (double channelNumber)
+	public void setChannelNumber(double channelNumber)
 	{
 		this.channelNumber = channelNumber;
 	}
@@ -98,7 +98,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return channelnumber.
 	 */
-	public double getChannelNumber ()
+	public double getChannelNumber()
 	{
 		return channelNumber;
 	}
@@ -106,7 +106,7 @@ public class AppContext extends BaseObject
 	/**
 	 * Set the State of the Connection.
 	 */
-	public void setConnectionState (boolean connectedWithServer)
+	public void setConnectionState(boolean connectedWithServer)
 	{
 		this.connectedWithServer = connectedWithServer;
 	}
@@ -116,7 +116,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return state.
 	 */
-	public boolean isConnectedWithServer ()
+	public boolean isConnectedWithServer()
 	{
 		return connectedWithServer;
 	}
@@ -126,14 +126,14 @@ public class AppContext extends BaseObject
 	 *
 	 * @return loggedIn.
 	 */
-	public boolean isUserLoggedIn ()
+	public boolean isUserLoggedIn()
 	{
 		if (user == null)
 		{
 			return false;
 		}
 
-		return user.isOnline ();
+		return user.isOnline();
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param serverIP The current serverIP.
 	 */
-	public void setServerIP (String serverIP)
+	public void setServerIP(String serverIP)
 	{
 		this.serverIP = serverIP;
 	}
@@ -151,7 +151,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The current serverIP.
 	 */
-	public String getServerIP ()
+	public String getServerIP()
 	{
 		return serverIP;
 	}
@@ -161,7 +161,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param user The current user.
 	 */
-	public void setUser (User user)
+	public void setUser(User user)
 	{
 		this.user = user;
 	}
@@ -171,7 +171,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The current user.
 	 */
-	public User getUser ()
+	public User getUser()
 	{
 		return user;
 	}
@@ -181,7 +181,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param server The current server.
 	 */
-	public void setServer (boolean server)
+	public void setServer(boolean server)
 	{
 		this.server = server;
 	}
@@ -191,7 +191,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The current server.
 	 */
-	public boolean getServer ()
+	public boolean getServer()
 	{
 		return server;
 	}
@@ -201,7 +201,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param client The current client.
 	 */
-	public void setClient (boolean client)
+	public void setClient(boolean client)
 	{
 		this.client = client;
 	}
@@ -211,7 +211,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The current client.
 	 */
-	public boolean getClient ()
+	public boolean getClient()
 	{
 		return client;
 	}
@@ -221,7 +221,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param applicationObject The new ApplicationDataObject.
 	 */
-	public void setApplicationObject (IObject applicationObject)
+	public void setApplicationObject(IObject applicationObject)
 	{
 		this.applicationObject = applicationObject;
 	}
@@ -229,24 +229,24 @@ public class AppContext extends BaseObject
 	/**
 	 * Set the ApplicationDataObject.
 	 */
-	public IObject getAppObject ()
+	public IObject getAppObject()
 	{
 		return applicationObject;
 	}
 
-	public synchronized Object getLockObject ()
+	public synchronized Object getLockObject()
 	{
 		return lockObject;
 	}
 
-	static public AppContext instance ()
+	static public AppContext instance()
 	{
 		if (appContext != null)
 		{
 			return appContext;
 		}
 
-		appContext = new AppContext ();
+		appContext = new AppContext();
 
 		return appContext;
 	}
@@ -256,7 +256,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The current language.
 	 */
-	public Locale getLocale ()
+	public Locale getLocale()
 	{
 		return locale;
 	}
@@ -266,7 +266,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param locale The new language.
 	 */
-	public void setLocale (Locale locale)
+	public void setLocale(Locale locale)
 	{
 		this.locale = locale;
 	}
@@ -277,9 +277,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, int value)
+	public void put(String key, int value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -288,9 +288,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, long value)
+	public void put(String key, long value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -299,9 +299,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, float value)
+	public void put(String key, float value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -310,9 +310,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, double value)
+	public void put(String key, double value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -321,9 +321,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, boolean value)
+	public void put(String key, boolean value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -332,9 +332,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, String value)
+	public void put(String key, String value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -343,9 +343,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, Object value)
+	public void put(String key, Object value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -354,9 +354,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public int getInt (String key)
+	public int getInt(String key)
 	{
-		return data.getInt (key);
+		return data.getInt(key);
 	}
 
 	/**
@@ -365,9 +365,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public long getLong (String key)
+	public long getLong(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -376,9 +376,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public float getFloat (String key)
+	public float getFloat(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -387,9 +387,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public double getDouble (String key)
+	public double getDouble(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -398,9 +398,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public boolean getBoolean (String key)
+	public boolean getBoolean(String key)
 	{
-		return data.getBoolean (key);
+		return data.getBoolean(key);
 	}
 
 	/**
@@ -409,9 +409,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public String getString (String key)
+	public String getString(String key)
 	{
-		return data.getString (key);
+		return data.getString(key);
 	}
 
 	/**
@@ -420,9 +420,9 @@ public class AppContext extends BaseObject
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public Object getObject (String key)
+	public Object getObject(String key)
 	{
-		return data.getObject (key);
+		return data.getObject(key);
 	}
 
 	/**
@@ -430,9 +430,9 @@ public class AppContext extends BaseObject
 	 *
 	 * @param key The attribute key.
 	 */
-	public void remove (String key)
+	public void remove(String key)
 	{
-		data.remove (key);
+		data.remove(key);
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param password Password
 	 */
-	public void setUserPassword (String password)
+	public void setUserPassword(String password)
 	{
 		this.userPassword = password;
 	}
@@ -450,7 +450,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return The user password
 	 */
-	public String getUserPassword ()
+	public String getUserPassword()
 	{
 		return userPassword;
 	}
@@ -460,7 +460,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param userName
 	 */
-	public void setUserName (String userName)
+	public void setUserName(String userName)
 	{
 		this.userName = userName;
 	}
@@ -470,7 +470,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return
 	 */
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
@@ -480,7 +480,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @param appId
 	 */
-	public void setAppId (String appId)
+	public void setAppId(String appId)
 	{
 		this.appId = appId;
 	}
@@ -490,7 +490,7 @@ public class AppContext extends BaseObject
 	 *
 	 * @return
 	 */
-	public String getAppId ()
+	public String getAppId()
 	{
 		return appId;
 	}

@@ -47,20 +47,20 @@ public class CallbackActionListener implements ActionListener
 	 * @param callbackObject The object to invoke.
 	 * @param methodName The name of the method to invoke.
 	 */
-	public CallbackActionListener (Object callbackObject, String methodName)
+	public CallbackActionListener(Object callbackObject, String methodName)
 	{
 		this.object = callbackObject;
 
 		try
 		{
-			method = object.getClass ().getMethod (methodName, new Class[]
+			method = object.getClass().getMethod(methodName, new Class[]
 			{
 				ActionEvent.class
 			});
 		}
 		catch (NoSuchMethodException e)
 		{
-			Log.logError ("resource", "CallbackActionListener", "NoSuchMethodException");
+			Log.logError("resource", "CallbackActionListener", "NoSuchMethodException");
 		}
 	}
 
@@ -70,22 +70,22 @@ public class CallbackActionListener implements ActionListener
 	 *
 	 * @param event The action event.
 	 */
-	public void actionPerformed (ActionEvent event)
+	public void actionPerformed(ActionEvent event)
 	{
 		try
 		{
-			method.invoke (object, new Object[]
+			method.invoke(object, new Object[]
 			{
 				event
 			});
 		}
 		catch (IllegalAccessException x)
 		{
-			Log.logError ("system", "CallbackActionListener", x.toString ());
+			Log.logError("system", "CallbackActionListener", x.toString());
 		}
 		catch (InvocationTargetException x)
 		{
-			Log.logError ("resource", "CallbackActionListener", x.toString ());
+			Log.logError("resource", "CallbackActionListener", x.toString());
 		}
 	}
 }

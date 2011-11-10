@@ -42,44 +42,44 @@ public class PingManager extends Threadable implements UserListener, ShutdownObs
 	/**
 	 * Standard constructor
 	 */
-	public PingManager ()
+	public PingManager()
 	{
-		super ("ping");
-		pingContextRegistry = new PingContextRegistry ();
+		super("ping");
+		pingContextRegistry = new PingContextRegistry();
 
-		((ShutdownManager) Engine.instance ().getManagerRegistry ().getManager ("shutdown")).addObserver (this);
+		((ShutdownManager) Engine.instance().getManagerRegistry().getManager("shutdown")).addObserver(this);
 
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 	}
 
-	public void run ()
+	public void run()
 	{
-		setState (Threadable.FREE);
+		setState(Threadable.FREE);
 
 		synchronized (pingContextRegistry)
 		{
-			for (Iterator i = pingContextRegistry.getPingContextIterator (); i.hasNext ();)
+			for (Iterator i = pingContextRegistry.getPingContextIterator(); i.hasNext();)
 			{
-				PingContext pingContext = (PingContext) i.next ();
+				PingContext pingContext = (PingContext) i.next();
 
-				pingContext.ping ();
+				pingContext.ping();
 			}
 		}
 
 		try
 		{
-			Thread.sleep (PING_INTERVAL);
+			Thread.sleep(PING_INTERVAL);
 		}
 		catch (InterruptedException x)
 		{
 		}
 	}
 
-	public void receivedPing (long uniqueId, long time)
+	public void receivedPing(long uniqueId, long time)
 	{
 		synchronized (pingContextRegistry)
 		{
-			((PingContext) pingContextRegistry.get ("" + uniqueId)).receivedPing (time);
+			((PingContext) pingContextRegistry.get("" + uniqueId)).receivedPing(time);
 		}
 	}
 
@@ -88,31 +88,31 @@ public class PingManager extends Threadable implements UserListener, ShutdownObs
 	 *
 	 * @param event The EventOject.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
 		synchronized (pingContextRegistry)
 		{
-			pingContextRegistry.add (new PingContext (event.getUser ()));
+			pingContextRegistry.add(new PingContext(event.getUser()));
 		}
 	}
 
-	public void doShutdownNotify ()
+	public void doShutdownNotify()
 	{
 		synchronized (pingContextRegistry)
 		{
-			pingContextRegistry.clear ();
+			pingContextRegistry.clear();
 		}
 	}
 
-	public void onShutdown ()
+	public void onShutdown()
 	{
 	}
 
-	public void onUserLogoff (User user)
+	public void onUserLogoff(User user)
 	{
 		synchronized (pingContextRegistry)
 		{
-			pingContextRegistry.remove ("" + user.getUniqueId ());
+			pingContextRegistry.remove("" + user.getUniqueId());
 		}
 	}
 }

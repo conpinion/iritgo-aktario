@@ -40,7 +40,7 @@ public class IObjectComboBoxModel extends AbstractListModel implements ComboBoxM
 	private static final long serialVersionUID = 1L;
 
 	/** List item map. */
-	private Map<IObject, Integer> mapping = new HashMap ();
+	private Map<IObject, Integer> mapping = new HashMap();
 
 	/** IObject list. */
 	private IObjectList list;
@@ -48,11 +48,11 @@ public class IObjectComboBoxModel extends AbstractListModel implements ComboBoxM
 	/** The currently selected item. */
 	private IObject selectedItem;
 
-	public Object getElementAt (int index)
+	public Object getElementAt(int index)
 	{
-		if (index >= 0 && index < list.size ())
+		if (index >= 0 && index < list.size())
 		{
-			return list.get (index);
+			return list.get(index);
 		}
 		else
 		{
@@ -60,70 +60,70 @@ public class IObjectComboBoxModel extends AbstractListModel implements ComboBoxM
 		}
 	}
 
-	public int getSize ()
+	public int getSize()
 	{
-		return list != null ? list.size () : 0;
+		return list != null ? list.size() : 0;
 	}
 
-	public Object getSelectedItem ()
+	public Object getSelectedItem()
 	{
 		return selectedItem;
 	}
 
-	public void setSelectedItem (Object anItem)
+	public void setSelectedItem(Object anItem)
 	{
-		if ((selectedItem != null && ! selectedItem.equals (anItem)) || selectedItem == null && anItem != null)
+		if ((selectedItem != null && ! selectedItem.equals(anItem)) || selectedItem == null && anItem != null)
 		{
 			selectedItem = (IObject) anItem;
-			fireContentsChanged (this, - 1, - 1);
+			fireContentsChanged(this, - 1, - 1);
 		}
 	}
 
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
-		if (event.isWaitingForNewObject ())
+		if (event.isWaitingForNewObject())
 		{
 			return;
 		}
 
-		int index = ((Integer) mapping.get (event.getObject ())).intValue ();
+		int index = ((Integer) mapping.get(event.getObject())).intValue();
 
-		fireContentsChanged (this, index, index);
+		fireContentsChanged(this, index, index);
 	}
 
-	public void update (IObjectList list)
+	public void update(IObjectList list)
 	{
-		if (this.list != null && this.list.size () > 0)
+		if (this.list != null && this.list.size() > 0)
 		{
-			fireIntervalRemoved (this, 0, this.list.size () - 1);
+			fireIntervalRemoved(this, 0, this.list.size() - 1);
 		}
 
 		this.list = list;
 		selectedItem = null;
 
-		for (Iterator i = mapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = mapping.keySet().iterator(); i.hasNext();)
 		{
-			IObject iobject = (IObject) i.next ();
+			IObject iobject = (IObject) i.next();
 
-			Engine.instance ().getProxyEventRegistry ().removeEventListener (iobject, this);
+			Engine.instance().getProxyEventRegistry().removeEventListener(iobject, this);
 		}
 
-		mapping.clear ();
+		mapping.clear();
 
-		if (list == null || list.size () == 0)
+		if (list == null || list.size() == 0)
 		{
 			return;
 		}
 
-		for (Pair<IObject, Integer> p : new JointIterator<IObject, Integer> (list, IntRange.N0 ()))
+		for (Pair<IObject, Integer> p : new JointIterator<IObject, Integer>(list, IntRange.N0()))
 		{
-			mapping.put (p.get1 (), p.get2 ());
-			Engine.instance ().getProxyEventRegistry ().addEventListener (p.get1 (), this);
+			mapping.put(p.get1(), p.get2());
+			Engine.instance().getProxyEventRegistry().addEventListener(p.get1(), this);
 		}
 
-		if (list.size () > 0)
+		if (list.size() > 0)
 		{
-			fireIntervalAdded (this, 0, list.size () - 1);
+			fireIntervalAdded(this, 0, list.size() - 1);
 		}
 	}
 }

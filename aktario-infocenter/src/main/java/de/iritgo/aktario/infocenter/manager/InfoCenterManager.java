@@ -29,22 +29,22 @@ public class InfoCenterManager extends BaseObject implements Manager
 {
 	private InfoCenterRegistry infoCenterRegistry;
 
-	public InfoCenterManager ()
+	public InfoCenterManager()
 	{
-		super ("infocenter");
+		super("infocenter");
 	}
 
-	public void init ()
+	public void init()
 	{
-		infoCenterRegistry = new InfoCenterRegistry ();
+		infoCenterRegistry = new InfoCenterRegistry();
 	}
 
-	public void unload ()
+	public void unload()
 	{
-		infoCenterRegistry.close ();
+		infoCenterRegistry.close();
 	}
 
-	public InfoCenterRegistry getInfoCenterRegistry ()
+	public InfoCenterRegistry getInfoCenterRegistry()
 	{
 		return infoCenterRegistry;
 	}

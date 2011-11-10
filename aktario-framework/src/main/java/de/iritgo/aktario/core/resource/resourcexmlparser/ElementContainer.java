@@ -37,24 +37,24 @@ public class ElementContainer
 	/**
 	 * Constructor.
 	 */
-	public ElementContainer (Element element, int pos, String path)
+	public ElementContainer(Element element, int pos, String path)
 	{
 		this.element = element;
 		this.pos = pos;
 		this.path = path;
 	}
 
-	public int getPos ()
+	public int getPos()
 	{
 		return pos;
 	}
 
-	public Element getElement ()
+	public Element getElement()
 	{
 		return element;
 	}
 
-	public String getPath ()
+	public String getPath()
 	{
 		return path;
 	}

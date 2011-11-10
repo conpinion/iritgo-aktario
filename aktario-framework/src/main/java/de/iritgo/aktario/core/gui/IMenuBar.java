@@ -35,18 +35,18 @@ public class IMenuBar extends JMenuBar
 	/**
 	 * Create new menu bar.
 	 */
-	public IMenuBar ()
+	public IMenuBar()
 	{
 	}
 
 	/**
 	 * Reload the labels of all menu items in this menu bar.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		for (int i = 0; i < getMenuCount (); ++i)
+		for (int i = 0; i < getMenuCount(); ++i)
 		{
-			((IMenu) getMenu (i)).reloadText ();
+			((IMenu) getMenu(i)).reloadText();
 		}
 	}
 }

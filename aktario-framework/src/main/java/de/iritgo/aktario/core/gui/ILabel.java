@@ -38,7 +38,7 @@ public class ILabel extends JLabel
 	/**
 	 * Create a label with no text or icon.
 	 */
-	public ILabel ()
+	public ILabel()
 	{
 	}
 
@@ -47,9 +47,9 @@ public class ILabel extends JLabel
 	 *
 	 * @param textKey The text of the label.
 	 */
-	public ILabel (String textKey)
+	public ILabel(String textKey)
 	{
-		super (textKey);
+		super(textKey);
 	}
 
 	/**
@@ -58,9 +58,9 @@ public class ILabel extends JLabel
 	 * @param textKey The text of the label.
 	 * @param icon The Icon image to display on the label.
 	 */
-	public ILabel (String textKey, Icon icon)
+	public ILabel(String textKey, Icon icon)
 	{
-		super (textKey, icon, SwingConstants.LEFT);
+		super(textKey, icon, SwingConstants.LEFT);
 	}
 
 	/**
@@ -68,9 +68,9 @@ public class ILabel extends JLabel
 	 *
 	 * @param icon The Icon image to display on the label.
 	 */
-	public ILabel (Icon icon)
+	public ILabel(Icon icon)
 	{
-		super (icon);
+		super(icon);
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class ILabel extends JLabel
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 }

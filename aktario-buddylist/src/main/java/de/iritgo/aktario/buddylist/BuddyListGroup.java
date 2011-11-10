@@ -34,16 +34,15 @@ import java.util.Iterator;
  */
 public class BuddyListGroup extends DataObject
 {
-	public BuddyListGroup ()
+	public BuddyListGroup()
 	{
-		super ("BuddyListGroup");
+		super("BuddyListGroup");
 
-		addAttribute ("name", "");
+		addAttribute("name", "");
 
-		addAttribute ("iritgoUserName", "");
+		addAttribute("iritgoUserName", "");
 
-		addAttribute ("participants", new IObjectList ("participant", new FrameworkProxy (new DataObject ("dummy")),
-						this));
+		addAttribute("participants", new IObjectList("participant", new FrameworkProxy(new DataObject("dummy")), this));
 	}
 
 	/**
@@ -51,9 +50,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @return The return the group name.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return getStringAttribute ("name");
+		return getStringAttribute("name");
 	}
 
 	/**
@@ -61,9 +60,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @param name The group name
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
-		setAttribute ("name", name);
+		setAttribute("name", name);
 	}
 
 	/**
@@ -71,9 +70,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @return The return the iritgo user name.
 	 */
-	public String getIritgoUserName ()
+	public String getIritgoUserName()
 	{
-		return getStringAttribute ("iritgoUserName");
+		return getStringAttribute("iritgoUserName");
 	}
 
 	/**
@@ -81,9 +80,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @param name The iritgo user name.
 	 */
-	public void setIritgoUserName (String iritgoUserName)
+	public void setIritgoUserName(String iritgoUserName)
 	{
-		setAttribute ("iritgoUserName", iritgoUserName);
+		setAttribute("iritgoUserName", iritgoUserName);
 	}
 
 	/**
@@ -91,9 +90,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @param user The participant to add.
 	 */
-	public void addParticipant (DynDataObject participant)
+	public void addParticipant(DynDataObject participant)
 	{
-		getIObjectListAttribute ("participants").add (participant);
+		getIObjectListAttribute("participants").add(participant);
 	}
 
 	/**
@@ -101,9 +100,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @return Return the participant iterator.
 	 */
-	public Iterator participantIterator ()
+	public Iterator participantIterator()
 	{
-		return getIObjectListAttribute ("participants").iterator ();
+		return getIObjectListAttribute("participants").iterator();
 	}
 
 	/**
@@ -111,9 +110,9 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @return The buddy list group count.
 	 */
-	public int getParticipantCount ()
+	public int getParticipantCount()
 	{
-		return getIObjectListAttribute ("participants").size ();
+		return getIObjectListAttribute("participants").size();
 	}
 
 	/**
@@ -121,8 +120,8 @@ public class BuddyListGroup extends DataObject
 	 *
 	 * @return Return the participant IObjectList
 	 */
-	public IObjectList getParticipantsIObjectList ()
+	public IObjectList getParticipantsIObjectList()
 	{
-		return getIObjectListAttribute ("participants");
+		return getIObjectListAttribute("participants");
 	}
 }

@@ -39,16 +39,16 @@ public class DisplayUserConnectionState extends Command
 	/**
 	 * Create a new command.
 	 */
-	public DisplayUserConnectionState ()
+	public DisplayUserConnectionState()
 	{
-		super ("DisplayUserConnectionState");
+		super("DisplayUserConnectionState");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		// 		if (properties.get ("userIds") == null)
 		// 		{

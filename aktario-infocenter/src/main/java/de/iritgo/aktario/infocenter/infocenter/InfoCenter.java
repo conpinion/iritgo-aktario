@@ -46,14 +46,14 @@ public class InfoCenter
 	 *        Constructor
 	 *
 	 */
-	public InfoCenter ()
+	public InfoCenter()
 	{
 	}
 
 	/**
 	 * Set the displayRegistry
 	 */
-	public static void setDisplayRegistrys (Hashtable h1, Hashtable h2)
+	public static void setDisplayRegistrys(Hashtable h1, Hashtable h2)
 	{
 		categoryRegistry = h1;
 		displayRegistry = h2;
@@ -61,7 +61,7 @@ public class InfoCenter
 
 	/**
 	 */
-	public static void info (User user, int context, String category, String icon, String message, String guiPaneId,
+	public static void info(User user, int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level)
 	{
 		if (categoryRegistry == null)
@@ -69,17 +69,17 @@ public class InfoCenter
 			return;
 		}
 
-		if (! categoryRegistry.containsKey (category + context))
+		if (! categoryRegistry.containsKey(category + context))
 		{
 			return;
 		}
 
-		ArrayList loggerlist = (ArrayList) categoryRegistry.get (category + context);
+		ArrayList loggerlist = (ArrayList) categoryRegistry.get(category + context);
 
-		for (int i = 0; i < loggerlist.size (); ++i)
+		for (int i = 0; i < loggerlist.size(); ++i)
 		{
-			((InfoCenterDisplay) displayRegistry.get (loggerlist.get (i))).info (user, context, category, icon,
-							message, guiPaneId, uniqueId, iObjectTypeId, level);
+			((InfoCenterDisplay) displayRegistry.get(loggerlist.get(i))).info(user, context, category, icon, message,
+							guiPaneId, uniqueId, iObjectTypeId, level);
 		}
 	}
 
@@ -90,9 +90,9 @@ public class InfoCenter
 	 *        @param icon
 	 *        @param message
 	 */
-	public static void info (User user, int context, String category, String icon, String message)
+	public static void info(User user, int context, String category, String icon, String message)
 	{
-		info (user, context, category, icon, message, "", 0, "", 0);
+		info(user, context, category, icon, message, "", 0, "", 0);
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class InfoCenter
 	 *        @param category
 	 *        @param message
 	 */
-	public static void info (User user, int context, String category, String message)
+	public static void info(User user, int context, String category, String message)
 	{
-		info (user, context, category, "", message, "", 0, "", 0);
+		info(user, context, category, "", message, "", 0, "", 0);
 	}
 }

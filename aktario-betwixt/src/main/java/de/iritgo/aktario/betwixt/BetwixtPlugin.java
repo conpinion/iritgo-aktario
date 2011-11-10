@@ -30,36 +30,36 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
 public class BetwixtPlugin extends FrameworkPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new LoadBetwixtBean ());
-		registerCommand (new SaveBetwixtBean ());
-		registerCommand (new LoadBaseObjects ());
-		registerCommand (new SaveBaseObjects ());
+		registerCommand(new LoadBetwixtBean());
+		registerCommand(new SaveBetwixtBean());
+		registerCommand(new LoadBaseObjects());
+		registerCommand(new SaveBaseObjects());
 	}
 
 	@Override
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 }

@@ -22,14 +22,14 @@ package de.iritgo.aktario.core.config;
 
 public class NetworkConfig
 {
-	SocketConfig socket = new SocketConfig ();
+	SocketConfig socket = new SocketConfig();
 
-	public SocketConfig getSocket ()
+	public SocketConfig getSocket()
 	{
 		return socket;
 	}
 
-	public void setSocket (SocketConfig socket)
+	public void setSocket(SocketConfig socket)
 	{
 		this.socket = socket;
 	}

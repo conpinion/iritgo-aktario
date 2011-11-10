@@ -33,40 +33,40 @@ public class QueryRegistry extends BaseObject
 {
 	private List queries;
 
-	public QueryRegistry ()
+	public QueryRegistry()
 	{
-		queries = new LinkedList ();
+		queries = new LinkedList();
 	}
 
-	public void addQuery (Query query)
+	public void addQuery(Query query)
 	{
-		queries.add (query);
+		queries.add(query);
 	}
 
-	synchronized public Iterator queryIterator ()
+	synchronized public Iterator queryIterator()
 	{
-		return new LinkedList (queries).iterator ();
+		return new LinkedList(queries).iterator();
 	}
 
-	synchronized public Iterator queryIterator (String dataObjectTypeId)
+	synchronized public Iterator queryIterator(String dataObjectTypeId)
 	{
-		List iteratorList = new LinkedList ();
+		List iteratorList = new LinkedList();
 
-		for (Iterator i = queries.iterator (); i.hasNext ();)
+		for (Iterator i = queries.iterator(); i.hasNext();)
 		{
-			Query query = (Query) i.next ();
+			Query query = (Query) i.next();
 
-			if (query.workingWithThisDataObjectTypeId (dataObjectTypeId))
+			if (query.workingWithThisDataObjectTypeId(dataObjectTypeId))
 			{
-				iteratorList.add (query);
+				iteratorList.add(query);
 			}
 		}
 
-		return iteratorList.iterator ();
+		return iteratorList.iterator();
 	}
 
-	public void removeQuery (Query query)
+	public void removeQuery(Query query)
 	{
-		queries.remove (query);
+		queries.remove(query);
 	}
 }

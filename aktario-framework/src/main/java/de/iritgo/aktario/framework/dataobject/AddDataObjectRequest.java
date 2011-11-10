@@ -54,20 +54,20 @@ public class AddDataObjectRequest extends NetworkFrameworkServerAction
 	/**
 	 * Create a new HistoricalDataServerAction.
 	 */
-	public AddDataObjectRequest ()
+	public AddDataObjectRequest()
 	{
-		setTypeId ("ADORQ");
+		setTypeId("ADORQ");
 	}
 
 	/**
 	 * Create a new HistoricalDataServerAction.
 	 */
-	public AddDataObjectRequest (DataObject dataObject)
+	public AddDataObjectRequest(DataObject dataObject)
 	{
-		this ();
+		this();
 		this.dataObject = dataObject;
-		dataObjectUniqueId = dataObject.getUniqueId ();
-		dataObjectTypeId = dataObject.getTypeId ();
+		dataObjectUniqueId = dataObject.getUniqueId();
+		dataObjectTypeId = dataObject.getTypeId();
 	}
 
 	/**
@@ -75,22 +75,22 @@ public class AddDataObjectRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
 		try
 		{
-			dataObjectUniqueId = stream.readLong ();
+			dataObjectUniqueId = stream.readLong();
 
-			dataObjectTypeId = stream.readUTF ();
-			dataObject = (DataObject) Engine.instance ().getIObjectFactory ().newInstance (dataObjectTypeId);
-			dataObject.readObject (stream);
+			dataObjectTypeId = stream.readUTF();
+			dataObject = (DataObject) Engine.instance().getIObjectFactory().newInstance(dataObjectTypeId);
+			dataObject.readObject(stream);
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 
 			// TODO: This is a hardcore bug! You have forgotten to register the DataObject!
-			Log.log ("network", "AddDataObject.readObject", "DataObject not registred: " + dataObjectTypeId, Log.FATAL);
+			Log.log("network", "AddDataObject.readObject", "DataObject not registred: " + dataObjectTypeId, Log.FATAL);
 		}
 	}
 
@@ -99,63 +99,63 @@ public class AddDataObjectRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (dataObject.getUniqueId ());
-		stream.writeUTF (dataObjectTypeId);
-		dataObject.writeObject (stream);
+		stream.writeLong(dataObject.getUniqueId());
+		stream.writeUTF(dataObjectTypeId);
+		dataObject.writeObject(stream);
 	}
 
 	/**
 	 * Perform this action.
 	 *
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-		long newUniqueId = Engine.instance ().getPersistentIDGenerator ().createId ();
-		long oldUniqueId = dataObject.getUniqueId ();
+		long newUniqueId = Engine.instance().getPersistentIDGenerator().createId();
+		long oldUniqueId = dataObject.getUniqueId();
 
-		dataObject.setUniqueId (newUniqueId);
+		dataObject.setUniqueId(newUniqueId);
 
-		((User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ()).putNewObjectsMapping (new Long (
-						oldUniqueId), new Long (newUniqueId));
+		((User) clientTransceiver.getConnectedChannel().getCustomerContextObject()).putNewObjectsMapping(new Long(
+						oldUniqueId), new Long(newUniqueId));
 
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		proxy.setSampleRealObject ((IObject) dataObject);
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) dataObject);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, dataObject.getTypeId ());
+		proxy.setSampleRealObject((IObject) dataObject);
+		Engine.instance().getBaseRegistry().add((BaseObject) dataObject);
+		Engine.instance().getProxyRegistry().addProxy(proxy, dataObject.getTypeId());
 
-		AddDataObjectResponse addDataObjectResponse = new AddDataObjectResponse (oldUniqueId, newUniqueId, dataObject
-						.getTypeId ());
+		AddDataObjectResponse addDataObjectResponse = new AddDataObjectResponse(oldUniqueId, newUniqueId, dataObject
+						.getTypeId());
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
-		addDataObjectResponse.setTransceiver (clientTransceiver);
-		addDataObjectResponse.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (addDataObjectResponse);
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
+		addDataObjectResponse.setTransceiver(clientTransceiver);
+		addDataObjectResponse.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(addDataObjectResponse);
 
-		clientTransceiver = new ClientTransceiver (clientTransceiver.getSender (), clientTransceiver
-						.getConnectedChannel ());
+		clientTransceiver = new ClientTransceiver(clientTransceiver.getSender(), clientTransceiver
+						.getConnectedChannel());
 
 		// 		Engine.instance ().getEventRegistry ().fire (
 		// 			"objectcreated",
 		// 			new IObjectListEvent(
 		// 				prototype, owner, proxyLinkedListId, clientTransceiver, IObjectListEvent.ADD));
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.onlineUserIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.onlineUserIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			clientTransceiver.addReceiver (user.getNetworkChannel ());
+			clientTransceiver.addReceiver(user.getNetworkChannel());
 		}
 
-		EditIObjectAction editPrototypeAction = new EditIObjectAction (EditIObjectAction.OK, dataObject);
+		EditIObjectAction editPrototypeAction = new EditIObjectAction(EditIObjectAction.OK, dataObject);
 
-		editPrototypeAction.setTransceiver (clientTransceiver);
-		editPrototypeAction.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (editPrototypeAction);
+		editPrototypeAction.setTransceiver(clientTransceiver);
+		editPrototypeAction.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(editPrototypeAction);
 	}
 }

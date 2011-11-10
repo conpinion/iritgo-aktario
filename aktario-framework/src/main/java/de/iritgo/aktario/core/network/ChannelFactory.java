@@ -55,9 +55,9 @@ public class ChannelFactory extends Threadable
 	 * @param port The port on which to listen.
 	 * @param timeout The accept timeout.
 	 */
-	public ChannelFactory (NetworkService networkService, int port, int timeout) throws IOException
+	public ChannelFactory(NetworkService networkService, int port, int timeout) throws IOException
 	{
-		this (networkService, "localhost", port, timeout);
+		this(networkService, "localhost", port, timeout);
 	}
 
 	/**
@@ -68,17 +68,17 @@ public class ChannelFactory extends Threadable
 	 * @param port The port on which to listen.
 	 * @param timeout The accept timeout.
 	 */
-	public ChannelFactory (NetworkService networkService, String hostName, int port, int timeout) throws IOException
+	public ChannelFactory(NetworkService networkService, String hostName, int port, int timeout) throws IOException
 	{
-		super ("ServerSocket [" + (hostName == null ? "localhost" : hostName) + ":" + port + "]");
+		super("ServerSocket [" + (hostName == null ? "localhost" : hostName) + ":" + port + "]");
 
 		this.networkService = networkService;
 		this.port = port;
 		this.hostName = hostName;
 
-		serverSocket = new ServerSocket (port);
+		serverSocket = new ServerSocket(port);
 
-		serverSocket.setSoTimeout (timeout);
+		serverSocket.setSoTimeout(timeout);
 	}
 
 	/**
@@ -88,33 +88,33 @@ public class ChannelFactory extends Threadable
 	 * ConnectedChannels if a connection was established.
 	 */
 	@Override
-	public void run ()
+	public void run()
 	{
 		try
 		{
-			Log.logVerbose ("network", "ChannelFactory.run", "Waiting for Connections");
+			Log.logVerbose("network", "ChannelFactory.run", "Waiting for Connections");
 
-			Socket s = serverSocket.accept ();
+			Socket s = serverSocket.accept();
 
-			networkService.addConnectedChannel (new Channel (s, networkService));
-			Log.logDebug ("network", "ChannelFactory.run", "Connection accepted");
+			networkService.addConnectedChannel(new Channel(s, networkService));
+			Log.logDebug("network", "ChannelFactory.run", "Connection accepted");
 		}
 		catch (IOException e)
 		{
 		}
 
-		setState (Threadable.FREE);
+		setState(Threadable.FREE);
 	}
 
 	/**
 	 * Dispose this channel factory.
 	 */
 	@Override
-	public void dispose ()
+	public void dispose()
 	{
 		try
 		{
-			serverSocket.close ();
+			serverSocket.close();
 		}
 		catch (IOException x)
 		{

@@ -66,50 +66,48 @@ public class SystemMonitorGUIPane extends SwingGUIPane
 	/**
 	 * Close the dialog.
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Refresh the system monitor.
 	 */
-	public Action update = new AbstractAction ()
+	public Action update = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			Engine.instance ().getProxyRegistry ().getProxy (getIObject ().getUniqueId (), getIObject ().getTypeId ())
-							.reset ();
+			Engine.instance().getProxyRegistry().getProxy(getIObject().getUniqueId(), getIObject().getTypeId()).reset();
 		}
 	};
 
 	/**
 	 * Create a new SystemMonitor.
 	 */
-	public SystemMonitorGUIPane ()
+	public SystemMonitorGUIPane()
 	{
-		super ("SystemMonitor");
+		super("SystemMonitor");
 	}
 
 	/**
 	 * Initialize the gui. Subclasses should override this method to create a
 	 * custom gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			JPanel panel = (JPanel) new SwingEngine (this).render (getClass ()
-							.getResource ("/swixml/SystemMonitor.xml"));
+			JPanel panel = (JPanel) new SwingEngine(this).render(getClass().getResource("/swixml/SystemMonitor.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 2, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 2, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "SystemMonitor.initGUI", x.toString ());
+			Log.logError("client", "SystemMonitor.initGUI", x.toString());
 		}
 	}
 
@@ -118,27 +116,27 @@ public class SystemMonitorGUIPane extends SwingGUIPane
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new SystemMonitorGUIPane ();
+		return new SystemMonitorGUIPane();
 	}
 
 	/**
 	 * Load the gui values from the data object attributes.
 	 */
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 		SystemMonitor systemMonitor = (SystemMonitor) iObject;
 
-		registeredUsers.setText ("" + systemMonitor.getRegisteredUsers ());
-		onlineUsers.setText ("" + systemMonitor.getOnlineUsers ());
-		workingThreads.setText ("" + systemMonitor.getWorkingThreads ());
-		freeThreads.setText ("" + systemMonitor.getFreeThreads ());
-		freeRam.setText ("" + systemMonitor.getFreeRam ());
-		clientFreeRam.setText ("" + Runtime.getRuntime ().freeMemory ());
+		registeredUsers.setText("" + systemMonitor.getRegisteredUsers());
+		onlineUsers.setText("" + systemMonitor.getOnlineUsers());
+		workingThreads.setText("" + systemMonitor.getWorkingThreads());
+		freeThreads.setText("" + systemMonitor.getFreeThreads());
+		freeRam.setText("" + systemMonitor.getFreeRam());
+		clientFreeRam.setText("" + Runtime.getRuntime().freeMemory());
 	}
 
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 		/* empty */
 	}

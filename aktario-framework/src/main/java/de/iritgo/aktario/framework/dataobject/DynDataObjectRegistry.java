@@ -32,41 +32,41 @@ public class DynDataObjectRegistry
 {
 	private List dynDataObjects;
 
-	public DynDataObjectRegistry ()
+	public DynDataObjectRegistry()
 	{
-		dynDataObjects = new LinkedList ();
+		dynDataObjects = new LinkedList();
 	}
 
-	public void add (DynDataObject dynDataObject)
-	{
-		synchronized (this)
-		{
-			dynDataObjects.add (dynDataObject);
-		}
-	}
-
-	public void remove (DynDataObject dynDataObject)
+	public void add(DynDataObject dynDataObject)
 	{
 		synchronized (this)
 		{
-			dynDataObjects.remove (dynDataObject);
+			dynDataObjects.add(dynDataObject);
 		}
 	}
 
-	public int size ()
+	public void remove(DynDataObject dynDataObject)
 	{
-		return dynDataObjects.size ();
+		synchronized (this)
+		{
+			dynDataObjects.remove(dynDataObject);
+		}
 	}
 
-	public Iterator iterator ()
+	public int size()
+	{
+		return dynDataObjects.size();
+	}
+
+	public Iterator iterator()
 	{
 		Iterator iterator = null;
 
 		synchronized (this)
 		{
-			List tmpList = new LinkedList (dynDataObjects);
+			List tmpList = new LinkedList(dynDataObjects);
 
-			iterator = tmpList.iterator ();
+			iterator = tmpList.iterator();
 		}
 
 		return iterator;

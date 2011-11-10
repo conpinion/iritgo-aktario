@@ -47,80 +47,80 @@ public class IObjectProxyEventRegistry
 	 * Constructor
 	 *
 	 */
-	public IObjectProxyEventRegistry ()
+	public IObjectProxyEventRegistry()
 	{
-		eventListeners = new HashMap ();
-		unfiredListeners = new LinkedList ();
+		eventListeners = new HashMap();
+		unfiredListeners = new LinkedList();
 	}
 
 	/**
 	 * Add the EventListener for Category
 	 */
-	public void addEventListener (IObject prototypeable, EventListener eventListener)
+	public void addEventListener(IObject prototypeable, EventListener eventListener)
 	{
 		List listeners = null;
 
 		synchronized (eventListeners)
 		{
-			listeners = (List) eventListeners.get (prototypeable);
+			listeners = (List) eventListeners.get(prototypeable);
 		}
 
 		if (listeners == null)
 		{
-			listeners = new LinkedList ();
-			eventListeners.put (prototypeable, listeners);
+			listeners = new LinkedList();
+			eventListeners.put(prototypeable, listeners);
 		}
 
-		if (! listeners.contains (eventListener))
+		if (! listeners.contains(eventListener))
 		{
-			listeners.add (eventListener);
+			listeners.add(eventListener);
 		}
 	}
 
 	/**
 	 * Remove the EventListener for Category
 	 */
-	public void removeEventListener (IObject prototypeable, EventListener eventListener)
+	public void removeEventListener(IObject prototypeable, EventListener eventListener)
 	{
 		List listeners = null;
 
 		synchronized (eventListeners)
 		{
-			listeners = (List) eventListeners.get (prototypeable);
+			listeners = (List) eventListeners.get(prototypeable);
 		}
 
 		if (listeners != null)
 		{
-			listeners.remove (eventListener);
+			listeners.remove(eventListener);
 		}
 	}
 
-	public void removeEventListener (EventListener eventListener)
+	public void removeEventListener(EventListener eventListener)
 	{
-		for (Iterator i = eventListeners.values ().iterator (); i.hasNext ();)
+		for (Iterator i = eventListeners.values().iterator(); i.hasNext();)
 		{
-			((List) i.next ()).remove (eventListener);
+			((List) i.next()).remove(eventListener);
 		}
 	}
 
-	public void clear ()
+	public void clear()
 	{
-		eventListeners.clear ();
+		eventListeners.clear();
 	}
 
 	/**
 	 * Fire a event.
 	 */
-	public void fire (IObject prototypeable, Event event)
+	public void fire(IObject prototypeable, Event event)
 	{
 		List listeners = null;
 		List tmpList = null;
 
 		synchronized (eventListeners)
 		{
-			listeners = (List) eventListeners.get (prototypeable);
+			listeners = (List) eventListeners.get(prototypeable);
 
-			if ((listeners == null) || (listeners.size () == 0))
+			if ((listeners == null) || (listeners.size() == 0))
 			{
 				//TODO: Please delete this code after the 14.7.2004! Than i believe we don't need this code :)!
 				// 				if (! unfiredListeners.contains (prototypeable))
@@ -130,27 +130,27 @@ public class IObjectProxyEventRegistry
 				return;
 			}
 
-			tmpList = new LinkedList (listeners);
+			tmpList = new LinkedList(listeners);
 		}
 
-		for (Iterator i = tmpList.iterator (); i.hasNext ();)
+		for (Iterator i = tmpList.iterator(); i.hasNext();)
 		{
-			EventListener listener = (EventListener) i.next ();
+			EventListener listener = (EventListener) i.next();
 
-			Class klass = listener.getClass ();
+			Class klass = listener.getClass();
 			boolean fired = false;
 
 			while (klass != null && ! fired)
 			{
-				Class[] interfaces = klass.getInterfaces ();
+				Class[] interfaces = klass.getInterfaces();
 
 				for (int j = 0; j < interfaces.length; ++j)
 				{
-					if (EventListener.class.isAssignableFrom (interfaces[j]))
+					if (EventListener.class.isAssignableFrom(interfaces[j]))
 					{
 						try
 						{
-							interfaces[j].getDeclaredMethods ()[0].invoke (listener, new Object[]
+							interfaces[j].getDeclaredMethods()[0].invoke(listener, new Object[]
 							{
 								event
 							});
@@ -169,26 +169,25 @@ public class IObjectProxyEventRegistry
 						}
 						catch (InvocationTargetException x)
 						{
-							Log.logError ("system", "IObjectProxyEventRegistry.fire",
+							Log.logError("system", "IObjectProxyEventRegistry.fire",
 											"Called listener method has a InvocationTargetException in Class: " + klass
 															+ ": " + interfaces[j]);
 
-							ByteArrayOutputStream trace = new ByteArrayOutputStream ();
-							PrintWriter traceOut = new PrintWriter (trace);
+							ByteArrayOutputStream trace = new ByteArrayOutputStream();
+							PrintWriter traceOut = new PrintWriter(trace);
 
-							x.getCause ().printStackTrace (traceOut);
-							traceOut.close ();
+							x.getCause().printStackTrace(traceOut);
+							traceOut.close();
 
-							Log.logError ("system", "IObjectProxyEventRegistry.fire", "Root cause was: "
-											+ x.getCause ());
+							Log.logError("system", "IObjectProxyEventRegistry.fire", "Root cause was: " + x.getCause());
 
-							Log.logError ("system", "IObjectProxyEventRegistry.fire", "Root cause stack trace: "
-											+ trace.toString ());
+							Log.logError("system", "IObjectProxyEventRegistry.fire", "Root cause stack trace: "
+											+ trace.toString());
 						}
 					}
 				}
 
-				klass = klass.getSuperclass ();
+				klass = klass.getSuperclass();
 			}
 		}
 	}

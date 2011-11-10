@@ -34,83 +34,83 @@ public interface IDialogFrame
 	 *
 	 * @param bounds The new bounds.
 	 */
-	public void setBounds (Rectangle bounds);
+	public void setBounds(Rectangle bounds);
 
 	/**
 	 * Get the window bounds.
 	 *
 	 * @return The bounds.
 	 */
-	public Rectangle getBounds ();
+	public Rectangle getBounds();
 
 	/**
 	 * Set the dialog title.
 	 *
 	 * @param title The new title.
 	 */
-	public void setTitle (String title);
+	public void setTitle(String title);
 
 	/**
 	 * Get the dialog title.
 	 *
 	 * @return The title.
 	 */
-	public String getTitle ();
+	public String getTitle();
 
 	/**
 	 * Set the dialog icon.
 	 *
 	 * @param icon The new icon.
 	 */
-	public void setIcon (Icon icon);
+	public void setIcon(Icon icon);
 
 	/**
 	 * Get the dialog's icon.
 	 *
 	 * @return The icon.
 	 */
-	public Icon getIcon ();
+	public Icon getIcon();
 
 	/**
 	 * Close the dialog frame.
 	 */
-	public void close ();
+	public void close();
 
 	/**
 	 * Close the dialog frame.
 	 */
-	public void systemClose ();
+	public void systemClose();
 
 	/**
 	 * Show the dialog frame.
 	 */
-	public void showDialog ();
+	public void showDialog();
 
 	/**
 	 * Enable/disable the dialog frame.
 	 *
 	 * @param enabled If true the dialog frame is enabled.
 	 */
-	public void setEnabled (boolean enabled);
+	public void setEnabled(boolean enabled);
 
 	/**
 	 * Check wether the display is enabled or not.
 	 *
 	 * @return True if the display is enabled.
 	 */
-	public boolean isEnabled ();
+	public boolean isEnabled();
 
 	/**
 	 * Set the dialog name.
 	 *
 	 * @param name The new name.
 	 */
-	public void setName (String name);
+	public void setName(String name);
 
 	/**
 	 * Get the dialog name.
 	 *
 	 * @return The name.
 	 */
-	public String getName ();
+	public String getName();
 }

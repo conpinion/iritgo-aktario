@@ -50,10 +50,10 @@ public class Dispatcher
 	 *
 	 * @param user The user.
 	 */
-	public Dispatcher (User user)
+	public Dispatcher(User user)
 	{
 		this.user = user;
-		this.channel = user.getNetworkChannel ();
+		this.channel = user.getNetworkChannel();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Dispatcher
 	 *
 	 * @param uniqueId The unique id from this far caster.
 	 */
-	public void setUniqueId (String uniqueId)
+	public void setUniqueId(String uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
@@ -71,7 +71,7 @@ public class Dispatcher
 	 *
 	 * @return String The unique id from this far caster.
 	 */
-	public String getUniqueId ()
+	public String getUniqueId()
 	{
 		return uniqueId;
 	}
@@ -81,7 +81,7 @@ public class Dispatcher
 	 *
 	 * @return double The channel from this far caster.
 	 */
-	public double getChannel ()
+	public double getChannel()
 	{
 		return channel;
 	}
@@ -91,7 +91,7 @@ public class Dispatcher
 	 *
 	 * @param user The user iritgo object.
 	 */
-	public boolean isUserDispatcher (User user)
+	public boolean isUserDispatcher(User user)
 	{
 		return this.user == user;
 	}
@@ -101,9 +101,9 @@ public class Dispatcher
 	 *
 	 * @param uniqueId The unique id from the dispatcher.
 	 */
-	public boolean isUniqueId (String uniqueId)
+	public boolean isUniqueId(String uniqueId)
 	{
-		return this.uniqueId.equals (uniqueId);
+		return this.uniqueId.equals(uniqueId);
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Dispatcher
 	 *
 	 * @return online state.
 	 */
-	public boolean isOnline ()
+	public boolean isOnline()
 	{
 		return isOnline;
 	}
@@ -121,24 +121,24 @@ public class Dispatcher
 	 *
 	 * @param agent The agent to transfer.
 	 */
-	public void sendAgent (Agent agent)
+	public void sendAgent(Agent agent)
 	{
-		double channelNumber = getChannel ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = getChannel();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		AgentTransferAction agentTransferAction = new AgentTransferAction ((DataObject) agent);
+		AgentTransferAction agentTransferAction = new AgentTransferAction((DataObject) agent);
 
-		agentTransferAction.setTransceiver (clientTransceiver);
+		agentTransferAction.setTransceiver(clientTransceiver);
 
-		if (AppContext.instance ().getServer ())
+		if (AppContext.instance().getServer())
 		{
-			ActionTools.sendToClient (agentTransferAction);
+			ActionTools.sendToClient(agentTransferAction);
 		}
 		else
 		{
-			ActionTools.sendToServer (agentTransferAction);
+			ActionTools.sendToServer(agentTransferAction);
 		}
 	}
 }

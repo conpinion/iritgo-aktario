@@ -47,15 +47,15 @@ public abstract class FrameworkPlugin extends Plugin
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkPlugin ()
+	public FrameworkPlugin()
 	{
-		super ();
+		super();
 
-		consoleCommands = new LinkedList ();
-		dataObjects = new LinkedList ();
+		consoleCommands = new LinkedList();
+		dataObjects = new LinkedList();
 
-		consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry ().getManager ("console"))
-						.getConsoleCommandRegistry ();
+		consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry().getManager("console"))
+						.getConsoleCommandRegistry();
 	}
 
 	/**
@@ -64,23 +64,23 @@ public abstract class FrameworkPlugin extends Plugin
 	 * @param engine The base Engine.
 	 */
 	@Override
-	public void init (Engine engine)
+	public void init(Engine engine)
 	{
-		if (AppContext.instance ().getClient ())
+		if (AppContext.instance().getClient())
 		{
-			setMode (Plugin.CLIENT);
+			setMode(Plugin.CLIENT);
 		}
 
-		if (ServerAppContext.serverInstance ().getServer ())
+		if (ServerAppContext.serverInstance().getServer())
 		{
-			setMode (Plugin.SERVER);
+			setMode(Plugin.SERVER);
 		}
 
-		registerDataObjects ();
+		registerDataObjects();
 
-		super.init (engine);
+		super.init(engine);
 
-		registerConsoleCommands ();
+		registerConsoleCommands();
 	}
 
 	/**
@@ -89,38 +89,38 @@ public abstract class FrameworkPlugin extends Plugin
 	 * @param engine The Engine
 	 */
 	@Override
-	public void unloadPlugin (Engine engine)
+	public void unloadPlugin(Engine engine)
 	{
-		super.unloadPlugin (engine);
+		super.unloadPlugin(engine);
 
-		for (Iterator i = consoleCommands.iterator (); i.hasNext ();)
+		for (Iterator i = consoleCommands.iterator(); i.hasNext();)
 		{
-			consoleCommandRegistry.remove ((ConsoleCommand) i.next ());
+			consoleCommandRegistry.remove((ConsoleCommand) i.next());
 		}
 
-		for (Iterator i = dataObjects.iterator (); i.hasNext ();)
+		for (Iterator i = dataObjects.iterator(); i.hasNext();)
 		{
-			iObjectFactory.remove ((IObject) i.next ());
+			iObjectFactory.remove((IObject) i.next());
 		}
 	}
 
 	/**
 	 * Register a manager.
 	 */
-	protected void registerConsoleCommand (ConsoleCommand consoleCommand)
+	protected void registerConsoleCommand(ConsoleCommand consoleCommand)
 	{
-		consoleCommandRegistry.add (consoleCommand);
-		consoleCommands.add (consoleCommand);
+		consoleCommandRegistry.add(consoleCommand);
+		consoleCommands.add(consoleCommand);
 	}
 
 	/**
 	 * Register a manager.
 	 */
-	protected void registerConsoleCommand (int mode, ConsoleCommand consoleCommand)
+	protected void registerConsoleCommand(int mode, ConsoleCommand consoleCommand)
 	{
-		if (getMode () == mode)
+		if (getMode() == mode)
 		{
-			registerConsoleCommand (consoleCommand);
+			registerConsoleCommand(consoleCommand);
 		}
 	}
 
@@ -129,10 +129,10 @@ public abstract class FrameworkPlugin extends Plugin
 	 *
 	 * @param dataObject The data object to register.
 	 */
-	protected void registerDataObject (DataObject dataObject)
+	protected void registerDataObject(DataObject dataObject)
 	{
-		iObjectFactory.register (dataObject);
-		dataObjects.add (dataObject);
+		iObjectFactory.register(dataObject);
+		dataObjects.add(dataObject);
 	}
 
 	/**
@@ -141,25 +141,25 @@ public abstract class FrameworkPlugin extends Plugin
 	 * @param mode Specifies wether this is a client or server manager.
 	 * @param dataObject The data object to register.
 	 */
-	protected void registerDataObject (int mode, DataObject dataObject)
+	protected void registerDataObject(int mode, DataObject dataObject)
 	{
-		if (getMode () == mode)
+		if (getMode() == mode)
 		{
-			registerDataObject (dataObject);
+			registerDataObject(dataObject);
 		}
 	}
 
 	/**
 	 * Register all data objects in this method.
 	 */
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
 	/**
 	 * Register all console commands in this method.
 	 */
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 }

@@ -32,9 +32,9 @@ public class InitIritgoException extends Exception
 	/**
 	 * Create a new <code>InitIritgoException</code>.
 	 */
-	public InitIritgoException ()
+	public InitIritgoException()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -42,9 +42,9 @@ public class InitIritgoException extends Exception
 	 *
 	 * @param cause The original error cause.
 	 */
-	public InitIritgoException (Throwable cause)
+	public InitIritgoException(Throwable cause)
 	{
-		super (cause);
+		super(cause);
 	}
 
 	/**
@@ -52,9 +52,9 @@ public class InitIritgoException extends Exception
 	 *
 	 * @param message The exception message.
 	 */
-	public InitIritgoException (String message)
+	public InitIritgoException(String message)
 	{
-		super (message);
+		super(message);
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class InitIritgoException extends Exception
 	 * @param message The exception message.
 	 * @param cause The original error cause.
 	 */
-	public InitIritgoException (String message, Throwable cause)
+	public InitIritgoException(String message, Throwable cause)
 	{
-		super (message, cause);
+		super(message, cause);
 	}
 }

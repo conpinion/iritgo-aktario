@@ -51,37 +51,37 @@ public class LoadObject extends Command
 	/**
 	 * Create a new <code>LoadObject</code> command.
 	 */
-	public LoadObject ()
+	public LoadObject()
 	{
-		super ("persist.LoadObject");
+		super("persist.LoadObject");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("id") == null)
+		if (properties.get("id") == null)
 		{
-			Log.logError ("persist", "LoadObject", "Missing unique id for the object to load");
+			Log.logError("persist", "LoadObject", "Missing unique id for the object to load");
 
 			return;
 		}
 
-		long uniqueId = ((Long) properties.get ("id")).longValue ();
-		final String typeId = (String) properties.get ("type");
+		long uniqueId = ((Long) properties.get("id")).longValue();
+		final String typeId = (String) properties.get("type");
 
-		if (Engine.instance ().getBaseRegistry ().get (uniqueId, typeId) != null)
+		if (Engine.instance().getBaseRegistry().get(uniqueId, typeId) != null)
 		{
-			Log.logVerbose ("persist", "LoadObject", "Object with id " + uniqueId + " already loaded, skipping");
+			Log.logVerbose("persist", "LoadObject", "Object with id " + uniqueId + " already loaded, skipping");
 
 			return;
 		}
 
 		if (typeId == null)
 		{
-			Log.logError ("persist", "LoadObject", "The type of the object to load wasn't specified");
+			Log.logError("persist", "LoadObject", "The type of the object to load wasn't specified");
 
 			return;
 		}
@@ -90,28 +90,28 @@ public class LoadObject extends Command
 
 		try
 		{
-			object = Engine.instance ().getIObjectFactory ().newInstance (typeId);
+			object = Engine.instance().getIObjectFactory().newInstance(typeId);
 		}
 		catch (NoSuchIObjectException ignored)
 		{
-			Log.logError ("persist", "LoadObject", "Attemting to load object of unknown type '" + typeId + "'");
+			Log.logError("persist", "LoadObject", "Attemting to load object of unknown type '" + typeId + "'");
 
 			return;
 		}
 
-		if (! DataObject.class.isInstance (object))
+		if (! DataObject.class.isInstance(object))
 		{
-			Log.logError ("persist", "LoadObject", "Attemting to load object that is not persitable");
+			Log.logError("persist", "LoadObject", "Attemting to load object that is not persitable");
 
 			return;
 		}
 
-		object = load (((JDBCManager) Engine.instance ().getManager ("persist.JDBCManager")).getDefaultDataSource (),
+		object = load(((JDBCManager) Engine.instance().getManager("persist.JDBCManager")).getDefaultDataSource(),
 						typeId, uniqueId);
 
 		if (object != null)
 		{
-			Engine.instance ().getBaseRegistry ().add ((BaseObject) object);
+			Engine.instance().getBaseRegistry().add((BaseObject) object);
 		}
 
 		return;
@@ -125,80 +125,79 @@ public class LoadObject extends Command
 	 * @param uniqueId The unique id of the object to load.
 	 * @return The loaded object (already registered with the base registry).
 	 */
-	private DataObject load (final DataSource dataSource, final String typeId, long uniqueId)
+	private DataObject load(final DataSource dataSource, final String typeId, long uniqueId)
 	{
 		DataObject object = null;
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
+			QueryRunner query = new QueryRunner(dataSource);
 
-			object = (DataObject) query.query ("select * from " + typeId + " where id=" + uniqueId,
-							new ResultSetHandler ()
+			object = (DataObject) query.query("select * from " + typeId + " where id=" + uniqueId,
+							new ResultSetHandler()
 							{
-								public Object handle (ResultSet rs) throws SQLException
+								public Object handle(ResultSet rs) throws SQLException
 								{
-									rs.getMetaData ();
+									rs.getMetaData();
 
-									if (rs.next ())
+									if (rs.next())
 									{
 										try
 										{
-											DataObject object = (DataObject) Engine.instance ().getIObjectFactory ()
-															.newInstance (typeId);
+											DataObject object = (DataObject) Engine.instance().getIObjectFactory()
+															.newInstance(typeId);
 
-											object.setUniqueId (rs.getLong ("id"));
+											object.setUniqueId(rs.getLong("id"));
 
-											for (Iterator i = object.getAttributes ().entrySet ().iterator (); i
-															.hasNext ();)
+											for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 											{
-												Map.Entry attribute = (Map.Entry) i.next ();
+												Map.Entry attribute = (Map.Entry) i.next();
 
-												if (attribute.getValue () instanceof IObjectList)
+												if (attribute.getValue() instanceof IObjectList)
 												{
-													loadList (dataSource, object, object
-																	.getIObjectListAttribute ((String) attribute
-																					.getKey ()));
+													loadList(dataSource, object, object
+																	.getIObjectListAttribute((String) attribute
+																					.getKey()));
 												}
 												else
 												{
 													try
 													{
 														if (! object
-																		.getAttribute ((String) attribute.getKey ())
-																		.getClass ()
-																		.equals (
+																		.getAttribute((String) attribute.getKey())
+																		.getClass()
+																		.equals(
 																						rs
-																										.getObject (
+																										.getObject(
 																														(String) attribute
-																																		.getKey ())
-																										.getClass ()))
+																																		.getKey())
+																										.getClass()))
 														{
 															System.out
-																			.println ("********* Datastruct is not compatible with dataobject:"
-																							+ object.getTypeId ()
+																			.println("********* Datastruct is not compatible with dataobject:"
+																							+ object.getTypeId()
 																							+ ":"
-																							+ attribute.getKey ()
+																							+ attribute.getKey()
 																							+ " Types:"
 																							+ object
-																											.getAttribute (
+																											.getAttribute(
 																															(String) attribute
-																																			.getKey ())
-																											.getClass ()
+																																			.getKey())
+																											.getClass()
 																							+ "!="
 																							+ rs
-																											.getObject (
+																											.getObject(
 																															(String) attribute
-																																			.getKey ())
-																											.getClass ());
+																																			.getKey())
+																											.getClass());
 														}
 
-														object.setAttribute ((String) attribute.getKey (), rs
-																		.getObject ((String) attribute.getKey ()));
+														object.setAttribute((String) attribute.getKey(), rs
+																		.getObject((String) attribute.getKey()));
 													}
 													catch (NullPointerException x)
 													{
-														System.out.println ("LoadObject error: " + attribute.getKey ());
+														System.out.println("LoadObject error: " + attribute.getKey());
 													}
 												}
 											}
@@ -207,7 +206,7 @@ public class LoadObject extends Command
 										}
 										catch (NoSuchIObjectException ignored)
 										{
-											Log.logError ("persist", "LoadObject", "NoSuchIObjectException");
+											Log.logError("persist", "LoadObject", "NoSuchIObjectException");
 										}
 									}
 									else
@@ -220,16 +219,16 @@ public class LoadObject extends Command
 
 			if (object != null)
 			{
-				Log.logVerbose ("persist", "LoadObject", "Successfully loaded object " + typeId + ":" + uniqueId);
+				Log.logVerbose("persist", "LoadObject", "Successfully loaded object " + typeId + ":" + uniqueId);
 			}
 			else
 			{
-				Log.logError ("persist", "LoadObject", "Unable to find object " + typeId + ":" + uniqueId);
+				Log.logError("persist", "LoadObject", "Unable to find object " + typeId + ":" + uniqueId);
 			}
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "LoadObject", "Error while loading the object " + typeId + ":" + uniqueId + ": "
+			Log.logError("persist", "LoadObject", "Error while loading the object " + typeId + ":" + uniqueId + ": "
 							+ x);
 		}
 
@@ -243,26 +242,26 @@ public class LoadObject extends Command
 	 * @param owner The owner of the list.
 	 * @param list the object list to load.
 	 */
-	public void loadList (final DataSource dataSource, DataObject owner, final IObjectList list)
+	public void loadList(final DataSource dataSource, DataObject owner, final IObjectList list)
 	{
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
+			QueryRunner query = new QueryRunner(dataSource);
 
-			query.query ("select elemType, elemId from IritgoObjectList where id=? and attribute=?", new Object[]
+			query.query("select elemType, elemId from IritgoObjectList where id=? and attribute=?", new Object[]
 			{
-							new Long (owner.getUniqueId ()), list.getAttributeName ()
-			}, new ResultSetHandler ()
+							new Long(owner.getUniqueId()), list.getAttributeName()
+			}, new ResultSetHandler()
 			{
-				public Object handle (ResultSet rs) throws SQLException
+				public Object handle(ResultSet rs) throws SQLException
 				{
-					while (rs.next ())
+					while (rs.next())
 					{
-						DataObject element = load (dataSource, rs.getString ("elemType"), rs.getLong ("elemId"));
+						DataObject element = load(dataSource, rs.getString("elemType"), rs.getLong("elemId"));
 
 						if (element != null)
 						{
-							list.add (element);
+							list.add(element);
 						}
 					}
 
@@ -272,8 +271,8 @@ public class LoadObject extends Command
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "LoadObject", "Error while loading the object list "
-							+ list.getOwner ().getTypeId () + "." + list.getAttributeName () + ": " + x);
+			Log.logError("persist", "LoadObject", "Error while loading the object list " + list.getOwner().getTypeId()
+							+ "." + list.getAttributeName() + ": " + x);
 		}
 	}
 }

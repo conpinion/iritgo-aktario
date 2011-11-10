@@ -30,42 +30,42 @@ public class SocketConfig
 
 	private int acceptTimeout = 60 * 1000;
 
-	public int getPort ()
+	public int getPort()
 	{
 		return port;
 	}
 
-	public void setPort (int port)
+	public void setPort(int port)
 	{
 		this.port = port;
 	}
 
-	public int getBuffer ()
+	public int getBuffer()
 	{
 		return buffer;
 	}
 
-	public void setBuffer (int buffer)
+	public void setBuffer(int buffer)
 	{
 		this.buffer = buffer;
 	}
 
-	public int getReadTimeout ()
+	public int getReadTimeout()
 	{
 		return readTimeout;
 	}
 
-	public void setReadTimeout (int readTimeout)
+	public void setReadTimeout(int readTimeout)
 	{
 		this.readTimeout = readTimeout;
 	}
 
-	public int getAcceptTimeout ()
+	public int getAcceptTimeout()
 	{
 		return acceptTimeout;
 	}
 
-	public void setAcceptTimeout (int acceptTimeout)
+	public void setAcceptTimeout(int acceptTimeout)
 	{
 		this.acceptTimeout = acceptTimeout;
 	}

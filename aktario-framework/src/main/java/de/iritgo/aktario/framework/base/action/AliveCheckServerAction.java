@@ -38,7 +38,7 @@ public class AliveCheckServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public AliveCheckServerAction ()
+	public AliveCheckServerAction()
 	{
 	}
 
@@ -47,7 +47,7 @@ public class AliveCheckServerAction extends NetworkFrameworkServerAction
 	 *
 	 * @param source The source form this action.
 	 */
-	public AliveCheckServerAction (int source)
+	public AliveCheckServerAction(int source)
 	{
 		this.source = source;
 	}
@@ -56,31 +56,31 @@ public class AliveCheckServerAction extends NetworkFrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		source = stream.readInt ();
+		source = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (source);
+		stream.writeInt(source);
 	}
 
 	@Override
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
 		if (source == CLIENT)
 		{
-			clientTransceiver.addReceiver (clientTransceiver.getSender ());
+			clientTransceiver.addReceiver(clientTransceiver.getSender());
 
-			return (FrameworkAction) new AliveCheckAction (source);
+			return (FrameworkAction) new AliveCheckAction(source);
 		}
 
-		clientTransceiver.getConnectedChannel ().setAliveCheckSent (false);
+		clientTransceiver.getConnectedChannel().setAliveCheckSent(false);
 
 		return null;
 	}

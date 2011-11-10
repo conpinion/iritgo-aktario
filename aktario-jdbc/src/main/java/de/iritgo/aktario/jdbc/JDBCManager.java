@@ -68,9 +68,9 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	/**
 	 * Create a new <code>JDBCManager</code>
 	 */
-	public JDBCManager ()
+	public JDBCManager()
 	{
-		super ("persist.JDBCManager");
+		super("persist.JDBCManager");
 	}
 
 	/**
@@ -79,66 +79,66 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 * This method creates the data sources specified in the server
 	 * configuration.
 	 */
-	public void init ()
+	public void init()
 	{
-		dataSources = new HashMap ();
+		dataSources = new HashMap();
 
 		try
 		{
-			Configuration config = Engine.instance ().getConfiguration ();
+			Configuration config = Engine.instance().getConfiguration();
 
-			for (DatasourceConfig datasourceConfig : config.getDataSources ())
+			for (DatasourceConfig datasourceConfig : config.getDataSources())
 			{
-				DataSource ds = (DataSource) Class.forName (datasourceConfig.getDataSourceClass ()).newInstance ();
+				DataSource ds = (DataSource) Class.forName(datasourceConfig.getDataSourceClass()).newInstance();
 
-				if (PropertyUtils.isWriteable (ds, "driverClassName"))
+				if (PropertyUtils.isWriteable(ds, "driverClassName"))
 				{
-					PropertyUtils.setProperty (ds, "driverClassName", datasourceConfig.getDriverClass ());
+					PropertyUtils.setProperty(ds, "driverClassName", datasourceConfig.getDriverClass());
 				}
 
-				if (PropertyUtils.isWriteable (ds, "username"))
+				if (PropertyUtils.isWriteable(ds, "username"))
 				{
-					PropertyUtils.setProperty (ds, "username", datasourceConfig.getUser ());
+					PropertyUtils.setProperty(ds, "username", datasourceConfig.getUser());
 				}
 
-				if (PropertyUtils.isWriteable (ds, "password"))
+				if (PropertyUtils.isWriteable(ds, "password"))
 				{
-					PropertyUtils.setProperty (ds, "password", datasourceConfig.getPassword ());
+					PropertyUtils.setProperty(ds, "password", datasourceConfig.getPassword());
 				}
 
-				if (PropertyUtils.isWriteable (ds, "url"))
+				if (PropertyUtils.isWriteable(ds, "url"))
 				{
-					PropertyUtils.setProperty (ds, "url", datasourceConfig.getUrl ());
+					PropertyUtils.setProperty(ds, "url", datasourceConfig.getUrl());
 				}
 
-				dataSources.put (datasourceConfig.getId (), ds);
+				dataSources.put(datasourceConfig.getId(), ds);
 
 				if (defaultDataSource == null)
 				{
 					defaultDataSource = ds;
 				}
 
-				Log.logInfo ("persist", "JDBCManager", "Created datasource '" + datasourceConfig.getId () + "'");
+				Log.logInfo("persist", "JDBCManager", "Created datasource '" + datasourceConfig.getId() + "'");
 			}
 
-			JDBCIDGenerator persistentIdGenerator = new JDBCIDGenerator (2, 2, 1000);
+			JDBCIDGenerator persistentIdGenerator = new JDBCIDGenerator(2, 2, 1000);
 
-			persistentIdGenerator.load ();
-			Engine.instance ().installPersistentIDGenerator (persistentIdGenerator);
+			persistentIdGenerator.load();
+			Engine.instance().installPersistentIDGenerator(persistentIdGenerator);
 
-			DefaultIDGenerator transientIdGenerator = new DefaultIDGenerator ((long) 1, (long) 2);
+			DefaultIDGenerator transientIdGenerator = new DefaultIDGenerator((long) 1, (long) 2);
 
-			Engine.instance ().installTransientIDGenerator (transientIdGenerator);
+			Engine.instance().installTransientIDGenerator(transientIdGenerator);
 		}
 		catch (Exception x)
 		{
-			Log.logError ("persist", "JDBCManager", "Error while creating the datasources: " + x);
+			Log.logError("persist", "JDBCManager", "Error while creating the datasources: " + x);
 		}
 
-		Engine.instance ().getEventRegistry ().addListener ("objectcreated", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectmodified", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectrequested", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectremoved", this);
+		Engine.instance().getEventRegistry().addListener("objectcreated", this);
+		Engine.instance().getEventRegistry().addListener("objectmodified", this);
+		Engine.instance().getEventRegistry().addListener("objectrequested", this);
+		Engine.instance().getEventRegistry().addListener("objectremoved", this);
 	}
 
 	/**
@@ -146,17 +146,17 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * This method closes all active data sources.
 	 */
-	public void unload ()
+	public void unload()
 	{
-		for (Iterator i = dataSources.entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = dataSources.entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry entry = (Map.Entry) i.next ();
+			Map.Entry entry = (Map.Entry) i.next();
 
 			try
 			{
 				try
 				{
-					MethodUtils.invokeMethod ((DataSource) entry.getValue (), "close", null);
+					MethodUtils.invokeMethod((DataSource) entry.getValue(), "close", null);
 				}
 				catch (NoSuchMethodException x)
 				{
@@ -168,12 +168,12 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 				{
 				}
 
-				Log.logInfo ("persist", "JDBCManager", "Closed datasource '" + entry.getKey () + "'");
+				Log.logInfo("persist", "JDBCManager", "Closed datasource '" + entry.getKey() + "'");
 			}
 			catch (Exception x)
 			{
-				Log.logError ("persist", "JDBCManager", "Error during closing the datasource '" + entry.getKey ()
-								+ "': " + x);
+				Log.logError("persist", "JDBCManager", "Error during closing the datasource '" + entry.getKey() + "': "
+								+ x);
 			}
 		}
 	}
@@ -183,7 +183,7 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @return The default data source.
 	 */
-	public DataSource getDefaultDataSource ()
+	public DataSource getDefaultDataSource()
 	{
 		return defaultDataSource;
 	}
@@ -194,16 +194,16 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param event The object list event.
 	 */
-	public void iObjectListEvent (IObjectListEvent event)
+	public void iObjectListEvent(IObjectListEvent event)
 	{
-		if (event.getType () == IObjectListEvent.ADD)
+		if (event.getType() == IObjectListEvent.ADD)
 		{
-			insert ((DataObject) event.getObject (), (DataObject) event.getOwnerObject (), event.getListAttribute ());
+			insert((DataObject) event.getObject(), (DataObject) event.getOwnerObject(), event.getListAttribute());
 		}
 
-		if (event.getType () == IObjectListEvent.REMOVE)
+		if (event.getType() == IObjectListEvent.REMOVE)
 		{
-			delete ((DataObject) event.getObject (), (DataObject) event.getOwnerObject (), event.getListAttribute ());
+			delete((DataObject) event.getObject(), (DataObject) event.getOwnerObject(), event.getListAttribute());
 		}
 	}
 
@@ -212,9 +212,9 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param event The creation event.
 	 */
-	public void iObjectCreatedEvent (IObjectCreatedEvent event)
+	public void iObjectCreatedEvent(IObjectCreatedEvent event)
 	{
-		insert ((DataObject) event.getCreatedObject (), (DataObject) event.getOwnerObject (), event.getListAttribute ());
+		insert((DataObject) event.getCreatedObject(), (DataObject) event.getOwnerObject(), event.getListAttribute());
 	}
 
 	/**
@@ -222,9 +222,9 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param event The creation event.
 	 */
-	public void iObjectDeletedEvent (IObjectDeletedEvent event)
+	public void iObjectDeletedEvent(IObjectDeletedEvent event)
 	{
-		delete ((DataObject) event.getDeletedObject (), (DataObject) event.getOwnerObject (), event.getListAttribute ());
+		delete((DataObject) event.getDeletedObject(), (DataObject) event.getOwnerObject(), event.getListAttribute());
 	}
 
 	/**
@@ -232,9 +232,9 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param event The modification event.
 	 */
-	public void iObjectModifiedEvent (IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(IObjectModifiedEvent event)
 	{
-		update ((DataObject) event.getModifiedObject ());
+		update((DataObject) event.getModifiedObject());
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param event The reuqest event.
 	 */
-	public void iObjectRequestEvent (IObjectRequestEvent event)
+	public void iObjectRequestEvent(IObjectRequestEvent event)
 	{
 	}
 
@@ -254,58 +254,58 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 * @param listAttribute The name of the list attribute to which the new
 	 *   object belongs.
 	 */
-	private void insert (DataObject object, DataObject owner, String listAttribute)
+	private void insert(DataObject object, DataObject owner, String listAttribute)
 	{
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			connection = defaultDataSource.getConnection ();
+			connection = defaultDataSource.getConnection();
 
-			StringBuffer sqlFields = new StringBuffer ("id");
-			StringBuffer sqlValues = new StringBuffer ("?");
+			StringBuffer sqlFields = new StringBuffer("id");
+			StringBuffer sqlValues = new StringBuffer("?");
 
-			for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+			for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 			{
-				Map.Entry attribute = (Map.Entry) i.next ();
+				Map.Entry attribute = (Map.Entry) i.next();
 
-				if (attribute.getValue () instanceof IObjectList)
+				if (attribute.getValue() instanceof IObjectList)
 				{
 					continue;
 				}
 
-				sqlFields.append (", " + (String) attribute.getKey ());
-				sqlValues.append (", ?");
+				sqlFields.append(", " + (String) attribute.getKey());
+				sqlValues.append(", ?");
 			}
 
-			String sql = "insert into " + object.getTypeId () + " (" + sqlFields.toString () + ") values ("
-							+ sqlValues.toString () + ")";
+			String sql = "insert into " + object.getTypeId() + " (" + sqlFields.toString() + ") values ("
+							+ sqlValues.toString() + ")";
 
-			stmt = connection.prepareStatement (sql);
-			putAttributesToStatement (object, stmt);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			putAttributesToStatement(object, stmt);
+			stmt.execute();
 
-			Log.logVerbose ("persist", "JDBCManager", "CREATED " + object.getTypeId () + ":" + object.getUniqueId ()
+			Log.logVerbose("persist", "JDBCManager", "CREATED " + object.getTypeId() + ":" + object.getUniqueId()
 							+ " |" + sql + "|");
 
-			stmt.close ();
+			stmt.close();
 
 			if (owner != null)
 			{
 				sql = "insert into IritgoObjectList (type, id, attribute, elemType, elemId) values (?, ?, ?, ?, ?)";
 
-				stmt = connection.prepareStatement (sql);
-				stmt.setString (1, owner.getTypeId ());
-				stmt.setLong (2, owner.getUniqueId ());
-				stmt.setString (3, listAttribute);
-				stmt.setString (4, object.getTypeId ());
-				stmt.setLong (5, object.getUniqueId ());
-				stmt.execute ();
+				stmt = connection.prepareStatement(sql);
+				stmt.setString(1, owner.getTypeId());
+				stmt.setLong(2, owner.getUniqueId());
+				stmt.setString(3, listAttribute);
+				stmt.setString(4, object.getTypeId());
+				stmt.setLong(5, object.getUniqueId());
+				stmt.execute();
 
-				Log.logVerbose ("persist", "JDBCManager", "CREATED REFRENCE " + owner.getTypeId () + ":"
-								+ owner.getUniqueId () + " => " + object.getTypeId () + ":" + object.getUniqueId ()
-								+ " |" + sql + "|");
+				Log.logVerbose("persist", "JDBCManager", "CREATED REFRENCE " + owner.getTypeId() + ":"
+								+ owner.getUniqueId() + " => " + object.getTypeId() + ":" + object.getUniqueId() + " |"
+								+ sql + "|");
 			}
 		}
 		catch (Exception x)
@@ -315,8 +315,8 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
@@ -328,34 +328,34 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 * @param listAttribute The name of the list attribute to which the new
 	 *   object belongs.
 	 */
-	private void delete (DataObject object, DataObject owner, String listAttribute)
+	private void delete(DataObject object, DataObject owner, String listAttribute)
 	{
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			connection = defaultDataSource.getConnection ();
+			connection = defaultDataSource.getConnection();
 
-			StringBuffer sqlFields = new StringBuffer ("id");
-			StringBuffer sqlValues = new StringBuffer ("?");
+			StringBuffer sqlFields = new StringBuffer("id");
+			StringBuffer sqlValues = new StringBuffer("?");
 
-			String sql = "delete from IritgoObjectList where type='" + owner.getTypeId () + "'" + " AND id="
-							+ owner.getUniqueId () + " AND attribute='" + listAttribute + "'" + " AND elemType='"
-							+ object.getTypeId () + "'" + " AND elemId=" + object.getUniqueId ();
+			String sql = "delete from IritgoObjectList where type='" + owner.getTypeId() + "'" + " AND id="
+							+ owner.getUniqueId() + " AND attribute='" + listAttribute + "'" + " AND elemType='"
+							+ object.getTypeId() + "'" + " AND elemId=" + object.getUniqueId();
 
-			stmt = connection.prepareStatement (sql);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			stmt.execute();
 
-			sql = "delete from " + object.getTypeId () + " where id=" + object.getUniqueId ();
+			sql = "delete from " + object.getTypeId() + " where id=" + object.getUniqueId();
 
-			stmt = connection.prepareStatement (sql);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			stmt.execute();
 
-			Log.logVerbose ("persist", "JDBCManager", "Removed " + object.getTypeId () + ":" + object.getUniqueId ()
+			Log.logVerbose("persist", "JDBCManager", "Removed " + object.getTypeId() + ":" + object.getUniqueId()
 							+ " |" + sql + "|");
 
-			stmt.close ();
+			stmt.close();
 		}
 		catch (Exception x)
 		{
@@ -363,8 +363,8 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
@@ -373,38 +373,38 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 *
 	 * @param object The data object to update.
 	 */
-	private void update (DataObject object)
+	private void update(DataObject object)
 	{
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			connection = defaultDataSource.getConnection ();
+			connection = defaultDataSource.getConnection();
 
-			StringBuffer sqlAssigns = new StringBuffer ("id=?");
+			StringBuffer sqlAssigns = new StringBuffer("id=?");
 
-			for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+			for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 			{
-				Map.Entry attribute = (Map.Entry) i.next ();
+				Map.Entry attribute = (Map.Entry) i.next();
 
-				if (attribute.getValue () instanceof IObjectList)
+				if (attribute.getValue() instanceof IObjectList)
 				{
 					continue;
 				}
 
-				sqlAssigns.append (", " + (String) attribute.getKey () + "=?");
+				sqlAssigns.append(", " + (String) attribute.getKey() + "=?");
 			}
 
-			String sql = "update " + object.getTypeId () + " set " + sqlAssigns.toString () + " where id="
-							+ object.getUniqueId ();
+			String sql = "update " + object.getTypeId() + " set " + sqlAssigns.toString() + " where id="
+							+ object.getUniqueId();
 
-			stmt = connection.prepareStatement (sql);
-			putAttributesToStatement (object, stmt);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			putAttributesToStatement(object, stmt);
+			stmt.execute();
 
-			Log.logVerbose ("persist", "JDBCManager", "UPDATE " + object.getTypeId () + ":" + object.getUniqueId ()
-							+ " |" + sql + "|");
+			Log.logVerbose("persist", "JDBCManager", "UPDATE " + object.getTypeId() + ":" + object.getUniqueId() + " |"
+							+ sql + "|");
 		}
 		catch (Exception x)
 		{
@@ -413,8 +413,8 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
@@ -426,22 +426,22 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 	 * @param stmt The prepared statement.
 	 * @throws SQLException If an attribute could not be set.
 	 */
-	private void putAttributesToStatement (DataObject object, PreparedStatement stmt) throws SQLException
+	private void putAttributesToStatement(DataObject object, PreparedStatement stmt) throws SQLException
 	{
-		stmt.setLong (1, object.getUniqueId ());
+		stmt.setLong(1, object.getUniqueId());
 
 		int pos = 2;
 
-		for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry attribute = (Map.Entry) i.next ();
+			Map.Entry attribute = (Map.Entry) i.next();
 
-			if (attribute.getValue () instanceof IObjectList)
+			if (attribute.getValue() instanceof IObjectList)
 			{
 				continue;
 			}
 
-			stmt.setObject (pos++, attribute.getValue ());
+			stmt.setObject(pos++, attribute.getValue());
 		}
 	}
 }

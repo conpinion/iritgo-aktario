@@ -30,15 +30,15 @@ public class ResourceClassLoader extends ClassLoader
 	 *
 	 * @param cl The parent ClassLoader
 	 */
-	public ResourceClassLoader (ClassLoader cl)
+	public ResourceClassLoader(ClassLoader cl)
 	{
-		super (cl);
+		super(cl);
 	}
 
-	public Object getObject (String name) throws Exception
+	public Object getObject(String name) throws Exception
 	{
-		Class foundClass = super.findClass (name);
+		Class foundClass = super.findClass(name);
 
-		return foundClass.newInstance ();
+		return foundClass.newInstance();
 	}
 }

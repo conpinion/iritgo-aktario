@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface IObjectModifiedListener extends EventListener
 {
-	public void iObjectModifiedEvent (IObjectModifiedEvent event);
+	public void iObjectModifiedEvent(IObjectModifiedEvent event);
 }

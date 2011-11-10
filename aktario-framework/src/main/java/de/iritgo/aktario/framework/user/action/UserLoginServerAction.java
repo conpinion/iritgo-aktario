@@ -52,16 +52,16 @@ public class UserLoginServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public UserLoginServerAction ()
+	public UserLoginServerAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public UserLoginServerAction (String userName, String password, String clientVersion)
+	public UserLoginServerAction(String userName, String password, String clientVersion)
 	{
-		super (- 1);
+		super(- 1);
 		this.userName = userName;
 		this.password = password;
 		this.clientVersion = clientVersion;
@@ -71,7 +71,7 @@ public class UserLoginServerAction extends NetworkFrameworkServerAction
 	 * Get the id of the iritgo object.
 	 */
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "server.action.userlogin";
 	}
@@ -80,102 +80,102 @@ public class UserLoginServerAction extends NetworkFrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		password = stream.readUTF ();
-		clientVersion = stream.readUTF ();
+		userName = stream.readUTF();
+		password = stream.readUTF();
+		clientVersion = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (password);
-		stream.writeUTF (clientVersion);
+		stream.writeUTF(userName);
+		stream.writeUTF(password);
+		stream.writeUTF(clientVersion);
 	}
 
 	/**
 	 * @see de.iritgo.aktario.framework.base.action.NetworkFrameworkServerAction#getAction(de.iritgo.aktario.core.network.ClientTransceiver)
 	 */
 	@Override
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
-		if (! IritgoEngine.instance ().getCommandLine ().hasOption ("n") && ! "0".equals (clientVersion))
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
+		if (! IritgoEngine.instance().getCommandLine().hasOption("n") && ! "0".equals(clientVersion))
 		{
-			String serverVersion = System.getProperty ("iritgo.app.version.long");
-			if (! serverVersion.equals (clientVersion))
+			String serverVersion = System.getProperty("iritgo.app.version.long");
+			if (! serverVersion.equals(clientVersion))
 			{
-				return new WrongVersionAction ();
+				return new WrongVersionAction();
 			}
 		}
-		return checkUserLogin (clientTransceiver);
+		return checkUserLogin(clientTransceiver);
 	}
 
 	/**
 	 * @param clientTransceiver
 	 * @return
 	 */
-	private FrameworkAction checkUserLogin (ClientTransceiver clientTransceiver)
+	private FrameworkAction checkUserLogin(ClientTransceiver clientTransceiver)
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		User user = userRegistry.getUser (userName);
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		User user = userRegistry.getUser(userName);
 		if (user == null)
 		{
-			return new UserLoginFailureAction (UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
+			return new UserLoginFailureAction(UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
 		}
 
-		if (CommandTools.commandExists ("LoginAllowed"))
+		if (CommandTools.commandExists("LoginAllowed"))
 		{
-			Properties props = new Properties ();
-			props.put ("userName", userName);
-			Boolean allowed = (Boolean) CommandTools.performSimple ("LoginAllowed", props);
+			Properties props = new Properties();
+			props.put("userName", userName);
+			Boolean allowed = (Boolean) CommandTools.performSimple("LoginAllowed", props);
 			if (! allowed)
 			{
-				return new UserLoginFailureAction (UserLoginFailureAction.LOGIN_NOT_ALLOWED);
+				return new UserLoginFailureAction(UserLoginFailureAction.LOGIN_NOT_ALLOWED);
 			}
 		}
 
-		if (CommandTools.commandExists ("Authenticate"))
+		if (CommandTools.commandExists("Authenticate"))
 		{
-			Properties props = new Properties ();
-			props.put ("userName", userName);
-			props.put ("password", password);
-			Boolean authenticated = (Boolean) CommandTools.performSimple ("Authenticate", props);
+			Properties props = new Properties();
+			props.put("userName", userName);
+			props.put("password", password);
+			Boolean authenticated = (Boolean) CommandTools.performSimple("Authenticate", props);
 			if (! authenticated)
 			{
-				return new UserLoginFailureAction (UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
+				return new UserLoginFailureAction(UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
 			}
 		}
-		else if (! password.equals (user.getPassword ()))
+		else if (! password.equals(user.getPassword()))
 		{
-			return new UserLoginFailureAction (UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
+			return new UserLoginFailureAction(UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD);
 		}
 
-		if (user.isOnline ())
+		if (user.isOnline())
 		{
-			double channel = user.getNetworkChannel ();
-			ClientTransceiver oldClientTransceiver = new ClientTransceiver (channel);
-			UserKickAction userKickAction = new UserKickAction ();
-			oldClientTransceiver.addReceiver (oldClientTransceiver.getSender ());
-			userKickAction.setTransceiver (oldClientTransceiver);
-			ActionTools.sendToClient (userKickAction);
-			user.setOnline (false);
-			return new UserLoginFailureAction (UserLoginFailureAction.USER_ALREADY_ONLINE);
+			double channel = user.getNetworkChannel();
+			ClientTransceiver oldClientTransceiver = new ClientTransceiver(channel);
+			UserKickAction userKickAction = new UserKickAction();
+			oldClientTransceiver.addReceiver(oldClientTransceiver.getSender());
+			userKickAction.setTransceiver(oldClientTransceiver);
+			ActionTools.sendToClient(userKickAction);
+			user.setOnline(false);
+			return new UserLoginFailureAction(UserLoginFailureAction.USER_ALREADY_ONLINE);
 		}
 
-		user.setNetworkChannel (clientTransceiver.getSender ());
-		user.setOnline (true);
-		clientTransceiver.getConnectedChannel ().setCustomerContextObject (user);
-		UserLoginAction userLoginAction = new UserLoginAction (user);
-		userLoginAction.setAppId (System.getProperty ("iritgo.app.id"));
-		userLoginAction.setTransceiver (clientTransceiver);
-		Engine.instance ().getEventRegistry ().fire ("User", new UserEvent (user, UserEvent.USER_LOGGED_IN, password));
-		ActionTools.sendToClient (userLoginAction);
+		user.setNetworkChannel(clientTransceiver.getSender());
+		user.setOnline(true);
+		clientTransceiver.getConnectedChannel().setCustomerContextObject(user);
+		UserLoginAction userLoginAction = new UserLoginAction(user);
+		userLoginAction.setAppId(System.getProperty("iritgo.app.id"));
+		userLoginAction.setTransceiver(clientTransceiver);
+		Engine.instance().getEventRegistry().fire("User", new UserEvent(user, UserEvent.USER_LOGGED_IN, password));
+		ActionTools.sendToClient(userLoginAction);
 		return null;
 	}
 }

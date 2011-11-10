@@ -57,20 +57,20 @@ public class ProxyLinkedListAddServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListAddServerAction ()
+	public ProxyLinkedListAddServerAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListAddServerAction (long ownerUniqueId, String ownerTypeId, String proxyLinkedListId,
+	public ProxyLinkedListAddServerAction(long ownerUniqueId, String ownerTypeId, String proxyLinkedListId,
 					IObject prototype)
 	{
 		this.prototype = prototype;
 		this.ownerUniqueId = ownerUniqueId;
 		this.proxyLinkedListId = proxyLinkedListId;
-		prototypeId = prototype.getTypeId ();
+		prototypeId = prototype.getTypeId();
 		this.ownerTypeId = ownerTypeId;
 	}
 
@@ -78,22 +78,22 @@ public class ProxyLinkedListAddServerAction extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
 		try
 		{
-			ownerTypeId = stream.readUTF ();
-			ownerUniqueId = stream.readLong ();
-			prototypeUniqueId = stream.readLong ();
-			prototypeId = stream.readUTF ();
-			proxyLinkedListId = stream.readUTF ();
-			prototype = Engine.instance ().getIObjectFactory ().newInstance (prototypeId);
-			prototype.readObject (stream);
+			ownerTypeId = stream.readUTF();
+			ownerUniqueId = stream.readLong();
+			prototypeUniqueId = stream.readLong();
+			prototypeId = stream.readUTF();
+			proxyLinkedListId = stream.readUTF();
+			prototype = Engine.instance().getIObjectFactory().newInstance(prototypeId);
+			prototype.readObject(stream);
 		}
 		catch (NoSuchIObjectException x)
 		{
-			Log.log ("network", "ProxyLinkedListAddServerAction.readObject",
-							"DataObject not registred: " + prototypeId, Log.FATAL);
+			Log.log("network", "ProxyLinkedListAddServerAction.readObject", "DataObject not registred: " + prototypeId,
+							Log.FATAL);
 		}
 	}
 
@@ -101,21 +101,21 @@ public class ProxyLinkedListAddServerAction extends FrameworkServerAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (ownerTypeId);
-		stream.writeLong (ownerUniqueId);
-		stream.writeLong (prototype.getUniqueId ());
-		stream.writeUTF (prototypeId);
-		stream.writeUTF (proxyLinkedListId);
-		prototype.writeObject (stream);
+		stream.writeUTF(ownerTypeId);
+		stream.writeLong(ownerUniqueId);
+		stream.writeLong(prototype.getUniqueId());
+		stream.writeUTF(prototypeId);
+		stream.writeUTF(proxyLinkedListId);
+		prototype.writeObject(stream);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 		DataObject owner = null;
@@ -124,71 +124,71 @@ public class ProxyLinkedListAddServerAction extends FrameworkServerAction
 		{
 			// Its a new object and the client has always the wrong id;
 			// Look in the Mapping
-			User user = (User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ();
+			User user = (User) clientTransceiver.getConnectedChannel().getCustomerContextObject();
 
-			owner = (DataObject) Engine.instance ().getBaseRegistry ().get (
-							user.getNewObjectsMapping (new Long (ownerUniqueId)).longValue (), ownerTypeId);
+			owner = (DataObject) Engine.instance().getBaseRegistry().get(
+							user.getNewObjectsMapping(new Long(ownerUniqueId)).longValue(), ownerTypeId);
 		}
 		else
 		{
-			owner = (DataObject) Engine.instance ().getBaseRegistry ().get (ownerUniqueId, ownerTypeId);
+			owner = (DataObject) Engine.instance().getBaseRegistry().get(ownerUniqueId, ownerTypeId);
 		}
 
-		long newUniqueId = Engine.instance ().getPersistentIDGenerator ().createId ();
-		long oldUniqueId = prototype.getUniqueId ();
+		long newUniqueId = Engine.instance().getPersistentIDGenerator().createId();
+		long oldUniqueId = prototype.getUniqueId();
 
 		if (owner == null)
 		{
-			Log.logError ("system", "ProxyLinkedListAddServerAction.perform", "Owner is null");
+			Log.logError("system", "ProxyLinkedListAddServerAction.perform", "Owner is null");
 
 			return;
 		}
 
-		IObjectList proxyLinkedList = (IObjectList) owner.getAttribute (proxyLinkedListId);
+		IObjectList proxyLinkedList = (IObjectList) owner.getAttribute(proxyLinkedListId);
 
 		if (proxyLinkedList == null)
 		{
-			Log.logError ("system", "ProxyLinkedListAddServerAction.perform", "Proxy linked list is null");
+			Log.logError("system", "ProxyLinkedListAddServerAction.perform", "Proxy linked list is null");
 
 			return;
 		}
 
-		prototype.setUniqueId (newUniqueId);
+		prototype.setUniqueId(newUniqueId);
 
-		proxyLinkedList.add (prototype);
+		proxyLinkedList.add(prototype);
 
-		((User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ()).putNewObjectsMapping (new Long (
-						oldUniqueId), new Long (newUniqueId));
+		((User) clientTransceiver.getConnectedChannel().getCustomerContextObject()).putNewObjectsMapping(new Long(
+						oldUniqueId), new Long(newUniqueId));
 
-		ProxyLinkedListAddAction proxyLinkedListAction = new ProxyLinkedListAddAction (oldUniqueId, newUniqueId,
-						prototype.getTypeId (), owner.getUniqueId (), owner.getTypeId ());
+		ProxyLinkedListAddAction proxyLinkedListAction = new ProxyLinkedListAddAction(oldUniqueId, newUniqueId,
+						prototype.getTypeId(), owner.getUniqueId(), owner.getTypeId());
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
-		proxyLinkedListAction.setTransceiver (clientTransceiver);
-		proxyLinkedListAction.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (proxyLinkedListAction);
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
+		proxyLinkedListAction.setTransceiver(clientTransceiver);
+		proxyLinkedListAction.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(proxyLinkedListAction);
 
-		clientTransceiver = new ClientTransceiver (clientTransceiver.getSender (), clientTransceiver
-						.getConnectedChannel ());
+		clientTransceiver = new ClientTransceiver(clientTransceiver.getSender(), clientTransceiver
+						.getConnectedChannel());
 
-		Engine.instance ().getEventRegistry ().fire (
+		Engine.instance().getEventRegistry().fire(
 						"objectcreated",
-						new IObjectListEvent (prototype, owner, proxyLinkedListId, clientTransceiver,
+						new IObjectListEvent(prototype, owner, proxyLinkedListId, clientTransceiver,
 										IObjectListEvent.ADD));
 
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.onlineUserIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.onlineUserIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			clientTransceiver.addReceiver (user.getNetworkChannel ());
+			clientTransceiver.addReceiver(user.getNetworkChannel());
 		}
 
-		EditIObjectAction editPrototypeAction = new EditIObjectAction (EditIObjectAction.OK, owner);
+		EditIObjectAction editPrototypeAction = new EditIObjectAction(EditIObjectAction.OK, owner);
 
-		editPrototypeAction.setTransceiver (clientTransceiver);
-		editPrototypeAction.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (editPrototypeAction);
+		editPrototypeAction.setTransceiver(clientTransceiver);
+		editPrototypeAction.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(editPrototypeAction);
 	}
 }

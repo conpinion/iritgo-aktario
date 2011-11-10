@@ -69,62 +69,62 @@ public class InstantMessageAgent extends DataObject implements Agent
 	/**
 	 * Create a new ScriptAgent.
 	 */
-	public InstantMessageAgent ()
+	public InstantMessageAgent()
 	{
-		super ("InstantMessageAgent");
-		addAttribute ("targetUser", "");
-		addAttribute ("sourceUser", "");
-		addAttribute ("message", "");
-		addAttribute ("timestamp", new Long (0));
+		super("InstantMessageAgent");
+		addAttribute("targetUser", "");
+		addAttribute("sourceUser", "");
+		addAttribute("message", "");
+		addAttribute("timestamp", new Long(0));
 	}
 
-	public InstantMessageAgent (String sourceUser, String targetUser, String message)
+	public InstantMessageAgent(String sourceUser, String targetUser, String message)
 	{
-		this ();
-		setSourceUser (sourceUser);
-		setTargetUser (targetUser);
-		setMessage (message);
-		setTimestamp (System.currentTimeMillis ());
+		this();
+		setSourceUser(sourceUser);
+		setTargetUser(targetUser);
+		setMessage(message);
+		setTimestamp(System.currentTimeMillis());
 	}
 
-	public void setTargetUser (String targetUser)
+	public void setTargetUser(String targetUser)
 	{
-		setAttribute ("targetUser", targetUser);
+		setAttribute("targetUser", targetUser);
 	}
 
-	public String getTargetUser ()
+	public String getTargetUser()
 	{
-		return getStringAttribute ("targetUser");
+		return getStringAttribute("targetUser");
 	}
 
-	public void setSourceUser (String sourceUser)
+	public void setSourceUser(String sourceUser)
 	{
-		setAttribute ("sourceUser", sourceUser);
+		setAttribute("sourceUser", sourceUser);
 	}
 
-	public String getSourceUser ()
+	public String getSourceUser()
 	{
-		return getStringAttribute ("sourceUser");
+		return getStringAttribute("sourceUser");
 	}
 
-	public void setMessage (String message)
+	public void setMessage(String message)
 	{
-		setAttribute ("message", message);
+		setAttribute("message", message);
 	}
 
-	public String getMessage ()
+	public String getMessage()
 	{
-		return getStringAttribute ("message");
+		return getStringAttribute("message");
 	}
 
-	public void setTimestamp (long timestamp)
+	public void setTimestamp(long timestamp)
 	{
-		setAttribute ("timestamp", timestamp);
+		setAttribute("timestamp", timestamp);
 	}
 
-	public long getTimestamp ()
+	public long getTimestamp()
 	{
-		return getLongAttribute ("timestamp");
+		return getLongAttribute("timestamp");
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param agentManager The agent manager.
 	 */
-	public void init (AgentManager agentManager)
+	public void init(AgentManager agentManager)
 	{
 		this.agentManager = agentManager;
 	}
@@ -142,9 +142,9 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void awake (final AgentContainer container)
+	public void awake(final AgentContainer container)
 	{
-		boolean server = agentManager.onServer ();
+		boolean server = agentManager.onServer();
 
 		agentContainer = container;
 
@@ -154,38 +154,38 @@ public class InstantMessageAgent extends DataObject implements Agent
 
 			boolean isOnline = false;
 
-			Boolean instantMessagesEnabled = (Boolean) CommandTools.performSimple ("InstantMessagesEnabled",
-							new Properties ());
+			Boolean instantMessagesEnabled = (Boolean) CommandTools.performSimple("InstantMessagesEnabled",
+							new Properties());
 
 			if ((instantMessagesEnabled != null) && ! instantMessagesEnabled)
 			{
-				this.sleep (container);
+				this.sleep(container);
 
 				return;
 			}
 
-			for (Iterator i = Server.instance ().getUserRegistry ().onlineUserIterator (); i.hasNext ();)
+			for (Iterator i = Server.instance().getUserRegistry().onlineUserIterator(); i.hasNext();)
 			{
-				User user = (User) i.next ();
+				User user = (User) i.next();
 
-				if (user.getName ().equals (getTargetUser ()))
+				if (user.getName().equals(getTargetUser()))
 				{
 					isOnline = true;
-					container.send (user.getName (), getInstantMessageAgent ());
+					container.send(user.getName(), getInstantMessageAgent());
 
 					break;
 				}
 			}
 
-			userListener = new UserListener ()
+			userListener = new UserListener()
 			{
-				public void userEvent (UserEvent e)
+				public void userEvent(UserEvent e)
 				{
-					if (e.isLoggedIn ())
+					if (e.isLoggedIn())
 					{
-						if (e.getUser ().getName ().equals (getTargetUser ()))
+						if (e.getUser().getName().equals(getTargetUser()))
 						{
-							container.send (e.getUser ().getName (), getInstantMessageAgent ());
+							container.send(e.getUser().getName(), getInstantMessageAgent());
 						}
 					}
 				}
@@ -193,7 +193,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 
 			if (! isOnline)
 			{
-				Engine.instance ().getEventRegistry ().addListener ("User", userListener);
+				Engine.instance().getEventRegistry().addListener("User", userListener);
 			}
 		}
 	}
@@ -201,44 +201,44 @@ public class InstantMessageAgent extends DataObject implements Agent
 	/**
 	 * The heartbeat will called at regular intervals
 	 */
-	public void heartbeat ()
+	public void heartbeat()
 	{
-		boolean server = agentManager.onServer ();
+		boolean server = agentManager.onServer();
 
-		if (! server && (AppContext.instance ().isUserLoggedIn ()))
+		if (! server && (AppContext.instance().isUserLoggedIn()))
 		{
-			User user = AppContext.instance ().getUser ();
+			User user = AppContext.instance().getUser();
 
-			if (user.getName ().equals (getTargetUser ()))
+			if (user.getName().equals(getTargetUser()))
 			{
-				Properties props = new Properties ();
+				Properties props = new Properties();
 
-				props.put ("message", getMessage ());
-				props.put ("sourceUser", getSourceUser ());
-				props.put ("timestamp", new Long (getTimestamp ()));
-				props.put ("bounds", new Rectangle (0, 0, 300, 100));
-				props.put ("weightx", new Double (2.5));
-				props.put ("weighty", new Double (1.5));
-				CommandTools.performAsync (new ShowDialog ("InstantMessageReceivePane"), props);
+				props.put("message", getMessage());
+				props.put("sourceUser", getSourceUser());
+				props.put("timestamp", new Long(getTimestamp()));
+				props.put("bounds", new Rectangle(0, 0, 300, 100));
+				props.put("weightx", new Double(2.5));
+				props.put("weighty", new Double(1.5));
+				CommandTools.performAsync(new ShowDialog("InstantMessageReceivePane"), props);
 
-				Engine.instance ().getEventRegistry ().fire (
+				Engine.instance().getEventRegistry().fire(
 								"InstantMessage",
-								new InstantMessageEvent (getTimestamp (), getMessage (), getSourceUser (),
-												getTargetUser (), true));
+								new InstantMessageEvent(getTimestamp(), getMessage(), getSourceUser(), getTargetUser(),
+												true));
 
-				sleep (agentContainer);
+				sleep(agentContainer);
 
 				return;
 			}
 
-			if (user.getName ().equals (getSourceUser ()))
+			if (user.getName().equals(getSourceUser()))
 			{
-				agentContainer.sendToFirstDispatcher (this);
+				agentContainer.sendToFirstDispatcher(this);
 			}
 		}
 	}
 
-	public InstantMessageAgent getInstantMessageAgent ()
+	public InstantMessageAgent getInstantMessageAgent()
 	{
 		return this;
 	}
@@ -248,14 +248,14 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void sleep (AgentContainer container)
+	public void sleep(AgentContainer container)
 	{
 		if (userListener != null)
 		{
-			Engine.instance ().getEventRegistry ().removeListener ("User", userListener);
+			Engine.instance().getEventRegistry().removeListener("User", userListener);
 		}
 
-		container.simpleThreadSleep (this);
+		container.simpleThreadSleep(this);
 	}
 
 	/**
@@ -264,11 +264,11 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void shutdown (AgentContainer container)
+	public void shutdown(AgentContainer container)
 	{
 		if (userListener != null)
 		{
-			Engine.instance ().getEventRegistry ().removeListener ("User", userListener);
+			Engine.instance().getEventRegistry().removeListener("User", userListener);
 		}
 	}
 
@@ -277,7 +277,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param heartBeat True if the agent is alive and has a heart beat.
 	 */
-	public void setHeartBeat (boolean heartBeat)
+	public void setHeartBeat(boolean heartBeat)
 	{
 		this.heartBeat = heartBeat;
 	}
@@ -287,7 +287,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @return True if the agent is alive and has a heart beat.
 	 */
-	public boolean hasHeartBeat ()
+	public boolean hasHeartBeat()
 	{
 		return heartBeat;
 	}
@@ -295,7 +295,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 	/**
 	 * Get an an overview of all functions of this agent.
 	 */
-	public String getFunctions ()
+	public String getFunctions()
 	{
 		return "";
 	}
@@ -306,7 +306,7 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 * @param communication A message string.
 	 * @return A message string.
 	 */
-	public String communication (String communication)
+	public String communication(String communication)
 	{
 		return "";
 	}
@@ -316,9 +316,9 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
+		super.writeObject(stream);
 	}
 
 	/**
@@ -326,9 +326,9 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
+		super.readObject(stream);
 	}
 
 	/**
@@ -337,13 +337,13 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void die (AgentContainer container)
+	public void die(AgentContainer container)
 	{
 		if (userListener != null)
 		{
-			Engine.instance ().getEventRegistry ().removeListener ("User", userListener);
+			Engine.instance().getEventRegistry().removeListener("User", userListener);
 		}
 
-		sleep (container);
+		sleep(container);
 	}
 }

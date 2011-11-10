@@ -38,10 +38,10 @@ public class SessionContext extends BaseObject
 	 * Constructor
 	 *
 	 */
-	public SessionContext (String id)
+	public SessionContext(String id)
 	{
-		super (id);
-		sessionContexts = new HashMap ();
+		super(id);
+		sessionContexts = new HashMap();
 	}
 
 	/**
@@ -49,9 +49,9 @@ public class SessionContext extends BaseObject
 	 *
 	 * @param baseObject
 	 */
-	public void add (BaseObject baseObject)
+	public void add(BaseObject baseObject)
 	{
-		sessionContexts.put (baseObject.getTypeId (), baseObject);
+		sessionContexts.put(baseObject.getTypeId(), baseObject);
 	}
 
 	/**
@@ -59,9 +59,9 @@ public class SessionContext extends BaseObject
 	 *
 	 * @param baseObject
 	 */
-	public void add (String id, BaseObject baseObject)
+	public void add(String id, BaseObject baseObject)
 	{
-		sessionContexts.put (id, baseObject);
+		sessionContexts.put(id, baseObject);
 	}
 
 	/**
@@ -69,13 +69,13 @@ public class SessionContext extends BaseObject
 	 *
 	 * @param id The id of the baseObject.
 	 */
-	public BaseObject get (String id)
+	public BaseObject get(String id)
 	{
-		BaseObject baseObject = (BaseObject) sessionContexts.get (id);
+		BaseObject baseObject = (BaseObject) sessionContexts.get(id);
 
 		if (baseObject == null)
 		{
-			Log.log ("system", "SessionContext.get", "Key not found: " + id, Log.WARN);
+			Log.log("system", "SessionContext.get", "Key not found: " + id, Log.WARN);
 		}
 
 		return baseObject;
@@ -84,25 +84,25 @@ public class SessionContext extends BaseObject
 	/**
 	 * Remove a baseObject.
 	 */
-	public void remove (BaseObject baseObject)
+	public void remove(BaseObject baseObject)
 	{
-		sessionContexts.remove (baseObject.getTypeId ());
+		sessionContexts.remove(baseObject.getTypeId());
 	}
 
 	/**
 	 * Remove a baseObject.
 	 */
-	public void remove (String id)
+	public void remove(String id)
 	{
-		sessionContexts.remove (id);
+		sessionContexts.remove(id);
 	}
 
 	/**
 	 * get the values iterator
 	 */
-	public Iterator getValueIterator ()
+	public Iterator getValueIterator()
 	{
-		return sessionContexts.values ().iterator ();
+		return sessionContexts.values().iterator();
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class SessionContext extends BaseObject
 	 *
 	 * @param id The id of the rule.
 	 */
-	public boolean baseObjectExists (String id)
+	public boolean baseObjectExists(String id)
 	{
-		return sessionContexts.containsKey (id);
+		return sessionContexts.containsKey(id);
 	}
 
 	/**
@@ -120,16 +120,16 @@ public class SessionContext extends BaseObject
 	 *
 	 * @param id The id of the rule.
 	 */
-	public boolean contains (String id)
+	public boolean contains(String id)
 	{
-		return sessionContexts.containsKey (id);
+		return sessionContexts.containsKey(id);
 	}
 
 	/**
 	 * clean sessioncontext
 	 */
-	public void cleanSessionContext ()
+	public void cleanSessionContext()
 	{
-		sessionContexts.clear ();
+		sessionContexts.clear();
 	}
 }

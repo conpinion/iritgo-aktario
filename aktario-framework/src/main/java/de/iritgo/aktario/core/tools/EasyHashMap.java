@@ -39,7 +39,7 @@ public class EasyHashMap extends HashMap
 	/**
 	 * Create a new empty map.
 	 */
-	public EasyHashMap ()
+	public EasyHashMap()
 	{
 	}
 
@@ -49,9 +49,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, int value)
+	public void put(String key, int value)
 	{
-		super.put (key, new Integer (value));
+		super.put(key, new Integer(value));
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, long value)
+	public void put(String key, long value)
 	{
-		super.put (key, new Long (value));
+		super.put(key, new Long(value));
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, float value)
+	public void put(String key, float value)
 	{
-		super.put (key, new Float (value));
+		super.put(key, new Float(value));
 	}
 
 	/**
@@ -82,9 +82,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, double value)
+	public void put(String key, double value)
 	{
-		super.put (key, new Double (value));
+		super.put(key, new Double(value));
 	}
 
 	/**
@@ -93,9 +93,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, boolean value)
+	public void put(String key, boolean value)
 	{
-		super.put (key, new Boolean (value));
+		super.put(key, new Boolean(value));
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, String value)
+	public void put(String key, String value)
 	{
-		super.put (key, value);
+		super.put(key, value);
 	}
 
 	/**
@@ -115,9 +115,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, Object value)
+	public void put(String key, Object value)
 	{
-		super.put (key, value);
+		super.put(key, value);
 	}
 
 	/**
@@ -126,9 +126,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public int getInt (String key)
+	public int getInt(String key)
 	{
-		return ((Integer) super.get (key)).intValue ();
+		return ((Integer) super.get(key)).intValue();
 	}
 
 	/**
@@ -137,9 +137,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public long getLong (String key)
+	public long getLong(String key)
 	{
-		return ((Long) super.get (key)).longValue ();
+		return ((Long) super.get(key)).longValue();
 	}
 
 	/**
@@ -148,9 +148,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public float getFloat (String key)
+	public float getFloat(String key)
 	{
-		return ((Float) super.get (key)).floatValue ();
+		return ((Float) super.get(key)).floatValue();
 	}
 
 	/**
@@ -159,9 +159,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public double getDouble (String key)
+	public double getDouble(String key)
 	{
-		return ((Double) super.get (key)).doubleValue ();
+		return ((Double) super.get(key)).doubleValue();
 	}
 
 	/**
@@ -170,9 +170,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public boolean getBoolean (String key)
+	public boolean getBoolean(String key)
 	{
-		return ((Boolean) super.get (key)).booleanValue ();
+		return ((Boolean) super.get(key)).booleanValue();
 	}
 
 	/**
@@ -181,9 +181,9 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public String getString (String key)
+	public String getString(String key)
 	{
-		return (String) super.get (key);
+		return (String) super.get(key);
 	}
 
 	/**
@@ -192,56 +192,56 @@ public class EasyHashMap extends HashMap
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public Object getObject (String key)
+	public Object getObject(String key)
 	{
-		return super.get (key);
+		return super.get(key);
 	}
 
 	/**
 	 * Write the attributes to a stream.
 	 */
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
-		stream.writeInt (size ());
+		stream.writeInt(size());
 
-		for (Iterator i = entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry entry = (Map.Entry) i.next ();
+			Map.Entry entry = (Map.Entry) i.next();
 
-			stream.writeUTF ((String) entry.getKey ());
+			stream.writeUTF((String) entry.getKey());
 
-			Object value = entry.getValue ();
-			Class klass = value.getClass ();
+			Object value = entry.getValue();
+			Class klass = value.getClass();
 
 			if (klass == Integer.class)
 			{
-				stream.writeUTF ("I");
-				stream.writeInt (((Integer) value).intValue ());
+				stream.writeUTF("I");
+				stream.writeInt(((Integer) value).intValue());
 			}
 			else if (klass == Long.class)
 			{
-				stream.writeUTF ("L");
-				stream.writeLong (((Long) value).longValue ());
+				stream.writeUTF("L");
+				stream.writeLong(((Long) value).longValue());
 			}
 			else if (klass == String.class)
 			{
-				stream.writeUTF ("S");
-				stream.writeUTF ((String) value);
+				stream.writeUTF("S");
+				stream.writeUTF((String) value);
 			}
 			else if (klass == Boolean.class)
 			{
-				stream.writeUTF ("B");
-				stream.writeBoolean (((Boolean) value).booleanValue ());
+				stream.writeUTF("B");
+				stream.writeBoolean(((Boolean) value).booleanValue());
 			}
 			else if (klass == Float.class)
 			{
-				stream.writeUTF ("F");
-				stream.writeFloat (((Float) value).floatValue ());
+				stream.writeUTF("F");
+				stream.writeFloat(((Float) value).floatValue());
 			}
 			else if (klass == Double.class)
 			{
-				stream.writeUTF ("D");
-				stream.writeDouble (((Double) value).doubleValue ());
+				stream.writeUTF("D");
+				stream.writeDouble(((Double) value).doubleValue());
 			}
 		}
 	}
@@ -249,43 +249,43 @@ public class EasyHashMap extends HashMap
 	/**
 	 * Read the attributes from a stream.
 	 */
-	public void readObject (DataInputStream stream) throws IOException
+	public void readObject(DataInputStream stream) throws IOException
 	{
-		int numAttributes = stream.readInt ();
+		int numAttributes = stream.readInt();
 
 		for (int i = 0; i < numAttributes; ++i)
 		{
-			String key = stream.readUTF ();
-			String type = stream.readUTF ();
+			String key = stream.readUTF();
+			String type = stream.readUTF();
 
-			if ("I".equals (type))
+			if ("I".equals(type))
 			{
-				put (key, stream.readInt ());
+				put(key, stream.readInt());
 			}
 
-			if ("L".equals (type))
+			if ("L".equals(type))
 			{
-				put (key, stream.readLong ());
+				put(key, stream.readLong());
 			}
 
-			if ("S".equals (type))
+			if ("S".equals(type))
 			{
-				put (key, stream.readUTF ());
+				put(key, stream.readUTF());
 			}
 
-			if ("B".equals (type))
+			if ("B".equals(type))
 			{
-				put (key, stream.readBoolean ());
+				put(key, stream.readBoolean());
 			}
 
-			if ("F".equals (type))
+			if ("F".equals(type))
 			{
-				put (key, stream.readFloat ());
+				put(key, stream.readFloat());
 			}
 
-			if ("D".equals (type))
+			if ("D".equals(type))
 			{
-				put (key, stream.readDouble ());
+				put(key, stream.readDouble());
 			}
 		}
 	}

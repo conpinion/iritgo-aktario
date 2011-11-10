@@ -35,7 +35,7 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	/**
 	 * Create a new <code>AbstractIObjectFactory</code>.
 	 */
-	public AbstractIObjectFactory ()
+	public AbstractIObjectFactory()
 	{
 	}
 
@@ -44,7 +44,7 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	 *
 	 * @param iObjectFactory The new factory to use
 	 */
-	public void setIObjectFactory (IObjectFactoryInterface iObjectFactory)
+	public void setIObjectFactory(IObjectFactoryInterface iObjectFactory)
 	{
 		this.iObjectFactory = iObjectFactory;
 	}
@@ -54,9 +54,9 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	 *
 	 * @param object The prototype object to add.
 	 */
-	public void register (IObject object)
+	public void register(IObject object)
 	{
-		iObjectFactory.register (object);
+		iObjectFactory.register(object);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	 *
 	 * @param object The prototype object to remove.
 	 */
-	public void remove (IObject object)
+	public void remove(IObject object)
 	{
-		iObjectFactory.remove (object);
+		iObjectFactory.remove(object);
 	}
 
 	/**
@@ -75,9 +75,9 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	 * @param typeId The type to check.
 	 * @return True if the factory can generate the specified type.
 	 */
-	public boolean contains (String typeId)
+	public boolean contains(String typeId)
 	{
-		return iObjectFactory.contains (typeId);
+		return iObjectFactory.contains(typeId);
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class AbstractIObjectFactory extends BaseObject implements IObjectFactory
 	 *
 	 * @param typeId The type id of the object to create.
 	 */
-	public IObject newInstance (String typeId) throws NoSuchIObjectException
+	public IObject newInstance(String typeId) throws NoSuchIObjectException
 	{
-		return iObjectFactory.newInstance (typeId);
+		return iObjectFactory.newInstance(typeId);
 	}
 }

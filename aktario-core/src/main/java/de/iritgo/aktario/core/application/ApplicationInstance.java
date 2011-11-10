@@ -33,12 +33,12 @@ public class ApplicationInstance extends DataObject
 	/**
 	 * Create a new ApplicationInstance.
 	 */
-	public ApplicationInstance ()
+	public ApplicationInstance()
 	{
-		super ("ApplicationInstance");
+		super("ApplicationInstance");
 
-		addAttribute ("applicationId", "");
-		addAttribute ("name", "");
+		addAttribute("applicationId", "");
+		addAttribute("name", "");
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class ApplicationInstance extends DataObject
 	 *
 	 * @return The application id.
 	 */
-	public String getApplicationId ()
+	public String getApplicationId()
 	{
-		return getStringAttribute ("applicationId");
+		return getStringAttribute("applicationId");
 	}
 
 	/**
@@ -56,9 +56,9 @@ public class ApplicationInstance extends DataObject
 	 *
 	 * @param name The new apllication id.
 	 */
-	public void setApplicationId (String applicationId)
+	public void setApplicationId(String applicationId)
 	{
-		setAttribute ("applicationId", applicationId);
+		setAttribute("applicationId", applicationId);
 	}
 
 	/**
@@ -66,9 +66,9 @@ public class ApplicationInstance extends DataObject
 	 *
 	 * @return The application name.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return getStringAttribute ("name");
+		return getStringAttribute("name");
 	}
 
 	/**
@@ -76,9 +76,9 @@ public class ApplicationInstance extends DataObject
 	 *
 	 * @param name The new name.
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
-		setAttribute ("name", name);
+		setAttribute("name", name);
 	}
 
 	/**
@@ -87,13 +87,13 @@ public class ApplicationInstance extends DataObject
 	 * @return The string representation.
 	 */
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		Application app = Application.get (getApplicationId ());
+		Application app = Application.get(getApplicationId());
 
 		if (app != null)
 		{
-			return "[" + app.getName () + "] " + getName ();
+			return "[" + app.getName() + "] " + getName();
 		}
 		else
 		{

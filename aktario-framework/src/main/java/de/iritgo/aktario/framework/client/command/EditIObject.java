@@ -41,9 +41,9 @@ public class EditIObject extends Command
 	 * Standard constructor
 	 *
 	 */
-	public EditIObject ()
+	public EditIObject()
 	{
-		super ("EditIObject");
+		super("EditIObject");
 	}
 
 	/**
@@ -51,31 +51,31 @@ public class EditIObject extends Command
 	 *
 	 * @param prototype The prototype that have changed
 	 */
-	public EditIObject (IObject prototype)
+	public EditIObject(IObject prototype)
 	{
-		this ();
+		this();
 		this.prototype = prototype;
 	}
 
 	/**
 	 * EditIObject
 	 */
-	public void perform ()
+	public void perform()
 	{
-		double channelNumber = AppContext.instance ().getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = AppContext.instance().getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		IObjectProxy iObjectProxy = Engine.instance ().getProxyRegistry ().getProxy (prototype.getUniqueId (),
-						prototype.getTypeId ());
+		IObjectProxy iObjectProxy = Engine.instance().getProxyRegistry().getProxy(prototype.getUniqueId(),
+						prototype.getTypeId());
 
-		iObjectProxy.setUpToDate (false);
+		iObjectProxy.setUpToDate(false);
 
-		EditIObjectServerAction editPrototypeServerAction = new EditIObjectServerAction (prototype);
+		EditIObjectServerAction editPrototypeServerAction = new EditIObjectServerAction(prototype);
 
-		editPrototypeServerAction.setTransceiver (clientTransceiver);
+		editPrototypeServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (editPrototypeServerAction);
+		ActionTools.sendToServer(editPrototypeServerAction);
 	}
 }

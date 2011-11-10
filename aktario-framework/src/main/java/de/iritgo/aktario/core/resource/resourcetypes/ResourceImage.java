@@ -41,9 +41,9 @@ public class ResourceImage extends ResourcePersistent
 	 * @param name The description of the resource.
 	 * @param nodeName The node Name
 	 */
-	public ResourceImage (String name, String nodeName, String resourcePath)
+	public ResourceImage(String name, String nodeName, String resourcePath)
 	{
-		super (name, nodeName, resourcePath);
+		super(name, nodeName, resourcePath);
 	}
 
 	/**
@@ -51,25 +51,25 @@ public class ResourceImage extends ResourcePersistent
 	 *
 	 * @return The Object.
 	 */
-	public Image getImage () throws ResourceNotFoundException
+	public Image getImage() throws ResourceNotFoundException
 	{
 		if (imageComponent == null)
 		{
-			Log.log ("resources", "getImage", "Loading Image: " + getResourcePath (), Log.INFO);
+			Log.log("resources", "getImage", "Loading Image: " + getResourcePath(), Log.INFO);
 
-			imageComponent = new ImageComponent (Engine.instance ().getSystemDir () + "/" + (String) getResourcePath ());
+			imageComponent = new ImageComponent(Engine.instance().getSystemDir() + "/" + (String) getResourcePath());
 		}
 
-		return imageComponent.getImage ();
+		return imageComponent.getImage();
 	}
 
-	public ImageComponent getImageComponent () throws ResourceNotFoundException
+	public ImageComponent getImageComponent() throws ResourceNotFoundException
 	{
 		if (imageComponent == null)
 		{
-			Log.log ("resources", "getImage", "Loading Image: " + getResourcePath (), Log.INFO);
+			Log.log("resources", "getImage", "Loading Image: " + getResourcePath(), Log.INFO);
 
-			imageComponent = new ImageComponent ((String) getResourcePath ());
+			imageComponent = new ImageComponent((String) getResourcePath());
 		}
 
 		return imageComponent;

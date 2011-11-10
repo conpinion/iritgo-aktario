@@ -40,13 +40,13 @@ public class UserChatCommand extends Command
 
 	private AppContext appContext;
 
-	public UserChatCommand ()
+	public UserChatCommand()
 	{
 	}
 
-	public UserChatCommand (String message, int channelId, String userName)
+	public UserChatCommand(String message, int channelId, String userName)
 	{
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 		this.userName = userName;
 		this.channelId = channelId;
 		this.message = message;
@@ -58,26 +58,26 @@ public class UserChatCommand extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		double channelNumber = appContext.getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = appContext.getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		if (message.startsWith ("/"))
+		if (message.startsWith("/"))
 		{
-			ConsoleManager consoleManager = (ConsoleManager) Engine.instance ().getManagerRegistry ().getManager (
+			ConsoleManager consoleManager = (ConsoleManager) Engine.instance().getManagerRegistry().getManager(
 							"console");
 
 			try
 			{
-				consoleManager.doConsoleCommand (message.substring (1, message.length ()));
+				consoleManager.doConsoleCommand(message.substring(1, message.length()));
 			}
 			catch (Exception x)
 			{
@@ -85,17 +85,17 @@ public class UserChatCommand extends Command
 		}
 		else
 		{
-			ChatMessageServerAction chatMessageServerAction = new ChatMessageServerAction (message, channelId, userName);
+			ChatMessageServerAction chatMessageServerAction = new ChatMessageServerAction(message, channelId, userName);
 
-			chatMessageServerAction.setTransceiver (clientTransceiver);
+			chatMessageServerAction.setTransceiver(clientTransceiver);
 
-			ActionTools.sendToServer (chatMessageServerAction);
+			ActionTools.sendToServer(chatMessageServerAction);
 		}
 	}
 
 	@Override
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
-		return appContext.isConnectedWithServer ();
+		return appContext.isConnectedWithServer();
 	}
 }

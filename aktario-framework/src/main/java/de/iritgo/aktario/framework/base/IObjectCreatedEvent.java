@@ -41,7 +41,7 @@ public class IObjectCreatedEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public IObjectCreatedEvent (IObject createdObject, IObject ownerObject, String listAttribute,
+	public IObjectCreatedEvent(IObject createdObject, IObject ownerObject, String listAttribute,
 					ClientTransceiver clientTransceiver)
 	{
 		this.createdObject = createdObject;
@@ -50,22 +50,22 @@ public class IObjectCreatedEvent implements Event
 		this.listAttribute = listAttribute;
 	}
 
-	public IObject getCreatedObject ()
+	public IObject getCreatedObject()
 	{
 		return createdObject;
 	}
 
-	public IObject getOwnerObject ()
+	public IObject getOwnerObject()
 	{
 		return ownerObject;
 	}
 
-	public String getListAttribute ()
+	public String getListAttribute()
 	{
 		return listAttribute;
 	}
 
-	public ClientTransceiver getClientTransceiver ()
+	public ClientTransceiver getClientTransceiver()
 	{
 		return clientTransceiver;
 	}

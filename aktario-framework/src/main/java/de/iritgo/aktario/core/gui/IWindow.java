@@ -57,9 +57,9 @@ public class IWindow extends BaseObject implements IDisplay
 	/**
 	 * Create a new IWindow.
 	 */
-	public IWindow ()
+	public IWindow()
 	{
-		this ("IWindow");
+		this("IWindow");
 	}
 
 	/**
@@ -67,10 +67,10 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param windowId The window id.
 	 */
-	public IWindow (String windowId)
+	public IWindow(String windowId)
 	{
-		super (windowId);
-		properties = new Properties ();
+		super(windowId);
+		properties = new Properties();
 		onScreenUniqueId = windowId;
 	}
 
@@ -79,10 +79,10 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param windowId The window id.
 	 */
-	public IWindow (String windowId, String onScreenUniqueId)
+	public IWindow(String windowId, String onScreenUniqueId)
 	{
-		super (windowId);
-		properties = new Properties ();
+		super(windowId);
+		properties = new Properties();
 		this.onScreenUniqueId = onScreenUniqueId;
 	}
 
@@ -91,7 +91,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The display's id.
 	 */
-	public String getOnScreenUniqueId ()
+	public String getOnScreenUniqueId()
 	{
 		return onScreenUniqueId;
 	}
@@ -102,9 +102,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 * @param guiPaneId The id of the gui pane that is to be displayed in this
 	 *   window.
 	 */
-	public void initGUI (String guiPaneId)
+	public void initGUI(String guiPaneId)
 	{
-		initGUI (guiPaneId, guiPaneId, null, null);
+		initGUI(guiPaneId, guiPaneId, null, null);
 	}
 
 	/**
@@ -114,9 +114,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *   window.
 	 * @param sessionContext The session contxt.
 	 */
-	public void initGUI (String guiPaneId, String onScreenUniqueId, SessionContext sessionContext)
+	public void initGUI(String guiPaneId, String onScreenUniqueId, SessionContext sessionContext)
 	{
-		initGUI (guiPaneId, onScreenUniqueId, null, sessionContext);
+		initGUI(guiPaneId, onScreenUniqueId, null, sessionContext);
 	}
 
 	/**
@@ -127,14 +127,14 @@ public class IWindow extends BaseObject implements IDisplay
 	 * @param object The IObject that is to be displayed in this window.
 	 * @param sessionContext The session contxt.
 	 */
-	public void initGUI (String guiPaneId, String onScreenUniqueId, IObject object, SessionContext sessionContext)
+	public void initGUI(String guiPaneId, String onScreenUniqueId, IObject object, SessionContext sessionContext)
 	{
 		this.onScreenUniqueId = onScreenUniqueId;
-		guiPane = (GUIPane) GUIPaneRegistry.instance ().create (guiPaneId);
-		guiPane.setProperties (properties);
-		guiPane.setObject (object);
-		guiPane.setSessionContext (sessionContext);
-		guiPane.setOnScreenUniqueId (onScreenUniqueId);
+		guiPane = (GUIPane) GUIPaneRegistry.instance().create(guiPaneId);
+		guiPane.setProperties(properties);
+		guiPane.setObject(object);
+		guiPane.setSessionContext(sessionContext);
+		guiPane.setOnScreenUniqueId(onScreenUniqueId);
 
 		boolean resizable = true;
 		boolean closable = true;
@@ -143,117 +143,116 @@ public class IWindow extends BaseObject implements IDisplay
 		boolean titlebar = true;
 		boolean initVisible = true;
 
-		if (properties.get ("resizable") != null)
+		if (properties.get("resizable") != null)
 		{
-			resizable = ((Boolean) properties.get ("resizable")).booleanValue ();
+			resizable = ((Boolean) properties.get("resizable")).booleanValue();
 		}
 
-		if (properties.get ("closable") != null)
+		if (properties.get("closable") != null)
 		{
-			closable = ((Boolean) properties.get ("closable")).booleanValue ();
+			closable = ((Boolean) properties.get("closable")).booleanValue();
 		}
 
-		if (properties.get ("maximizable") != null)
+		if (properties.get("maximizable") != null)
 		{
-			maximizable = ((Boolean) properties.get ("maximizable")).booleanValue ();
+			maximizable = ((Boolean) properties.get("maximizable")).booleanValue();
 		}
 
-		if (properties.get ("iconifiable") != null)
+		if (properties.get("iconifiable") != null)
 		{
-			iconifiable = ((Boolean) properties.get ("iconifiable")).booleanValue ();
+			iconifiable = ((Boolean) properties.get("iconifiable")).booleanValue();
 		}
 
-		if (properties.get ("titlebar") != null)
+		if (properties.get("titlebar") != null)
 		{
-			titlebar = ((Boolean) properties.get ("titlebar")).booleanValue ();
+			titlebar = ((Boolean) properties.get("titlebar")).booleanValue();
 		}
 
-		if (properties.get ("visible") != null)
+		if (properties.get("visible") != null)
 		{
-			initVisible = ((Boolean) properties.get ("visible")).booleanValue ();
+			initVisible = ((Boolean) properties.get("visible")).booleanValue();
 		}
 
-		windowFrame = Engine.instance ().getGUIFactory ().createWindowFrame (this, getTypeId (), resizable, closable,
+		windowFrame = Engine.instance().getGUIFactory().createWindowFrame(this, getTypeId(), resizable, closable,
 						maximizable, iconifiable, titlebar, initVisible, properties);
 
-		windowFrame.setProperties (properties);
+		windowFrame.setProperties(properties);
 
-		guiPane.setIDisplay (this);
+		guiPane.setIDisplay(this);
 
-		if (properties.get ("bounds") != null)
+		if (properties.get("bounds") != null)
 		{
-			windowFrame.setBounds ((Rectangle) properties.get ("bounds"));
+			windowFrame.setBounds((Rectangle) properties.get("bounds"));
 		}
 
-		if (properties.get ("maximized") != null)
+		if (properties.get("maximized") != null)
 		{
 			try
 			{
-				windowFrame.setMaximized (((Boolean) properties.get ("maximized")).booleanValue ());
+				windowFrame.setMaximized(((Boolean) properties.get("maximized")).booleanValue());
 			}
 			catch (Exception x)
 			{
 			}
 		}
 
-		if (properties.get ("title") != null)
+		if (properties.get("title") != null)
 		{
-			windowFrame.setTitle ((String) properties.get ("title"));
+			windowFrame.setTitle((String) properties.get("title"));
 		}
 
-		guiPane.initGUI ();
+		guiPane.initGUI();
 
-		if (properties.get ("weightx") != null)
+		if (properties.get("weightx") != null)
 		{
-			Rectangle bounds = windowFrame.getBounds ();
+			Rectangle bounds = windowFrame.getBounds();
 
-			bounds.width *= ((Double) properties.get ("weightx")).doubleValue ();
-			windowFrame.setBounds (bounds);
+			bounds.width *= ((Double) properties.get("weightx")).doubleValue();
+			windowFrame.setBounds(bounds);
 		}
 
-		if (properties.get ("weighty") != null)
+		if (properties.get("weighty") != null)
 		{
-			Rectangle bounds = windowFrame.getBounds ();
+			Rectangle bounds = windowFrame.getBounds();
 
-			bounds.height *= ((Double) properties.get ("eightx")).doubleValue ();
-			windowFrame.setBounds (bounds);
+			bounds.height *= ((Double) properties.get("eightx")).doubleValue();
+			windowFrame.setBounds(bounds);
 		}
 
-		if (properties.get ("name") != null)
+		if (properties.get("name") != null)
 		{
-			windowFrame.setName ((String) properties.get ("name"));
+			windowFrame.setName((String) properties.get("name"));
 		}
 		else
 		{
-			windowFrame.setName (guiPane.getTypeId ());
+			windowFrame.setName(guiPane.getTypeId());
 		}
 
 		if (object != null)
 		{
-			registerIObject (object, guiPane);
+			registerIObject(object, guiPane);
 		}
 	}
 
-	public void registerIObject (IObject object, GUIPane guiPane)
+	public void registerIObject(IObject object, GUIPane guiPane)
 	{
-		IObjectProxyRegistry proxyRegistry = Engine.instance ().getProxyRegistry ();
-		IObjectProxy prototypeProxy = (IObjectProxy) proxyRegistry
-						.getProxy (object.getUniqueId (), object.getTypeId ());
+		IObjectProxyRegistry proxyRegistry = Engine.instance().getProxyRegistry();
+		IObjectProxy prototypeProxy = (IObjectProxy) proxyRegistry.getProxy(object.getUniqueId(), object.getTypeId());
 
-		IObject prototypeable = prototypeProxy.getRealObject ();
+		IObject prototypeable = prototypeProxy.getRealObject();
 
-		guiPane.setObject (prototypeable);
-		guiPane.registerProxyEventListener ();
+		guiPane.setObject(prototypeable);
+		guiPane.registerProxyEventListener();
 
 		if (prototypeable != null)
 		{
-			loadFromObject ();
+			loadFromObject();
 		}
 	}
 
-	public void initGUIPane ()
+	public void initGUIPane()
 	{
-		guiPane.initGUI ();
+		guiPane.initGUI();
 	}
 
 	/**
@@ -261,7 +260,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param The gui pane.
 	 */
-	public void setGUIPane (GUIPane guiPane)
+	public void setGUIPane(GUIPane guiPane)
 	{
 		this.guiPane = guiPane;
 	}
@@ -271,7 +270,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The gui pane.
 	 */
-	public GUIPane getGUIPane ()
+	public GUIPane getGUIPane()
 	{
 		return guiPane;
 	}
@@ -279,17 +278,17 @@ public class IWindow extends BaseObject implements IDisplay
 	/**
 	 * LoadFromObject, loads the GUI from object.
 	 */
-	public void loadFromObject ()
+	public void loadFromObject()
 	{
-		guiPane.loadFromObject ();
+		guiPane.loadFromObject();
 	}
 
 	/**
 	 * StoreToObject, save the GUI to object.
 	 */
-	public void storeToObject ()
+	public void storeToObject()
 	{
-		guiPane.storeToObject ();
+		guiPane.storeToObject();
 	}
 
 	/**
@@ -297,7 +296,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The desktop id (or null if this display is a dialog).
 	 */
-	public String getDesktopId ()
+	public String getDesktopId()
 	{
 		return desktopId;
 	}
@@ -307,7 +306,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param desktopId The desktop id.
 	 */
-	public void setDesktopId (String desktopId)
+	public void setDesktopId(String desktopId)
 	{
 		this.desktopId = desktopId;
 	}
@@ -317,7 +316,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param desktopManager The desktop manager.
 	 */
-	public void setDesktopManager (IDesktopManager desktopManager)
+	public void setDesktopManager(IDesktopManager desktopManager)
 	{
 		this.desktopManager = desktopManager;
 	}
@@ -327,7 +326,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The desktop manager.
 	 */
-	public IDesktopManager getDesktopManager ()
+	public IDesktopManager getDesktopManager()
 	{
 		return desktopManager;
 	}
@@ -335,39 +334,39 @@ public class IWindow extends BaseObject implements IDisplay
 	/**
 	 * Close the window.
 	 */
-	public void close ()
+	public void close()
 	{
 		if (guiPane != null)
 		{
-			guiPane.close ();
+			guiPane.close();
 		}
 
 		if (windowFrame != null)
 		{
-			windowFrame.close ();
+			windowFrame.close();
 		}
 
-		desktopManager.removeDisplay (this);
-		Engine.instance ().getEventRegistry ().fire ("iwindowframe.closed", new IDisplayClosedEvent (this));
+		desktopManager.removeDisplay(this);
+		Engine.instance().getEventRegistry().fire("iwindowframe.closed", new IDisplayClosedEvent(this));
 	}
 
 	/**
 	 * Close the window.
 	 */
-	public void systemClose ()
+	public void systemClose()
 	{
 		if (guiPane != null)
 		{
-			guiPane.systemClose ();
+			guiPane.systemClose();
 		}
 
 		if (windowFrame != null)
 		{
-			windowFrame.systemClose ();
+			windowFrame.systemClose();
 		}
 
-		desktopManager.removeDisplay (this);
-		Engine.instance ().getEventRegistry ().fire ("iwindowframe.closed", new IDisplayClosedEvent (this));
+		desktopManager.removeDisplay(this);
+		Engine.instance().getEventRegistry().fire("iwindowframe.closed", new IDisplayClosedEvent(this));
 	}
 
 	/**
@@ -375,9 +374,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The data object.
 	 */
-	public IObject getDataObject ()
+	public IObject getDataObject()
 	{
-		return guiPane.getObject ();
+		return guiPane.getObject();
 	}
 
 	/**
@@ -386,9 +385,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param title The new title.
 	 */
-	public void setTitle (String title)
+	public void setTitle(String title)
 	{
-		windowFrame.setTitle (title);
+		windowFrame.setTitle(title);
 	}
 
 	/**
@@ -396,9 +395,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The window title.
 	 */
-	public String getTitle ()
+	public String getTitle()
 	{
-		return windowFrame.getTitle ();
+		return windowFrame.getTitle();
 	}
 
 	/**
@@ -407,9 +406,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param icon The icon.
 	 */
-	public void setIcon (Icon icon)
+	public void setIcon(Icon icon)
 	{
-		windowFrame.setIcon (icon);
+		windowFrame.setIcon(icon);
 	}
 
 	/**
@@ -417,9 +416,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The display's icon.
 	 */
-	public Icon getIcon ()
+	public Icon getIcon()
 	{
-		return windowFrame.getIcon ();
+		return windowFrame.getIcon();
 	}
 
 	/**
@@ -428,9 +427,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 * @param key The key under which to store the property.
 	 * @param value The property value.
 	 */
-	public void putProperty (String key, Object value)
+	public void putProperty(String key, Object value)
 	{
-		properties.put (key, value);
+		properties.put(key, value);
 	}
 
 	/**
@@ -439,9 +438,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 * @param key The key of the property to retrieve.
 	 * @return The property value.
 	 */
-	public Object getProperty (String key)
+	public Object getProperty(String key)
 	{
-		return properties.get (key);
+		return properties.get(key);
 	}
 
 	/**
@@ -449,7 +448,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param properties The new properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 		if (properties != null)
 		{
@@ -462,7 +461,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The display properties.
 	 */
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}
@@ -472,9 +471,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param key The key of the property to remove.
 	 */
-	public void removeProperty (String key)
+	public void removeProperty(String key)
 	{
-		properties.remove (key);
+		properties.remove(key);
 	}
 
 	/**
@@ -482,7 +481,7 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return The window frame.
 	 */
-	public IWindowFrame getWindowFrame ()
+	public IWindowFrame getWindowFrame()
 	{
 		return windowFrame;
 	}
@@ -490,11 +489,11 @@ public class IWindow extends BaseObject implements IDisplay
 	/**
 	 * Show the window frame.
 	 */
-	public void show ()
+	public void show()
 	{
-		windowFrame.showWindow ();
+		windowFrame.showWindow();
 
-		Engine.instance ().getEventRegistry ().fire ("iwindowframe.opened", new IDisplayOpenedEvent (this));
+		Engine.instance().getEventRegistry().fire("iwindowframe.opened", new IDisplayOpenedEvent(this));
 	}
 
 	/**
@@ -502,9 +501,9 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @param enabled If true the window is enabled.
 	 */
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		windowFrame.setEnabled (enabled);
+		windowFrame.setEnabled(enabled);
 	}
 
 	/**
@@ -512,16 +511,16 @@ public class IWindow extends BaseObject implements IDisplay
 	 *
 	 * @return True if the display is enabled.
 	 */
-	public boolean isEnabled ()
+	public boolean isEnabled()
 	{
-		return windowFrame.isEnabled ();
+		return windowFrame.isEnabled();
 	}
 
 	/**
 	 * Make this window the topmost window.
 	 */
-	public void bringToFront ()
+	public void bringToFront()
 	{
-		windowFrame.bringToFront ();
+		windowFrame.bringToFront();
 	}
 }

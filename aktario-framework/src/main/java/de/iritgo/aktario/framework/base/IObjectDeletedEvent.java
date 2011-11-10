@@ -41,7 +41,7 @@ public class IObjectDeletedEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public IObjectDeletedEvent (IObject deletedObject, IObject ownerObject, String listAttribute,
+	public IObjectDeletedEvent(IObject deletedObject, IObject ownerObject, String listAttribute,
 					ClientTransceiver clientTransceiver)
 	{
 		this.deletedObject = deletedObject;
@@ -50,22 +50,22 @@ public class IObjectDeletedEvent implements Event
 		this.listAttribute = listAttribute;
 	}
 
-	public IObject getDeletedObject ()
+	public IObject getDeletedObject()
 	{
 		return deletedObject;
 	}
 
-	public IObject getOwnerObject ()
+	public IObject getOwnerObject()
 	{
 		return ownerObject;
 	}
 
-	public String getListAttribute ()
+	public String getListAttribute()
 	{
 		return listAttribute;
 	}
 
-	public ClientTransceiver getClientTransceiver ()
+	public ClientTransceiver getClientTransceiver()
 	{
 		return clientTransceiver;
 	}

@@ -53,26 +53,26 @@ public class AktarioClientManager extends BaseObject implements Manager, UserLis
 	/**
 	 * Create a new client manager.
 	 */
-	public AktarioClientManager ()
+	public AktarioClientManager()
 	{
-		super ("aktarioclient");
+		super("aktarioclient");
 		startup = true;
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
-		Client.instance ().createDefaultNetworkProcessingSystem ();
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
+		Client.instance().createDefaultNetworkProcessingSystem();
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
 	}
 
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 
@@ -81,7 +81,7 @@ public class AktarioClientManager extends BaseObject implements Manager, UserLis
 	 *
 	 * @return The current user.
 	 */
-	public AktarioUser getUser ()
+	public AktarioUser getUser()
 	{
 		return aktarioUser;
 	}
@@ -93,46 +93,46 @@ public class AktarioClientManager extends BaseObject implements Manager, UserLis
 	 *
 	 * @param userEvent The userEvent.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if ((event != null) && (event.isLoggedIn ()))
+		if ((event != null) && (event.isLoggedIn()))
 		{
-			aktarioUser = (AktarioUser) DataObjectTools.registerDataObject ("AktarioUser", event.getUser ()
-							.getUniqueId (), new IObjectProxyListener ()
-			{
-				public void proxyEvent (IObjectProxyEvent event)
-				{
-					if (! event.isWaitingForNewObject ())
-					{
-						AktarioUser aktarioUser = (AktarioUser) event.getObject ();
+			aktarioUser = (AktarioUser) DataObjectTools.registerDataObject("AktarioUser",
+							event.getUser().getUniqueId(), new IObjectProxyListener()
+							{
+								public void proxyEvent(IObjectProxyEvent event)
+								{
+									if (! event.isWaitingForNewObject())
+									{
+										AktarioUser aktarioUser = (AktarioUser) event.getObject();
 
-						Properties props = new Properties ();
+										Properties props = new Properties();
 
-						props = new Properties ();
-						props.put ("enabled", new Boolean (aktarioUser.getRole () == AktarioUser.ROLE_ADMIN));
-						CommandTools.performAsync ("EnableAdminFunctions", props);
-					}
-				}
-			});
+										props = new Properties();
+										props.put("enabled", new Boolean(
+														aktarioUser.getRole() == AktarioUser.ROLE_ADMIN));
+										CommandTools.performAsync("EnableAdminFunctions", props);
+									}
+								}
+							});
 
 			@SuppressWarnings("unused")
-			AktarioUserPreferences preferences = (AktarioUserPreferences) DataObjectTools.registerDataObject (
-							"AktarioUserPreferences", event.getUser ().getUniqueId (), new IObjectProxyListener ()
+			AktarioUserPreferences preferences = (AktarioUserPreferences) DataObjectTools.registerDataObject(
+							"AktarioUserPreferences", event.getUser().getUniqueId(), new IObjectProxyListener()
 							{
-								public void proxyEvent (IObjectProxyEvent event)
+								public void proxyEvent(IObjectProxyEvent event)
 								{
-									if (! event.isWaitingForNewObject ())
+									if (! event.isWaitingForNewObject())
 									{
-										AktarioUserPreferences preferences = (AktarioUserPreferences) event
-														.getObject ();
-										Properties props = new Properties ();
+										AktarioUserPreferences preferences = (AktarioUserPreferences) event.getObject();
+										Properties props = new Properties();
 
-										props.put ("preferences", preferences);
-										CommandTools.performAsync ("ApplyPreferences", props);
+										props.put("preferences", preferences);
+										CommandTools.performAsync("ApplyPreferences", props);
 
 										if (startup)
 										{
-											startup (aktarioUser);
+											startup(aktarioUser);
 											startup = false;
 										}
 									}
@@ -140,7 +140,7 @@ public class AktarioClientManager extends BaseObject implements Manager, UserLis
 							});
 		}
 
-		if ((event != null) && (! event.isLoggedIn ()))
+		if ((event != null) && (! event.isLoggedIn()))
 		{
 			startup = true;
 		}
@@ -152,37 +152,37 @@ public class AktarioClientManager extends BaseObject implements Manager, UserLis
 	 *
 	 * @param user The user who has logged in.
 	 */
-	private void startup (AktarioUser user)
+	private void startup(AktarioUser user)
 	{
-		Properties props = new Properties ();
+		Properties props = new Properties();
 
-		props.put ("user", user);
+		props.put("user", user);
 
-		if (CommandTools.commandExists ("Startup"))
+		if (CommandTools.commandExists("Startup"))
 		{
-			CommandTools.performAsync ("Startup", props);
+			CommandTools.performAsync("Startup", props);
 		}
 		else
 		{
-			CommandTools.performAsync ("DefaultStartup", props);
+			CommandTools.performAsync("DefaultStartup", props);
 		}
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
-		if (event.allPluginsInitialized ())
+		if (event.allPluginsInitialized())
 		{
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.setProperty ("command", "test.aktera-client.loginCommand");
-			props.setProperty ("name", "login");
+			props.setProperty("command", "test.aktera-client.loginCommand");
+			props.setProperty("name", "login");
 
-			CommandTools.performSimple ("aktario-xmlrpc.AddXmlRpcCommand", props);
+			CommandTools.performSimple("aktario-xmlrpc.AddXmlRpcCommand", props);
 
-			props.setProperty ("command", "test.aktera-client.logoffCommand");
-			props.setProperty ("name", "logoff");
+			props.setProperty("command", "test.aktera-client.logoffCommand");
+			props.setProperty("name", "logoff");
 
-			CommandTools.performSimple ("aktario-xmlrpc.AddXmlRpcCommand", props);
+			CommandTools.performSimple("aktario-xmlrpc.AddXmlRpcCommand", props);
 		}
 	}
 }

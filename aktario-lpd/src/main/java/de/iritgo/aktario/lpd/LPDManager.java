@@ -42,9 +42,9 @@ public class LPDManager extends BaseObject implements Manager
 	static
 	{
 		//PropertyConfigurator.configure("logConfig.ini");
-		URL logConfigUrl = LPDManager.class.getResource ("/resources/log.conf");
+		URL logConfigUrl = LPDManager.class.getResource("/resources/log.conf");
 
-		PropertyConfigurator.configure (logConfigUrl);
+		PropertyConfigurator.configure(logConfigUrl);
 	}
 
 	private Thread lpdThread;
@@ -52,26 +52,26 @@ public class LPDManager extends BaseObject implements Manager
 	/**
 	 * Create a new call manager manager.
 	 */
-	public LPDManager ()
+	public LPDManager()
 	{
-		super ("LPDManager");
+		super("LPDManager");
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		initLPDService ();
+		initLPDService();
 	}
 
-	private void initLPDService ()
+	private void initLPDService()
 	{
-		Properties properties = new Properties ();
+		Properties properties = new Properties();
 
 		try
 		{
-			properties.load (getClass ().getResource ("/resources/lpd.properties").openStream ());
+			properties.load(getClass().getResource("/resources/lpd.properties").openStream());
 		}
 		catch (Exception x)
 		{
@@ -82,19 +82,19 @@ public class LPDManager extends BaseObject implements Manager
 			final String rawQueueName = "RAW";
 
 			// Initialize data model and Print Queue
-			PrintJobTableModel pjtm = new PrintJobTableModel ();
-			Queues queues = Queues.getInstance ();
+			PrintJobTableModel pjtm = new PrintJobTableModel();
+			Queues queues = Queues.getInstance();
 
 			// create the PrintQueue
-			PrintQueue rawQueue = queues.createQueueWithTableModel (rawQueueName, pjtm);
+			PrintQueue rawQueue = queues.createQueueWithTableModel(rawQueueName, pjtm);
 
 			// initialize the TableModel by making it aware of it's data source, the PrintQueue
-			pjtm.setPrintQueueDataModel (rawQueue);
+			pjtm.setPrintQueueDataModel(rawQueue);
 
 			//			lpdThread = new Thread(LPD.getInstance (properties));
-			lpdThread = new Thread (LPD.getInstance ());
+			lpdThread = new Thread(LPD.getInstance());
 			//			HandlerFactory.getInstance ().setCustomHandler ("AKTARIO", new LPDCustomHandler());
-			lpdThread.start ();
+			lpdThread.start();
 		}
 		catch (Exception e)
 		{
@@ -105,8 +105,8 @@ public class LPDManager extends BaseObject implements Manager
 	 * Free all client manager resources.
 	 */
 	@SuppressWarnings("deprecation")
-	public void unload ()
+	public void unload()
 	{
-		lpdThread.stop ();
+		lpdThread.stop();
 	}
 }

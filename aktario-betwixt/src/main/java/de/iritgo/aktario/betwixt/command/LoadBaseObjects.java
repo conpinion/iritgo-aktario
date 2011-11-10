@@ -32,16 +32,16 @@ public class LoadBaseObjects extends Command
 {
 	private String path;
 
-	public LoadBaseObjects ()
+	public LoadBaseObjects()
 	{
-		super ("loadbaseobjects");
-		path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator () + "data"
-						+ Engine.instance ().getFileSeparator ();
+		super("loadbaseobjects");
+		path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator() + "data"
+						+ Engine.instance().getFileSeparator();
 	}
 
-	public LoadBaseObjects (String path)
+	public LoadBaseObjects(String path)
 	{
-		this ();
+		this();
 		this.path = path;
 	}
 
@@ -51,18 +51,18 @@ public class LoadBaseObjects extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
-		path = (String) properties.get ("path");
+		path = (String) properties.get("path");
 
 		if (path == null)
 		{
-			path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator ();
+			path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator();
 		}
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		// 		BeanWriter writer = null;
 		// 		BaseRegistry baseRegistry = Engine.instance ().getBaseRegistry ();

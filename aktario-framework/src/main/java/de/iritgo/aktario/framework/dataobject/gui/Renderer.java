@@ -29,21 +29,21 @@ import de.iritgo.aktario.framework.base.DataObject;
  */
 public abstract class Renderer extends BaseObject
 {
-	public Renderer (String typeId)
+	public Renderer(String typeId)
 	{
-		super (typeId);
+		super(typeId);
 	}
 
-	public abstract void workOn (Controller controller, DataObject dataObject, Object content,
+	public abstract void workOn(Controller controller, DataObject dataObject, Object content,
 					DataObjectGUIPane dataObjectGUIPane);
 
-	public abstract void workOn (Controller controller, DataObject dataObject, Object content, QueryPane queryPane);
+	public abstract void workOn(Controller controller, DataObject dataObject, Object content, QueryPane queryPane);
 
-	public abstract void setError (String widgetId);
+	public abstract void setError(String widgetId);
 
-	public abstract void setNoError (String widgetId);
+	public abstract void setNoError(String widgetId);
 
-	public abstract void close ();
+	public abstract void close();
 
-	public abstract void refresh ();
+	public abstract void refresh();
 }

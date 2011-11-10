@@ -34,5 +34,5 @@ public interface IDisplayClosedListener extends EventListener
 	 *
 	 * @param event The closing event.
 	 */
-	public void displayClosedEvent (IDisplayClosedEvent event);
+	public void displayClosedEvent(IDisplayClosedEvent event);
 }

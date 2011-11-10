@@ -40,7 +40,7 @@ public class PluginContext extends BaseObject
 	 * @param plugin The plugin.
 	 * @param classLoader The class loader.
 	 */
-	public PluginContext (Plugin plugin, ClassLoader classLoader)
+	public PluginContext(Plugin plugin, ClassLoader classLoader)
 	{
 		this.plugin = plugin;
 		this.classLoader = classLoader;
@@ -51,7 +51,7 @@ public class PluginContext extends BaseObject
 	 *
 	 * @return The class loader.
 	 */
-	public ClassLoader getClassLoader ()
+	public ClassLoader getClassLoader()
 	{
 		return classLoader;
 	}
@@ -61,7 +61,7 @@ public class PluginContext extends BaseObject
 	 *
 	 * @return The plugin.
 	 */
-	public Plugin getPlugin ()
+	public Plugin getPlugin()
 	{
 		return plugin;
 	}
@@ -70,8 +70,8 @@ public class PluginContext extends BaseObject
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return "PluginContext@" + this.hashCode () + "[" + plugin.getName () + "]";
+		return "PluginContext@" + this.hashCode() + "[" + plugin.getName() + "]";
 	}
 }

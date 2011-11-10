@@ -38,14 +38,14 @@ public class EndFileTransferRequest extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public EndFileTransferRequest ()
+	public EndFileTransferRequest()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public EndFileTransferRequest (String fileId)
+	public EndFileTransferRequest(String fileId)
 	{
 		this.fileId = fileId;
 	}
@@ -54,29 +54,29 @@ public class EndFileTransferRequest extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		fileId = stream.readUTF ();
+		fileId = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (fileId);
+		stream.writeUTF(fileId);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance ().getManager (
+		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance().getManager(
 						"FileTransferManager");
 
-		fileTransferManager.endFileTransfer (fileId);
+		fileTransferManager.endFileTransfer(fileId);
 	}
 }

@@ -69,12 +69,12 @@ public class NetworkService extends BaseObject
 	/**
 	 * Networkbase Standard constructor
 	 */
-	public NetworkService (ThreadService threadBase, NetworkActionProcessorInterface reveiveNetworkActionProcessor,
+	public NetworkService(ThreadService threadBase, NetworkActionProcessorInterface reveiveNetworkActionProcessor,
 					NetworkActionProcessorInterface sendNetworkActionProcessor)
 	{
 		this.threadService = threadBase;
-		networkSystemListenerList = new LinkedList ();
-		channelList = new HashMap ();
+		networkSystemListenerList = new LinkedList();
+		channelList = new HashMap();
 		numChannels = 0;
 		this.reveiveNetworkActionProcessor = reveiveNetworkActionProcessor;
 		this.sendNetworkActionProcessor = sendNetworkActionProcessor;
@@ -87,19 +87,19 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel Channel-Class, managed the transmission.
 	 */
-	public void addConnectedChannel (Channel channel)
+	public void addConnectedChannel(Channel channel)
 	{
-		channel.setChannelNumber (numChannels);
+		channel.setChannelNumber(numChannels);
 
 		synchronized (channelList)
 		{
-			channelList.put (String.valueOf (numChannels), channel);
-			reveiveNetworkActionProcessor.newChannelCreated (channel);
+			channelList.put(String.valueOf(numChannels), channel);
+			reveiveNetworkActionProcessor.newChannelCreated(channel);
 		}
 
-		threadService.add (channel);
+		threadService.add(channel);
 		numChannels++;
-		fireConnectionEstablished (channel);
+		fireConnectionEstablished(channel);
 	}
 
 	/**
@@ -108,9 +108,9 @@ public class NetworkService extends BaseObject
 	 * @param action Most often it is a action object.
 	 * @param channel The channel that received the object.
 	 */
-	synchronized public void callReceiveNetworkActionProcessor (Action action, final Channel channel)
+	synchronized public void callReceiveNetworkActionProcessor(Action action, final Channel channel)
 	{
-		reveiveNetworkActionProcessor.perform (action, new ClientTransceiver (channel.getChannelNumber (), channel));
+		reveiveNetworkActionProcessor.perform(action, new ClientTransceiver(channel.getChannelNumber(), channel));
 	}
 
 	/**
@@ -118,11 +118,11 @@ public class NetworkService extends BaseObject
 	 * sending and receiving objects.
 	 * This method will called from ChannelFactory (receiver) or from Networkbase (sender).
 	 */
-	public void addNetworkSystemListener (NetworkSystemListener listener)
+	public void addNetworkSystemListener(NetworkSystemListener listener)
 	{
 		synchronized (networkSystemListenerList)
 		{
-			networkSystemListenerList.add (listener);
+			networkSystemListenerList.add(listener);
 		}
 	}
 
@@ -131,11 +131,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireConnectionEstablished (Channel channel)
+	public void fireConnectionEstablished(Channel channel)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).connectionEstablished (this, channel);
+			((NetworkSystemListener) i.next()).connectionEstablished(this, channel);
 		}
 	}
 
@@ -144,15 +144,15 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireConnectionTerminated (Channel channel)
+	public void fireConnectionTerminated(Channel channel)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).connectionTerminated (this, channel);
+			((NetworkSystemListener) i.next()).connectionTerminated(this, channel);
 		}
 
-		reveiveNetworkActionProcessor.channelClosed (channel);
-		sendNetworkActionProcessor.channelClosed (channel);
+		reveiveNetworkActionProcessor.channelClosed(channel);
+		sendNetworkActionProcessor.channelClosed(channel);
 	}
 
 	/**
@@ -160,11 +160,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, NoSuchIObjectException x)
+	public void fireError(Channel channel, NoSuchIObjectException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
@@ -173,11 +173,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, SocketTimeoutException x)
+	public void fireError(Channel channel, SocketTimeoutException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
@@ -186,11 +186,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, ClassNotFoundException x)
+	public void fireError(Channel channel, ClassNotFoundException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
@@ -199,11 +199,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, EOFException x)
+	public void fireError(Channel channel, EOFException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
@@ -212,11 +212,11 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, SocketException x)
+	public void fireError(Channel channel, SocketException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
@@ -225,20 +225,20 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channel The network channel.
 	 */
-	public void fireError (Channel channel, IOException x)
+	public void fireError(Channel channel, IOException x)
 	{
-		for (Iterator i = networkSystemListenerList.iterator (); i.hasNext ();)
+		for (Iterator i = networkSystemListenerList.iterator(); i.hasNext();)
 		{
-			((NetworkSystemListener) i.next ()).error (this, channel, x);
+			((NetworkSystemListener) i.next()).error(this, channel, x);
 		}
 	}
 
 	/**
 	 * Connect with a Server.
 	 */
-	public double connect (String name, int port, ConnectObserver connectObserver)
+	public double connect(String name, int port, ConnectObserver connectObserver)
 	{
-		Log.logDebug ("network", "NetworkService.connect", "Connecting to server on port " + port);
+		Log.logDebug("network", "NetworkService.connect", "Connecting to server on port " + port);
 
 		Channel channel = null;
 
@@ -254,11 +254,11 @@ public class NetworkService extends BaseObject
 				{
 					try
 					{
-						Thread.sleep (100);
+						Thread.sleep(100);
 
 						if (connectObserver != null)
 						{
-							connectObserver.notice ();
+							connectObserver.notice();
 						}
 					}
 					catch (InterruptedException e)
@@ -266,7 +266,7 @@ public class NetworkService extends BaseObject
 					}
 				}
 
-				socket = new Socket (InetAddress.getByName (name), port);
+				socket = new Socket(InetAddress.getByName(name), port);
 				++i;
 			}
 
@@ -275,18 +275,18 @@ public class NetworkService extends BaseObject
 				return - 1;
 			}
 
-			channel = new Channel (socket, this);
-			addConnectedChannel (channel);
+			channel = new Channel(socket, this);
+			addConnectedChannel(channel);
 		}
 
 		catch (Exception e)
 		{
-			Log.logError ("network", "NetworkService.connect", "Error while connecting to " + name + ":" + port);
+			Log.logError("network", "NetworkService.connect", "Error while connecting to " + name + ":" + port);
 
 			return - 1;
 		}
 
-		return channel.getChannelNumber ();
+		return channel.getChannelNumber();
 	}
 
 	/**
@@ -296,14 +296,14 @@ public class NetworkService extends BaseObject
 	 * @param port The port number.
 	 * @param timeout Socket timeout.
 	 */
-	public void listen (String name, int port, int timeout)
+	public void listen(String name, int port, int timeout)
 	{
-		Log.logInfo ("network", "NetworkService.listen", "Listening on port:" + port);
+		Log.logInfo("network", "NetworkService.listen", "Listening on port:" + port);
 
 		try
 		{
-			channelFactory = new ChannelFactory (this, name, port, timeout);
-			threadService.add (channelFactory);
+			channelFactory = new ChannelFactory(this, name, port, timeout);
+			threadService.add(channelFactory);
 		}
 		catch (Exception e)
 		{
@@ -313,45 +313,45 @@ public class NetworkService extends BaseObject
 	/**
 	 * Send a object about a channel.
 	 */
-	public void send (Object object, double channel)
+	public void send(Object object, double channel)
 	{
 		Channel connectedChannel = null;
 
 		synchronized (channelList)
 		{
-			connectedChannel = (Channel) channelList.get (String.valueOf (channel));
+			connectedChannel = (Channel) channelList.get(String.valueOf(channel));
 
 			if (connectedChannel == null)
 			{
-				Log.logFatal ("network", "NetworkService.send", "Channel not found: " + channel);
+				Log.logFatal("network", "NetworkService.send", "Channel not found: " + channel);
 
 				return;
 			}
 		}
 
-		connectedChannel.send (object);
+		connectedChannel.send(object);
 	}
 
 	/**
 	 * Send a object about a channel.
 	 */
-	public void send (Object object, Channel channel)
+	public void send(Object object, Channel channel)
 	{
-		channel.send (object);
+		channel.send(object);
 	}
 
 	/**
 	 * Send a object to all channels.
 	 */
-	public void sendBroadcast (Object object)
+	public void sendBroadcast(Object object)
 	{
 		synchronized (channelList)
 		{
-			Iterator i = channelList.keySet ().iterator ();
+			Iterator i = channelList.keySet().iterator();
 
-			while (i.hasNext ())
+			while (i.hasNext())
 			{
-				((Channel) channelList.get (i.next ())).send (object);
+				((Channel) channelList.get(i.next())).send(object);
 			}
 		}
 	}
@@ -361,51 +361,51 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param channelNumber
 	 */
-	public void closeChannel (double channelNumber)
+	public void closeChannel(double channelNumber)
 	{
 		try
 		{
 			synchronized (channelList)
 			{
-				Channel connectedChannel = (Channel) channelList.get (String.valueOf (channelNumber));
+				Channel connectedChannel = (Channel) channelList.get(String.valueOf(channelNumber));
 
 				if (connectedChannel != null)
 				{
-					connectedChannel.dispose ();
-					channelList.remove (String.valueOf (channelNumber));
-					Log.logInfo ("network", "NetworkService.closeChannel", "Closing channel " + channelNumber);
+					connectedChannel.dispose();
+					channelList.remove(String.valueOf(channelNumber));
+					Log.logInfo("network", "NetworkService.closeChannel", "Closing channel " + channelNumber);
 				}
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logError ("network", "NetworkService.closeChannel", "Error while closing channel " + channelNumber
-							+ ": " + x.toString ());
+			Log.logError("network", "NetworkService.closeChannel", "Error while closing channel " + channelNumber
+							+ ": " + x.toString());
 		}
 	}
 
 	/**
 	 * Close all Channel
 	 */
-	public void closeAllChannels ()
+	public void closeAllChannels()
 	{
 		try
 		{
 			synchronized (channelList)
 			{
-				for (Iterator i = channelList.values ().iterator (); i.hasNext ();)
+				for (Iterator i = channelList.values().iterator(); i.hasNext();)
 				{
-					Channel connectedChannel = (Channel) i.next ();
+					Channel connectedChannel = (Channel) i.next();
 
-					connectedChannel.dispose ();
+					connectedChannel.dispose();
 				}
 
-				channelList.clear ();
+				channelList.clear();
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logError ("network", "NetworkService.closeChannel", "Error while closing channel :" + x.toString ());
+			Log.logError("network", "NetworkService.closeChannel", "Error while closing channel :" + x.toString());
 		}
 	}
 
@@ -414,7 +414,7 @@ public class NetworkService extends BaseObject
 	 *
 	 * @return Numbers of channels.
 	 */
-	public double getNumChannels ()
+	public double getNumChannels()
 	{
 		return numChannels;
 	}
@@ -422,13 +422,13 @@ public class NetworkService extends BaseObject
 	/**
 	 * Return the Channel of the ChannelNumber.
 	 */
-	public Channel getConnectedChannel (double channelNumber)
+	public Channel getConnectedChannel(double channelNumber)
 	{
 		Channel connectedChannel = null;
 
 		synchronized (channelList)
 		{
-			connectedChannel = (Channel) channelList.get (String.valueOf (channelNumber));
+			connectedChannel = (Channel) channelList.get(String.valueOf(channelNumber));
 		}
 
 		return connectedChannel;
@@ -437,46 +437,46 @@ public class NetworkService extends BaseObject
 	/**
 	 * Flush the Buffer, send all...
 	 */
-	public void flush (double channel)
+	public void flush(double channel)
 	{
 		Channel connectedChannel = null;
 
 		synchronized (channelList)
 		{
-			connectedChannel = (Channel) channelList.get (String.valueOf (channel));
+			connectedChannel = (Channel) channelList.get(String.valueOf(channel));
 
 			if (connectedChannel == null)
 			{
-				Log.logFatal ("network", "NetworkService.flush", "Channel not found: " + channel);
+				Log.logFatal("network", "NetworkService.flush", "Channel not found: " + channel);
 
 				return;
 			}
 		}
 
-		connectedChannel.flush ();
+		connectedChannel.flush();
 	}
 
 	/**
 	 * Flush the Buffer, send all...
 	 */
-	public void flushAll ()
+	public void flushAll()
 	{
 		Channel connectedChannel = null;
 
 		synchronized (channelList)
 		{
-			for (Iterator i = channelList.values ().iterator (); i.hasNext ();)
+			for (Iterator i = channelList.values().iterator(); i.hasNext();)
 			{
-				connectedChannel = (Channel) i.next ();
+				connectedChannel = (Channel) i.next();
 
 				if (connectedChannel == null)
 				{
-					Log.logFatal ("network", "NetworkService.flushAll", "Channel not found: " + channel);
+					Log.logFatal("network", "NetworkService.flushAll", "Channel not found: " + channel);
 
 					continue;
 				}
 
-				connectedChannel.flush ();
+				connectedChannel.flush();
 			}
 		}
 	}
@@ -486,14 +486,14 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param s The socket with work the stream organizer.
 	 */
-	public StreamOrganizer getDefaultStreamOrganizer (Socket s) throws IOException
+	public StreamOrganizer getDefaultStreamOrganizer(Socket s) throws IOException
 	{
 		if (defaultStreamOrganizer != null)
 		{
-			return defaultStreamOrganizer.create (s);
+			return defaultStreamOrganizer.create(s);
 		}
 
-		return new ObjectStream (s);
+		return new ObjectStream(s);
 	}
 
 	/**
@@ -501,7 +501,7 @@ public class NetworkService extends BaseObject
 	 *
 	 * @param streamOrganizer StreamOrganizer The stream organizer
 	 */
-	public void setDefaultStreamOrganizer (StreamOrganizer streamOrganizer)
+	public void setDefaultStreamOrganizer(StreamOrganizer streamOrganizer)
 	{
 		defaultStreamOrganizer = streamOrganizer;
 	}
@@ -512,7 +512,7 @@ public class NetworkService extends BaseObject
 	 * @param streamOrganizer StreamOrganizer The stream organizer
 	 * @param channel ConnectChannelNumber The channel number.
 	 */
-	public void setStreamOrganizer (StreamOrganizer streamOrganizer, double channel)
+	public void setStreamOrganizer(StreamOrganizer streamOrganizer, double channel)
 	{
 		Channel connectedChannel = null;
 
@@ -520,21 +520,21 @@ public class NetworkService extends BaseObject
 		{
 			synchronized (channelList)
 			{
-				connectedChannel = (Channel) channelList.get (String.valueOf (channel));
+				connectedChannel = (Channel) channelList.get(String.valueOf(channel));
 
 				if (connectedChannel == null)
 				{
-					Log.logFatal ("network", "NetworkService.setStreamOrganizer", "Channel not found: " + channel);
+					Log.logFatal("network", "NetworkService.setStreamOrganizer", "Channel not found: " + channel);
 
 					return;
 				}
 
-				connectedChannel.setStreamOrganizer (streamOrganizer);
+				connectedChannel.setStreamOrganizer(streamOrganizer);
 			}
 		}
 		catch (IOException x)
 		{
-			Log.logFatal ("network", "NetworkService.setStreamOrganizer", "Unable to set stream organizer for channel "
+			Log.logFatal("network", "NetworkService.setStreamOrganizer", "Unable to set stream organizer for channel "
 							+ channel);
 		}
 	}
@@ -542,8 +542,8 @@ public class NetworkService extends BaseObject
 	/**
 	 * Dispose this network service.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
-		channelFactory.dispose ();
+		channelFactory.dispose();
 	}
 }

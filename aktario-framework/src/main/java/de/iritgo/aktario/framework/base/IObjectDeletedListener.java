@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface IObjectDeletedListener extends EventListener
 {
-	public void iObjectDeletedEvent (IObjectDeletedEvent event);
+	public void iObjectDeletedEvent(IObjectDeletedEvent event);
 }

@@ -45,14 +45,14 @@ public class ProxyLinkedListRemoveAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListRemoveAction ()
+	public ProxyLinkedListRemoveAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListRemoveAction (long uniqueId, String iObjectTypeId, long ownerUniqueId, String ownerTypeId,
+	public ProxyLinkedListRemoveAction(long uniqueId, String iObjectTypeId, long ownerUniqueId, String ownerTypeId,
 					String iObjectListName)
 	{
 		this.uniqueId = uniqueId;
@@ -66,35 +66,35 @@ public class ProxyLinkedListRemoveAction extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		uniqueId = stream.readLong ();
-		iObjectTypeId = stream.readUTF ();
-		ownerUniqueId = stream.readLong ();
-		ownerTypeId = stream.readUTF ();
-		iObjectListName = stream.readUTF ();
+		uniqueId = stream.readLong();
+		iObjectTypeId = stream.readUTF();
+		ownerUniqueId = stream.readLong();
+		ownerTypeId = stream.readUTF();
+		iObjectListName = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (uniqueId);
-		stream.writeUTF (iObjectTypeId);
-		stream.writeLong (ownerUniqueId);
-		stream.writeUTF (ownerTypeId);
-		stream.writeUTF (iObjectListName);
+		stream.writeLong(uniqueId);
+		stream.writeUTF(iObjectTypeId);
+		stream.writeLong(ownerUniqueId);
+		stream.writeUTF(ownerTypeId);
+		stream.writeUTF(iObjectListName);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		DataObject ownerObject = (DataObject) Engine.instance ().getBaseRegistry ().get (ownerUniqueId, ownerTypeId);
+		DataObject ownerObject = (DataObject) Engine.instance().getBaseRegistry().get(ownerUniqueId, ownerTypeId);
 
 		if (ownerObject == null)
 		{
@@ -102,13 +102,13 @@ public class ProxyLinkedListRemoveAction extends FrameworkServerAction
 			return;
 		}
 
-		DataObject dataObject = (DataObject) Engine.instance ().getBaseRegistry ().get (uniqueId, iObjectTypeId);
+		DataObject dataObject = (DataObject) Engine.instance().getBaseRegistry().get(uniqueId, iObjectTypeId);
 
-		IObjectList iObjectList = ownerObject.getIObjectListAttribute (iObjectListName);
+		IObjectList iObjectList = ownerObject.getIObjectListAttribute(iObjectListName);
 
-		iObjectList.removeIObject (dataObject);
+		iObjectList.removeIObject(dataObject);
 
-		Engine.instance ().getProxyEventRegistry ().fire (ownerObject, new IObjectProxyEvent (ownerObject, false));
-		Engine.instance ().getEventRegistry ().fire ("proxyisuptodate", new IObjectProxyEvent (ownerObject, false));
+		Engine.instance().getProxyEventRegistry().fire(ownerObject, new IObjectProxyEvent(ownerObject, false));
+		Engine.instance().getEventRegistry().fire("proxyisuptodate", new IObjectProxyEvent(ownerObject, false));
 	}
 }

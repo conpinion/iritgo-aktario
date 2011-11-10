@@ -37,7 +37,7 @@ import java.io.IOException;
 public class AgentTransferAction extends FrameworkAction
 {
 	/** The IObject / DataObject stream serializer */
-	private static IObjectSerializer streamSerializer = new IObjectSerializer ();
+	private static IObjectSerializer streamSerializer = new IObjectSerializer();
 
 	/** The DataObject */
 	private DataObject dataObject;
@@ -48,17 +48,17 @@ public class AgentTransferAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public AgentTransferAction ()
+	public AgentTransferAction()
 	{
-		super (- 1);
+		super(- 1);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public AgentTransferAction (DataObject dataObject)
+	public AgentTransferAction(DataObject dataObject)
 	{
-		currentTime = System.currentTimeMillis ();
+		currentTime = System.currentTimeMillis();
 		this.dataObject = dataObject;
 	}
 
@@ -66,13 +66,13 @@ public class AgentTransferAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		currentTime = stream.readLong ();
+		currentTime = stream.readLong();
 
 		try
 		{
-			dataObject = (DataObject) streamSerializer.read (stream);
+			dataObject = (DataObject) streamSerializer.read(stream);
 		}
 		catch (NoSuchIObjectException x)
 		{
@@ -83,20 +83,20 @@ public class AgentTransferAction extends FrameworkAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (currentTime);
-		streamSerializer.write (stream, dataObject);
+		stream.writeLong(currentTime);
+		streamSerializer.write(stream, dataObject);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		AgentManager agentManager = AgentManager.instance ();
+		AgentManager agentManager = AgentManager.instance();
 
-		agentManager.bringAgentToLife ((Agent) dataObject);
+		agentManager.bringAgentToLife((Agent) dataObject);
 	}
 }

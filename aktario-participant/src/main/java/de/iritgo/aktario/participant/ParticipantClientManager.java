@@ -34,23 +34,23 @@ public class ParticipantClientManager extends ParticipantManager
 	/**
 	 * Create a new client manager.
 	 */
-	public ParticipantClientManager ()
+	public ParticipantClientManager()
 	{
-		super ("ParticipantClientManager");
+		super("ParticipantClientManager");
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
-		if (event.allPluginsInitialized ())
+		if (event.allPluginsInitialized())
 		{
-			DataObjectTools.registerOnStartupDynDataObject (participant);
+			DataObjectTools.registerOnStartupDynDataObject(participant);
 		}
 	}
 
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

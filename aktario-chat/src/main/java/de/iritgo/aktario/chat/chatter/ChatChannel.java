@@ -36,62 +36,62 @@ public class ChatChannel extends BaseObject
 
 	private UserRegistry userRegistry;
 
-	public ChatChannel (String name, UserRegistry userRegistry)
+	public ChatChannel(String name, UserRegistry userRegistry)
 	{
 		this.name = name;
-		chatter = new LinkedList ();
+		chatter = new LinkedList();
 		this.userRegistry = userRegistry;
 	}
 
-	public void addChatter (Long chatterId)
+	public void addChatter(Long chatterId)
 	{
-		User user = userRegistry.getUser (chatterId);
+		User user = userRegistry.getUser(chatterId);
 
 		if (user != null)
 		{
-			chatter.add (user);
+			chatter.add(user);
 		}
 	}
 
-	public boolean existsChatterInChannel (Long chatterId)
+	public boolean existsChatterInChannel(Long chatterId)
 	{
-		User user = userRegistry.getUser (chatterId);
+		User user = userRegistry.getUser(chatterId);
 
 		if (user != null)
 		{
-			return chatter.contains (user);
+			return chatter.contains(user);
 		}
 
 		return false;
 	}
 
-	public void removeChatter (Long chatterId)
+	public void removeChatter(Long chatterId)
 	{
-		chatter.remove (userRegistry.getUser (chatterId));
+		chatter.remove(userRegistry.getUser(chatterId));
 	}
 
-	public void removeChatter (User user)
+	public void removeChatter(User user)
 	{
-		chatter.remove (user);
+		chatter.remove(user);
 	}
 
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}
 
-	public int getChannelId ()
+	public int getChannelId()
 	{
-		return name.hashCode ();
+		return name.hashCode();
 	}
 
-	public int getNumChatters ()
+	public int getNumChatters()
 	{
-		return chatter.size ();
+		return chatter.size();
 	}
 
-	public Iterator getMembersIterator ()
+	public Iterator getMembersIterator()
 	{
-		return chatter.iterator ();
+		return chatter.iterator();
 	}
 }

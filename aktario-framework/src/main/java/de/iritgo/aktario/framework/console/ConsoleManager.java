@@ -40,27 +40,27 @@ public class ConsoleManager extends BaseObject implements Manager
 {
 	private ConsoleCommandRegistry consoleCommandRegistry;
 
-	public ConsoleManager ()
+	public ConsoleManager()
 	{
-		super ("console");
-		init ();
+		super("console");
+		init();
 	}
 
-	public void init ()
+	public void init()
 	{
-		consoleCommandRegistry = new ConsoleCommandRegistry ();
+		consoleCommandRegistry = new ConsoleCommandRegistry();
 	}
 
-	public ConsoleCommandRegistry getConsoleCommandRegistry ()
+	public ConsoleCommandRegistry getConsoleCommandRegistry()
 	{
 		return consoleCommandRegistry;
 	}
 
-	public void doConsoleCommand (String commandString)
+	public void doConsoleCommand(String commandString)
 		throws CommandNotFoundException, WrongParameterException, UnknownClassException, UnknownConstructorException,
 		UnknownErrorException
 	{
-		String[] params = commandString.split (" ");
+		String[] params = commandString.split(" ");
 
 		int paramLength = params.length;
 
@@ -73,97 +73,97 @@ public class ConsoleManager extends BaseObject implements Manager
 		{
 			Object constructorParamDeclaration = null;
 
-			constructorParamDeclaration = Array.newInstance (Class.forName ("java.lang.Class"), paramLength - 1);
+			constructorParamDeclaration = Array.newInstance(Class.forName("java.lang.Class"), paramLength - 1);
 
-			List constructorParams = new LinkedList ();
+			List constructorParams = new LinkedList();
 
 			for (int i = 1; i < paramLength; ++i)
 			{
-				Array.set (constructorParamDeclaration, i - 1, "dummy".getClass ());
+				Array.set(constructorParamDeclaration, i - 1, "dummy".getClass());
 
-				constructorParams.add (params[i]);
+				constructorParams.add(params[i]);
 			}
 
-			ClassLoader loader = Thread.currentThread ().getContextClassLoader ();
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
-			ConsoleCommand consoleCommand = consoleCommandRegistry.get (params[0]);
+			ConsoleCommand consoleCommand = consoleCommandRegistry.get(params[0]);
 
 			if (consoleCommand == null)
 			{
-				Log.log ("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
-				throw new CommandNotFoundException ("Command not found: " + params[0]);
+				Log.log("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
+				throw new CommandNotFoundException("Command not found: " + params[0]);
 			}
 
-			if (((paramLength - 1) != consoleCommand.getNumParam ()) && (consoleCommand.getNumParam () >= 0))
+			if (((paramLength - 1) != consoleCommand.getNumParam()) && (consoleCommand.getNumParam() >= 0))
 			{
-				Log.log ("system", "ConsoleManager.doConsoleCommand", "wrong parameter", Log.WARN);
-				throw new WrongParameterException ("Wrong parameter(s) for command: " + params[0]);
+				Log.log("system", "ConsoleManager.doConsoleCommand", "wrong parameter", Log.WARN);
+				throw new WrongParameterException("Wrong parameter(s) for command: " + params[0]);
 			}
 
-			Class klass = consoleCommand.getCommand ().getClass ();
+			Class klass = consoleCommand.getCommand().getClass();
 
 			if (klass == null)
 			{
-				Log.log ("system", "ConsoleManager.doConsoleCommand", "no class found!", Log.WARN);
-				throw new UnknownClassException ("Unknown Class for command: " + params[0]);
+				Log.log("system", "ConsoleManager.doConsoleCommand", "no class found!", Log.WARN);
+				throw new UnknownClassException("Unknown Class for command: " + params[0]);
 			}
 
-			Constructor constructor = klass.getConstructor ((Class[]) constructorParamDeclaration);
+			Constructor constructor = klass.getConstructor((Class[]) constructorParamDeclaration);
 
 			if (constructor == null)
 			{
-				Log.log ("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
-				throw new UnknownConstructorException ("Unknown Constructor for command: " + params[0]);
+				Log.log("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
+				throw new UnknownConstructorException("Unknown Constructor for command: " + params[0]);
 			}
 
-			Command command = (Command) constructor.newInstance (constructorParams.toArray ());
+			Command command = (Command) constructor.newInstance(constructorParams.toArray());
 
-			IritgoEngine.instance ().getSimpleCommandProcessor ().perform (command);
+			IritgoEngine.instance().getSimpleCommandProcessor().perform(command);
 		}
 		catch (ClassNotFoundException x)
 		{
-			Log.log ("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
-			throw new CommandNotFoundException ("Command not found: " + params[0]);
+			Log.log("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
+			throw new CommandNotFoundException("Command not found: " + params[0]);
 		}
 		catch (NoSuchMethodException x)
 		{
-			Log.log ("system", "ConsoleManager.doConsoleCommand", "wrong parameter", Log.WARN);
-			throw new WrongParameterException ("Wrong parameter(s) for command: " + params[0]);
+			Log.log("system", "ConsoleManager.doConsoleCommand", "wrong parameter", Log.WARN);
+			throw new WrongParameterException("Wrong parameter(s) for command: " + params[0]);
 		}
 		catch (InstantiationException x)
 		{
-			Log.log ("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
-			throw new UnknownConstructorException ("Unknown Constructor for command: " + params[0]);
+			Log.log("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
+			throw new UnknownConstructorException("Unknown Constructor for command: " + params[0]);
 		}
 		catch (IllegalAccessException x)
 		{
-			Log.log ("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
-			throw new CommandNotFoundException ("Command not found: " + params[0]);
+			Log.log("system", "ConsoleManager.doConsoleCommand", "command not registerd!", Log.WARN);
+			throw new CommandNotFoundException("Command not found: " + params[0]);
 		}
 		catch (InvocationTargetException x)
 		{
-			Log.log ("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
-			throw new UnknownConstructorException ("Unknown Constructor for command: " + params[0]);
+			Log.log("system", "ConsoleManager.doConsoleCommand", "no constructor found!", Log.WARN);
+			throw new UnknownConstructorException("Unknown Constructor for command: " + params[0]);
 		}
 	}
 
 	/**
 	 * @return The all consolecommand objects for this console.
 	 */
-	public ConsoleCommand getConsoleCommand (String commandId)
+	public ConsoleCommand getConsoleCommand(String commandId)
 	{
-		return consoleCommandRegistry.get (commandId);
+		return consoleCommandRegistry.get(commandId);
 	}
 
 	/**
 	 * @return The all consolecommand objects for this console.
 	 */
-	public Iterator getConsoleCommandIterator ()
+	public Iterator getConsoleCommandIterator()
 	{
-		return consoleCommandRegistry.getCommandIterator ();
+		return consoleCommandRegistry.getCommandIterator();
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }

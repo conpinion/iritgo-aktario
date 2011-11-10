@@ -41,23 +41,23 @@ public class RenderNullCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public RenderNullCommand ()
+	public RenderNullCommand()
 	{
-		super ("RenderNullCommand");
+		super("RenderNullCommand");
 	}
 
 	/**
 	 *
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer ()
+		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer()
 		{
-			public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected,
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column)
 			{
-				table.getColumnModel ().getColumn (column).setMinWidth (0);
-				table.getColumnModel ().getColumn (column).setMaxWidth (1);
+				table.getColumnModel().getColumn(column).setMinWidth(0);
+				table.getColumnModel().getColumn(column).setMaxWidth(1);
 
 				return this;
 			}

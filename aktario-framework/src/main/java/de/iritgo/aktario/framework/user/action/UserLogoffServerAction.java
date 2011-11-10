@@ -35,7 +35,7 @@ public class UserLogoffServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public UserLogoffServerAction ()
+	public UserLogoffServerAction()
 	{
 	}
 
@@ -43,20 +43,20 @@ public class UserLogoffServerAction extends FrameworkServerAction
 	 * Perform the action.
 	 * Disable the action processor for the user
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
-		Double channel = new Double (clientTransceiver.getSender ());
+		Double channel = new Double(clientTransceiver.getSender());
 
-		FilterActionProcessor filterActionProcessor = (FilterActionProcessor) Engine.instance ()
-						.getActionProcessorRegistry ().get ("Server.FilterActionProcessor");
+		FilterActionProcessor filterActionProcessor = (FilterActionProcessor) Engine.instance()
+						.getActionProcessorRegistry().get("Server.FilterActionProcessor");
 
-		UserLogoffAction userLogoffAction = new UserLogoffAction ();
+		UserLogoffAction userLogoffAction = new UserLogoffAction();
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
-		userLogoffAction.setTransceiver (clientTransceiver);
-		ActionTools.sendToClient (userLogoffAction);
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
+		userLogoffAction.setTransceiver(clientTransceiver);
+		ActionTools.sendToClient(userLogoffAction);
 
-		filterActionProcessor.addChannelToFilter (channel);
+		filterActionProcessor.addChannelToFilter(channel);
 	}
 }

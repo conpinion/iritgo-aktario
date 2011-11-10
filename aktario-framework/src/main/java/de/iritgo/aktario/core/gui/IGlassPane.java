@@ -43,7 +43,7 @@ public class IGlassPane extends JPanel
 	/** */
 	private static final long serialVersionUID = 1L;
 
-	protected static ImageIcon waitIcon = new ImageIcon (IGlassPane.class.getResource ("/resources/app-wait.gif"));
+	protected static ImageIcon waitIcon = new ImageIcon(IGlassPane.class.getResource("/resources/app-wait.gif"));
 
 	/** If true the underlying display will be enabled. */
 	protected boolean enabled;
@@ -57,32 +57,31 @@ public class IGlassPane extends JPanel
 	/**
 	 * Create a new LessonDisplayGlassPane.
 	 */
-	public IGlassPane ()
+	public IGlassPane()
 	{
-		texture = new BufferedImage (2, 2, BufferedImage.TYPE_INT_ARGB);
+		texture = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
 
-		Graphics2D g2 = (Graphics2D) texture.getGraphics ();
+		Graphics2D g2 = (Graphics2D) texture.getGraphics();
 
-		g2.setPaint (new Color (255, 255, 255, 64));
-		g2.fillRect (0, 0, 2, 2);
-		g2.setPaint (new Color (0, 0, 0, 64));
-		g2.fillRect (0, 0, 1, 1);
-		g2.fillRect (1, 1, 1, 1);
+		g2.setPaint(new Color(255, 255, 255, 64));
+		g2.fillRect(0, 0, 2, 2);
+		g2.setPaint(new Color(0, 0, 0, 64));
+		g2.fillRect(0, 0, 1, 1);
+		g2.fillRect(1, 1, 1, 1);
 
-		texturePaint = new TexturePaint (texture, new Rectangle (0, 0, 2, 2));
+		texturePaint = new TexturePaint(texture, new Rectangle(0, 0, 2, 2));
 
-		setOpaque (false);
-		setLayout (new BorderLayout ());
+		setOpaque(false);
+		setLayout(new BorderLayout());
 
-		ILabel label = new ILabel ("please.wait",
-						new ImageIcon (getClass ().getResource ("/resources/addressbook.png")));
+		ILabel label = new ILabel("please.wait", new ImageIcon(getClass().getResource("/resources/addressbook.png")));
 
-		label.setHorizontalAlignment (JLabel.CENTER);
+		label.setHorizontalAlignment(JLabel.CENTER);
 
-		add (label, BorderLayout.CENTER);
+		add(label, BorderLayout.CENTER);
 
-		setEnabled (true);
-		setVisible (true);
+		setEnabled(true);
+		setVisible(true);
 	}
 
 	/**
@@ -91,31 +90,31 @@ public class IGlassPane extends JPanel
 	 * @param g The graphics context.
 	 */
 	@Override
-	public void paint (Graphics g)
+	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
-		Rectangle bounds = getBounds ();
+		Rectangle bounds = getBounds();
 
 		if (enabled)
 		{
 		}
 		else
 		{
-			Component topLevel = getTopLevelAncestor ();
-			Color bgColor = topLevel.getBackground ();
+			Component topLevel = getTopLevelAncestor();
+			Color bgColor = topLevel.getBackground();
 
-			g2.setPaint (new Color (bgColor.getRed (), bgColor.getGreen (), bgColor.getBlue (), 128));
-			g2.fillRect (0, 0, bounds.width, bounds.height);
+			g2.setPaint(new Color(bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue(), 128));
+			g2.fillRect(0, 0, bounds.width, bounds.height);
 
-			g2.setPaint (Color.WHITE);
-			g2.fillRect (0, (int) bounds.getHeight () / 2 - 32, bounds.width, 64);
+			g2.setPaint(Color.WHITE);
+			g2.fillRect(0, (int) bounds.getHeight() / 2 - 32, bounds.width, 64);
 
-			g2.setPaint (Color.BLACK);
-			g2.fillRect (0, (int) bounds.getHeight () / 2 - 34, bounds.width, 2);
+			g2.setPaint(Color.BLACK);
+			g2.fillRect(0, (int) bounds.getHeight() / 2 - 34, bounds.width, 2);
 
-			g2.setPaint (Color.BLACK);
-			g2.fillRect (0, (int) bounds.getHeight () / 2 + 33, bounds.width, 2);
-			super.paint (g);
+			g2.setPaint(Color.BLACK);
+			g2.fillRect(0, (int) bounds.getHeight() / 2 + 33, bounds.width, 2);
+			super.paint(g);
 		}
 	}
 
@@ -125,20 +124,20 @@ public class IGlassPane extends JPanel
 	 * @param enabled If true the glass pane will be enabled.
 	 */
 	@Override
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
 		this.enabled = enabled;
 
 		if (enabled)
 		{
-			disableEvents (AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
+			disableEvents(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
 		}
 		else
 		{
-			enableEvents (AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
+			enableEvents(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
 		}
 
-		repaint ();
+		repaint();
 	}
 
 	/**
@@ -147,7 +146,7 @@ public class IGlassPane extends JPanel
 	 * @return True if the pane is enabled.
 	 */
 	@Override
-	public boolean isEnabled ()
+	public boolean isEnabled()
 	{
 		return enabled;
 	}
@@ -157,7 +156,7 @@ public class IGlassPane extends JPanel
 	 *
 	 * @param icon The new wait icon.
 	 */
-	public static void setWaitIcon (ImageIcon icon)
+	public static void setWaitIcon(ImageIcon icon)
 	{
 		waitIcon = icon;
 	}

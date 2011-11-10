@@ -77,7 +77,7 @@ public class UserLoginPane extends SwingGUIPane
 		 * @param password The password to connect with.
 		 * @param server The server to connect with.
 		 */
-		public AutoLoginItem (String userName, String password, String server)
+		public AutoLoginItem(String userName, String password, String server)
 		{
 			this.userName = userName;
 			this.password = password;
@@ -90,7 +90,7 @@ public class UserLoginPane extends SwingGUIPane
 		 * @return A string representation of the item.
 		 */
 		@Override
-		public String toString ()
+		public String toString()
 		{
 			return userName + "@" + server;
 		}
@@ -123,112 +123,112 @@ public class UserLoginPane extends SwingGUIPane
 	/**
 	 * Log into the server.
 	 */
-	public Action loginAction = new AbstractAction ()
+	public Action loginAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 
-			UserLoginHelper.login (loginPane, server.getText (), username.getText (), new String (password
-							.getPassword ()), remember.isSelected (), autoLogin.isSelected ());
+			UserLoginHelper.login(loginPane, server.getText(), username.getText(), new String(password.getPassword()),
+							remember.isSelected(), autoLogin.isSelected());
 		}
 	};
 
 	/**
 	 * Cancel the login process.
 	 */
-	public Action cancelAction = new AbstractAction ()
+	public Action cancelAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
-			IritgoEngine.instance ().shutdown ();
+			display.close();
+			IritgoEngine.instance().shutdown();
 		}
 	};
 
 	/**
 	 * Create a new user login dialog.
 	 */
-	public UserLoginPane ()
+	public UserLoginPane()
 	{
-		super ("AktarioUserLoginDialog");
+		super("AktarioUserLoginDialog");
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		loginPane = this;
 
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (UserLoginPane.class.getClassLoader ());
+			swingEngine.setClassLoader(UserLoginPane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/UserLoginPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/UserLoginPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			server.setText ("localhost");
+			server.setText("localhost");
 
-			SystemProperties properties = Engine.instance ().getSystemProperties ();
-			String storedAccounts = properties.getString ("account.list", "");
+			SystemProperties properties = Engine.instance().getSystemProperties();
+			String storedAccounts = properties.getString("account.list", "");
 
-			for (StringTokenizer st = new StringTokenizer (storedAccounts, ","); st.hasMoreTokens ();)
+			for (StringTokenizer st = new StringTokenizer(storedAccounts, ","); st.hasMoreTokens();)
 			{
-				String accountNum = st.nextToken ();
+				String accountNum = st.nextToken();
 
-				logins.addItem (new AutoLoginItem (properties.getString ("account." + accountNum + ".name", ""),
-								StringTools.decode (properties.getString ("account." + accountNum + ".password", "")),
-								properties.getString ("account." + accountNum + ".server", "")));
+				logins.addItem(new AutoLoginItem(properties.getString("account." + accountNum + ".name", ""),
+								StringTools.decode(properties.getString("account." + accountNum + ".password", "")),
+								properties.getString("account." + accountNum + ".server", "")));
 			}
 
-			logins.setSelectedIndex (- 1);
+			logins.setSelectedIndex(- 1);
 
-			logins.addItemListener (new ItemListener ()
+			logins.addItemListener(new ItemListener()
 			{
-				public void itemStateChanged (ItemEvent e)
+				public void itemStateChanged(ItemEvent e)
 				{
-					if (e.getStateChange () == ItemEvent.SELECTED)
+					if (e.getStateChange() == ItemEvent.SELECTED)
 					{
-						remember.setSelected (true);
+						remember.setSelected(true);
 
-						AutoLoginItem item = (AutoLoginItem) logins.getSelectedItem ();
+						AutoLoginItem item = (AutoLoginItem) logins.getSelectedItem();
 
-						username.setText (item.userName);
-						password.setText (item.password);
-						server.setText (item.server);
+						username.setText(item.userName);
+						password.setText(item.password);
+						server.setText(item.server);
 					}
 				}
 			});
 
-			AktarioGUI gui = (AktarioGUI) Client.instance ().getClientGUI ();
+			AktarioGUI gui = (AktarioGUI) Client.instance().getClientGUI();
 
-			background.setIcon (gui.getLoginBackground ());
+			background.setIcon(gui.getLoginBackground());
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "UserLoginDialog", x.toString ());
+			Log.logError("client", "UserLoginDialog", x.toString());
 		}
 
-		String lastLogin = Engine.instance ().getSystemProperties ().getProperty ("lastlogin", "");
+		String lastLogin = Engine.instance().getSystemProperties().getProperty("lastlogin", "");
 
-		if (! lastLogin.equals (""))
+		if (! lastLogin.equals(""))
 		{
-			username.setText (lastLogin.substring (0, lastLogin.indexOf ("@")));
-			server.setText (lastLogin.substring (lastLogin.indexOf ("@") + 1, lastLogin.length ()));
+			username.setText(lastLogin.substring(0, lastLogin.indexOf("@")));
+			server.setText(lastLogin.substring(lastLogin.indexOf("@") + 1, lastLogin.length()));
 		}
 
-		if (StringTools.isTrimEmpty (username.getText ()))
+		if (StringTools.isTrimEmpty(username.getText()))
 		{
-			username.grabFocus ();
+			username.grabFocus();
 		}
 		else
 		{
-			password.grabFocus ();
+			password.grabFocus();
 		}
 	}
 
@@ -238,75 +238,73 @@ public class UserLoginPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new UserLoginPane ();
+		return new UserLoginPane();
 	}
 
 	/**
 	 * Remember the current account information.
 	 */
-	public void rememberAccount ()
+	public void rememberAccount()
 	{
-		SystemProperties properties = Engine.instance ().getSystemProperties ();
-		int nextAccountNum = properties.getInt ("account.next", 0);
-		String storedAccounts = properties.getString ("account.list", "");
+		SystemProperties properties = Engine.instance().getSystemProperties();
+		int nextAccountNum = properties.getInt("account.next", 0);
+		String storedAccounts = properties.getString("account.list", "");
 
-		for (StringTokenizer st = new StringTokenizer (storedAccounts, ","); st.hasMoreTokens ();)
+		for (StringTokenizer st = new StringTokenizer(storedAccounts, ","); st.hasMoreTokens();)
 		{
-			String accountNum = st.nextToken ();
+			String accountNum = st.nextToken();
 
-			if (properties.getString ("account." + accountNum + ".name", "").equals (username.getText ())
-							&& properties.getString ("account." + accountNum + ".server", "")
-											.equals (server.getText ()))
+			if (properties.getString("account." + accountNum + ".name", "").equals(username.getText())
+							&& properties.getString("account." + accountNum + ".server", "").equals(server.getText()))
 			{
 				return;
 			}
 		}
 
-		properties.put ("account." + nextAccountNum + ".name", username.getText ());
-		properties.put ("account." + nextAccountNum + ".password", StringTools.encode (new String (password
-						.getPassword ())));
-		properties.put ("account." + nextAccountNum + ".server", server.getText ());
-		properties.put ("account.list", storedAccounts + (storedAccounts.length () > 0 ? "," : "") + nextAccountNum);
-		properties.put ("account.next", nextAccountNum + 1);
-		Engine.instance ().storeSystemProperties ();
+		properties.put("account." + nextAccountNum + ".name", username.getText());
+		properties.put("account." + nextAccountNum + ".password", StringTools
+						.encode(new String(password.getPassword())));
+		properties.put("account." + nextAccountNum + ".server", server.getText());
+		properties.put("account.list", storedAccounts + (storedAccounts.length() > 0 ? "," : "") + nextAccountNum);
+		properties.put("account.next", nextAccountNum + 1);
+		Engine.instance().storeSystemProperties();
 	}
 
 	/**
 	 * Check if the current account information was stored in the
 	 * properties. In this case remove it from the properties.
 	 */
-	public void removeAccount ()
+	public void removeAccount()
 	{
-		SystemProperties properties = Engine.instance ().getSystemProperties ();
-		String storedAccounts = properties.getString ("account.list", "");
+		SystemProperties properties = Engine.instance().getSystemProperties();
+		String storedAccounts = properties.getString("account.list", "");
 
-		for (StringTokenizer st = new StringTokenizer (storedAccounts, ","); st.hasMoreTokens ();)
+		for (StringTokenizer st = new StringTokenizer(storedAccounts, ","); st.hasMoreTokens();)
 		{
-			String accountNum = st.nextToken ();
+			String accountNum = st.nextToken();
 
-			if (properties.getString ("account." + accountNum + ".name", "").equals (username.getText ())
-							&& properties.getString ("account." + accountNum + ".server", "")
-											.equals (server.getText ()))
+			if (properties.getString("account." + accountNum + ".name", "").equals(username.getText())
+							&& properties.getString("account." + accountNum + ".server", "").equals(server.getText()))
 			{
-				properties.remove ("account." + accountNum + ".name");
-				properties.remove ("account." + accountNum + ".password");
-				properties.remove ("account." + accountNum + ".server");
+				properties.remove("account." + accountNum + ".name");
+				properties.remove("account." + accountNum + ".password");
+				properties.remove("account." + accountNum + ".server");
 
 				try
 				{
-					storedAccounts = storedAccounts.replaceAll ("(^|,)" + accountNum + "(,|$)", "$1$2");
-					storedAccounts = storedAccounts.replaceAll ("(^,|,$)", "");
-					storedAccounts = storedAccounts.replaceAll ("(,,)", ",");
+					storedAccounts = storedAccounts.replaceAll("(^|,)" + accountNum + "(,|$)", "$1$2");
+					storedAccounts = storedAccounts.replaceAll("(^,|,$)", "");
+					storedAccounts = storedAccounts.replaceAll("(,,)", ",");
 				}
 				catch (PatternSyntaxException ignored)
 				{
 				}
 
-				properties.put ("account.list", storedAccounts);
+				properties.put("account.list", storedAccounts);
 
-				Engine.instance ().storeSystemProperties ();
+				Engine.instance().storeSystemProperties();
 
 				return;
 			}
@@ -316,25 +314,25 @@ public class UserLoginPane extends SwingGUIPane
 	/**
 	 * Remember the current account information.
 	 */
-	public void rememberAutoLogin ()
+	public void rememberAutoLogin()
 	{
-		SystemProperties properties = Engine.instance ().getSystemProperties ();
+		SystemProperties properties = Engine.instance().getSystemProperties();
 
-		properties.put ("autoLogin", "true");
-		properties.put ("autoLoginUser", username.getText ());
-		properties.put ("autoLoginPassword", StringTools.encode (new String (password.getPassword ())));
-		properties.put ("autoLoginServer", server.getText ());
-		Engine.instance ().storeSystemProperties ();
+		properties.put("autoLogin", "true");
+		properties.put("autoLoginUser", username.getText());
+		properties.put("autoLoginPassword", StringTools.encode(new String(password.getPassword())));
+		properties.put("autoLoginServer", server.getText());
+		Engine.instance().storeSystemProperties();
 	}
 
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		/* empty */
 	}
 
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		/* empty */
 	}

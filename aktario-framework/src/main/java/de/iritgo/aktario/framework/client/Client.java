@@ -88,24 +88,24 @@ public class Client extends BaseObject
 	/**
 	 * Standard constructor
 	 */
-	public Client ()
+	public Client()
 	{
 	}
 
 	/**
 	 * Init all client functions.
 	 */
-	public void init () throws InitIritgoException
+	public void init() throws InitIritgoException
 	{
-		engine = Engine.instance ();
+		engine = Engine.instance();
 
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 
-		loadUser ();
-		registerActionProcessors ();
-		initBasics ();
-		initResources ();
-		registerConsoleCommands ();
+		loadUser();
+		registerActionProcessors();
+		initBasics();
+		initResources();
+		registerConsoleCommands();
 	}
 
 	/**
@@ -113,11 +113,11 @@ public class Client extends BaseObject
 	 *
 	 * @return The client.
 	 */
-	static public Client instance ()
+	static public Client instance()
 	{
 		if (client == null)
 		{
-			client = new Client ();
+			client = new Client();
 		}
 
 		return client;
@@ -128,27 +128,27 @@ public class Client extends BaseObject
 	 *
 	 * @return The clientEngine.
 	 */
-	public Engine getEngine ()
+	public Engine getEngine()
 	{
 		return engine;
 	}
 
-	public UserRegistry getUserRegistry ()
+	public UserRegistry getUserRegistry()
 	{
 		return userRegistry;
 	}
 
-	public ClientGUI getClientGUI ()
+	public ClientGUI getClientGUI()
 	{
 		return clientGUI;
 	}
 
-	public GUIExtensionManager getGUIExtensionManager ()
+	public GUIExtensionManager getGUIExtensionManager()
 	{
 		return guiExtensionManager;
 	}
 
-	public NetworkService getNetworkService ()
+	public NetworkService getNetworkService()
 	{
 		return networkService;
 	}
@@ -156,171 +156,171 @@ public class Client extends BaseObject
 	/**
 	 * Load the Userdata or set the user of default (-1).
 	 */
-	private void loadUser ()
+	private void loadUser()
 	{
-		userRegistry = new UserRegistry ();
+		userRegistry = new UserRegistry();
 
-		User user = new User ();
+		User user = new User();
 
-		user.setUniqueId (- 1);
-		appContext.setUser (user);
+		user.setUniqueId(- 1);
+		appContext.setUser(user);
 	}
 
 	/**
 	 * Init all actionProcessors, it used for the Network and local actions.
 	 */
-	private void registerActionProcessors ()
+	private void registerActionProcessors()
 	{
-		actionProcessorRegistry = engine.getActionProcessorRegistry ();
+		actionProcessorRegistry = engine.getActionProcessorRegistry();
 
-		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = new ReceiveEntryNetworkActionProcessor (
+		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = new ReceiveEntryNetworkActionProcessor(
 						"Client.ReceiveEntryNetworkActionProcessor", null, null);
 
-		actionProcessorRegistry.put (receiveEntryNetworkActionProcessor);
+		actionProcessorRegistry.put(receiveEntryNetworkActionProcessor);
 
-		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = new SendEntryNetworkActionProcessor (
+		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = new SendEntryNetworkActionProcessor(
 						"Client.SendEntryNetworkActionProcessor", null, null);
 
-		actionProcessorRegistry.put (sendEntryNetworkActionProcessor);
+		actionProcessorRegistry.put(sendEntryNetworkActionProcessor);
 
-		networkService = new NetworkService (engine.getThreadService (), receiveEntryNetworkActionProcessor,
+		networkService = new NetworkService(engine.getThreadService(), receiveEntryNetworkActionProcessor,
 						sendEntryNetworkActionProcessor);
 
-		networkService.addNetworkSystemListener (new NetworkSystemListenerImpl ());
+		networkService.addNetworkSystemListener(new NetworkSystemListenerImpl());
 	}
 
 	/**
 	 * This method create a default network action processor path.
 	 */
-	public void createDefaultNetworkProcessingSystem ()
+	public void createDefaultNetworkProcessingSystem()
 	{
-		createReceive ();
-		createSend ();
+		createReceive();
+		createSend();
 	}
 
-	private void createReceive ()
+	private void createReceive()
 	{
 		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = (ReceiveEntryNetworkActionProcessor) actionProcessorRegistry
-						.get ("Client.ReceiveEntryNetworkActionProcessor");
+						.get("Client.ReceiveEntryNetworkActionProcessor");
 
-		ReceiveNetworkActionProcessor receiveNetworkActionProcessor = new ReceiveNetworkActionProcessor (null,
+		ReceiveNetworkActionProcessor receiveNetworkActionProcessor = new ReceiveNetworkActionProcessor(null,
 						receiveEntryNetworkActionProcessor);
 
-		receiveEntryNetworkActionProcessor.addOutput (receiveNetworkActionProcessor);
+		receiveEntryNetworkActionProcessor.addOutput(receiveNetworkActionProcessor);
 
-		SimpleSyncNetworkActionProcessor simpleSyncNetworkActionProcessor = new SimpleSyncNetworkActionProcessor (null,
+		SimpleSyncNetworkActionProcessor simpleSyncNetworkActionProcessor = new SimpleSyncNetworkActionProcessor(null,
 						receiveNetworkActionProcessor);
 
-		receiveNetworkActionProcessor.addOutput (simpleSyncNetworkActionProcessor);
+		receiveNetworkActionProcessor.addOutput(simpleSyncNetworkActionProcessor);
 
-		SimpleActionProcessor simpleActionProcessor = new SimpleActionProcessor ();
+		SimpleActionProcessor simpleActionProcessor = new SimpleActionProcessor();
 
-		simpleSyncNetworkActionProcessor.addOutput (simpleActionProcessor);
+		simpleSyncNetworkActionProcessor.addOutput(simpleActionProcessor);
 	}
 
-	private void createSend ()
+	private void createSend()
 	{
 		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = (SendEntryNetworkActionProcessor) actionProcessorRegistry
-						.get ("Client.SendEntryNetworkActionProcessor");
+						.get("Client.SendEntryNetworkActionProcessor");
 
-		sendEntryNetworkActionProcessor.addOutput (new SendNetworkActionProcessor (networkService, null,
+		sendEntryNetworkActionProcessor.addOutput(new SendNetworkActionProcessor(networkService, null,
 						sendEntryNetworkActionProcessor));
 	}
 
-	private void registerConsoleCommands () throws InitIritgoException
+	private void registerConsoleCommands() throws InitIritgoException
 	{
-		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry ().getManager (
-						"console")).getConsoleCommandRegistry ();
+		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry().getManager(
+						"console")).getConsoleCommandRegistry();
 
-		consoleCommandRegistry.add (new ConsoleCommand ("reloadplugins", new ClientReloadPlugins (),
+		consoleCommandRegistry.add(new ConsoleCommand("reloadplugins", new ClientReloadPlugins(),
 						"system.help.reloadplugin", 0));
-		consoleCommandRegistry.add (new ConsoleCommand ("loglevel", new SetLogLevel (), "system.help.loglevel", 1));
-		consoleCommandRegistry.add (new ConsoleCommand ("pingpong", new PingPong (), "system.help.pingpong", 0));
+		consoleCommandRegistry.add(new ConsoleCommand("loglevel", new SetLogLevel(), "system.help.loglevel", 1));
+		consoleCommandRegistry.add(new ConsoleCommand("pingpong", new PingPong(), "system.help.pingpong", 0));
 	}
 
-	public void initGUI () throws InitIritgoException
+	public void initGUI() throws InitIritgoException
 	{
-		ClientManager clientManager = (ClientManager) engine.getManagerRegistry ().getManager ("client");
+		ClientManager clientManager = (ClientManager) engine.getManagerRegistry().getManager("client");
 
 		if (clientManager == null)
 		{
 			return;
 		}
 
-		clientGUI = clientManager.getClientGUI ();
-		clientGUI.init ();
+		clientGUI = clientManager.getClientGUI();
+		clientGUI.init();
 	}
 
-	public void stopGUI () throws InitIritgoException
+	public void stopGUI() throws InitIritgoException
 	{
-		clientGUI.stopGUI ();
+		clientGUI.stopGUI();
 		clientGUI = null;
 	}
 
-	private void initBasics () throws InitIritgoException
+	private void initBasics() throws InitIritgoException
 	{
-		Configuration config = IritgoEngine.instance ().getConfiguration ();
-		ThreadPoolConfig threadPoolConfig = config.getThreadPool ();
+		Configuration config = IritgoEngine.instance().getConfiguration();
+		ThreadPoolConfig threadPoolConfig = config.getThreadPool();
 
-		int minThreads = threadPoolConfig.getMinThreads ();
+		int minThreads = threadPoolConfig.getMinThreads();
 
 		for (int i = 0; i < minThreads; ++i)
 		{
-			engine.getThreadService ().addThreadSlot ();
+			engine.getThreadService().addThreadSlot();
 		}
 
-		networkProxyManager = new NetworkProxyManager ();
-		networkProxyLinkedListManager = new NetworkProxyLinkedListManager ();
-		guiExtensionManager = new GUIExtensionManager ();
-		Engine.instance ().getManagerRegistry ().addManager (guiExtensionManager);
+		networkProxyManager = new NetworkProxyManager();
+		networkProxyLinkedListManager = new NetworkProxyLinkedListManager();
+		guiExtensionManager = new GUIExtensionManager();
+		Engine.instance().getManagerRegistry().addManager(guiExtensionManager);
 	}
 
-	private void initResources () throws InitIritgoException
+	private void initResources() throws InitIritgoException
 	{
-		engine.getResourceService ().loadTranslationsWithClassLoader (IritgoEngine.class, "/resources/system");
+		engine.getResourceService().loadTranslationsWithClassLoader(IritgoEngine.class, "/resources/system");
 	}
 
-	public void startGUI () throws InitIritgoException
+	public void startGUI() throws InitIritgoException
 	{
 		if (clientGUI != null)
 		{
-			clientGUI.startGUI ();
+			clientGUI.startGUI();
 		}
 	}
 
-	public void startApplication () throws InitIritgoException
+	public void startApplication() throws InitIritgoException
 	{
 		if (clientGUI != null)
 		{
-			clientGUI.startApplication ();
+			clientGUI.startApplication();
 		}
 	}
 
-	public void lostNetworkConnection ()
+	public void lostNetworkConnection()
 	{
 		if (clientGUI != null)
 		{
-			clientGUI.lostNetworkConnection ();
+			clientGUI.lostNetworkConnection();
 		}
 
 		// Client clean all cached IObjects, proxy and proxyEvents.
-		Engine.instance ().getProxyEventRegistry ().clear ();
-		Engine.instance ().getProxyRegistry ().clear ();
-		Engine.instance ().getBaseRegistry ().clear ();
-		Client.instance ().getUserRegistry ().clear ();
+		Engine.instance().getProxyEventRegistry().clear();
+		Engine.instance().getProxyRegistry().clear();
+		Engine.instance().getBaseRegistry().clear();
+		Client.instance().getUserRegistry().clear();
 	}
 
-	public void stop ()
+	public void stop()
 	{
 		if (clientGUI != null)
 		{
-			clientGUI.stopGUI ();
-			clientGUI.stopApplication ();
+			clientGUI.stopGUI();
+			clientGUI.stopApplication();
 		}
 
 		// Important for the lostNetworkConnection() method!
 		clientGUI = null;
 
-		networkService.closeChannel (appContext.getUser ().getNetworkChannel ());
+		networkService.closeChannel(appContext.getUser().getNetworkChannel());
 	}
 }

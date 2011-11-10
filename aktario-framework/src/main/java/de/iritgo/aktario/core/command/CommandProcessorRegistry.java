@@ -35,10 +35,10 @@ public class CommandProcessorRegistry extends BaseObject
 	/**
 	 * Create a new CommandProcessorRegistry.
 	 */
-	public CommandProcessorRegistry ()
+	public CommandProcessorRegistry()
 	{
-		super ("commandprocessorregistry");
-		commandProcessors = new HashMap ();
+		super("commandprocessorregistry");
+		commandProcessors = new HashMap();
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class CommandProcessorRegistry extends BaseObject
 	 *
 	 * @param commandProcessor The command processor to add.
 	 */
-	public void add (CommandProcessor commandProcessor)
+	public void add(CommandProcessor commandProcessor)
 	{
-		commandProcessors.put (commandProcessor.getTypeId (), commandProcessor);
+		commandProcessors.put(commandProcessor.getTypeId(), commandProcessor);
 	}
 
 	/**
@@ -56,9 +56,9 @@ public class CommandProcessorRegistry extends BaseObject
 	 *
 	 * @param id The id of the command processor.
 	 */
-	public CommandProcessor get (String id)
+	public CommandProcessor get(String id)
 	{
-		return (CommandProcessor) commandProcessors.get (id);
+		return (CommandProcessor) commandProcessors.get(id);
 	}
 
 	/**
@@ -66,9 +66,9 @@ public class CommandProcessorRegistry extends BaseObject
 	 *
 	 * @param commandProcessor The command processor to add.
 	 */
-	public void remove (CommandProcessor commandProcessor)
+	public void remove(CommandProcessor commandProcessor)
 	{
-		commandProcessors.remove (commandProcessor.getTypeId ());
+		commandProcessors.remove(commandProcessor.getTypeId());
 	}
 
 	/**
@@ -77,16 +77,16 @@ public class CommandProcessorRegistry extends BaseObject
 	 * @param id The id of the command processor to check.
 	 * @return True if the command processor exists.
 	 */
-	public boolean exists (String id)
+	public boolean exists(String id)
 	{
-		return commandProcessors.containsKey (id);
+		return commandProcessors.containsKey(id);
 	}
 
 	/**
 	 * Clear the registry.
 	 */
-	public void clear ()
+	public void clear()
 	{
-		commandProcessors.clear ();
+		commandProcessors.clear();
 	}
 }

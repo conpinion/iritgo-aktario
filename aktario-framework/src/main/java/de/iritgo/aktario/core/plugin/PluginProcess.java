@@ -25,5 +25,5 @@ package de.iritgo.aktario.core.plugin;
  */
 public interface PluginProcess
 {
-	public void doPlugin (Plugin plugin);
+	public void doPlugin(Plugin plugin);
 }

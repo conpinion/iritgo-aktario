@@ -29,9 +29,9 @@ public class IDesktopPane extends JDesktopPane
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void setBounds (int x, int y, int width, int height)
+	public void setBounds(int x, int y, int width, int height)
 	{
-		super.setBounds (x, y, width, height);
-		((IDesktopLayouter) getDesktopManager ()).setBounds (x, y, width, height);
+		super.setBounds(x, y, width, height);
+		((IDesktopLayouter) getDesktopManager()).setBounds(x, y, width, height);
 	}
 }

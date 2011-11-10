@@ -36,22 +36,22 @@ public class IToolBar extends JToolBar
 	/**
 	 * Create new tool bar.
 	 */
-	public IToolBar ()
+	public IToolBar()
 	{
 	}
 
 	/**
 	 * Reload the labels of all menu items in this tool bar.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		for (int i = 0; i < getComponentCount (); ++i)
+		for (int i = 0; i < getComponentCount(); ++i)
 		{
-			Component component = getComponentAtIndex (i);
+			Component component = getComponentAtIndex(i);
 
 			if (component instanceof IButton)
 			{
-				((IButton) component).reloadText ();
+				((IButton) component).reloadText();
 			}
 		}
 	}

@@ -50,23 +50,23 @@ public class IBusyButton extends JButton
 
 	private ImageIcon[] idleIcon =
 	{
-					new ImageIcon (IBusyButton.class.getResource ("/resources/busy.png")),
-					new ImageIcon (IBusyButton.class.getResource ("/resources/search.png"))
+					new ImageIcon(IBusyButton.class.getResource("/resources/busy.png")),
+					new ImageIcon(IBusyButton.class.getResource("/resources/search.png"))
 	};
 
 	private ImageIcon[] busyIcon =
 	{
-					new ImageIcon (IBusyButton.class.getResource ("/resources/busy-rotating.gif")),
-					new ImageIcon (IBusyButton.class.getResource ("/resources/search-rotating.gif"))
+					new ImageIcon(IBusyButton.class.getResource("/resources/busy-rotating.gif")),
+					new ImageIcon(IBusyButton.class.getResource("/resources/search-rotating.gif"))
 	};
 
 	/**
 	 * Create a busy button with no text.
 	 */
-	public IBusyButton ()
+	public IBusyButton()
 	{
-		super ();
-		setIcon (idleIcon[style.ordinal ()]);
+		super();
+		setIcon(idleIcon[style.ordinal()]);
 	}
 
 	/**
@@ -74,11 +74,11 @@ public class IBusyButton extends JButton
 	 *
 	 * @param style The busy style
 	 */
-	public IBusyButton (Style style)
+	public IBusyButton(Style style)
 	{
-		super ();
+		super();
 		this.style = style;
-		setIcon (idleIcon[style.ordinal ()]);
+		setIcon(idleIcon[style.ordinal()]);
 	}
 
 	/**
@@ -87,10 +87,10 @@ public class IBusyButton extends JButton
 	 * @param text
 	 *            The text of the button.
 	 */
-	public IBusyButton (String text)
+	public IBusyButton(String text)
 	{
-		super (text);
-		setIcon (idleIcon[style.ordinal ()]);
+		super(text);
+		setIcon(idleIcon[style.ordinal()]);
 	}
 
 	/**
@@ -100,11 +100,11 @@ public class IBusyButton extends JButton
 	 *            The text of the button.
 	 * @param style The busy style
 	 */
-	public IBusyButton (String text, Style style)
+	public IBusyButton(String text, Style style)
 	{
-		super (text);
+		super(text);
 		this.style = style;
-		setIcon (idleIcon[style.ordinal ()]);
+		setIcon(idleIcon[style.ordinal()]);
 	}
 
 	/**
@@ -113,10 +113,10 @@ public class IBusyButton extends JButton
 	 * @param textKey
 	 *            The text specified by a resource key.
 	 */
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
 		this.textKey = textKey;
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 
 	/**
@@ -126,37 +126,37 @@ public class IBusyButton extends JButton
 	 *            The text specified by a resource key.
 	 */
 	@Override
-	public void setToolTipText (String textKey)
+	public void setToolTipText(String textKey)
 	{
 		this.toolTipTextKey = textKey;
-		super.setToolTipText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setToolTipText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 
 	/**
 	 * Reload the labels of all menu items in this menu bar.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		setText (textKey);
-		setToolTipText (toolTipTextKey);
+		setText(textKey);
+		setToolTipText(toolTipTextKey);
 	}
 
-	public void setStyle (Style style)
+	public void setStyle(Style style)
 	{
 		this.style = style;
-		setIcon (idleIcon[style.ordinal ()]);
+		setIcon(idleIcon[style.ordinal()]);
 	}
 
 	/**
 	 * Display the idle state.
 	 */
-	public void idle ()
+	public void idle()
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
-				setIcon (idleIcon[style.ordinal ()]);
+				setIcon(idleIcon[style.ordinal()]);
 			}
 		});
 	}
@@ -164,13 +164,13 @@ public class IBusyButton extends JButton
 	/**
 	 * Display the busy state.
 	 */
-	public void busy ()
+	public void busy()
 	{
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
-				setIcon (busyIcon[style.ordinal ()]);
+				setIcon(busyIcon[style.ordinal()]);
 			}
 		});
 	}

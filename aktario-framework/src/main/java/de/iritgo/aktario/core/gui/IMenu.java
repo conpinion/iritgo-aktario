@@ -41,9 +41,9 @@ public class IMenu extends JMenu
 	/**
 	 * Creates a menu item with no set text or icon.
 	 */
-	public IMenu ()
+	public IMenu()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -51,9 +51,9 @@ public class IMenu extends JMenu
 	 *
 	 * @param action The Action used to specify the new menu item.
 	 */
-	public IMenu (Action action)
+	public IMenu(Action action)
 	{
-		super (action);
+		super(action);
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class IMenu extends JMenu
 	 *
 	 * @param text The text of the menu item.
 	 */
-	public IMenu (String text)
+	public IMenu(String text)
 	{
-		super (text);
+		super(text);
 	}
 
 	/**
@@ -72,31 +72,31 @@ public class IMenu extends JMenu
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
 		this.textKey = textKey;
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 
 	/**
 	 * Reload the labels of all menu items in this menu.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 
-		for (int i = 0; i < getMenuComponentCount (); ++i)
+		for (int i = 0; i < getMenuComponentCount(); ++i)
 		{
-			Component item = getMenuComponent (i);
+			Component item = getMenuComponent(i);
 
-			if (item.getClass ().equals (IMenu.class))
+			if (item.getClass().equals(IMenu.class))
 			{
-				((IMenu) item).reloadText ();
+				((IMenu) item).reloadText();
 			}
 
-			if (item.getClass ().equals (IMenuItem.class))
+			if (item.getClass().equals(IMenuItem.class))
 			{
-				((IMenuItem) item).reloadText ();
+				((IMenuItem) item).reloadText();
 			}
 		}
 	}

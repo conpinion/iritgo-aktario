@@ -70,7 +70,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 
 		public ExtensionTile extensionTile;
 
-		public ColumnHelper (WidgetDescription wd, ExtensionTile extensionTile, int columnType)
+		public ColumnHelper(WidgetDescription wd, ExtensionTile extensionTile, int columnType)
 		{
 			this.wd = wd;
 			this.columnType = columnType;
@@ -121,29 +121,29 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	private JLabel searchLabel;
 
 	/** */
-	private ActionListener executeSearch = new ActionListener ()
+	private ActionListener executeSearch = new ActionListener()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			refresh ();
+			refresh();
 		}
 	};
 
 	/**
 	 * Default constructor
 	 */
-	public DefaultQueryRenderer ()
+	public DefaultQueryRenderer()
 	{
-		super ("DefaultQueryRenderer");
-		newIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/new.png"));
-		editIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/edit.png"));
-		saveIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/save.png"));
-		deleteIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/delete.png"));
-		cancelIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/cancel.png"));
-		searchIcon = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/search.png"));
-		searchWait = new ImageIcon (DefaultQueryRenderer.class.getResource ("/resources/search-rotating.gif"));
-		wdList = new ArrayList<ColumnHelper> (8);
-		dataObjectButtons = new LinkedList ();
+		super("DefaultQueryRenderer");
+		newIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/new.png"));
+		editIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/edit.png"));
+		saveIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/save.png"));
+		deleteIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/delete.png"));
+		cancelIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/cancel.png"));
+		searchIcon = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/search.png"));
+		searchWait = new ImageIcon(DefaultQueryRenderer.class.getResource("/resources/search-rotating.gif"));
+		wdList = new ArrayList<ColumnHelper>(8);
+		dataObjectButtons = new LinkedList();
 	}
 
 	/**
@@ -158,8 +158,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @param DataObjectGUIPane
 	 *            The pane to render on.
 	 */
-	public void workOn (Controller controller, DataObject dataObject, Object content,
-					DataObjectGUIPane dataObjectGUIPane)
+	public void workOn(Controller controller, DataObject dataObject, Object content, DataObjectGUIPane dataObjectGUIPane)
 	{
 	}
 
@@ -175,7 +174,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @param QueryPane
 	 *            The pane to render on.
 	 */
-	public void workOn (final Controller controller, final DataObject dataObject, final Object content,
+	public void workOn(final Controller controller, final DataObject dataObject, final Object content,
 					final QueryPane queryPane)
 	{
 		this.dataObject = dataObject;
@@ -183,114 +182,114 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 
 		try
 		{
-			JPanel panel = (JPanel) new JPanel ();
-			JPanel toolbar = (JPanel) new JPanel ();
+			JPanel panel = (JPanel) new JPanel();
+			JPanel toolbar = (JPanel) new JPanel();
 
-			panel.setLayout (new GridBagLayout ());
-			toolbar.setLayout (new GridBagLayout ());
+			panel.setLayout(new GridBagLayout());
+			toolbar.setLayout(new GridBagLayout());
 
-			Properties props = queryPane.getProperties ();
+			Properties props = queryPane.getProperties();
 
-			JPanel searchPanel = (JPanel) new JPanel ();
+			JPanel searchPanel = (JPanel) new JPanel();
 
-			searchPanel.setLayout (new GridBagLayout ());
+			searchPanel.setLayout(new GridBagLayout());
 
 			int searchComponentPos = 0;
 
-			if (Client.instance ().getGUIExtensionManager ().existsExtension (queryPane.getOnScreenUniqueId (),
+			if (Client.instance().getGUIExtensionManager().existsExtension(queryPane.getOnScreenUniqueId(),
 							"searchPanel"))
 			{
-				for (Iterator i = Client.instance ().getGUIExtensionManager ().getExtensionIterator (
-								queryPane.getOnScreenUniqueId (), "searchPanel"); i.hasNext ();)
+				for (Iterator i = Client.instance().getGUIExtensionManager().getExtensionIterator(
+								queryPane.getOnScreenUniqueId(), "searchPanel"); i.hasNext();)
 				{
-					ExtensionTile extensionTileCommand = (ExtensionTile) i.next ();
+					ExtensionTile extensionTileCommand = (ExtensionTile) i.next();
 
-					searchPanel.add (extensionTileCommand.getTile (queryPane, dataObject, null), createConstraints (
+					searchPanel.add(extensionTileCommand.getTile(queryPane, dataObject, null), createConstraints(
 									searchComponentPos, 0, 1, 1, 0.1, 0.0, GridBagConstraints.HORIZONTAL,
-									GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+									GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 					searchComponentPos++;
 				}
 			}
 
-			WidgetDescription listSearchCategoryComboBox = controller.getWidgetDescription ("listSearchCategory");
+			WidgetDescription listSearchCategoryComboBox = controller.getWidgetDescription("listSearchCategory");
 
 			if (listSearchCategoryComboBox != null)
 			{
-				JComboBox combobox = new JComboBox ();
+				JComboBox combobox = new JComboBox();
 
-				listSearchCategoryComboBox.addControl (queryPane.getOnScreenUniqueId () + "_"
-								+ listSearchCategoryComboBox.getWidgetId (), combobox);
+				listSearchCategoryComboBox.addControl(queryPane.getOnScreenUniqueId() + "_"
+								+ listSearchCategoryComboBox.getWidgetId(), combobox);
 
-				searchPanel.add (combobox, createConstraints (searchComponentPos, 0, 1, 1, 0.1, 0.0,
-								GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+				searchPanel.add(combobox, createConstraints(searchComponentPos, 0, 1, 1, 0.1, 0.0,
+								GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 
 				searchComponentPos++;
 			}
 
-			if (props.getProperty ("searchpanel", "yes").equals ("yes"))
+			if (props.getProperty("searchpanel", "yes").equals("yes"))
 			{
-				searchConditionField = new JTextField ("");
-				searchPanel.add (searchConditionField, createConstraints (searchComponentPos++, 0, 1, 1, 0.8, 0.0,
-								GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+				searchConditionField = new JTextField("");
+				searchPanel.add(searchConditionField, createConstraints(searchComponentPos++, 0, 1, 1, 0.8, 0.0,
+								GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 
-				searchLabel = new JLabel (searchIcon);
-				searchPanel.add (searchLabel, createConstraints (searchComponentPos++, 0, 1, 1, 0.0, 0.0,
-								GridBagConstraints.NONE, GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+				searchLabel = new JLabel(searchIcon);
+				searchPanel.add(searchLabel, createConstraints(searchComponentPos++, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.NONE, GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 
-				searchConditionField.addActionListener (executeSearch);
+				searchConditionField.addActionListener(executeSearch);
 
-				if (props.getProperty ("searchbutton", "yes").equals ("yes"))
+				if (props.getProperty("searchbutton", "yes").equals("yes"))
 				{
-					IButton button = new IButton ("search", searchIcon);
+					IButton button = new IButton("search", searchIcon);
 
-					toolbar.add (button, createConstraints (0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
-									GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+					toolbar.add(button, createConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+									GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 
-					button.addActionListener (executeSearch);
+					button.addActionListener(executeSearch);
 					searchComponentPos++;
 				}
 			}
 
-			searchPanel.revalidate ();
+			searchPanel.revalidate();
 
-			panel.add (searchPanel, createConstraints (0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
-							GridBagConstraints.NORTHWEST, new Insets (2, 2, 2, 2)));
+			panel.add(searchPanel, createConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+							GridBagConstraints.NORTHWEST, new Insets(2, 2, 2, 2)));
 
 			int y = 1;
 
-			configureTableModel (controller);
-			queryPane.setModel (queryTableModel);
+			configureTableModel(controller);
+			queryPane.setModel(queryTableModel);
 
-			configureTable (queryTableModel);
+			configureTable(queryTableModel);
 
 			int verticalScrollbarPolicy = JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED;
 
-			if (queryPane.getProperties ().containsKey ("verticalScrollbarPolicy"))
+			if (queryPane.getProperties().containsKey("verticalScrollbarPolicy"))
 			{
-				verticalScrollbarPolicy = (Integer) queryPane.getProperties ().get ("verticalScrollbarPolicy");
+				verticalScrollbarPolicy = (Integer) queryPane.getProperties().get("verticalScrollbarPolicy");
 			}
 
 			int horizontalScrollbarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED;
 
-			if (queryPane.getProperties ().containsKey ("horizontalScrollbarPolicy"))
+			if (queryPane.getProperties().containsKey("horizontalScrollbarPolicy"))
 			{
-				horizontalScrollbarPolicy = (Integer) queryPane.getProperties ().get ("horizontalScrollbarPolicy");
+				horizontalScrollbarPolicy = (Integer) queryPane.getProperties().get("horizontalScrollbarPolicy");
 			}
 
-			queryScrollPane = new JScrollPane (queryTable, verticalScrollbarPolicy, horizontalScrollbarPolicy);
+			queryScrollPane = new JScrollPane(queryTable, verticalScrollbarPolicy, horizontalScrollbarPolicy);
 
 			// queryScrollPane.getColumnHeader ().setVisible (true);
-			panel.add (queryScrollPane, createConstraints (0, 1, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
-							GridBagConstraints.NORTHWEST, new Insets (0, 0, 0, 0)));
+			panel.add(queryScrollPane, createConstraints(0, 1, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
+							GridBagConstraints.NORTHWEST, new Insets(0, 0, 0, 0)));
 
-			JSeparator sep = new JSeparator ();
+			JSeparator sep = new JSeparator();
 
-			if (props.getProperty ("toolbar", "no").equals ("yes"))
+			if (props.getProperty("toolbar", "no").equals("yes"))
 			{
-				if (controller.getCommandDescriptions ().size () != 0)
+				if (controller.getCommandDescriptions().size() != 0)
 				{
-					toolbar.add (sep, createConstraints (0, 1, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
-									GridBagConstraints.NORTHWEST, new Insets (4, 8, 4, 8)));
+					toolbar.add(sep, createConstraints(0, 1, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+									GridBagConstraints.NORTHWEST, new Insets(4, 8, 4, 8)));
 
 					y = 2;
 				}
@@ -299,182 +298,182 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 					y = 1;
 				}
 
-				for (Iterator i = controller.getCommandDescriptions ().iterator (); i.hasNext ();)
+				for (Iterator i = controller.getCommandDescriptions().iterator(); i.hasNext();)
 				{
-					CommandDescription cd = (CommandDescription) i.next ();
+					CommandDescription cd = (CommandDescription) i.next();
 
 					DataObjectButton dataObjectButton = null;
 
-					if (cd.getTextId ().equals ("new"))
+					if (cd.getTextId().equals("new"))
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId (), newIcon);
+						dataObjectButton = new DataObjectButton(cd.getTextId(), newIcon);
 					}
-					else if (cd.getIconId ().equals ("edit"))
+					else if (cd.getIconId().equals("edit"))
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId (), editIcon);
+						dataObjectButton = new DataObjectButton(cd.getTextId(), editIcon);
 					}
-					else if (cd.getIconId ().equals ("save"))
+					else if (cd.getIconId().equals("save"))
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId (), saveIcon);
+						dataObjectButton = new DataObjectButton(cd.getTextId(), saveIcon);
 					}
-					else if (cd.getIconId ().equals ("delete"))
+					else if (cd.getIconId().equals("delete"))
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId (), deleteIcon);
+						dataObjectButton = new DataObjectButton(cd.getTextId(), deleteIcon);
 					}
-					else if (cd.getIconId ().equals ("cancel"))
+					else if (cd.getIconId().equals("cancel"))
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId (), cancelIcon);
+						dataObjectButton = new DataObjectButton(cd.getTextId(), cancelIcon);
 					}
 					else
 					{
-						dataObjectButton = new DataObjectButton (cd.getTextId ());
+						dataObjectButton = new DataObjectButton(cd.getTextId());
 					}
 
-					dataObjectButton.setDataObject (dataObject);
-					dataObjectButton.setSwingGUIPane (queryPane);
-					dataObjectButton.setCommandDescription (cd);
+					dataObjectButton.setDataObject(dataObject);
+					dataObjectButton.setSwingGUIPane(queryPane);
+					dataObjectButton.setCommandDescription(cd);
 
-					toolbar.add (dataObjectButton, createConstraints (0, y, 1, 1, 1.0, 0.0,
-									GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,
-									new Insets (4, 8, 0, 8)));
-					dataObjectButtons.add (dataObjectButton);
+					toolbar.add(dataObjectButton,
+									createConstraints(0, y, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+													GridBagConstraints.NORTHWEST, new Insets(4, 8, 0, 8)));
+					dataObjectButtons.add(dataObjectButton);
 					++y;
 				}
 
-				if (Client.instance ().getGUIExtensionManager ().existsExtension (queryPane.getOnScreenUniqueId (),
+				if (Client.instance().getGUIExtensionManager().existsExtension(queryPane.getOnScreenUniqueId(),
 								"toolbar"))
 				{
-					sep = new JSeparator ();
-					toolbar.add (sep, createConstraints (0, y, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
-									GridBagConstraints.NORTHWEST, new Insets (8, 8, 4, 8)));
+					sep = new JSeparator();
+					toolbar.add(sep, createConstraints(0, y, 1, 1, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+									GridBagConstraints.NORTHWEST, new Insets(8, 8, 4, 8)));
 					++y;
 
-					for (Iterator i = Client.instance ().getGUIExtensionManager ().getExtensionIterator (
-									queryPane.getOnScreenUniqueId (), "toolbar"); i.hasNext ();)
+					for (Iterator i = Client.instance().getGUIExtensionManager().getExtensionIterator(
+									queryPane.getOnScreenUniqueId(), "toolbar"); i.hasNext();)
 					{
-						ExtensionTile extensionTile = (ExtensionTile) i.next ();
+						ExtensionTile extensionTile = (ExtensionTile) i.next();
 
-						toolbar.add (extensionTile.getTile (queryPane, dataObject, null), createConstraints (0, y, 1,
-										1, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,
-										new Insets (4, 8, 0, 8)));
+						toolbar.add(extensionTile.getTile(queryPane, dataObject, null), createConstraints(0, y, 1, 1,
+										1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,
+										new Insets(4, 8, 0, 8)));
 						++y;
 					}
 				}
 			}
 
 			// Surrounding Commands
-			if (props.getProperty ("surroundingcommands", "no").equals ("yes"))
+			if (props.getProperty("surroundingcommands", "no").equals("yes"))
 			{
-				if (Client.instance ().getGUIExtensionManager ().existsExtension (queryPane.getOnScreenUniqueId (),
+				if (Client.instance().getGUIExtensionManager().existsExtension(queryPane.getOnScreenUniqueId(),
 								"surroundingcommands"))
 				{
-					for (Iterator l = Client.instance ().getGUIExtensionManager ().getExtensionIterator (
-									queryPane.getOnScreenUniqueId (), "surroundingcommands"); l.hasNext ();)
+					for (Iterator l = Client.instance().getGUIExtensionManager().getExtensionIterator(
+									queryPane.getOnScreenUniqueId(), "surroundingcommands"); l.hasNext();)
 					{
-						ExtensionTile extensionTile = (ExtensionTile) l.next ();
-						JComponent component = extensionTile.getTile (queryPane, dataObject, null);
-						Object constraints = extensionTile.getConstraints ();
+						ExtensionTile extensionTile = (ExtensionTile) l.next();
+						JComponent component = extensionTile.getTile(queryPane, dataObject, null);
+						Object constraints = extensionTile.getConstraints();
 
-						if (controller.getCommandDescriptions ().size () != 0)
+						if (controller.getCommandDescriptions().size() != 0)
 						{
 							if (constraints != null)
 							{
-								component.add (sep, constraints);
+								component.add(sep, constraints);
 							}
 							else
 							{
-								component.add (sep);
+								component.add(sep);
 							}
 						}
 
-						for (Iterator i = controller.getCommandDescriptions ().iterator (); i.hasNext ();)
+						for (Iterator i = controller.getCommandDescriptions().iterator(); i.hasNext();)
 						{
-							CommandDescription cd = (CommandDescription) i.next ();
+							CommandDescription cd = (CommandDescription) i.next();
 
 							DataObjectButton dataObjectButton = null;
 
-							if (cd.getTextId ().equals ("new"))
+							if (cd.getTextId().equals("new"))
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId (), newIcon);
+								dataObjectButton = new DataObjectButton(cd.getTextId(), newIcon);
 							}
-							else if (cd.getIconId ().equals ("edit"))
+							else if (cd.getIconId().equals("edit"))
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId (), editIcon);
+								dataObjectButton = new DataObjectButton(cd.getTextId(), editIcon);
 							}
-							else if (cd.getIconId ().equals ("save"))
+							else if (cd.getIconId().equals("save"))
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId (), saveIcon);
+								dataObjectButton = new DataObjectButton(cd.getTextId(), saveIcon);
 							}
-							else if (cd.getIconId ().equals ("delete"))
+							else if (cd.getIconId().equals("delete"))
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId (), deleteIcon);
+								dataObjectButton = new DataObjectButton(cd.getTextId(), deleteIcon);
 							}
-							else if (cd.getIconId ().equals ("cancel"))
+							else if (cd.getIconId().equals("cancel"))
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId (), cancelIcon);
+								dataObjectButton = new DataObjectButton(cd.getTextId(), cancelIcon);
 							}
 							else
 							{
-								dataObjectButton = new DataObjectButton (cd.getTextId ());
+								dataObjectButton = new DataObjectButton(cd.getTextId());
 							}
 
-							if (props.getProperty ("surroundingcommands.filter", "").indexOf (cd.getTextId () + ";") >= 0)
+							if (props.getProperty("surroundingcommands.filter", "").indexOf(cd.getTextId() + ";") >= 0)
 							{
 								continue;
 							}
 
-							dataObjectButton.setDataObject (dataObject);
-							dataObjectButton.setSwingGUIPane (queryPane);
-							dataObjectButton.setCommandDescription (cd);
+							dataObjectButton.setDataObject(dataObject);
+							dataObjectButton.setSwingGUIPane(queryPane);
+							dataObjectButton.setCommandDescription(cd);
 
-							dataObjectButtons.add (dataObjectButton);
+							dataObjectButtons.add(dataObjectButton);
 
 							if (constraints != null)
 							{
-								component.add (dataObjectButton, constraints);
+								component.add(dataObjectButton, constraints);
 							}
 							else
 							{
-								component.add (dataObjectButton);
+								component.add(dataObjectButton);
 							}
 						}
 
-						if (Client.instance ().getGUIExtensionManager ().existsExtension (
-										queryPane.getOnScreenUniqueId (), "toolbar"))
+						if (Client.instance().getGUIExtensionManager().existsExtension(queryPane.getOnScreenUniqueId(),
+										"toolbar"))
 						{
-							for (Iterator i = Client.instance ().getGUIExtensionManager ().getExtensionIterator (
-											queryPane.getOnScreenUniqueId (), "toolbar"); i.hasNext ();)
+							for (Iterator i = Client.instance().getGUIExtensionManager().getExtensionIterator(
+											queryPane.getOnScreenUniqueId(), "toolbar"); i.hasNext();)
 							{
-								ExtensionTile extensionTileCommand = (ExtensionTile) i.next ();
+								ExtensionTile extensionTileCommand = (ExtensionTile) i.next();
 
 								if (constraints != null)
 								{
-									component.add (extensionTileCommand.getTile (queryPane, dataObject, null),
+									component.add(extensionTileCommand.getTile(queryPane, dataObject, null),
 													constraints);
 								}
 								else
 								{
-									component.add (extensionTileCommand.getTile (queryPane, dataObject, null));
+									component.add(extensionTileCommand.getTile(queryPane, dataObject, null));
 								}
 							}
 						}
 
-						component.revalidate ();
+						component.revalidate();
 					}
 				}
 			}
 
-			((JPanel) content).setLayout (new GridBagLayout ());
+			((JPanel) content).setLayout(new GridBagLayout());
 
-			((JPanel) content).add (panel, createConstraints (0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
-							GridBagConstraints.NORTHWEST, new Insets (0, 0, 4, 0)));
+			((JPanel) content).add(panel, createConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.BOTH,
+							GridBagConstraints.NORTHWEST, new Insets(0, 0, 4, 0)));
 
-			((JPanel) content).add (toolbar, createConstraints (1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NONE,
-							GridBagConstraints.NORTHWEST, new Insets (0, 0, 4, 0)));
+			((JPanel) content).add(toolbar, createConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NONE,
+							GridBagConstraints.NORTHWEST, new Insets(0, 0, 4, 0)));
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 
@@ -482,7 +481,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @see de.iritgo.aktario.framework.dataobject.gui.Renderer#setError(java.lang.String)
 	 */
 	@Override
-	public void setError (String widgetId)
+	public void setError(String widgetId)
 	{
 	}
 
@@ -490,7 +489,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @see de.iritgo.aktario.framework.dataobject.gui.Renderer#setNoError(java.lang.String)
 	 */
 	@Override
-	public void setNoError (String widgetId)
+	public void setNoError(String widgetId)
 	{
 	}
 
@@ -501,80 +500,80 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 *            The controller for the data object and model
 	 */
 	@SuppressWarnings("serial")
-	private void configureTableModel (Controller controller)
+	private void configureTableModel(Controller controller)
 	{
-		GUIExtensionManager guiExtManager = Client.instance ().getGUIExtensionManager ();
+		GUIExtensionManager guiExtManager = Client.instance().getGUIExtensionManager();
 
-		List<ExtensionTile> tilesCopy = guiExtManager.getExtensionsCopy (queryPane.getOnScreenUniqueId (), "columns");
+		List<ExtensionTile> tilesCopy = guiExtManager.getExtensionsCopy(queryPane.getOnScreenUniqueId(), "columns");
 
-		WidgetDescription wdGroup = (WidgetDescription) controller.getWidgetDescriptions ().get (0);
+		WidgetDescription wdGroup = (WidgetDescription) controller.getWidgetDescriptions().get(0);
 
-		for (Iterator i = wdGroup.getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = wdGroup.getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			WidgetDescription wd = (WidgetDescription) i.next ();
+			WidgetDescription wd = (WidgetDescription) i.next();
 
-			if (wd.isVisible ())
+			if (wd.isVisible())
 			{
-				ExtensionTile tile = guiExtManager.getExtension (queryPane.getOnScreenUniqueId (), "columns", wd
-								.getWidgetId ());
+				ExtensionTile tile = guiExtManager.getExtension(queryPane.getOnScreenUniqueId(), "columns", wd
+								.getWidgetId());
 
-				wdList.add (new ColumnHelper (wd, tile, DATAOBJECT_COLUMN));
-				tilesCopy.remove (tile);
+				wdList.add(new ColumnHelper(wd, tile, DATAOBJECT_COLUMN));
+				tilesCopy.remove(tile);
 			}
 		}
 
 		for (ExtensionTile tile : tilesCopy)
 		{
-			wdList.add (new ColumnHelper (null, tile, TRANSIENT_COLUMN));
+			wdList.add(new ColumnHelper(null, tile, TRANSIENT_COLUMN));
 		}
 
 		try
 		{
-			queryTableModel = new IObjectTableModelSorted ()
+			queryTableModel = new IObjectTableModelSorted()
 			{
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
-					return wdList.size ();
+					return wdList.size();
 				}
 
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
-					ColumnHelper columnHelper = (ColumnHelper) wdList.get (col);
+					ColumnHelper columnHelper = (ColumnHelper) wdList.get(col);
 					String text = "";
 
 					if (columnHelper.columnType == DATAOBJECT_COLUMN)
 					{
-						text = Engine.instance ().getResourceService ().getStringWithoutException (
-										(String) ((WidgetDescription) columnHelper.wd).getLabelId ());
+						text = Engine.instance().getResourceService().getStringWithoutException(
+										(String) ((WidgetDescription) columnHelper.wd).getLabelId());
 					}
 					else if (columnHelper.columnType == TRANSIENT_COLUMN)
 					{
-						text = Engine.instance ().getResourceService ().getStringWithoutException (
-										columnHelper.extensionTile.getLabel ());
+						text = Engine.instance().getResourceService().getStringWithoutException(
+										columnHelper.extensionTile.getLabel());
 					}
 
 					return text;
 				}
 
-				public boolean isCellEditable (int row, int col)
+				public boolean isCellEditable(int row, int col)
 				{
 					return false;
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
-					ColumnHelper columnHelper = (ColumnHelper) wdList.get (col);
+					ColumnHelper columnHelper = (ColumnHelper) wdList.get(col);
 
-					Object object = new String ("Unknown column");
+					Object object = new String("Unknown column");
 
 					if (columnHelper.columnType == DATAOBJECT_COLUMN)
 					{
-						object = ((DataObject) getObjectByRow (row))
-										.getAttribute (((WidgetDescription) columnHelper.wd).getWidgetId ());
+						object = ((DataObject) getObjectByRow(row)).getAttribute(((WidgetDescription) columnHelper.wd)
+										.getWidgetId());
 					}
 					else if (columnHelper.columnType == TRANSIENT_COLUMN)
 					{
-						object = (DataObject) getObjectByRow (row);
+						object = (DataObject) getObjectByRow(row);
 					}
 
 					return object;
@@ -583,8 +582,8 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "DefaultQueryRenderer.configureTable", x.toString ());
-			x.printStackTrace ();
+			Log.logFatal("system", "DefaultQueryRenderer.configureTable", x.toString());
+			x.printStackTrace();
 		}
 	}
 
@@ -594,27 +593,27 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @param IObjectTableModelSorted
 	 *            The table model for this table.
 	 */
-	private void configureTable (IObjectTableModelSorted queryTableModel)
+	private void configureTable(IObjectTableModelSorted queryTableModel)
 	{
 		try
 		{
-			queryTable = new ITable ();
+			queryTable = new ITable();
 
-			queryTable.setShowGrid (true);
+			queryTable.setShowGrid(true);
 
-			queryTable.setCellSelectionEnabled (false);
+			queryTable.setCellSelectionEnabled(false);
 
-			queryTable.setRowSelectionAllowed (true);
+			queryTable.setRowSelectionAllowed(true);
 
-			queryTable.setSelectionMode (0);
+			queryTable.setSelectionMode(0);
 
-			queryTable.setRowHeight (Math.max (queryTable.getRowHeight () + 4, 24 + 4));
+			queryTable.setRowHeight(Math.max(queryTable.getRowHeight() + 4, 24 + 4));
 
-			tableSorter = queryTableModel.getTableSorter ();
-			queryTable.setModel (tableSorter);
-			tableSorter.addMouseListenerToHeaderInTable (queryTable);
+			tableSorter = queryTableModel.getTableSorter();
+			queryTable.setModel(tableSorter);
+			tableSorter.addMouseListenerToHeaderInTable(queryTable);
 
-			queryTableModel.addTableModelListener (this);
+			queryTableModel.addTableModelListener(this);
 
 			int column = 0;
 
@@ -622,63 +621,63 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 			{
 				if (columnHelper.extensionTile != null)
 				{
-					queryTable.getColumnModel ().getColumn (column).setCellRenderer (
-									(DefaultTableCellRenderer) columnHelper.extensionTile.getTile (queryPane,
+					queryTable.getColumnModel().getColumn(column).setCellRenderer(
+									(DefaultTableCellRenderer) columnHelper.extensionTile.getTile(queryPane,
 													dataObject, null));
 				}
 
 				++column;
 			}
 
-			queryTable.addMouseListener (new MouseAdapter ()
+			queryTable.addMouseListener(new MouseAdapter()
 			{
-				public void mouseClicked (MouseEvent e)
+				public void mouseClicked(MouseEvent e)
 				{
-					int col = queryTable.columnAtPoint (e.getPoint ());
-					int row = tableSorter.getRealRow (queryTable.getSelectedRow ());
+					int col = queryTable.columnAtPoint(e.getPoint());
+					int row = tableSorter.getRealRow(queryTable.getSelectedRow());
 
 					if ((col < 0) || (row < 0))
 					{
 						return;
 					}
 
-					int realColumn = queryTable.getColumnModel ().getColumn (col).getModelIndex ();
+					int realColumn = queryTable.getColumnModel().getColumn(col).getModelIndex();
 
-					ColumnHelper columnHelper = (ColumnHelper) wdList.get (realColumn);
+					ColumnHelper columnHelper = (ColumnHelper) wdList.get(realColumn);
 
 					String columnId = "";
 
 					if (columnHelper.columnType == DATAOBJECT_COLUMN)
 					{
-						columnId = columnHelper.wd.getWidgetId ();
+						columnId = columnHelper.wd.getWidgetId();
 					}
 					else if (columnHelper.columnType == TRANSIENT_COLUMN)
 					{
-						columnId = columnHelper.extensionTile.getTileId ();
+						columnId = columnHelper.extensionTile.getTileId();
 					}
 
-					DataObject dataObject = (DataObject) ((ITableSorter) queryTable.getModel ()).getObjectByRow (row);
+					DataObject dataObject = (DataObject) ((ITableSorter) queryTable.getModel()).getObjectByRow(row);
 
-					Properties props = new Properties ();
+					Properties props = new Properties();
 
-					props.put ("table", queryTable);
-					props.put ("mousePosition", e.getPoint ());
+					props.put("table", queryTable);
+					props.put("mousePosition", e.getPoint());
 
-					for (Iterator i = Client.instance ().getGUIExtensionManager ().getExtensionIterator (
-									queryPane.getOnScreenUniqueId (), "listcommands"); i.hasNext ();)
+					for (Iterator i = Client.instance().getGUIExtensionManager().getExtensionIterator(
+									queryPane.getOnScreenUniqueId(), "listcommands"); i.hasNext();)
 					{
-						ExtensionTile extensionTile = (ExtensionTile) i.next ();
+						ExtensionTile extensionTile = (ExtensionTile) i.next();
 
-						if (extensionTile.getTileId ().equals (columnId))
+						if (extensionTile.getTileId().equals(columnId))
 						{
-							if (! extensionTile.isDoubleClickCommand ())
+							if (! extensionTile.isDoubleClickCommand())
 							{
-								extensionTile.command (queryPane, dataObject, props);
+								extensionTile.command(queryPane, dataObject, props);
 							}
 
-							if (extensionTile.isDoubleClickCommand () && (e.getClickCount () == 2))
+							if (extensionTile.isDoubleClickCommand() && (e.getClickCount() == 2))
 							{
-								extensionTile.command (queryPane, dataObject, props);
+								extensionTile.command(queryPane, dataObject, props);
 							}
 						}
 					}
@@ -687,8 +686,8 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "DefaultQueryRenderer.configureTable", x.toString ());
-			x.printStackTrace ();
+			Log.logFatal("system", "DefaultQueryRenderer.configureTable", x.toString());
+			x.printStackTrace();
 		}
 	}
 
@@ -696,16 +695,16 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @see de.iritgo.aktario.framework.dataobject.gui.Renderer#close()
 	 */
 	@Override
-	public void close ()
+	public void close()
 	{
-		for (Iterator i = dataObjectButtons.iterator (); i.hasNext ();)
+		for (Iterator i = dataObjectButtons.iterator(); i.hasNext();)
 		{
-			DataObjectButton dob = (DataObjectButton) i.next ();
+			DataObjectButton dob = (DataObjectButton) i.next();
 
-			dob.release ();
+			dob.release();
 		}
 
-		dataObjectButtons.clear ();
+		dataObjectButtons.clear();
 	}
 
 	/**
@@ -714,10 +713,10 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * @param TableModelEvent
 	 *            The event.
 	 */
-	public void tableChanged (TableModelEvent e)
+	public void tableChanged(TableModelEvent e)
 	{
-		queryTable.revalidate ();
-		queryTable.repaint ();
+		queryTable.revalidate();
+		queryTable.repaint();
 	}
 
 	/**
@@ -743,10 +742,10 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 *            The cell insets.
 	 * @return The gridbag constraints.
 	 */
-	protected GridBagConstraints createConstraints (int x, int y, int width, int height, double wx, double wy,
-					int fill, int anchor, Insets insets)
+	protected GridBagConstraints createConstraints(int x, int y, int width, int height, double wx, double wy, int fill,
+					int anchor, Insets insets)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -759,7 +758,7 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 
 		if (insets == null)
 		{
-			gbc.insets = new Insets (0, 0, 0, 0);
+			gbc.insets = new Insets(0, 0, 0, 0);
 		}
 		else
 		{
@@ -773,11 +772,11 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * Describe method setSearchIcon() here.
 	 *
 	 */
-	public void setSearchIcon ()
+	public void setSearchIcon()
 	{
 		if (searchLabel != null)
 		{
-			searchLabel.setIcon (searchIcon);
+			searchLabel.setIcon(searchIcon);
 		}
 	}
 
@@ -785,11 +784,11 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 * Describe method setSearchWaitIcon() here.
 	 *
 	 */
-	public void setSearchWaitIcon ()
+	public void setSearchWaitIcon()
 	{
 		if (searchLabel != null)
 		{
-			searchLabel.setIcon (searchWait);
+			searchLabel.setIcon(searchWait);
 		}
 	}
 
@@ -798,21 +797,21 @@ public class DefaultQueryRenderer extends Renderer implements TableModelListener
 	 *
 	 * @return JTable The table of this default query renderer
 	 */
-	public JTable getTable ()
+	public JTable getTable()
 	{
 		return queryTable;
 	}
 
 	@Override
-	public void refresh ()
+	public void refresh()
 	{
 		AbstractQuery query = (AbstractQuery) dataObject;
 
-		IObjectList results = (IObjectList) query.getIObjectListResults ();
+		IObjectList results = (IObjectList) query.getIObjectListResults();
 
-		results.clearIObjectList ();
+		results.clearIObjectList();
 
-		query.setSearchCondition (searchConditionField.getText ());
-		query.update ();
+		query.setSearchCondition(searchConditionField.getText());
+		query.update();
 	}
 }

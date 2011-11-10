@@ -32,35 +32,35 @@ import java.net.SocketTimeoutException;
  */
 public class NetworkSystemAdapter implements NetworkSystemListener
 {
-	public void connectionEstablished (NetworkService networkBase, Channel connectedChannel)
+	public void connectionEstablished(NetworkService networkBase, Channel connectedChannel)
 	{
 	}
 
-	public void connectionTerminated (NetworkService networkBase, Channel connectedChannel)
+	public void connectionTerminated(NetworkService networkBase, Channel connectedChannel)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, NoSuchIObjectException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, NoSuchIObjectException x)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, ClassNotFoundException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, ClassNotFoundException x)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, EOFException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, EOFException x)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, SocketException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, SocketException x)
 	{
 	}
 
-	public void error (NetworkService networkBase, Channel connectedChannel, IOException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, IOException x)
 	{
 	}
 }

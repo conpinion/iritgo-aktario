@@ -57,32 +57,32 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 	/**
 	 * Create a new client manager.
 	 */
-	public ParticipantGroupManager ()
+	public ParticipantGroupManager()
 	{
-		super ("ParticipantGroupManager");
+		super("ParticipantGroupManager");
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectcreated", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectmodified", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectremoved", this);
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
+		Engine.instance().getEventRegistry().addListener("objectcreated", this);
+		Engine.instance().getEventRegistry().addListener("objectmodified", this);
+		Engine.instance().getEventRegistry().addListener("objectremoved", this);
 
-		Properties props = new Properties ();
+		Properties props = new Properties();
 
-		props.put ("type", "AktarioUserRegistry");
-		props.put ("id", new Long (11000));
-		CommandTools.performSimple ("persist.LoadObject", props);
+		props.put("type", "AktarioUserRegistry");
+		props.put("id", new Long(11000));
+		CommandTools.performSimple("persist.LoadObject", props);
 
-		AktarioUserRegistry userRegistry = (AktarioUserRegistry) Engine.instance ().getBaseRegistry ().get (11000,
+		AktarioUserRegistry userRegistry = (AktarioUserRegistry) Engine.instance().getBaseRegistry().get(11000,
 						"AktarioUserRegistry");
 
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 	}
 
 	/**
@@ -90,23 +90,23 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 	 *
 	 * @param event The creation event.
 	 */
-	public void iObjectCreatedEvent (IObjectCreatedEvent event)
+	public void iObjectCreatedEvent(IObjectCreatedEvent event)
 	{
-		if (event.getCreatedObject () instanceof AktarioUser)
+		if (event.getCreatedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-								.getManager ("AktarioUserManager");
+				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+								.getManager("AktarioUserManager");
 
-				User user = userRegistry.getUser (((AktarioUser) event.getCreatedObject ()).getUserId ());
+				User user = userRegistry.getUser(((AktarioUser) event.getCreatedObject()).getUserId());
 
-				DataObject participantGroup = (DataObject) Engine.instance ().getIObjectFactory ().newInstance (
+				DataObject participantGroup = (DataObject) Engine.instance().getIObjectFactory().newInstance(
 								"ParticipantGroup");
 
-				participantGroup.setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
+				participantGroup.setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
 
 				// 				participantGroup.setAttribute ("iritgoUserName", user.getName ());
 
@@ -119,22 +119,22 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 
 				// 				participantState.setAttribute ("iritgoUserUniqueId", user.getUniqueId ());
 				// 				participantState.setAttribute ("onlineUser", false);
-				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-				proxy.setSampleRealObject ((IObject) participantGroup);
-				Engine.instance ().getBaseRegistry ().add ((BaseObject) participantGroup);
-				Engine.instance ().getProxyRegistry ().addProxy (proxy, participantGroup.getTypeId ());
+				proxy.setSampleRealObject((IObject) participantGroup);
+				Engine.instance().getBaseRegistry().add((BaseObject) participantGroup);
+				Engine.instance().getProxyRegistry().addProxy(proxy, participantGroup.getTypeId());
 
-				Engine.instance ().getEventRegistry ().fire ("objectcreated",
-								new IObjectCreatedEvent (participantGroup, null, null, null));
+				Engine.instance().getEventRegistry().fire("objectcreated",
+								new IObjectCreatedEvent(participantGroup, null, null, null));
 
-				ActionTools.sendServerBroadcast (new EditIObjectAction (EditIObjectAction.OK, participantGroup));
+				ActionTools.sendServerBroadcast(new EditIObjectAction(EditIObjectAction.OK, participantGroup));
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantGroupManager:pluginEvent(Create participantGroups)",
+				Log.logFatal("system", "ParicipantGroupManager:pluginEvent(Create participantGroups)",
 								"Can not create participant group error.");
-				x.printStackTrace ();
+				x.printStackTrace();
 			}
 		}
 	}
@@ -144,9 +144,9 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 	 *
 	 * @param event The modification event.
 	 */
-	public void iObjectModifiedEvent (IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(IObjectModifiedEvent event)
 	{
-		if (event.getModifiedObject () instanceof AktarioUser)
+		if (event.getModifiedObject() instanceof AktarioUser)
 		{
 			// 			try
 			// 			{
@@ -209,59 +209,59 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 	 *
 	 * @param event The delete event.
 	 */
-	public void iObjectDeletedEvent (IObjectDeletedEvent event)
+	public void iObjectDeletedEvent(IObjectDeletedEvent event)
 	{
-		if (event.getDeletedObject () instanceof AktarioUser)
+		if (event.getDeletedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance ().getManagerRegistry ()
-								.getManager ("AktarioUserManager");
+				AktarioUserManager aktarioUserManager = (AktarioUserManager) Engine.instance().getManagerRegistry()
+								.getManager("AktarioUserManager");
 
-				User user = userRegistry.getUser (((AktarioUser) event.getDeletedObject ()).getUserId ());
+				User user = userRegistry.getUser(((AktarioUser) event.getDeletedObject()).getUserId());
 
 				DynDataObject participantGroup = null;
 
-				for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantGroup"); i.hasNext ();)
+				for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantGroup"); i.hasNext();)
 				{
-					participantGroup = (DynDataObject) i.next ();
+					participantGroup = (DynDataObject) i.next();
 
-					if (participantGroup.getStringAttribute ("iritgoUserName").equals (user.getName ()))
+					if (participantGroup.getStringAttribute("iritgoUserName").equals(user.getName()))
 					{
 						break;
 					}
 				}
 
-				Engine.instance ().getEventRegistry ().fire ("objectremoved",
-								new IObjectDeletedEvent (participantGroup, null, null, null));
-				Engine.instance ().getBaseRegistry ().remove (participantGroup);
+				Engine.instance().getEventRegistry().fire("objectremoved",
+								new IObjectDeletedEvent(participantGroup, null, null, null));
+				Engine.instance().getBaseRegistry().remove(participantGroup);
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantGroupManager:pluginEvent(delete participant group)",
+				Log.logFatal("system", "ParicipantGroupManager:pluginEvent(delete participant group)",
 								"Can not delete participant group error.");
 			}
 		}
 	}
 
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		User user = event.getUser ();
+		User user = event.getUser();
 
 		if (user == null)
 		{
 			return;
 		}
 
-		long userUniqueId = user.getUniqueId ();
+		long userUniqueId = user.getUniqueId();
 
-		if (event.isLoggedIn ())
+		if (event.isLoggedIn())
 		{
 		}
 
-		if (event.isLoggedOut ())
+		if (event.isLoggedOut())
 		{
 		}
 	}
@@ -269,7 +269,7 @@ public class ParticipantGroupManager extends BaseObject implements Manager, User
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

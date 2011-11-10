@@ -60,34 +60,34 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	/**
 	 * Create manager.
 	 */
-	public ParticipantManager (String instance)
+	public ParticipantManager(String instance)
 	{
-		super (instance);
+		super(instance);
 
-		attributeRenderCommands = new HashMap ();
-		attributeEditorCommands = new HashMap ();
-		attributeCommands = new HashMap ();
-		contentCommands = new LinkedList ();
+		attributeRenderCommands = new HashMap();
+		attributeEditorCommands = new HashMap();
+		attributeCommands = new HashMap();
+		contentCommands = new LinkedList();
 
-		participant = new DynDataObject ("ParticipantState");
-		participant.addAttribute ("onlineUser", false);
-		participant.addAttribute ("iritgoUserName", "");
-		participant.addAttribute ("aktarioUserName", "");
-		participant.addAttribute ("iritgoUserUniqueId", new Long (0));
+		participant = new DynDataObject("ParticipantState");
+		participant.addAttribute("onlineUser", false);
+		participant.addAttribute("iritgoUserName", "");
+		participant.addAttribute("aktarioUserName", "");
+		participant.addAttribute("iritgoUserUniqueId", new Long(0));
 
-		addAttributeRenderCommand ("onlineUser", new RenderOnlineStateCommand ());
-		addAttributeRenderCommand ("iritgoUserName", new RenderNullCommand ());
-		addAttributeRenderCommand ("aktarioUserName", new RenderNameStateCommand ());
-		addAttributeRenderCommand ("iritgoUserUniqueId", new RenderNullCommand ());
+		addAttributeRenderCommand("onlineUser", new RenderOnlineStateCommand());
+		addAttributeRenderCommand("iritgoUserName", new RenderNullCommand());
+		addAttributeRenderCommand("aktarioUserName", new RenderNameStateCommand());
+		addAttributeRenderCommand("iritgoUserUniqueId", new RenderNullCommand());
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 	}
 
 	/**
@@ -97,9 +97,9 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	 * @param String The attribute name to add.
 	 * @param Object The object type of the attribute
 	 */
-	public void addAttribute (String attribute, Object attributeType)
+	public void addAttribute(String attribute, Object attributeType)
 	{
-		participant.addAttribute (attribute, attributeType);
+		participant.addAttribute(attribute, attributeType);
 	}
 
 	/**
@@ -110,14 +110,14 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	 * @param String The attribute name
 	 * @param Command The command for the attribute.
 	 */
-	public void addAttributeRenderCommand (String attribute, Command command)
+	public void addAttributeRenderCommand(String attribute, Command command)
 	{
-		attributeRenderCommands.put (attribute, command);
+		attributeRenderCommands.put(attribute, command);
 	}
 
-	public Command getAttributeRenderCommand (String attribute)
+	public Command getAttributeRenderCommand(String attribute)
 	{
-		return (Command) attributeRenderCommands.get (attribute);
+		return (Command) attributeRenderCommands.get(attribute);
 	}
 
 	/**
@@ -128,14 +128,14 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	 * @param String The attribute name
 	 * @param Command The command for the attribute.
 	 */
-	public void addAttributeEditorCommand (String attribute, Command command)
+	public void addAttributeEditorCommand(String attribute, Command command)
 	{
-		attributeEditorCommands.put (attribute, command);
+		attributeEditorCommands.put(attribute, command);
 	}
 
-	public Command getAttributeEditorCommand (String attribute)
+	public Command getAttributeEditorCommand(String attribute)
 	{
-		return (Command) attributeEditorCommands.get (attribute);
+		return (Command) attributeEditorCommands.get(attribute);
 	}
 
 	/**
@@ -144,52 +144,52 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	 * @param String The attribute name
 	 * @param Command The command for the attribute.
 	 */
-	public void addAttributeCommand (String attribute, Command command)
+	public void addAttributeCommand(String attribute, Command command)
 	{
-		attributeCommands.put (attribute, command);
+		attributeCommands.put(attribute, command);
 	}
 
-	public Command getAttributeCommand (String attribute)
+	public Command getAttributeCommand(String attribute)
 	{
-		return (Command) attributeCommands.get (attribute);
+		return (Command) attributeCommands.get(attribute);
 	}
 
-	public void addContentCommand (Command command)
+	public void addContentCommand(Command command)
 	{
-		contentCommands.add (command);
+		contentCommands.add(command);
 	}
 
-	public Iterator contentCommandIterator ()
+	public Iterator contentCommandIterator()
 	{
-		return contentCommands.iterator ();
+		return contentCommands.iterator();
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
 	}
 
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if (event.isLoggedIn ())
+		if (event.isLoggedIn())
 		{
-			User user = event.getUser ();
-			long userUniqueId = user.getUniqueId ();
+			User user = event.getUser();
+			long userUniqueId = user.getUniqueId();
 		}
 
-		if (event.isLoggedOut ())
+		if (event.isLoggedOut())
 		{
-			User user = event.getUser ();
-			long userUniqueId = user.getUniqueId ();
+			User user = event.getUser();
+			long userUniqueId = user.getUniqueId();
 		}
 	}
 
-	public DynDataObject getByName (String name)
+	public DynDataObject getByName(String name)
 	{
-		for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+		for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 		{
-			DynDataObject participantState = (DynDataObject) i.next ();
+			DynDataObject participantState = (DynDataObject) i.next();
 
-			if (participantState.getStringAttribute ("iritgoUserName").equals (name))
+			if (participantState.getStringAttribute("iritgoUserName").equals(name))
 			{
 				return participantState;
 			}
@@ -201,7 +201,7 @@ public class ParticipantManager extends BaseObject implements Manager, PluginEve
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

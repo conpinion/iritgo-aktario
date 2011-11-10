@@ -36,7 +36,7 @@ public class CloseDisplay extends Command
 	/**
 	 * Standard constructor
 	 */
-	public CloseDisplay (String windowId)
+	public CloseDisplay(String windowId)
 	{
 		this.windowId = windowId;
 	}
@@ -46,21 +46,21 @@ public class CloseDisplay extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		IDisplay display = Client.instance ().getClientGUI ().getDesktopManager ().getDisplay (windowId);
+		IDisplay display = Client.instance().getClientGUI().getDesktopManager().getDisplay(windowId);
 
 		if (display != null)
 		{
-			display.close ();
-			Client.instance ().getClientGUI ().getDesktopManager ().removeDisplay (display);
+			display.close();
+			Client.instance().getClientGUI().getDesktopManager().removeDisplay(display);
 		}
 	}
 }

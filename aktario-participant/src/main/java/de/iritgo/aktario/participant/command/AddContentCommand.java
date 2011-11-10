@@ -36,19 +36,19 @@ public class AddContentCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public AddContentCommand ()
+	public AddContentCommand()
 	{
-		super ("AddContentCommand");
+		super("AddContentCommand");
 	}
 
 	/**
 	 *
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ParticipantManager participantManager = null;
 
-		participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+		participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 						"ParticipantClientManager");
 
 		if (participantManager == null)
@@ -58,12 +58,12 @@ public class AddContentCommand extends Command
 
 		try
 		{
-			participantManager.addContentCommand ((Command) properties.get ("command"));
+			participantManager.addContentCommand((Command) properties.get("command"));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "AddContentCommand:perform", "Class not found Exception, Attribute type unknown: "
-							+ properties.getProperty ("attributeType"));
+			Log.logFatal("system", "AddContentCommand:perform", "Class not found Exception, Attribute type unknown: "
+							+ properties.getProperty("attributeType"));
 		}
 	}
 }

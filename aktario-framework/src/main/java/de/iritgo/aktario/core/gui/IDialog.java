@@ -54,9 +54,9 @@ public class IDialog extends BaseObject implements IDisplay
 	/**
 	 * Create a new IDialog.
 	 */
-	public IDialog ()
+	public IDialog()
 	{
-		this ("IWindow");
+		this("IWindow");
 	}
 
 	/**
@@ -64,10 +64,10 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param dialogId The dialog id.
 	 */
-	public IDialog (String dialogId)
+	public IDialog(String dialogId)
 	{
-		super (dialogId);
-		properties = new Properties ();
+		super(dialogId);
+		properties = new Properties();
 		onScreenUniqueId = dialogId;
 	}
 
@@ -76,10 +76,10 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param dialogId The dialog id.
 	 */
-	public IDialog (String dialogId, String onScreenUniqueId)
+	public IDialog(String dialogId, String onScreenUniqueId)
 	{
-		super (dialogId);
-		properties = new Properties ();
+		super(dialogId);
+		properties = new Properties();
 		this.onScreenUniqueId = onScreenUniqueId;
 	}
 
@@ -88,7 +88,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The display's id.
 	 */
-	public String getOnScreenUniqueId ()
+	public String getOnScreenUniqueId()
 	{
 		return onScreenUniqueId;
 	}
@@ -98,9 +98,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param guiPaneId The id of the gui pane to be displayed in this dialog.
 	 */
-	public void initGUI (String guiPaneId)
+	public void initGUI(String guiPaneId)
 	{
-		initGUI (guiPaneId, guiPaneId, null, null);
+		initGUI(guiPaneId, guiPaneId, null, null);
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 * @param guiPaneId The id of the gui pane to be displayed in this dialog.
 	 * @param sessionContext The session context.
 	 */
-	public void initGUI (String guiPaneId, String onScreenUniqueId, SessionContext sessionContext)
+	public void initGUI(String guiPaneId, String onScreenUniqueId, SessionContext sessionContext)
 	{
-		initGUI (guiPaneId, onScreenUniqueId, null, sessionContext);
+		initGUI(guiPaneId, onScreenUniqueId, null, sessionContext);
 	}
 
 	/**
@@ -122,54 +122,54 @@ public class IDialog extends BaseObject implements IDisplay
 	 * @param object The data object to be displayed in this dialog.
 	 * @param sessionContext The session context.
 	 */
-	public void initGUI (String guiPaneId, String onScreenUniqueId, IObject object, SessionContext sessionContext)
+	public void initGUI(String guiPaneId, String onScreenUniqueId, IObject object, SessionContext sessionContext)
 	{
-		dialogFrame = Engine.instance ().getGUIFactory ().createDialogFrame (this, getTypeId (), properties);
+		dialogFrame = Engine.instance().getGUIFactory().createDialogFrame(this, getTypeId(), properties);
 
-		guiPane = (GUIPane) GUIPaneRegistry.instance ().create (guiPaneId);
-		guiPane.setProperties (properties);
-		guiPane.setObject (object);
-		guiPane.setSessionContext (sessionContext);
-		guiPane.setIDisplay (this);
-		guiPane.setOnScreenUniqueId (onScreenUniqueId);
+		guiPane = (GUIPane) GUIPaneRegistry.instance().create(guiPaneId);
+		guiPane.setProperties(properties);
+		guiPane.setObject(object);
+		guiPane.setSessionContext(sessionContext);
+		guiPane.setIDisplay(this);
+		guiPane.setOnScreenUniqueId(onScreenUniqueId);
 
-		if (properties.get ("bounds") != null)
+		if (properties.get("bounds") != null)
 		{
-			dialogFrame.setBounds ((Rectangle) properties.get ("bounds"));
+			dialogFrame.setBounds((Rectangle) properties.get("bounds"));
 		}
 
-		if (properties.get ("title") != null)
+		if (properties.get("title") != null)
 		{
-			dialogFrame.setTitle ((String) properties.get ("title"));
+			dialogFrame.setTitle((String) properties.get("title"));
 		}
 
-		if (properties.get ("name") != null)
+		if (properties.get("name") != null)
 		{
-			dialogFrame.setName ((String) properties.get ("name"));
+			dialogFrame.setName((String) properties.get("name"));
 		}
 		else
 		{
-			dialogFrame.setName (guiPane.getTypeId ());
+			dialogFrame.setName(guiPane.getTypeId());
 		}
 
-		guiPane.initGUI ();
+		guiPane.initGUI();
 
 		if (object != null)
 		{
-			guiPane.setObject (object);
-			guiPane.registerProxyEventListener ();
+			guiPane.setObject(object);
+			guiPane.registerProxyEventListener();
 
-			IObjectProxyRegistry proxyRegistry = Engine.instance ().getProxyRegistry ();
-			IObjectProxy prototypeProxy = (IObjectProxy) proxyRegistry.getProxy (object.getUniqueId (), object
-							.getTypeId ());
+			IObjectProxyRegistry proxyRegistry = Engine.instance().getProxyRegistry();
+			IObjectProxy prototypeProxy = (IObjectProxy) proxyRegistry.getProxy(object.getUniqueId(), object
+							.getTypeId());
 
-			IObject prototypeable = prototypeProxy.getRealObject ();
+			IObject prototypeable = prototypeProxy.getRealObject();
 
-			guiPane.setObject (prototypeable);
+			guiPane.setObject(prototypeable);
 
 			if (prototypeable != null)
 			{
-				loadFromObject ();
+				loadFromObject();
 			}
 		}
 	}
@@ -179,7 +179,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param The gui pane.
 	 */
-	public void setGUIPane (GUIPane guiPane)
+	public void setGUIPane(GUIPane guiPane)
 	{
 		this.guiPane = guiPane;
 	}
@@ -189,7 +189,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The gui pane.
 	 */
-	public GUIPane getGUIPane ()
+	public GUIPane getGUIPane()
 	{
 		return guiPane;
 	}
@@ -197,53 +197,53 @@ public class IDialog extends BaseObject implements IDisplay
 	/**
 	 * Load the object attributes into the gui.
 	 */
-	public void loadFromObject ()
+	public void loadFromObject()
 	{
-		guiPane.loadFromObject ();
+		guiPane.loadFromObject();
 	}
 
 	/**
 	 * Store the gui values to the object's attributes.
 	 */
-	public void storeToObject ()
+	public void storeToObject()
 	{
-		guiPane.storeToObject ();
+		guiPane.storeToObject();
 	}
 
 	/**
 	 * Close the dialog.
 	 */
-	public void close ()
+	public void close()
 	{
 		if (guiPane != null)
 		{
-			guiPane.close ();
+			guiPane.close();
 		}
 
 		if (dialogFrame != null)
 		{
-			dialogFrame.close ();
+			dialogFrame.close();
 		}
 
-		desktopManager.removeDisplay (this);
+		desktopManager.removeDisplay(this);
 	}
 
 	/**
 	 * Called from swing, the dialog will closed.
 	 */
-	public void systemClose ()
+	public void systemClose()
 	{
 		if (guiPane != null)
 		{
-			guiPane.systemClose ();
+			guiPane.systemClose();
 		}
 
 		if (dialogFrame != null)
 		{
-			dialogFrame.systemClose ();
+			dialogFrame.systemClose();
 		}
 
-		desktopManager.removeDisplay (this);
+		desktopManager.removeDisplay(this);
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param desktopManager The desktop manager.
 	 */
-	public void setDesktopManager (IDesktopManager desktopManager)
+	public void setDesktopManager(IDesktopManager desktopManager)
 	{
 		this.desktopManager = desktopManager;
 	}
@@ -261,7 +261,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The desktop manager.
 	 */
-	public IDesktopManager getDesktopManager ()
+	public IDesktopManager getDesktopManager()
 	{
 		return desktopManager;
 	}
@@ -271,7 +271,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The desktop id (or null if this display is a dialog).
 	 */
-	public String getDesktopId ()
+	public String getDesktopId()
 	{
 		return null;
 	}
@@ -281,7 +281,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param desktopId The desktop id.
 	 */
-	public void setDesktopId (String desktopId)
+	public void setDesktopId(String desktopId)
 	{
 	}
 
@@ -290,9 +290,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The data object.
 	 */
-	public IObject getDataObject ()
+	public IObject getDataObject()
 	{
-		return guiPane.getObject ();
+		return guiPane.getObject();
 	}
 
 	/**
@@ -301,9 +301,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param title The new title.
 	 */
-	public void setTitle (String title)
+	public void setTitle(String title)
 	{
-		dialogFrame.setTitle (title);
+		dialogFrame.setTitle(title);
 	}
 
 	/**
@@ -311,9 +311,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The gui pane title.
 	 */
-	public String getTitle ()
+	public String getTitle()
 	{
-		return dialogFrame.getTitle ();
+		return dialogFrame.getTitle();
 	}
 
 	/**
@@ -322,9 +322,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 * @param key The key under which to store the property.
 	 * @param value The property value.
 	 */
-	public void putProperty (String key, Object value)
+	public void putProperty(String key, Object value)
 	{
-		properties.put (key, value);
+		properties.put(key, value);
 	}
 
 	/**
@@ -333,9 +333,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 * @param key The key of the property to retrieve.
 	 * @return The property value.
 	 */
-	public Object getProperty (String key)
+	public Object getProperty(String key)
 	{
-		return properties.get (key);
+		return properties.get(key);
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param properties The new properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 		if (properties != null)
 		{
@@ -356,7 +356,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The display properties.
 	 */
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}
@@ -366,9 +366,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param key The key of the property to remove.
 	 */
-	public void removeProperty (String key)
+	public void removeProperty(String key)
 	{
-		properties.remove (key);
+		properties.remove(key);
 	}
 
 	/**
@@ -377,9 +377,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param icon The new icon.
 	 */
-	public void setIcon (Icon icon)
+	public void setIcon(Icon icon)
 	{
-		dialogFrame.setIcon (icon);
+		dialogFrame.setIcon(icon);
 	}
 
 	/**
@@ -387,9 +387,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The display's icon.
 	 */
-	public Icon getIcon ()
+	public Icon getIcon()
 	{
-		return dialogFrame.getIcon ();
+		return dialogFrame.getIcon();
 	}
 
 	/**
@@ -397,7 +397,7 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return The dialog frame.
 	 */
-	public IDialogFrame getDialogFrame ()
+	public IDialogFrame getDialogFrame()
 	{
 		return dialogFrame;
 	}
@@ -405,9 +405,9 @@ public class IDialog extends BaseObject implements IDisplay
 	/**
 	 * Show the Dialog.
 	 */
-	public void show ()
+	public void show()
 	{
-		dialogFrame.showDialog ();
+		dialogFrame.showDialog();
 	}
 
 	/**
@@ -415,9 +415,9 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @param enabled If true the dialog is enabled.
 	 */
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		dialogFrame.setEnabled (enabled);
+		dialogFrame.setEnabled(enabled);
 	}
 
 	/**
@@ -425,15 +425,15 @@ public class IDialog extends BaseObject implements IDisplay
 	 *
 	 * @return True if the display is enabled.
 	 */
-	public boolean isEnabled ()
+	public boolean isEnabled()
 	{
-		return dialogFrame.isEnabled ();
+		return dialogFrame.isEnabled();
 	}
 
 	/**
 	 * Make this window the topmost window.
 	 */
-	public void bringToFront ()
+	public void bringToFront()
 	{
 	}
 }

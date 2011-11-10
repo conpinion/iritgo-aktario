@@ -30,8 +30,8 @@ public class IDisplayClosedEvent extends IDisplayEvent
 	 *
 	 * @param display The display.
 	 */
-	public IDisplayClosedEvent (IDisplay display)
+	public IDisplayClosedEvent(IDisplay display)
 	{
-		super (display);
+		super(display);
 	}
 }

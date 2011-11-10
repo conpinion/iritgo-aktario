@@ -34,18 +34,18 @@ public class TestCommand extends Command
 	/**
 	 * Create a new TestCommand.
 	 */
-	public TestCommand ()
+	public TestCommand()
 	{
-		super ("aktario-xmlrpc.TestCommand");
+		super("aktario-xmlrpc.TestCommand");
 	}
 
 	/**
 	 * Execute the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Log.logDebug ("", "", "******** XML/RPC Test-Command ********");
-		Log.logDebug ("", "", getProperties ().toString ());
-		Log.logDebug ("", "", "**************************************");
+		Log.logDebug("", "", "******** XML/RPC Test-Command ********");
+		Log.logDebug("", "", getProperties().toString());
+		Log.logDebug("", "", "**************************************");
 	}
 }

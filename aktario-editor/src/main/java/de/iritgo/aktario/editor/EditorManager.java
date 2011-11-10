@@ -34,24 +34,24 @@ public class EditorManager extends BaseObject implements Manager
 	/**
 	 * Create a new EditorManager.
 	 */
-	public EditorManager ()
+	public EditorManager()
 	{
-		super ("EditorManager");
+		super("EditorManager");
 	}
 
 	/**
 	 * Initialize the manager.
 	 */
-	public void init ()
+	public void init()
 	{
 	}
 
-	public void setFilename (String filename)
+	public void setFilename(String filename)
 	{
 		this.filename = filename;
 	}
 
-	public String getFilename ()
+	public String getFilename()
 	{
 		return filename;
 	}
@@ -59,7 +59,7 @@ public class EditorManager extends BaseObject implements Manager
 	/**
 	 * Unload the manager from the system.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

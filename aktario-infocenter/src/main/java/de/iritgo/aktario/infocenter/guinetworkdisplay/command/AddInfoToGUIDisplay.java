@@ -51,12 +51,12 @@ public class AddInfoToGUIDisplay extends Command
 	 * Standard constructor
 	 *
 	 */
-	public AddInfoToGUIDisplay ()
+	public AddInfoToGUIDisplay()
 	{
-		super ("addinfotoguidisplay");
+		super("addinfotoguidisplay");
 	}
 
-	public AddInfoToGUIDisplay (int context, String category, String icon, String message, String guiPaneId,
+	public AddInfoToGUIDisplay(int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level)
 	{
 		this.context = context;
@@ -69,16 +69,16 @@ public class AddInfoToGUIDisplay extends Command
 		this.level = level;
 	}
 
-	public void perform ()
+	public void perform()
 	{
-		InfoCenterClientManager infoCenterClientManager = (InfoCenterClientManager) Engine.instance ()
-						.getManagerRegistry ().getManager ("infocenterclient");
+		InfoCenterClientManager infoCenterClientManager = (InfoCenterClientManager) Engine.instance()
+						.getManagerRegistry().getManager("infocenterclient");
 
-		GUIDisplay guiDisplay = infoCenterClientManager.getGUIDisplay ();
+		GUIDisplay guiDisplay = infoCenterClientManager.getGUIDisplay();
 
 		if (guiDisplay != null)
 		{
-			guiDisplay.addInfo (context, category, icon, message, guiPaneId, uniqueId, iObjectTypeId, level);
+			guiDisplay.addInfo(context, category, icon, message, guiPaneId, uniqueId, iObjectTypeId, level);
 		}
 	}
 }

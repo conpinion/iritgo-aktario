@@ -45,9 +45,9 @@ public class GetDatabaseVersion extends Command
 	/**
 	 * Create a new <code>GetDatabaseVersion</code> command.
 	 */
-	public GetDatabaseVersion ()
+	public GetDatabaseVersion()
 	{
-		super ("persist.GetDatabaseVersion");
+		super("persist.GetDatabaseVersion");
 	}
 
 	/**
@@ -55,10 +55,10 @@ public class GetDatabaseVersion extends Command
 	 *
 	 * @return The database name and version.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		Connection connection = null;
 
@@ -66,22 +66,22 @@ public class GetDatabaseVersion extends Command
 		{
 			if (version == null)
 			{
-				connection = dataSource.getConnection ();
+				connection = dataSource.getConnection();
 
-				DatabaseMetaData meta = connection.getMetaData ();
+				DatabaseMetaData meta = connection.getMetaData();
 
-				version = meta.getDatabaseProductName () + " " + meta.getDatabaseProductVersion ();
+				version = meta.getDatabaseProductName() + " " + meta.getDatabaseProductVersion();
 			}
 
 			return version;
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "Insert", "Unable to get database meta data: " + x);
+			Log.logError("persist", "Insert", "Unable to get database meta data: " + x);
 		}
 		finally
 		{
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(connection);
 		}
 
 		return null;

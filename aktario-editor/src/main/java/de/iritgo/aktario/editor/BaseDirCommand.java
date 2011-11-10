@@ -46,17 +46,17 @@ public class BaseDirCommand extends Command
 	/**
 	 * Create a new command object.
 	 */
-	public BaseDirCommand ()
+	public BaseDirCommand()
 	{
-		super ("SetBaseDirEditorCommand");
+		super("SetBaseDirEditorCommand");
 	}
 
 	/**
 	 * Create a new command object.
 	 */
-	public BaseDirCommand (EditorPane sofwareReviewPane)
+	public BaseDirCommand(EditorPane sofwareReviewPane)
 	{
-		super ("SetBaseDirEditorCommand");
+		super("SetBaseDirEditorCommand");
 		this.sofwareReviewPane = sofwareReviewPane;
 	}
 
@@ -64,48 +64,48 @@ public class BaseDirCommand extends Command
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		File baseDir = sofwareReviewPane.getBaseDir ();
-		JPanel content = sofwareReviewPane.getContent ();
-		JTextField fileNameDisplay = sofwareReviewPane.getFileNameDisplay ();
-		FileBrowser fileBrowser = sofwareReviewPane.getFileBrowser ();
+		File baseDir = sofwareReviewPane.getBaseDir();
+		JPanel content = sofwareReviewPane.getContent();
+		JTextField fileNameDisplay = sofwareReviewPane.getFileNameDisplay();
+		FileBrowser fileBrowser = sofwareReviewPane.getFileBrowser();
 
-		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction (AppContext
-						.instance ().getUser (), false);
+		AktarioUserReadyServerAction aktarioUserReadyServerAction = new AktarioUserReadyServerAction(AppContext
+						.instance().getUser(), false);
 
-		ActionTools.sendToServer (aktarioUserReadyServerAction);
+		ActionTools.sendToServer(aktarioUserReadyServerAction);
 
-		JFileChooser chooser = new JFileChooser ();
+		JFileChooser chooser = new JFileChooser();
 
-		chooser.setDialogTitle (Engine.instance ().getResourceService ().getString ("chooseBaseDir"));
+		chooser.setDialogTitle(Engine.instance().getResourceService().getString("chooseBaseDir"));
 
 		if (baseDir != null)
 		{
-			chooser.setCurrentDirectory (baseDir);
+			chooser.setCurrentDirectory(baseDir);
 		}
 
-		chooser.setFileSelectionMode (JFileChooser.DIRECTORIES_ONLY);
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		int result = chooser.showOpenDialog (content.getTopLevelAncestor ());
+		int result = chooser.showOpenDialog(content.getTopLevelAncestor());
 
 		if (result == JFileChooser.APPROVE_OPTION)
 		{
-			baseDir = chooser.getSelectedFile ();
-			sofwareReviewPane.setBaseDir (baseDir);
+			baseDir = chooser.getSelectedFile();
+			sofwareReviewPane.setBaseDir(baseDir);
 
-			fileNameDisplay.setText (baseDir.getAbsolutePath ());
-			fileBrowser.setRoot (baseDir);
+			fileNameDisplay.setText(baseDir.getAbsolutePath());
+			fileBrowser.setRoot(baseDir);
 
-			Properties props = new Properties ();
+			Properties props = new Properties();
 			@SuppressWarnings("unused")
-			Integer role = (Integer) CommandTools.performSimple ("GetUserRole", props);
+			Integer role = (Integer) CommandTools.performSimple("GetUserRole", props);
 
-			sofwareReviewPane.setBasedirSelected (true);
+			sofwareReviewPane.setBasedirSelected(true);
 
-			aktarioUserReadyServerAction = new AktarioUserReadyServerAction (AppContext.instance ().getUser (), true);
+			aktarioUserReadyServerAction = new AktarioUserReadyServerAction(AppContext.instance().getUser(), true);
 
-			ActionTools.sendToServer (aktarioUserReadyServerAction);
+			ActionTools.sendToServer(aktarioUserReadyServerAction);
 		}
 	}
 }

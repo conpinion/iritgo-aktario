@@ -34,5 +34,5 @@ public interface IDisplayOpenedListener extends EventListener
 	 *
 	 * @param event The opening event.
 	 */
-	public void displayOpenedEvent (IDisplayOpenedEvent event);
+	public void displayOpenedEvent(IDisplayOpenedEvent event);
 }

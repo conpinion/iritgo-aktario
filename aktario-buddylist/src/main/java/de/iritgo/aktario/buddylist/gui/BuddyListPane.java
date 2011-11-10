@@ -59,9 +59,9 @@ public class BuddyListPane extends SwingGUIPane
 	/**
 	 * Create a new UserListGUIPane.
 	 */
-	public BuddyListPane ()
+	public BuddyListPane()
 	{
-		super ("BuddyListPane");
+		super("BuddyListPane");
 	}
 
 	/**
@@ -69,22 +69,22 @@ public class BuddyListPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			taskPane = new JTaskPane ();
+			taskPane = new JTaskPane();
 
-			JScrollPane scrollPane = new JScrollPane (taskPane);
+			JScrollPane scrollPane = new JScrollPane(taskPane);
 
-			taskPane.removeAll ();
+			taskPane.removeAll();
 
-			content.add (scrollPane, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(scrollPane, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "ParticipantStatePane.initGUI", x.toString ());
-			x.printStackTrace ();
+			Log.logError("client", "ParticipantStatePane.initGUI", x.toString());
+			x.printStackTrace();
 		}
 	}
 
@@ -92,15 +92,15 @@ public class BuddyListPane extends SwingGUIPane
 	 * Load the data object into the gui.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		BuddyList buddyList = (BuddyList) iobject;
 
-		taskPane.removeAll ();
+		taskPane.removeAll();
 
-		for (Iterator i = buddyList.buddyListGroupIterator (); i.hasNext ();)
+		for (Iterator i = buddyList.buddyListGroupIterator(); i.hasNext();)
 		{
-			taskPane.add (new TaskGroup ((BuddyListGroup) i.next ()));
+			taskPane.add(new TaskGroup((BuddyListGroup) i.next()));
 		}
 	}
 
@@ -108,7 +108,7 @@ public class BuddyListPane extends SwingGUIPane
 	 * Store the gui values to the data object.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -118,8 +118,8 @@ public class BuddyListPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new BuddyListPane ();
+		return new BuddyListPane();
 	}
 }

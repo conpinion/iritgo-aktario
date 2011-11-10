@@ -30,19 +30,19 @@ public interface Logger
 	 *
 	 * @return The logger id.
 	 */
-	public String getId ();
+	public String getId();
 
 	/**
 	 * Initialize the logger.
 	 *
 	 * @param category The logger category.
 	 */
-	public void init (String category);
+	public void init(String category);
 
 	/**
 	 * Free all logger resources.
 	 */
-	public void dispose ();
+	public void dispose();
 
 	/**
 	 * Log a message.
@@ -52,5 +52,5 @@ public interface Logger
 	 * @param message The log message.
 	 * @param level The logging level.
 	 */
-	public void log (String category, String source, String message, int level);
+	public void log(String category, String source, String message, int level);
 }

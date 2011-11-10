@@ -38,17 +38,17 @@ public class PlasticXPLookAndFeelIritgo extends PlasticXPLookAndFeel
 	 * @see com.jgoodies.looks.plastic.PlasticLookAndFeel#initClassDefaults(javax.swing.UIDefaults)
 	 */
 	@Override
-	protected void initClassDefaults (UIDefaults table)
+	protected void initClassDefaults(UIDefaults table)
 	{
-		super.initClassDefaults (table);
+		super.initClassDefaults(table);
 
-		table.put ("InternalFrameUI", "com.jgoodies.looks.plastic.PlasticInternalFrameUIIritgo");
+		table.put("InternalFrameUI", "com.jgoodies.looks.plastic.PlasticInternalFrameUIIritgo");
 
 		if (! themesInitialized)
 		{
-			installTheme (new Aktario ());
-			installTheme (new BueroByte ());
-			installTheme (new KDE ());
+			installTheme(new Aktario());
+			installTheme(new BueroByte());
+			installTheme(new KDE());
 			themesInitialized = true;
 		}
 	}

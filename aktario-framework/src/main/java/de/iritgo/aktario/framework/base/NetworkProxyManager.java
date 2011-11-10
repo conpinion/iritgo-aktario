@@ -38,10 +38,10 @@ public class NetworkProxyManager extends BaseObject implements IObjectProxyListe
 	/**
 	 * Constructor
 	 */
-	public NetworkProxyManager ()
+	public NetworkProxyManager()
 	{
-		super ("networkproxymanager");
-		Engine.instance ().getEventRegistry ().addListener ("proxyupdate", this);
+		super("networkproxymanager");
+		Engine.instance().getEventRegistry().addListener("proxyupdate", this);
 	}
 
 	/**
@@ -49,17 +49,17 @@ public class NetworkProxyManager extends BaseObject implements IObjectProxyListe
 	 *
 	 * @param event The EventOject.
 	 */
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
-		double channelNumber = AppContext.instance ().getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = AppContext.instance().getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		ProxyServerAction action = new ProxyServerAction (event.getUniqueId (), event.getIObjectTypeId ());
+		ProxyServerAction action = new ProxyServerAction(event.getUniqueId(), event.getIObjectTypeId());
 
-		action.setTransceiver (clientTransceiver);
+		action.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (action);
+		ActionTools.sendToServer(action);
 	}
 }

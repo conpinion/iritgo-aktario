@@ -25,5 +25,5 @@ package de.iritgo.aktario.core.network;
  */
 public interface ConnectObserver
 {
-	public void notice () throws Exception;
+	public void notice() throws Exception;
 }

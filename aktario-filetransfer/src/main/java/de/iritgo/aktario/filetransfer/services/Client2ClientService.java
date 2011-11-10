@@ -26,40 +26,40 @@ import de.iritgo.aktario.filetransfer.FileTransferContext;
 public class Client2ClientService extends FileTransferService
 {
 	@Override
-	public void startClientTransfer (FileTransferContext fileTransferContext)
+	public void startClientTransfer(FileTransferContext fileTransferContext)
 	{
 	}
 
 	@Override
-	public void startServerTransfer (FileTransferContext fileTransferContext)
+	public void startServerTransfer(FileTransferContext fileTransferContext)
 	{
 	}
 
 	@Override
-	public int clientTransfer (FileTransferContext fileTransferContext)
+	public int clientTransfer(FileTransferContext fileTransferContext)
 	{
 		return 0;
 	}
 
 	@Override
-	public int serverTransfer (FileTransferContext fileTransferContext)
+	public int serverTransfer(FileTransferContext fileTransferContext)
 	{
 		return 0;
 	}
 
 	@Override
-	public void endClientTransfer (FileTransferContext fileTransferContext)
+	public void endClientTransfer(FileTransferContext fileTransferContext)
 	{
 	}
 
 	@Override
-	public void endServerTransfer (FileTransferContext fileTransferContext)
+	public void endServerTransfer(FileTransferContext fileTransferContext)
 	{
 	}
 
 	@Override
-	public FileTransferService clone ()
+	public FileTransferService clone()
 	{
-		return (FileTransferService) new Client2ClientService ();
+		return (FileTransferService) new Client2ClientService();
 	}
 }

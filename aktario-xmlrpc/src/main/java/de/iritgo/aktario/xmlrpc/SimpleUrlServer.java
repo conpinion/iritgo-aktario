@@ -38,20 +38,20 @@ import java.util.regex.Pattern;
 public class SimpleUrlServer
 {
 	// GET /number=1000 HTTP/1.0
-	static private Pattern numberPattern = Pattern.compile ("GET.*number=(\\d+) .*");
+	static private Pattern numberPattern = Pattern.compile("GET.*number=(\\d+) .*");
 
-	static private Pattern exitPattern = Pattern.compile ("GET.*exit=(\\w+) .*");
+	static private Pattern exitPattern = Pattern.compile("GET.*exit=(\\w+) .*");
 
 	private boolean shutdown = false;
 
-	protected void start ()
+	protected void start()
 	{
 		ServerSocket s;
 
 		try
 		{
-			s = new ServerSocket (3005);
-			s.setSoTimeout (3000);
+			s = new ServerSocket(3005);
+			s.setSoTimeout(3000);
 		}
 		catch (Exception e)
 		{
@@ -66,56 +66,56 @@ public class SimpleUrlServer
 		{
 			try
 			{
-				remote = s.accept ();
+				remote = s.accept();
 
-				in = new BufferedReader (new InputStreamReader (remote.getInputStream ()));
+				in = new BufferedReader(new InputStreamReader(remote.getInputStream()));
 
-				out = new PrintWriter (remote.getOutputStream ());
+				out = new PrintWriter(remote.getOutputStream());
 
 				String str = ".";
 				String number = "";
 				Boolean exitProcess = false;
 
-				while (! str.equals (""))
+				while (! str.equals(""))
 				{
-					str = in.readLine ();
+					str = in.readLine();
 
-					Matcher numberMatcher = numberPattern.matcher (str);
+					Matcher numberMatcher = numberPattern.matcher(str);
 
-					if (numberMatcher.matches ())
+					if (numberMatcher.matches())
 					{
-						number = numberMatcher.group (1);
+						number = numberMatcher.group(1);
 						break;
 					}
 
-					Matcher exitMatcher = exitPattern.matcher (str);
+					Matcher exitMatcher = exitPattern.matcher(str);
 
-					if (exitMatcher.matches ())
+					if (exitMatcher.matches())
 					{
 						exitProcess = true;
 						break;
 					}
 				}
 
-				out.println ("HTTP/1.0 200 OK");
-				out.println ("Content-Type: text/html");
-				out.println ("Server: IPtell");
-				out.println ("");
+				out.println("HTTP/1.0 200 OK");
+				out.println("Content-Type: text/html");
+				out.println("Server: IPtell");
+				out.println("");
 				// Send the HTML page
-				out.println ("result ok.");
-				out.flush ();
+				out.println("result ok.");
+				out.flush();
 
-				if (StringTools.isNotTrimEmpty (number))
+				if (StringTools.isNotTrimEmpty(number))
 				{
-					Properties props = new Properties ();
+					Properties props = new Properties();
 
-					props.setProperty ("number", number);
-					CommandTools.performAsync ("aktario-callmanager.CallNumber", props);
+					props.setProperty("number", number);
+					CommandTools.performAsync("aktario-callmanager.CallNumber", props);
 				}
 
 				if (exitProcess)
 				{
-					System.exit (0);
+					System.exit(0);
 				}
 
 			}
@@ -126,11 +126,11 @@ public class SimpleUrlServer
 			{
 				if (remote != null)
 				{
-					out.close ();
+					out.close();
 
 					try
 					{
-						remote.close ();
+						remote.close();
 					}
 					catch (IOException x)
 					{
@@ -139,27 +139,27 @@ public class SimpleUrlServer
 			}
 		}
 
-		Log.logInfo ("AktarioXmlRpcManager", "SimpleUrlServer", "Shutdown local network service");
+		Log.logInfo("AktarioXmlRpcManager", "SimpleUrlServer", "Shutdown local network service");
 	}
 
-	public void init ()
+	public void init()
 	{
 		try
 		{
-			new Thread (new Runnable ()
+			new Thread(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					start ();
+					start();
 				}
-			}).start ();
+			}).start();
 		}
 		catch (Exception x)
 		{
 		}
 	}
 
-	public void shutdown ()
+	public void shutdown()
 	{
 		//	  Log.logInfo ("AktarioXmlRpcManager", "SimpleUrlServer", "Try to shutdown...");
 		shutdown = true;

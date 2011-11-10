@@ -56,15 +56,15 @@ public class IObjectList extends LinkedList implements IObject
 	protected long uniqueId;
 
 	@SuppressWarnings("unused")
-	private Object uniqueIdObject = new Object ();
+	private Object uniqueIdObject = new Object();
 
 	/**
 	 * Create a new object list.
 	 *
 	 */
-	public IObjectList ()
+	public IObjectList()
 	{
-		proxyPrototypeMapping = new HashMap ();
+		proxyPrototypeMapping = new HashMap();
 	}
 
 	/**
@@ -75,13 +75,13 @@ public class IObjectList extends LinkedList implements IObject
 	 * @param proxy
 	 * @param owner The owner of this list.
 	 */
-	public IObjectList (String attributeName, IObjectProxy proxy, IObject owner)
+	public IObjectList(String attributeName, IObjectProxy proxy, IObject owner)
 	{
 		this.attributeName = attributeName;
 		this.proxy = proxy;
-		proxyPrototypeMapping = new HashMap ();
+		proxyPrototypeMapping = new HashMap();
 		this.owner = owner;
-		setUniqueId (owner.getUniqueId ());
+		setUniqueId(owner.getUniqueId());
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return The type id.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "IObjectList";
 	}
@@ -99,7 +99,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @param id The new type
 	 */
-	public void setTypeId (String id)
+	public void setTypeId(String id)
 	{
 	}
 
@@ -108,7 +108,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return The unique id.
 	 */
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}
@@ -118,7 +118,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @param uniqueId The new type
 	 */
-	public void setUniqueId (long uniqueId)
+	public void setUniqueId(long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
@@ -128,7 +128,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return The list owner.
 	 */
-	public IObject getOwner ()
+	public IObject getOwner()
 	{
 		return owner;
 	}
@@ -140,47 +140,47 @@ public class IObjectList extends LinkedList implements IObject
 	 * @return attributeName The name of the list attribute in the enclosing
 	 *   object.
 	 */
-	public String getAttributeName ()
+	public String getAttributeName()
 	{
 		return attributeName;
 	}
 
-	private IObjectProxy createListProxy (Object object)
+	private IObjectProxy createListProxy(Object object)
 	{
 		IObjectProxy tmpProxy = null;
 
 		IObject prototype = (IObject) object;
 
-		IObjectProxy existsProxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (
-						((IObject) object).getUniqueId (), prototype.getTypeId ());
+		IObjectProxy existsProxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(
+						((IObject) object).getUniqueId(), prototype.getTypeId());
 
 		if (existsProxy == null)
 		{
 			prototype = (IObject) object;
 
-			if (prototype.getUniqueId () == 0) // Ist ein neues Object, vom Client erzeugt, bekommt eine temp uniqueId
+			if (prototype.getUniqueId() == 0) // Ist ein neues Object, vom Client erzeugt, bekommt eine temp uniqueId
 			{
-				prototype.setUniqueId ((Engine.instance ().getPersistentIDGenerator ().createId () * - 1));
+				prototype.setUniqueId((Engine.instance().getPersistentIDGenerator().createId() * - 1));
 			}
 
-			IObjectProxy clonedProxy = (IObjectProxy) proxy.createProxy ();
+			IObjectProxy clonedProxy = (IObjectProxy) proxy.createProxy();
 
-			clonedProxy.setSampleRealObject ((IObject) prototype);
+			clonedProxy.setSampleRealObject((IObject) prototype);
 
-			Engine.instance ().getBaseRegistry ().add ((BaseObject) prototype);
-			Engine.instance ().getProxyRegistry ().addProxy (clonedProxy, prototype.getTypeId ());
+			Engine.instance().getBaseRegistry().add((BaseObject) prototype);
+			Engine.instance().getProxyRegistry().addProxy(clonedProxy, prototype.getTypeId());
 
 			tmpProxy = clonedProxy;
 
-			Engine.instance ().getEventRegistry ().fire ("proxylinkedlistupdate",
-							new IObjectListEvent (prototype, owner, attributeName, IObjectListEvent.ADD));
+			Engine.instance().getEventRegistry().fire("proxylinkedlistupdate",
+							new IObjectListEvent(prototype, owner, attributeName, IObjectListEvent.ADD));
 		}
 		else
 		{
 			tmpProxy = existsProxy;
 		}
 
-		proxyPrototypeMapping.put (tmpProxy.getSampleRealObject (), tmpProxy);
+		proxyPrototypeMapping.put(tmpProxy.getSampleRealObject(), tmpProxy);
 
 		return tmpProxy;
 	}
@@ -191,20 +191,20 @@ public class IObjectList extends LinkedList implements IObject
 	 * @param object The object to add.
 	 */
 	@Override
-	public boolean add (Object object)
+	public boolean add(Object object)
 	{
 		IObject prototype = (IObject) object;
 
-		boolean createdByClient = prototype.getUniqueId () <= 0;
+		boolean createdByClient = prototype.getUniqueId() <= 0;
 
 		if (createdByClient)
 		{
-			createListProxy (object);
+			createListProxy(object);
 
 			return true;
 		}
 
-		return super.add (createListProxy (object));
+		return super.add(createListProxy(object));
 	}
 
 	/**
@@ -213,15 +213,15 @@ public class IObjectList extends LinkedList implements IObject
 	 * @param object The object to remove.
 	 */
 	@Override
-	public boolean remove (Object object)
+	public boolean remove(Object object)
 	{
 		if (object == null)
 		{
 			return false;
 		}
 
-		Engine.instance ().getEventRegistry ().fire ("proxylinkedlistupdate",
-						new IObjectListEvent ((IObject) object, owner, attributeName, IObjectListEvent.REMOVE));
+		Engine.instance().getEventRegistry().fire("proxylinkedlistupdate",
+						new IObjectListEvent((IObject) object, owner, attributeName, IObjectListEvent.REMOVE));
 
 		// 		//TODO: Check is read only, becourse it is open by an other user.
 		// 		proxyPrototypeMapping.remove (proxy);
@@ -234,23 +234,23 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @param iObject The iObject to remove.
 	 */
-	public boolean removeIObject (IObject iObject)
+	public boolean removeIObject(IObject iObject)
 	{
-		IObjectProxy proxy = (IObjectProxy) proxyPrototypeMapping.get (iObject);
+		IObjectProxy proxy = (IObjectProxy) proxyPrototypeMapping.get(iObject);
 
 		if (proxy == null)
 		{
-			Log.logFatal ("system", "ProxyLinkedList.removeIObject", "That object '" + iObject + ":"
-							+ iObject.getUniqueId () + " is to remove, but no mapping exists in this iObjectList: "
-							+ getAttributeName () + " Owner:" + getOwner () + ":" + getOwner ().getUniqueId ());
+			Log.logFatal("system", "ProxyLinkedList.removeIObject", "That object '" + iObject + ":"
+							+ iObject.getUniqueId() + " is to remove, but no mapping exists in this iObjectList: "
+							+ getAttributeName() + " Owner:" + getOwner() + ":" + getOwner().getUniqueId());
 
 			return false;
 		}
 
 		//TODO: Check is read only, becourse it is open by an other user.
-		proxyPrototypeMapping.remove (proxy);
+		proxyPrototypeMapping.remove(proxy);
 
-		return super.remove (proxy);
+		return super.remove(proxy);
 	}
 
 	/**
@@ -260,11 +260,11 @@ public class IObjectList extends LinkedList implements IObject
 	 * @return The element at the specified index.
 	 */
 	@Override
-	public Object get (int index)
+	public Object get(int index)
 	{
-		IObjectProxy proxy = (IObjectProxy) super.get (index);
+		IObjectProxy proxy = (IObjectProxy) super.get(index);
 
-		return proxy.getRealObject ();
+		return proxy.getRealObject();
 	}
 
 	/**
@@ -274,17 +274,17 @@ public class IObjectList extends LinkedList implements IObject
 	 * @return True or fase
 	 */
 	@Override
-	public boolean contains (Object object)
+	public boolean contains(Object object)
 	{
-		IObjectProxy existsProxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (
-						((IObject) object).getUniqueId (), ((IObject) object).getTypeId ());
+		IObjectProxy existsProxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(
+						((IObject) object).getUniqueId(), ((IObject) object).getTypeId());
 
 		if (existsProxy == null)
 		{
 			return false;
 		}
 
-		return super.contains (existsProxy);
+		return super.contains(existsProxy);
 	}
 
 	/**
@@ -294,9 +294,9 @@ public class IObjectList extends LinkedList implements IObject
 	 * @return An element iterator.
 	 */
 	@Override
-	synchronized public Iterator iterator ()
+	synchronized public Iterator iterator()
 	{
-		return new IObjectIterator (this);
+		return new IObjectIterator(this);
 	}
 
 	/**
@@ -304,9 +304,9 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return An element iterator.
 	 */
-	public Iterator getListIterator ()
+	public Iterator getListIterator()
 	{
-		return super.iterator ();
+		return super.iterator();
 	}
 
 	/**
@@ -314,41 +314,41 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
-		int size = dataStream.readInt ();
+		int size = dataStream.readInt();
 
-		int curSize = super.size ();
+		int curSize = super.size();
 
 		if (size >= curSize)
 		{
 			for (int i = 0; i < curSize; ++i)
 			{
 				@SuppressWarnings("unused")
-				String receivedTypeId = dataStream.readUTF ();
+				String receivedTypeId = dataStream.readUTF();
 				@SuppressWarnings("unused")
-				long uniqueId = dataStream.readLong ();
+				long uniqueId = dataStream.readLong();
 			}
 
 			int newRecords = size - curSize;
 
 			for (int i = 0; i < newRecords; ++i)
 			{
-				String receivedTypeId = dataStream.readUTF ();
-				long uniqueId = dataStream.readLong ();
+				String receivedTypeId = dataStream.readUTF();
+				long uniqueId = dataStream.readLong();
 				IObject prototype = null;
 
 				try
 				{
-					prototype = Engine.instance ().getIObjectFactory ().newInstance (receivedTypeId);
+					prototype = Engine.instance().getIObjectFactory().newInstance(receivedTypeId);
 
 					// 					System.out.println (uniqueIdObject + ":" + newRecords + " - Owner: " + getOwner ().getUniqueId () + ":" + receivedTypeId +":"+ prototype.getTypeId ());
 				}
 				catch (NoSuchIObjectException x)
 				{
-					Log.log ("system", "ProxyLinkedList.readObject",
+					Log.log("system", "ProxyLinkedList.readObject",
 									"ProxyLinkedList - Prototype not found! DataObject not in plugin registered? : "
 													+ receivedTypeId, Log.WARN);
 
@@ -358,12 +358,12 @@ public class IObjectList extends LinkedList implements IObject
 
 				if (prototype == null)
 				{
-					prototype = proxy.getRealObject ().create ();
+					prototype = proxy.getRealObject().create();
 				}
 
-				prototype.setUniqueId (uniqueId);
+				prototype.setUniqueId(uniqueId);
 
-				super.add (createListProxy (prototype));
+				super.add(createListProxy(prototype));
 			}
 		}
 	}
@@ -373,22 +373,22 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @param stream The output stream.
 	 */
-	synchronized public void writeObject (OutputStream stream) throws IOException
+	synchronized public void writeObject(OutputStream stream) throws IOException
 	{
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
-		int size = super.size ();
+		int size = super.size();
 
-		dataStream.writeInt (size);
+		dataStream.writeInt(size);
 
-		for (Iterator i = super.iterator (); i.hasNext ();)
+		for (Iterator i = super.iterator(); i.hasNext();)
 		{
-			IObjectProxy proxy = (IObjectProxy) i.next ();
+			IObjectProxy proxy = (IObjectProxy) i.next();
 
-			IObject prot = proxy.getSampleRealObject ();
+			IObject prot = proxy.getSampleRealObject();
 
-			dataStream.writeUTF (prot.getTypeId ());
-			dataStream.writeLong (proxy.getUniqueId ());
+			dataStream.writeUTF(prot.getTypeId());
+			dataStream.writeLong(proxy.getUniqueId());
 
 			// 			System.out.println (uniqueIdObject + ":" + size + " - W-Owner: " + getOwner ().getUniqueId () + ":" + prot.getTypeId () +":"+ prot);
 		}
@@ -398,32 +398,32 @@ public class IObjectList extends LinkedList implements IObject
 	 * Remove all elements from this list.
 	 */
 	@Override
-	public void clear ()
+	public void clear()
 	{
 		// TODO: hack! We must wrote a bulk thing here...
-		LinkedList tmpList = new LinkedList (this);
+		LinkedList tmpList = new LinkedList(this);
 
-		for (Iterator i = tmpList.iterator (); i.hasNext ();)
+		for (Iterator i = tmpList.iterator(); i.hasNext();)
 		{
-			remove (((IObjectProxy) i.next ()).getRealObject ());
+			remove(((IObjectProxy) i.next()).getRealObject());
 		}
 	}
 
 	/**
 	 * Remove all elements from this list.
 	 */
-	public void clearIObjectList ()
+	public void clearIObjectList()
 	{
-		proxyPrototypeMapping.clear ();
-		super.clear ();
+		proxyPrototypeMapping.clear();
+		super.clear();
 	}
 
 	/**
 	 * Create a instance of the iritgo object.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
-		return new IObjectList (attributeName, proxy, owner);
+		return new IObjectList(attributeName, proxy, owner);
 	}
 
 	/**
@@ -431,7 +431,7 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return True for a valid object.
 	 */
-	public boolean isValid ()
+	public boolean isValid()
 	{
 		return true;
 	}
@@ -439,14 +439,14 @@ public class IObjectList extends LinkedList implements IObject
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		try
 		{
-			DataOutputStream dataStream = new DataOutputStream (stream);
+			DataOutputStream dataStream = new DataOutputStream(stream);
 
-			dataStream.writeUTF (attributeName);
-			dataStream.writeUTF (proxy.getClass ().getName ());
+			dataStream.writeUTF(attributeName);
+			dataStream.writeUTF(proxy.getClass().getName());
 		}
 		catch (Exception x)
 		{
@@ -459,19 +459,19 @@ public class IObjectList extends LinkedList implements IObject
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
 		try
 		{
-			attributeName = dataStream.readUTF ();
-			proxy = (IObjectProxy) Class.forName (dataStream.readUTF ()).newInstance ();
+			attributeName = dataStream.readUTF();
+			proxy = (IObjectProxy) Class.forName(dataStream.readUTF()).newInstance();
 			owner = iObject;
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 
 		return null;
@@ -482,8 +482,8 @@ public class IObjectList extends LinkedList implements IObject
 	 *
 	 * @return String The current dump
 	 */
-	public String dump ()
+	public String dump()
 	{
-		return toString ();
+		return toString();
 	}
 }

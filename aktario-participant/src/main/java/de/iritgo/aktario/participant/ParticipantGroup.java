@@ -33,14 +33,13 @@ import java.util.Iterator;
  */
 public class ParticipantGroup extends DataObject
 {
-	public ParticipantGroup ()
+	public ParticipantGroup()
 	{
-		super ("ParticipantGroup");
+		super("ParticipantGroup");
 
-		addAttribute ("iritgoUserName", "");
+		addAttribute("iritgoUserName", "");
 
-		addAttribute ("participants", new IObjectList ("participants", new FrameworkProxy (new DataObject ("dummy")),
-						this));
+		addAttribute("participants", new IObjectList("participants", new FrameworkProxy(new DataObject("dummy")), this));
 	}
 
 	/**
@@ -48,9 +47,9 @@ public class ParticipantGroup extends DataObject
 	 *
 	 * @return The return the iritgo user name.
 	 */
-	public String getIritgoUserName ()
+	public String getIritgoUserName()
 	{
-		return getStringAttribute ("iritgoUserName");
+		return getStringAttribute("iritgoUserName");
 	}
 
 	/**
@@ -58,9 +57,9 @@ public class ParticipantGroup extends DataObject
 	 *
 	 * @param name The iritgo user name.
 	 */
-	public void setIritgoUserName (String iritgoUserName)
+	public void setIritgoUserName(String iritgoUserName)
 	{
-		setAttribute ("iritgoUserName", iritgoUserName);
+		setAttribute("iritgoUserName", iritgoUserName);
 	}
 
 	/**
@@ -69,9 +68,9 @@ public class ParticipantGroup extends DataObject
 	 * @param transaction The transaction for this object.
 	 * @return Return the participant iterator.
 	 */
-	public Iterator participantIteartor ()
+	public Iterator participantIteartor()
 	{
-		return getIObjectListAttribute ("participants").iterator ();
+		return getIObjectListAttribute("participants").iterator();
 	}
 
 	/**
@@ -79,8 +78,8 @@ public class ParticipantGroup extends DataObject
 	 *
 	 * @return Return the participant IObjectList
 	 */
-	public IObjectList getParticipantsIObjectList ()
+	public IObjectList getParticipantsIObjectList()
 	{
-		return getIObjectListAttribute ("participants");
+		return getIObjectListAttribute("participants");
 	}
 }

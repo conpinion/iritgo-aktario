@@ -50,12 +50,12 @@ import java.util.Properties;
  */
 public class OtherFrame extends SwingDesktopFrame implements UserListener
 {
-	public static final Rectangle SIZE_FULL_SCREEN = new Rectangle (- 1, - 1, 0, 0);
+	public static final Rectangle SIZE_FULL_SCREEN = new Rectangle(- 1, - 1, 0, 0);
 
-	public static final Rectangle SIZE_PACK = new Rectangle (- 2, - 2, 0, 0);
+	public static final Rectangle SIZE_PACK = new Rectangle(- 2, - 2, 0, 0);
 
-	protected static ImageIcon defaultIcon = new ImageIcon (OtherFrame.class
-					.getResource ("/resources/aktario-icon-16.png"));
+	protected static ImageIcon defaultIcon = new ImageIcon(OtherFrame.class
+					.getResource("/resources/aktario-icon-16.png"));
 
 	protected Properties properties;
 
@@ -69,11 +69,11 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 
 	/**
 	 */
-	public Action closeAction = new AbstractAction ()
+	public Action closeAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			close ();
+			close();
 		}
 	};
 
@@ -81,7 +81,7 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 	 * Other frame
 	 *
 	 */
-	public OtherFrame (OtherFrameCloseListener closeListener, String frameLabel, String frameId, Rectangle bounds)
+	public OtherFrame(OtherFrameCloseListener closeListener, String frameLabel, String frameId, Rectangle bounds)
 	{
 		this.closeListener = closeListener;
 		this.frameLabel = frameLabel;
@@ -89,98 +89,98 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 		this.bounds = bounds;
 	}
 
-	public String getFrameId ()
+	public String getFrameId()
 	{
 		return frameId;
 	}
 
-	public void initOtherFrame ()
+	public void initOtherFrame()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 
-		setTitle (Engine.instance ().getResourceService ().getString (frameLabel));
-		setIconImage (defaultIcon.getImage ());
+		setTitle(Engine.instance().getResourceService().getString(frameLabel));
+		setIconImage(defaultIcon.getImage());
 
-		super.init ();
-		addCloseListener (new ActionListener ()
+		super.init();
+		addCloseListener(new ActionListener()
 		{
-			public void actionPerformed (ActionEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
-				closeAction.actionPerformed (e);
+				closeAction.actionPerformed(e);
 			}
 		});
 
-		getJFrame ().getContentPane ().setLayout (new BorderLayout ());
+		getJFrame().getContentPane().setLayout(new BorderLayout());
 
-		JDesktopPane desktopPane = (JDesktopPane) new OtherJDesktopPane (this);
+		JDesktopPane desktopPane = (JDesktopPane) new OtherJDesktopPane(this);
 
-		desktopPane.setDesktopManager (new IDockingDesktopLayouter ());
-		getJFrame ().getContentPane ().add (desktopPane, BorderLayout.CENTER);
+		desktopPane.setDesktopManager(new IDockingDesktopLayouter());
+		getJFrame().getContentPane().add(desktopPane, BorderLayout.CENTER);
 
-		ClientGUI clientGUI = ((ClientGUI) Client.instance ().getClientGUI ());
+		ClientGUI clientGUI = ((ClientGUI) Client.instance().getClientGUI());
 
-		((SwingDesktopManager) clientGUI.getDesktopManager ()).addDesktopPaneNoActivation (frameId, desktopPane);
+		((SwingDesktopManager) clientGUI.getDesktopManager()).addDesktopPaneNoActivation(frameId, desktopPane);
 
-		Dimension dim = getToolkit ().getScreenSize ();
+		Dimension dim = getToolkit().getScreenSize();
 
 		if (bounds == null)
 		{
-			setBounds ((int) dim.getWidth () / 4, (int) dim.getHeight () / 4, (int) dim.getWidth () / 2, (int) dim
-							.getHeight () / 2);
-			setVisible ();
+			setBounds((int) dim.getWidth() / 4, (int) dim.getHeight() / 4, (int) dim.getWidth() / 2, (int) dim
+							.getHeight() / 2);
+			setVisible();
 		}
 		else
 		{
-			if (bounds.equals (SIZE_FULL_SCREEN))
+			if (bounds.equals(SIZE_FULL_SCREEN))
 			{
-				setVisible ();
-				getJFrame ().setExtendedState (JFrame.MAXIMIZED_BOTH);
+				setVisible();
+				getJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 			}
-			else if (bounds.equals (SIZE_PACK))
+			else if (bounds.equals(SIZE_PACK))
 			{
 			}
 			else
 			{
-				setBounds ((int) ((dim.getWidth () / 2) - bounds.getX ()), (int) ((dim.getHeight () / 2) - bounds
-								.getY ()), (int) bounds.getWidth (), (int) bounds.getHeight ());
+				setBounds((int) ((dim.getWidth() / 2) - bounds.getX()), (int) ((dim.getHeight() / 2) - bounds.getY()),
+								(int) bounds.getWidth(), (int) bounds.getHeight());
 
-				setVisible ();
+				setVisible();
 			}
 		}
 	}
 
-	public void close ()
+	public void close()
 	{
-		Engine.instance ().getEventRegistry ().removeListener ("User", this);
+		Engine.instance().getEventRegistry().removeListener("User", this);
 
 		try
 		{
-			if (SwingUtilities.isEventDispatchThread ())
+			if (SwingUtilities.isEventDispatchThread())
 			{
-				ClientGUI clientGUI = ((ClientGUI) Client.instance ().getClientGUI ());
+				ClientGUI clientGUI = ((ClientGUI) Client.instance().getClientGUI());
 
-				SwingDesktopManager desktopManager = ((SwingDesktopManager) clientGUI.getDesktopManager ());
+				SwingDesktopManager desktopManager = ((SwingDesktopManager) clientGUI.getDesktopManager());
 
-				desktopManager.closeAllDisplays (frameId);
-				setVisible (false);
-				dispose ();
+				desktopManager.closeAllDisplays(frameId);
+				setVisible(false);
+				dispose();
 
-				desktopManager.removeDesktopPane (frameId);
+				desktopManager.removeDesktopPane(frameId);
 			}
 			else
 			{
-				SwingUtilities.invokeAndWait (new Runnable ()
+				SwingUtilities.invokeAndWait(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
-						ClientGUI clientGUI = ((ClientGUI) Client.instance ().getClientGUI ());
+						ClientGUI clientGUI = ((ClientGUI) Client.instance().getClientGUI());
 
-						SwingDesktopManager desktopManager = ((SwingDesktopManager) clientGUI.getDesktopManager ());
+						SwingDesktopManager desktopManager = ((SwingDesktopManager) clientGUI.getDesktopManager());
 
-						desktopManager.closeAllDisplays (frameId);
-						setVisible (false);
-						dispose ();
-						desktopManager.removeDesktopPane (frameId);
+						desktopManager.closeAllDisplays(frameId);
+						setVisible(false);
+						dispose();
+						desktopManager.removeDesktopPane(frameId);
 					}
 				});
 			}
@@ -191,7 +191,7 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 
 		if (closeListener != null)
 		{
-			closeListener.otherFrameClosed (this);
+			closeListener.otherFrameClosed(this);
 		}
 	}
 
@@ -200,11 +200,11 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 	 *
 	 * @param event The userEvent.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if ((event != null) && (! event.isLoggedIn ()))
+		if ((event != null) && (! event.isLoggedIn()))
 		{
-			close ();
+			close();
 		}
 	}
 
@@ -213,37 +213,37 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 	 *
 	 * @param comp The added component.
 	 */
-	public void windowAdded (final Component comp)
+	public void windowAdded(final Component comp)
 	{
-		if (! getJFrame ().isVisible ())
+		if (! getJFrame().isVisible())
 		{
 			if (bounds != null && bounds.x == SIZE_PACK.x)
 			{
-				final Dimension screenBounds = getToolkit ().getScreenSize ();
+				final Dimension screenBounds = getToolkit().getScreenSize();
 
 				if (comp instanceof SwingWindowFrame)
 				{
-					comp.addComponentListener (new ComponentAdapter ()
+					comp.addComponentListener(new ComponentAdapter()
 					{
-						public void componentShown (ComponentEvent e)
+						public void componentShown(ComponentEvent e)
 						{
-							Dimension compBounds = ((SwingWindowFrame) comp).getContentPane ().getPreferredSize ();
+							Dimension compBounds = ((SwingWindowFrame) comp).getContentPane().getPreferredSize();
 							int width = compBounds.width + 64;
 							int height = compBounds.height + 64;
 
-							setBounds ((screenBounds.width - width) / 2, (screenBounds.height - height) / 2, width,
+							setBounds((screenBounds.width - width) / 2, (screenBounds.height - height) / 2, width,
 											height);
 
-							setVisible ();
+							setVisible();
 						}
 					});
 				}
 				else
 				{
-					Dimension compBounds = getToolkit ().getScreenSize ();
+					Dimension compBounds = getToolkit().getScreenSize();
 
-					setBounds (0, 0, compBounds.width, compBounds.height);
-					setVisible ();
+					setBounds(0, 0, compBounds.width, compBounds.height);
+					setVisible();
 				}
 			}
 		}
@@ -254,7 +254,7 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 	 *
 	 * @param icon The new default icon.
 	 */
-	public static void setDefaultIcon (ImageIcon icon)
+	public static void setDefaultIcon(ImageIcon icon)
 	{
 		defaultIcon = icon;
 	}
@@ -264,7 +264,7 @@ public class OtherFrame extends SwingDesktopFrame implements UserListener
 	 *
 	 * @return The default icon.
 	 */
-	public static ImageIcon getDefaultIcon ()
+	public static ImageIcon getDefaultIcon()
 	{
 		return defaultIcon;
 	}

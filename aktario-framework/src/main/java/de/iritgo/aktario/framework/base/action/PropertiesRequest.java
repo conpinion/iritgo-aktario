@@ -36,14 +36,14 @@ public class PropertiesRequest extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public PropertiesRequest ()
+	public PropertiesRequest()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public PropertiesRequest (Properties properties)
+	public PropertiesRequest(Properties properties)
 	{
 		this.properties = properties;
 	}
@@ -52,29 +52,29 @@ public class PropertiesRequest extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		ObjectInputStream s = new ObjectInputStream (stream);
+		ObjectInputStream s = new ObjectInputStream(stream);
 
-		properties = (Properties) s.readObject ();
+		properties = (Properties) s.readObject();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		ObjectOutputStream s = new ObjectOutputStream (stream);
+		ObjectOutputStream s = new ObjectOutputStream(stream);
 
-		s.writeObject (properties);
+		s.writeObject(properties);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 	}
 }

@@ -40,18 +40,18 @@ public class PluginStateEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public PluginStateEvent (Plugin plugin, int state)
+	public PluginStateEvent(Plugin plugin, int state)
 	{
 		this.plugin = plugin;
 		this.state = state;
 	}
 
-	public int getState ()
+	public int getState()
 	{
 		return state;
 	}
 
-	public boolean allPluginsInitialized ()
+	public boolean allPluginsInitialized()
 	{
 		return state == ALL_PLUGINS_INITIALIZED;
 	}

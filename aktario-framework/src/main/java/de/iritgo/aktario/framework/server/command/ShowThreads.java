@@ -30,16 +30,16 @@ import de.iritgo.aktario.core.thread.ThreadService;
  */
 public class ShowThreads extends Command
 {
-	public ShowThreads ()
+	public ShowThreads()
 	{
 	}
 
 	/**
 	 * Execute the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		ThreadService threadService = Engine.instance ().getThreadService ();
+		ThreadService threadService = Engine.instance().getThreadService();
 
 		// 		for (Iterator i = threadService.getThreadController ().threadSlotIterator (); i.hasNext ();)
 		// 		{

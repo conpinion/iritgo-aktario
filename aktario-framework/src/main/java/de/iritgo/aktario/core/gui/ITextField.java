@@ -39,9 +39,9 @@ public class ITextField extends JTextField
 	/**
 	 * Constructs a new ITextField.
 	 */
-	public ITextField ()
+	public ITextField()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -55,9 +55,9 @@ public class ITextField extends JTextField
 	 *   width >= 0; if columns  is set to zero, the preferred width will be
 	 *   whatever naturally results from the component implementation.
 	 */
-	public ITextField (Document doc, String text, int columns)
+	public ITextField(Document doc, String text, int columns)
 	{
-		super (doc, text, columns);
+		super(doc, text, columns);
 	}
 
 	/**
@@ -67,9 +67,9 @@ public class ITextField extends JTextField
 	 *   if columns is set to zero, the preferred width will be whatever naturally
 	 *   results from the component implementation
 	 */
-	public ITextField (int columns)
+	public ITextField(int columns)
 	{
-		super (columns);
+		super(columns);
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class ITextField extends JTextField
 	 *
 	 * @param text The text to be displayed, or null.
 	 */
-	public ITextField (String text)
+	public ITextField(String text)
 	{
-		super (text);
+		super(text);
 	}
 
 	/**
@@ -90,9 +90,9 @@ public class ITextField extends JTextField
 	 *   if columns is set to zero, the preferred width will be whatever naturally
 	 *   results from the component implementation
 	 */
-	public ITextField (String text, int columns)
+	public ITextField(String text, int columns)
 	{
-		super (text, columns);
+		super(text, columns);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class ITextField extends JTextField
 	 * @param autoSelect If true the text is selected if the text field is
 	 *   activated.
 	 */
-	public void setAutoSelect (boolean autoSelect)
+	public void setAutoSelect(boolean autoSelect)
 	{
 		this.autoSelect = autoSelect;
 	}
@@ -111,19 +111,19 @@ public class ITextField extends JTextField
 	 * @see javax.swing.JFormattedTextField#processFocusEvent(java.awt.event.FocusEvent)
 	 */
 	@Override
-	protected void processFocusEvent (FocusEvent e)
+	protected void processFocusEvent(FocusEvent e)
 	{
-		super.processFocusEvent (e);
+		super.processFocusEvent(e);
 
 		if (autoSelect)
 		{
-			if (e.getID () == FocusEvent.FOCUS_GAINED)
+			if (e.getID() == FocusEvent.FOCUS_GAINED)
 			{
-				this.selectAll ();
+				this.selectAll();
 			}
 			else
 			{
-				this.select (0, 0);
+				this.select(0, 0);
 			}
 		}
 	}

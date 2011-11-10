@@ -37,29 +37,29 @@ public class GetParticipantStateByName extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public GetParticipantStateByName ()
+	public GetParticipantStateByName()
 	{
-		super ("aktario-participant.GetParticipantStateByName");
+		super("aktario-participant.GetParticipantStateByName");
 	}
 
 	/**
 	 * perform command.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		if (IritgoEngine.instance ().isServer ())
+		if (IritgoEngine.instance().isServer())
 		{
-			ParticipantServerManager participantServerManager = (ParticipantServerManager) Engine.instance ()
-							.getManager ("ParticipantServerManager");
+			ParticipantServerManager participantServerManager = (ParticipantServerManager) Engine.instance()
+							.getManager("ParticipantServerManager");
 
-			return participantServerManager.getByName (properties.getProperty ("name"));
+			return participantServerManager.getByName(properties.getProperty("name"));
 		}
 		else
 		{
-			ParticipantClientManager participantClientManager = (ParticipantClientManager) Engine.instance ()
-							.getManager ("ParticipantClientManager");
+			ParticipantClientManager participantClientManager = (ParticipantClientManager) Engine.instance()
+							.getManager("ParticipantClientManager");
 
-			return participantClientManager.getByName (properties.getProperty ("name"));
+			return participantClientManager.getByName(properties.getProperty("name"));
 		}
 	}
 }

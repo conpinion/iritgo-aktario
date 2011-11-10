@@ -41,9 +41,9 @@ public class SimpleAgent extends DataObject implements Agent
 	/**
 	 * Create a new SimpleAgent.
 	 */
-	public SimpleAgent ()
+	public SimpleAgent()
 	{
-		super ("SimpleAgent");
+		super("SimpleAgent");
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param agentManager The agent manager.
 	 */
-	public void init (AgentManager agentManager)
+	public void init(AgentManager agentManager)
 	{
 		this.agentManager = agentManager;
 	}
@@ -61,21 +61,21 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void awake (AgentContainer container)
+	public void awake(AgentContainer container)
 	{
-		container.simpleThreadAwake (this);
+		container.simpleThreadAwake(this);
 	}
 
 	/**
 	 * The heartbeat will be called at regular intervals.
 	 */
-	public void heartbeat ()
+	public void heartbeat()
 	{
-		System.out.print (".");
+		System.out.print(".");
 
 		if (time > 3)
 		{
-			agentManager.getContainer ().sendToFirstDispatcher (this);
+			agentManager.getContainer().sendToFirstDispatcher(this);
 		}
 
 		++time;
@@ -86,9 +86,9 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void sleep (AgentContainer container)
+	public void sleep(AgentContainer container)
 	{
-		container.simpleThreadSleep (this);
+		container.simpleThreadSleep(this);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void shutdown (AgentContainer container)
+	public void shutdown(AgentContainer container)
 	{
 	}
 
@@ -106,7 +106,7 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param heartBeat True if the agent is alive and has a heart beat.
 	 */
-	public void setHeartBeat (boolean heartBeat)
+	public void setHeartBeat(boolean heartBeat)
 	{
 		this.heartBeat = heartBeat;
 	}
@@ -114,7 +114,7 @@ public class SimpleAgent extends DataObject implements Agent
 	/**
 	 * Get an an overview of all functions of this agent.
 	 */
-	public boolean hasHeartBeat ()
+	public boolean hasHeartBeat()
 	{
 		return heartBeat;
 	}
@@ -122,7 +122,7 @@ public class SimpleAgent extends DataObject implements Agent
 	/**
 	 * Get an an overview of all functions of this agent.
 	 */
-	public String getFunctions ()
+	public String getFunctions()
 	{
 		return "";
 	}
@@ -133,7 +133,7 @@ public class SimpleAgent extends DataObject implements Agent
 	 * @param communication A message string.
 	 * @return A message string.
 	 */
-	public String communication (String communication)
+	public String communication(String communication)
 	{
 		return "";
 	}
@@ -144,8 +144,8 @@ public class SimpleAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void die (AgentContainer container)
+	public void die(AgentContainer container)
 	{
-		sleep (container);
+		sleep(container);
 	}
 }

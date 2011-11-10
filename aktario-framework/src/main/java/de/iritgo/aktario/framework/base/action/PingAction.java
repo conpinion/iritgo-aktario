@@ -38,17 +38,17 @@ public class PingAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public PingAction ()
+	public PingAction()
 	{
-		super (- 1);
+		super(- 1);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public PingAction (long pingTime)
+	public PingAction(long pingTime)
 	{
-		createTimeFromThis = System.currentTimeMillis ();
+		createTimeFromThis = System.currentTimeMillis();
 		this.pingTime = pingTime;
 	}
 
@@ -56,37 +56,37 @@ public class PingAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		pingTime = stream.readLong ();
+		pingTime = stream.readLong();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (pingTime);
+		stream.writeLong(pingTime);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		AppContext.instance ().getUser ().addPingTime (createTimeFromThis - pingTime);
+		AppContext.instance().getUser().addPingTime(createTimeFromThis - pingTime);
 
-		double channelNumber = AppContext.instance ().getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = AppContext.instance().getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		PingServerAction pingServerAction = new PingServerAction (System.currentTimeMillis ());
+		PingServerAction pingServerAction = new PingServerAction(System.currentTimeMillis());
 
-		pingServerAction.setTransceiver (clientTransceiver);
+		pingServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (pingServerAction);
+		ActionTools.sendToServer(pingServerAction);
 	}
 }

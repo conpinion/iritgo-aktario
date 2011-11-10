@@ -29,18 +29,18 @@ public class FileTransferEvent implements Event
 
 	private int state;
 
-	public FileTransferEvent (int state, FileTransferContext fileTransferContext)
+	public FileTransferEvent(int state, FileTransferContext fileTransferContext)
 	{
 		this.state = state;
 		this.fileTransferContext = fileTransferContext;
 	}
 
-	public FileTransferContext getFileTransferContext ()
+	public FileTransferContext getFileTransferContext()
 	{
 		return fileTransferContext;
 	}
 
-	public int getState ()
+	public int getState()
 	{
 		return state;
 	}

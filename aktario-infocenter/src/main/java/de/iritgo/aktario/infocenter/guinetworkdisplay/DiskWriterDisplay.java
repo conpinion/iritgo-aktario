@@ -35,9 +35,9 @@ import java.util.Date;
  */
 public class DiskWriterDisplay implements InfoCenterDisplay
 {
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat ("yyyyMMd");
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMd");
 
-	private static SimpleDateFormat diskDateFormat = new SimpleDateFormat ("yyyy:MM:d-H:m:s");
+	private static SimpleDateFormat diskDateFormat = new SimpleDateFormat("yyyy:MM:d-H:m:s");
 
 	private String infoStoreFile;
 
@@ -45,13 +45,13 @@ public class DiskWriterDisplay implements InfoCenterDisplay
 
 	private FileWriter writer;
 
-	private String day = simpleDateFormat.format (new Date ());
+	private String day = simpleDateFormat.format(new Date());
 
 	/**
 	 * Constructor
 	 *
 	 */
-	public DiskWriterDisplay ()
+	public DiskWriterDisplay()
 	{
 	}
 
@@ -60,7 +60,7 @@ public class DiskWriterDisplay implements InfoCenterDisplay
 	 *
 	 * @param infoStoreFile The filename
 	 */
-	public void setInfoStoreFile (String infoStoreFile)
+	public void setInfoStoreFile(String infoStoreFile)
 	{
 		this.infoStoreFile = infoStoreFile;
 	}
@@ -69,7 +69,7 @@ public class DiskWriterDisplay implements InfoCenterDisplay
 	 * Get the Id of the Logger
 	 *
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "diskwriter.display";
 	}
@@ -79,22 +79,22 @@ public class DiskWriterDisplay implements InfoCenterDisplay
 	 *
 	 * @param category
 	 */
-	public void init (String category, int context, User user)
+	public void init(String category, int context, User user)
 	{
 		try
 		{
-			file = new File (infoStoreFile + "-" + context + "-" + day + "." + category);
+			file = new File(infoStoreFile + "-" + context + "-" + day + "." + category);
 
-			if (! file.exists ())
+			if (! file.exists())
 			{
-				file.createNewFile ();
+				file.createNewFile();
 			}
 
-			writer = new FileWriter (file, true);
+			writer = new FileWriter(file, true);
 		}
 		catch (IOException x)
 		{
-			Log.log ("system", "DiskWriterDisplay.init", "Cannot create or read infostorefile" + x.getMessage (),
+			Log.log("system", "DiskWriterDisplay.init", "Cannot create or read infostorefile" + x.getMessage(),
 							Log.FATAL);
 		}
 	}
@@ -103,43 +103,43 @@ public class DiskWriterDisplay implements InfoCenterDisplay
 	 * release
 	 *
 	 */
-	public void release ()
+	public void release()
 	{
 		try
 		{
-			writer.flush ();
-			writer.close ();
+			writer.flush();
+			writer.close();
 		}
 		catch (IOException x)
 		{
-			Log.log ("system", "DiskWriterDisplay.release", "Cannot close infostorefile" + x.getMessage (), Log.FATAL);
+			Log.log("system", "DiskWriterDisplay.release", "Cannot close infostorefile" + x.getMessage(), Log.FATAL);
 		}
 	}
 
 	/**
 	 * Info
 	 */
-	public void info (User user, int context, String category, String icon, String message, String guiPaneId,
+	public void info(User user, int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level)
 	{
-		String currentMonth = simpleDateFormat.format (new Date ());
+		String currentMonth = simpleDateFormat.format(new Date());
 
-		if (! currentMonth.equals (day))
+		if (! currentMonth.equals(day))
 		{
-			release ();
-			init (category, context, null);
+			release();
+			init(category, context, null);
 		}
 
 		try
 		{
-			writer.write (diskDateFormat.format (new Date ()) + "|" + category + "|" + icon + "|" + message + "|"
+			writer.write(diskDateFormat.format(new Date()) + "|" + category + "|" + icon + "|" + message + "|"
 							+ guiPaneId + "|" + uniqueId + "|" + iObjectTypeId + "|" + level + "\r\n");
 
-			writer.flush ();
+			writer.flush();
 		}
 		catch (IOException x)
 		{
-			Log.log ("system", "DiskWriterDisplay.info", "Cannot write to infostorefile" + x.getMessage (), Log.FATAL);
+			Log.log("system", "DiskWriterDisplay.info", "Cannot write to infostorefile" + x.getMessage(), Log.FATAL);
 		}
 	}
 }

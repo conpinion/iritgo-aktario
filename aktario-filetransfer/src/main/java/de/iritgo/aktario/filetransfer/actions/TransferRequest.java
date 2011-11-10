@@ -42,17 +42,17 @@ public class TransferRequest extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public TransferRequest ()
+	public TransferRequest()
 	{
-		setTypeId ("tr");
+		setTypeId("tr");
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public TransferRequest (String fileId, byte[] buffer, int readed)
+	public TransferRequest(String fileId, byte[] buffer, int readed)
 	{
-		this ();
+		this();
 		this.fileId = fileId;
 		this.buffer = buffer;
 		this.readed = readed;
@@ -62,11 +62,11 @@ public class TransferRequest extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		fileId = stream.readUTF ();
+		fileId = stream.readUTF();
 
-		int bufferSize = stream.readInt ();
+		int bufferSize = stream.readInt();
 
 		buffer = new byte[bufferSize];
 
@@ -74,7 +74,7 @@ public class TransferRequest extends FrameworkServerAction
 
 		while (readed < bufferSize)
 		{
-			readed += stream.read (buffer, readed, bufferSize - readed);
+			readed += stream.read(buffer, readed, bufferSize - readed);
 		}
 	}
 
@@ -82,19 +82,19 @@ public class TransferRequest extends FrameworkServerAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
 		try
 		{
-			stream.writeUTF (fileId);
-			stream.writeInt (readed);
+			stream.writeUTF(fileId);
+			stream.writeInt(readed);
 
-			stream.write (buffer, 0, readed);
+			stream.write(buffer, 0, readed);
 		}
 		catch (Exception x)
 		{
-			System.out.println ("Error: " + x);
-			x.printStackTrace ();
+			System.out.println("Error: " + x);
+			x.printStackTrace();
 		}
 	}
 
@@ -102,11 +102,11 @@ public class TransferRequest extends FrameworkServerAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance ().getManager (
+		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance().getManager(
 						"FileTransferManager");
 
-		fileTransferManager.fileTransfer (fileId, buffer);
+		fileTransferManager.fileTransfer(fileId, buffer);
 	}
 }

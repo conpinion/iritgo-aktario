@@ -45,10 +45,10 @@ public class TextResource extends ResourceBundle
 	/**
 	 * Create a new TextResource.
 	 */
-	public TextResource ()
+	public TextResource()
 	{
-		super ();
-		localisations = new Properties ();
+		super();
+		localisations = new Properties();
 	}
 
 	/**
@@ -57,9 +57,9 @@ public class TextResource extends ResourceBundle
 	 * @return The key enumeration.
 	 */
 	@Override
-	public Enumeration getKeys ()
+	public Enumeration getKeys()
 	{
-		return localisations.keys ();
+		return localisations.keys();
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class TextResource extends ResourceBundle
 	 * @return The resource value.
 	 */
 	@Override
-	public Object handleGetObject (String key)
+	public Object handleGetObject(String key)
 	{
-		return localisations.get (key);
+		return localisations.get(key);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class TextResource extends ResourceBundle
 	 *
 	 * @return The parent resources.
 	 */
-	public ResourceBundle getParent ()
+	public ResourceBundle getParent()
 	{
 		return parent;
 	}
@@ -90,9 +90,9 @@ public class TextResource extends ResourceBundle
 	 * @param key The resource key.
 	 * @param value The resource value.
 	 */
-	public void addResource (String key, String value)
+	public void addResource(String key, String value)
 	{
-		localisations.put (key, value);
+		localisations.put(key, value);
 	}
 
 	/**
@@ -102,17 +102,17 @@ public class TextResource extends ResourceBundle
 	 * @param fileName The Filename of the JAR-File.
 	 * @param resourceName The ResourceName.
 	 */
-	public void loadFromJarFile (String directory, String fileName, String resourceName)
+	public void loadFromJarFile(String directory, String fileName, String resourceName)
 	{
 		try
 		{
-			loadFromInputStream (createInputStreamFromJarFile (directory + Engine.instance ().getFileSeparator ()
+			loadFromInputStream(createInputStreamFromJarFile(directory + Engine.instance().getFileSeparator()
 							+ fileName, resourceName));
 		}
 		catch (IOException x)
 		{
-			Log.logFatal ("system", "TextResource.loadFromJarFile", "Unable to unload property file " + fileName + "!"
-							+ resourceName + ": " + x.getMessage ());
+			Log.logFatal("system", "TextResource.loadFromJarFile", "Unable to unload property file " + fileName + "!"
+							+ resourceName + ": " + x.getMessage());
 		}
 	}
 
@@ -122,17 +122,17 @@ public class TextResource extends ResourceBundle
 	 * @param directory The directory.
 	 * @param fileName The Filename of the JAR-File
 	 */
-	public void loadFromFile (String directory, String fileName)
+	public void loadFromFile(String directory, String fileName)
 	{
 		try
 		{
-			File file = new File (directory + Engine.instance ().getFileSeparator () + fileName);
+			File file = new File(directory + Engine.instance().getFileSeparator() + fileName);
 
-			loadFromInputStream (new FileInputStream (file));
+			loadFromInputStream(new FileInputStream(file));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "TextResource.loadFromFile", "Unable to load property file " + fileName + ": " + x);
+			Log.logFatal("system", "TextResource.loadFromFile", "Unable to load property file " + fileName + ": " + x);
 		}
 	}
 
@@ -142,17 +142,17 @@ public class TextResource extends ResourceBundle
 	 * @param directory The directory.
 	 * @param fileName The Filename of the JAR-File
 	 */
-	public void unloadFromFile (String directory, String fileName)
+	public void unloadFromFile(String directory, String fileName)
 	{
 		try
 		{
-			File file = new File (directory + Engine.instance ().getFileSeparator () + fileName);
+			File file = new File(directory + Engine.instance().getFileSeparator() + fileName);
 
-			unloadFromInputStream (new FileInputStream (file));
+			unloadFromInputStream(new FileInputStream(file));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "TextResource.unloadFromFile", "Unable to unload property file " + fileName + ": "
+			Log.logFatal("system", "TextResource.unloadFromFile", "Unable to unload property file " + fileName + ": "
 							+ x);
 		}
 	}
@@ -164,17 +164,17 @@ public class TextResource extends ResourceBundle
 	 * @param fileName The Filename of the JAR-File.
 	 * @param resourceName The ResourceName.
 	 */
-	public void unloadFromJarFile (String directory, String fileName, String resourceName)
+	public void unloadFromJarFile(String directory, String fileName, String resourceName)
 	{
 		try
 		{
-			unloadFromInputStream (createInputStreamFromJarFile (directory + Engine.instance ().getFileSeparator ()
+			unloadFromInputStream(createInputStreamFromJarFile(directory + Engine.instance().getFileSeparator()
 							+ fileName, resourceName));
 		}
 		catch (IOException x)
 		{
-			Log.logFatal ("system", "TextResource.unloadFromJarFile", "Unable to unload property file " + fileName
-							+ "!" + resourceName + ": " + x.getMessage ());
+			Log.logFatal("system", "TextResource.unloadFromJarFile", "Unable to unload property file " + fileName + "!"
+							+ resourceName + ": " + x.getMessage());
 		}
 	}
 
@@ -184,26 +184,26 @@ public class TextResource extends ResourceBundle
 	 * @param file The name of the jar file.
 	 * @param resourceName The ResourceName.
 	 */
-	public InputStream createInputStreamFromJarFile (String file, String resourceName)
+	public InputStream createInputStreamFromJarFile(String file, String resourceName)
 	{
 		try
 		{
-			JarFile jarFile = new JarFile (file);
-			ZipEntry entry = jarFile.getEntry (resourceName);
+			JarFile jarFile = new JarFile(file);
+			ZipEntry entry = jarFile.getEntry(resourceName);
 
 			if (entry != null)
 			{
-				return jarFile.getInputStream (entry);
+				return jarFile.getInputStream(entry);
 			}
 			else
 			{
-				throw new Exception ("entry not found.");
+				throw new Exception("entry not found.");
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "TextResource.createInputStreamFromJarFile", "Unable to load property file " + file
-							+ "!" + resourceName + ": " + x.getMessage ());
+			Log.logFatal("system", "TextResource.createInputStreamFromJarFile", "Unable to load property file " + file
+							+ "!" + resourceName + ": " + x.getMessage());
 		}
 
 		return null;
@@ -214,9 +214,9 @@ public class TextResource extends ResourceBundle
 	 *
 	 * @param in The input stream.
 	 */
-	public void loadFromInputStream (InputStream in) throws IOException
+	public void loadFromInputStream(InputStream in) throws IOException
 	{
-		localisations.load (in);
+		localisations.load(in);
 	}
 
 	/**
@@ -224,15 +224,15 @@ public class TextResource extends ResourceBundle
 	 *
 	 * @param is The input stream.
 	 */
-	public void unloadFromInputStream (InputStream is) throws IOException
+	public void unloadFromInputStream(InputStream is) throws IOException
 	{
-		Properties properties = new Properties ();
+		Properties properties = new Properties();
 
-		properties.load (is);
+		properties.load(is);
 
-		for (Iterator i = properties.values ().iterator (); i.hasNext ();)
+		for (Iterator i = properties.values().iterator(); i.hasNext();)
 		{
-			localisations.remove ((String) i.next ());
+			localisations.remove((String) i.next());
 		}
 	}
 
@@ -242,16 +242,16 @@ public class TextResource extends ResourceBundle
 	 * @param klass The class which class loader should be used.
 	 * @param resourceName The name of the resource file.
 	 */
-	public void loadWithClassLoader (Class klass, String resourceName)
+	public void loadWithClassLoader(Class klass, String resourceName)
 	{
 		try
 		{
-			loadFromInputStream (klass.getResourceAsStream (resourceName));
+			loadFromInputStream(klass.getResourceAsStream(resourceName));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "TextResource.loadWithClassLoader", "Unable to load resources " + klass.getName ()
-							+ "!" + resourceName + ": " + x.getMessage ());
+			Log.logFatal("system", "TextResource.loadWithClassLoader", "Unable to load resources " + klass.getName()
+							+ "!" + resourceName + ": " + x.getMessage());
 		}
 	}
 
@@ -261,16 +261,16 @@ public class TextResource extends ResourceBundle
 	 * @param klass The class which class loader should be used.
 	 * @param resourceName The name of the resource file.
 	 */
-	public void unloadWithClassLoader (Class klass, String resourceName)
+	public void unloadWithClassLoader(Class klass, String resourceName)
 	{
 		try
 		{
-			unloadFromInputStream (klass.getResourceAsStream (resourceName));
+			unloadFromInputStream(klass.getResourceAsStream(resourceName));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "TextResource.unloadWithClassLoader", "Unable to unload resources "
-							+ klass.getName () + "!" + resourceName + ": " + x.getMessage ());
+			Log.logFatal("system", "TextResource.unloadWithClassLoader", "Unable to unload resources "
+							+ klass.getName() + "!" + resourceName + ": " + x.getMessage());
 		}
 	}
 }

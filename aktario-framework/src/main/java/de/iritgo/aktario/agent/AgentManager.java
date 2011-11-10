@@ -63,11 +63,11 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param mode The manager startup mode (SPHERE_SERVER or SPHERE_CLIENT).
 	 */
-	private AgentManager (int mode)
+	private AgentManager(int mode)
 	{
 		this.mode = mode;
-		container = new AgentContainer (this);
-		init (mode);
+		container = new AgentContainer(this);
+		init(mode);
 	}
 
 	/**
@@ -75,14 +75,14 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param mode The agent manager mode.
 	 */
-	private void init (int mode)
+	private void init(int mode)
 	{
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
-		((ShutdownManager) Engine.instance ().getManagerRegistry ().getManager ("shutdown")).addObserver (this);
+		Engine.instance().getEventRegistry().addListener("User", this);
+		((ShutdownManager) Engine.instance().getManagerRegistry().getManager("shutdown")).addObserver(this);
 
-		AbstractIObjectFactory iObjectFactory = (AbstractIObjectFactory) Engine.instance ().getIObjectFactory ();
+		AbstractIObjectFactory iObjectFactory = (AbstractIObjectFactory) Engine.instance().getIObjectFactory();
 
-		iObjectFactory.register (new AgentTransferAction ());
+		iObjectFactory.register(new AgentTransferAction());
 	}
 
 	/**
@@ -92,29 +92,29 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 * @param mode The agent manager mode.
 	 */
 	@SuppressWarnings("unused")
-	private void initTestAgents (int mode)
+	private void initTestAgents(int mode)
 	{
-		AbstractIObjectFactory iObjectFactory = (AbstractIObjectFactory) Engine.instance ().getIObjectFactory ();
-		SimpleAgent simpleAgent = new SimpleAgent ();
+		AbstractIObjectFactory iObjectFactory = (AbstractIObjectFactory) Engine.instance().getIObjectFactory();
+		SimpleAgent simpleAgent = new SimpleAgent();
 
-		iObjectFactory.register (simpleAgent);
+		iObjectFactory.register(simpleAgent);
 
-		ScriptAgent scriptAgent = new ScriptAgent ();
+		ScriptAgent scriptAgent = new ScriptAgent();
 
-		iObjectFactory.register (scriptAgent);
+		iObjectFactory.register(scriptAgent);
 
-		simpleAgent.init (this);
-		simpleAgent.setUniqueId (1);
+		simpleAgent.init(this);
+		simpleAgent.setUniqueId(1);
 
-		scriptAgent.init (this);
-		scriptAgent.setUniqueId (2);
+		scriptAgent.init(this);
+		scriptAgent.setUniqueId(2);
 
-		System.out.println ("Awake simple entity");
+		System.out.println("Awake simple entity");
 
 		if (mode == AGENT_SERVER)
 		{
-			simpleAgent.awake (container);
-			scriptAgent.awake (container);
+			simpleAgent.awake(container);
+			scriptAgent.awake(container);
 		}
 	}
 
@@ -123,12 +123,12 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param agent The agent to start.
 	 */
-	public void bringAgentToLife (Agent agent)
+	public void bringAgentToLife(Agent agent)
 	{
-		((DataObject) agent).setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
-		agent.init (this);
-		container.simpleThreadAwake ((DataObject) agent);
-		agent.awake (container);
+		((DataObject) agent).setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
+		agent.init(this);
+		container.simpleThreadAwake((DataObject) agent);
+		agent.awake(container);
 	}
 
 	/**
@@ -136,14 +136,14 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @return The agent container.
 	 */
-	public AgentContainer getContainer ()
+	public AgentContainer getContainer()
 	{
 		return container;
 	}
 
-	public boolean onServer ()
+	public boolean onServer()
 	{
-		return IritgoEngine.instance ().isServer ();
+		return IritgoEngine.instance().isServer();
 	}
 
 	/**
@@ -151,27 +151,27 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param event The user event.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if (event.isLoggedIn ())
+		if (event.isLoggedIn())
 		{
-			Dispatcher dispatcher = new Dispatcher (event.getUser ());
+			Dispatcher dispatcher = new Dispatcher(event.getUser());
 
-			dispatcher.setUniqueId (event.getUser ().getName ());
-			container.addDispatcher (dispatcher);
+			dispatcher.setUniqueId(event.getUser().getName());
+			container.addDispatcher(dispatcher);
 		}
 		else
 		{
-			container.removeDispatcher (event.getUser ().getName ());
+			container.removeDispatcher(event.getUser().getName());
 		}
 	}
 
 	/**
 	 * Called when the system shuts down.
 	 */
-	public void onShutdown ()
+	public void onShutdown()
 	{
-		container.close ();
+		container.close();
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param user The leaving user.
 	 */
-	public void onUserLogoff (User user)
+	public void onUserLogoff(User user)
 	{
 	}
 
@@ -188,7 +188,7 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @return AgentManager The agent manager.
 	 */
-	public static AgentManager instance ()
+	public static AgentManager instance()
 	{
 		return agentManager;
 	}
@@ -198,14 +198,14 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @param mode The manager mode, client or server (SPHERE_SERVER, SPHERE_CLIENT)
 	 */
-	public static void createAgentManager (int mode)
+	public static void createAgentManager(int mode)
 	{
 		if (agentManager != null)
 		{
 			return;
 		}
 
-		agentManager = new AgentManager (mode);
+		agentManager = new AgentManager(mode);
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class AgentManager implements UserListener, ShutdownObserver
 	 *
 	 * @return The type id.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "AgentManager";
 	}

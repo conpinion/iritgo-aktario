@@ -35,36 +35,36 @@ import de.iritgo.aktario.infocenter.manager.InfoCenterManager;
 
 public class InfoCenterPlugin extends FrameworkPlugin
 {
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new InfoCenterAction ());
+		registerAction(new InfoCenterAction());
 	}
 
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (Plugin.CLIENT, new NetworkDisplayGUIPane ());
+		registerGUIPane(Plugin.CLIENT, new NetworkDisplayGUIPane());
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new InfoCenterManager ());
-		registerManager (Plugin.CLIENT, new InfoCenterClientManager ());
+		registerManager(Plugin.SERVER, new InfoCenterManager());
+		registerManager(Plugin.CLIENT, new InfoCenterClientManager());
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new InfoCenter ());
-		registerCommand (new CreateGUINetworkDisplay ());
-		registerCommand (new CreateDiskWriterDisplay ());
-		registerCommand (new AddInfoToGUIDisplay ());
-		registerCommand (new RemoveGUINetworkDisplay ());
+		registerCommand(new InfoCenter());
+		registerCommand(new CreateGUINetworkDisplay());
+		registerCommand(new CreateDiskWriterDisplay());
+		registerCommand(new AddInfoToGUIDisplay());
+		registerCommand(new RemoveGUINetworkDisplay());
 	}
 
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 }

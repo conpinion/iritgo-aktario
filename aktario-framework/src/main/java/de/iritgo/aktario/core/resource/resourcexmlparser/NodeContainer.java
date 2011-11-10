@@ -27,16 +27,16 @@ public class NodeContainer
 {
 	Object node;
 
-	public NodeContainer ()
+	public NodeContainer()
 	{
 	}
 
-	public void setNode (Object node)
+	public void setNode(Object node)
 	{
 		this.node = node;
 	}
 
-	public Object getNode ()
+	public Object getNode()
 	{
 		return node;
 	}

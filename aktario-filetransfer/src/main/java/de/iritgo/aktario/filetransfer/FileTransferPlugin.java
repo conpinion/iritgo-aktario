@@ -33,35 +33,35 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
 public class FileTransferPlugin extends FrameworkPlugin
 {
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new FileTransferQueuePane ());
+		registerGUIPane(new FileTransferQueuePane());
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (Plugin.CLIENT, new StartFileTransferCommand ());
+		registerCommand(Plugin.CLIENT, new StartFileTransferCommand());
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new StartFileTransferRequest ());
-		registerAction (new StartFileTransferResponse ());
-		registerAction (new TransferRequest ());
-		registerAction (new EndFileTransferRequest ());
+		registerAction(new StartFileTransferRequest());
+		registerAction(new StartFileTransferResponse());
+		registerAction(new TransferRequest());
+		registerAction(new EndFileTransferRequest());
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (new FileTransferManager ());
-		registerManager (new FileTransferSessionManager ());
+		registerManager(new FileTransferManager());
+		registerManager(new FileTransferSessionManager());
 	}
 
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 }

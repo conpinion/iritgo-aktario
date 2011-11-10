@@ -44,7 +44,7 @@ public class ITableSorter extends ITableMap
 
 	int[] indexes;
 
-	Vector sortingColumns = new Vector ();
+	Vector sortingColumns = new Vector();
 
 	boolean ascending = true;
 
@@ -52,32 +52,32 @@ public class ITableSorter extends ITableMap
 
 	IObjectTableModelSorted iObjectTableModelSorted;
 
-	public ITableSorter ()
+	public ITableSorter()
 	{
 		indexes = new int[0]; // For consistency.
 	}
 
-	public ITableSorter (TableModel model)
+	public ITableSorter(TableModel model)
 	{
-		setModel (model);
+		setModel(model);
 		this.iObjectTableModelSorted = (IObjectTableModelSorted) model;
 	}
 
 	@Override
-	public void setModel (TableModel model)
+	public void setModel(TableModel model)
 	{
-		super.setModel (model);
-		reallocateIndexes ();
+		super.setModel(model);
+		reallocateIndexes();
 	}
 
-	public int compareRowsByColumn (int row1, int row2, int column)
+	public int compareRowsByColumn(int row1, int row2, int column)
 	{
-		Class type = model.getColumnClass (column);
+		Class type = model.getColumnClass(column);
 		TableModel data = model;
 
 		// Check for nulls
-		Object o1 = data.getValueAt (row1, column);
-		Object o2 = data.getValueAt (row2, column);
+		Object o1 = data.getValueAt(row1, column);
+		Object o2 = data.getValueAt(row2, column);
 
 		// If both values are null return 0
 		if (o1 == null && o2 == null)
@@ -94,12 +94,12 @@ public class ITableSorter extends ITableMap
 			return 1;
 		}
 
-		if (type.getSuperclass () == java.lang.Number.class)
+		if (type.getSuperclass() == java.lang.Number.class)
 		{
-			Number n1 = (Number) data.getValueAt (row1, column);
-			double d1 = n1.doubleValue ();
-			Number n2 = (Number) data.getValueAt (row2, column);
-			double d2 = n2.doubleValue ();
+			Number n1 = (Number) data.getValueAt(row1, column);
+			double d1 = n1.doubleValue();
+			Number n2 = (Number) data.getValueAt(row2, column);
+			double d2 = n2.doubleValue();
 
 			if (d1 < d2)
 			{
@@ -116,10 +116,10 @@ public class ITableSorter extends ITableMap
 		}
 		else if (type == java.util.Date.class)
 		{
-			Date d1 = (Date) data.getValueAt (row1, column);
-			long n1 = d1.getTime ();
-			Date d2 = (Date) data.getValueAt (row2, column);
-			long n2 = d2.getTime ();
+			Date d1 = (Date) data.getValueAt(row1, column);
+			long n1 = d1.getTime();
+			Date d2 = (Date) data.getValueAt(row2, column);
+			long n2 = d2.getTime();
 
 			if (n1 < n2)
 			{
@@ -136,9 +136,9 @@ public class ITableSorter extends ITableMap
 		}
 		else if (type == String.class)
 		{
-			String s1 = (String) data.getValueAt (row1, column);
-			String s2 = (String) data.getValueAt (row2, column);
-			int result = s1.compareTo (s2);
+			String s1 = (String) data.getValueAt(row1, column);
+			String s2 = (String) data.getValueAt(row2, column);
+			int result = s1.compareTo(s2);
 
 			if (result < 0)
 			{
@@ -155,10 +155,10 @@ public class ITableSorter extends ITableMap
 		}
 		else if (type == Boolean.class)
 		{
-			Boolean bool1 = (Boolean) data.getValueAt (row1, column);
-			boolean b1 = bool1.booleanValue ();
-			Boolean bool2 = (Boolean) data.getValueAt (row2, column);
-			boolean b2 = bool2.booleanValue ();
+			Boolean bool1 = (Boolean) data.getValueAt(row1, column);
+			boolean b1 = bool1.booleanValue();
+			Boolean bool2 = (Boolean) data.getValueAt(row2, column);
+			boolean b2 = bool2.booleanValue();
 
 			if (b1 == b2)
 			{
@@ -175,11 +175,11 @@ public class ITableSorter extends ITableMap
 		}
 		else
 		{
-			Object v1 = data.getValueAt (row1, column);
-			String s1 = v1.toString ();
-			Object v2 = data.getValueAt (row2, column);
-			String s2 = v2.toString ();
-			int result = s1.compareTo (s2);
+			Object v1 = data.getValueAt(row1, column);
+			String s1 = v1.toString();
+			Object v2 = data.getValueAt(row2, column);
+			String s2 = v2.toString();
+			int result = s1.compareTo(s2);
 
 			if (result < 0)
 			{
@@ -196,14 +196,14 @@ public class ITableSorter extends ITableMap
 		}
 	}
 
-	public int compare (int row1, int row2)
+	public int compare(int row1, int row2)
 	{
 		compares++;
 
-		for (int level = 0; level < sortingColumns.size (); level++)
+		for (int level = 0; level < sortingColumns.size(); level++)
 		{
-			Integer column = (Integer) sortingColumns.elementAt (level);
-			int result = compareRowsByColumn (row1, row2, column.intValue ());
+			Integer column = (Integer) sortingColumns.elementAt(level);
+			int result = compareRowsByColumn(row1, row2, column.intValue());
 
 			if (result != 0)
 			{
@@ -214,9 +214,9 @@ public class ITableSorter extends ITableMap
 		return 0;
 	}
 
-	public void reallocateIndexes ()
+	public void reallocateIndexes()
 	{
-		int rowCount = model.getRowCount ();
+		int rowCount = model.getRowCount();
 
 		indexes = new int[rowCount];
 
@@ -226,50 +226,50 @@ public class ITableSorter extends ITableMap
 		}
 	}
 
-	public void reallocateIndexesUpdate ()
+	public void reallocateIndexesUpdate()
 	{
-		reallocateIndexes ();
+		reallocateIndexes();
 	}
 
 	@Override
-	public void tableChanged (TableModelEvent e)
+	public void tableChanged(TableModelEvent e)
 	{
-		reallocateIndexes ();
+		reallocateIndexes();
 
-		super.tableChanged (e);
+		super.tableChanged(e);
 	}
 
-	public void checkModel ()
+	public void checkModel()
 	{
-		if (indexes.length != model.getRowCount ())
+		if (indexes.length != model.getRowCount())
 		{
-			System.err.println ("Sorter not informed of a change in model.");
+			System.err.println("Sorter not informed of a change in model.");
 		}
 	}
 
-	public void sort (@SuppressWarnings("unused") Object sender)
+	public void sort(@SuppressWarnings("unused") Object sender)
 	{
-		checkModel ();
+		checkModel();
 
 		compares = 0;
-		shuttlesort ((int[]) indexes.clone (), indexes, 0, indexes.length);
+		shuttlesort((int[]) indexes.clone(), indexes, 0, indexes.length);
 	}
 
-	public void n2sort ()
+	public void n2sort()
 	{
-		for (int i = 0; i < getRowCount (); i++)
+		for (int i = 0; i < getRowCount(); i++)
 		{
-			for (int j = i + 1; j < getRowCount (); j++)
+			for (int j = i + 1; j < getRowCount(); j++)
 			{
-				if (compare (indexes[i], indexes[j]) == - 1)
+				if (compare(indexes[i], indexes[j]) == - 1)
 				{
-					swap (i, j);
+					swap(i, j);
 				}
 			}
 		}
 	}
 
-	public void shuttlesort (int[] from, int[] to, int low, int high)
+	public void shuttlesort(int[] from, int[] to, int low, int high)
 	{
 		if (high - low < 2)
 		{
@@ -278,13 +278,13 @@ public class ITableSorter extends ITableMap
 
 		int middle = (low + high) / 2;
 
-		shuttlesort (to, from, low, middle);
-		shuttlesort (to, from, middle, high);
+		shuttlesort(to, from, low, middle);
+		shuttlesort(to, from, middle, high);
 
 		int p = low;
 		int q = middle;
 
-		if (high - low >= 4 && compare (from[middle - 1], from[middle]) <= 0)
+		if (high - low >= 4 && compare(from[middle - 1], from[middle]) <= 0)
 		{
 			for (int i = low; i < high; i++)
 			{
@@ -297,7 +297,7 @@ public class ITableSorter extends ITableMap
 		// A normal merge.
 		for (int i = low; i < high; i++)
 		{
-			if (q >= high || (p < middle && compare (from[p], from[q]) <= 0))
+			if (q >= high || (p < middle && compare(from[p], from[q]) <= 0))
 			{
 				to[i] = from[p++];
 			}
@@ -308,7 +308,7 @@ public class ITableSorter extends ITableMap
 		}
 	}
 
-	public void swap (int i, int j)
+	public void swap(int i, int j)
 	{
 		int tmp = indexes[i];
 
@@ -316,72 +316,72 @@ public class ITableSorter extends ITableMap
 		indexes[j] = tmp;
 	}
 
-	public Object getValueAt (int aRow, int aColumn)
+	public Object getValueAt(int aRow, int aColumn)
 	{
-		checkModel ();
+		checkModel();
 
-		return model.getValueAt (indexes[aRow], aColumn);
+		return model.getValueAt(indexes[aRow], aColumn);
 	}
 
-	public int getRealRow (int row)
+	public int getRealRow(int row)
 	{
 		return indexes[row];
 	}
 
-	public IObject getObjectByRow (int row)
+	public IObject getObjectByRow(int row)
 	{
-		return iObjectTableModelSorted.getObjectByRow (row);
+		return iObjectTableModelSorted.getObjectByRow(row);
 	}
 
 	@Override
-	public void setValueAt (Object aValue, int aRow, int aColumn)
+	public void setValueAt(Object aValue, int aRow, int aColumn)
 	{
-		checkModel ();
-		model.setValueAt (aValue, indexes[aRow], aColumn);
+		checkModel();
+		model.setValueAt(aValue, indexes[aRow], aColumn);
 	}
 
-	public void sortByColumn (int column)
+	public void sortByColumn(int column)
 	{
-		sortByColumn (column, true);
+		sortByColumn(column, true);
 	}
 
-	public void sortByColumn (int column, boolean ascending)
+	public void sortByColumn(int column, boolean ascending)
 	{
 		this.ascending = ascending;
-		sortingColumns.removeAllElements ();
-		sortingColumns.addElement (new Integer (column));
-		sort (this);
-		super.tableChanged (new TableModelEvent (this));
+		sortingColumns.removeAllElements();
+		sortingColumns.addElement(new Integer(column));
+		sort(this);
+		super.tableChanged(new TableModelEvent(this));
 	}
 
-	public void addMouseListenerToHeaderInTable (JTable table)
+	public void addMouseListenerToHeaderInTable(JTable table)
 	{
 		final ITableSorter sorter = this;
 		final JTable tableView = table;
 
-		tableView.setColumnSelectionAllowed (false);
+		tableView.setColumnSelectionAllowed(false);
 
-		MouseAdapter listMouseListener = new MouseAdapter ()
+		MouseAdapter listMouseListener = new MouseAdapter()
 		{
 			@Override
-			public void mouseClicked (MouseEvent e)
+			public void mouseClicked(MouseEvent e)
 			{
-				TableColumnModel columnModel = tableView.getColumnModel ();
-				int viewColumn = columnModel.getColumnIndexAtX (e.getX ());
-				int column = tableView.convertColumnIndexToModel (viewColumn);
+				TableColumnModel columnModel = tableView.getColumnModel();
+				int viewColumn = columnModel.getColumnIndexAtX(e.getX());
+				int column = tableView.convertColumnIndexToModel(viewColumn);
 
-				if (e.getClickCount () == 1 && column != - 1)
+				if (e.getClickCount() == 1 && column != - 1)
 				{
-					int shiftPressed = e.getModifiers () & InputEvent.SHIFT_MASK;
+					int shiftPressed = e.getModifiers() & InputEvent.SHIFT_MASK;
 					boolean ascending = (shiftPressed == 0);
 
-					sorter.sortByColumn (column, ascending);
+					sorter.sortByColumn(column, ascending);
 				}
 			}
 		};
 
-		JTableHeader th = tableView.getTableHeader ();
+		JTableHeader th = tableView.getTableHeader();
 
-		th.addMouseListener (listMouseListener);
+		th.addMouseListener(listMouseListener);
 	}
 }

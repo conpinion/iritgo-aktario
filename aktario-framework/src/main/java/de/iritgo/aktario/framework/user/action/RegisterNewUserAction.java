@@ -44,16 +44,16 @@ public class RegisterNewUserAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserAction ()
+	public RegisterNewUserAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserAction (String userName, String email, long userUniqueId, String password)
+	public RegisterNewUserAction(String userName, String email, long userUniqueId, String password)
 	{
-		super (userUniqueId);
+		super(userUniqueId);
 
 		this.userName = userName;
 		this.email = email;
@@ -63,7 +63,7 @@ public class RegisterNewUserAction extends FrameworkAction
 	/**
 	 * Get the id of the iritgo object.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.registernewuser";
 	}
@@ -71,7 +71,7 @@ public class RegisterNewUserAction extends FrameworkAction
 	/**
 	 * Get the UserName.
 	 */
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
@@ -79,36 +79,36 @@ public class RegisterNewUserAction extends FrameworkAction
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		email = stream.readUTF ();
-		password = stream.readUTF ();
+		userName = stream.readUTF();
+		email = stream.readUTF();
+		password = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (email);
-		stream.writeUTF (password);
+		stream.writeUTF(userName);
+		stream.writeUTF(email);
+		stream.writeUTF(password);
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-		User user = new User (userName, email, 0, password, clientTransceiver.getSender ());
+		User user = new User(userName, email, 0, password, clientTransceiver.getSender());
 
-		AppContext appContext = AppContext.instance ();
+		AppContext appContext = AppContext.instance();
 
-		appContext.setUser (user);
+		appContext.setUser(user);
 
-		Engine.instance ().getFlowControl ().ruleSuccess ("userregisted");
+		Engine.instance().getFlowControl().ruleSuccess("userregisted");
 	}
 }

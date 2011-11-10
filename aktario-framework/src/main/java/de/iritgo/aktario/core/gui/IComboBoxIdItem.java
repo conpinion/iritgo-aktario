@@ -30,31 +30,31 @@ public class IComboBoxIdItem
 
 	public String label;
 
-	public IComboBoxIdItem (Object id, String label)
+	public IComboBoxIdItem(Object id, String label)
 	{
 		this.id = id;
 		this.label = label;
 	}
 
 	@Override
-	public String toString ()
+	public String toString()
 	{
 		return label;
 	}
 
-	public static void selectItemWithId (final JComboBox comboBox, Object id)
+	public static void selectItemWithId(final JComboBox comboBox, Object id)
 	{
-		for (int index = 0; index < comboBox.getItemCount (); ++index)
+		for (int index = 0; index < comboBox.getItemCount(); ++index)
 		{
-			if (((IComboBoxIdItem) comboBox.getItemAt (index)).id.equals (id))
+			if (((IComboBoxIdItem) comboBox.getItemAt(index)).id.equals(id))
 			{
 				final int selectIndex = index;
 
-				SwingUtilities.invokeLater (new Runnable ()
+				SwingUtilities.invokeLater(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
-						comboBox.setSelectedIndex (selectIndex);
+						comboBox.setSelectedIndex(selectIndex);
 					}
 				});
 
@@ -62,18 +62,18 @@ public class IComboBoxIdItem
 			}
 		}
 
-		SwingUtilities.invokeLater (new Runnable ()
+		SwingUtilities.invokeLater(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
-				comboBox.setSelectedIndex (comboBox.getItemCount () > 0 ? 0 : - 1);
+				comboBox.setSelectedIndex(comboBox.getItemCount() > 0 ? 0 : - 1);
 			}
 		});
 	}
 
-	public static Object getSelectedId (JComboBox comboBox)
+	public static Object getSelectedId(JComboBox comboBox)
 	{
-		IComboBoxIdItem item = (IComboBoxIdItem) comboBox.getSelectedItem ();
+		IComboBoxIdItem item = (IComboBoxIdItem) comboBox.getSelectedItem();
 
 		return item != null ? item.id : null;
 	}

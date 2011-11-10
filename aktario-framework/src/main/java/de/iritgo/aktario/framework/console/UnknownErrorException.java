@@ -25,8 +25,8 @@ package de.iritgo.aktario.framework.console;
  */
 public class UnknownErrorException extends Exception
 {
-	public UnknownErrorException (String message)
+	public UnknownErrorException(String message)
 	{
-		super (message);
+		super(message);
 	}
 }

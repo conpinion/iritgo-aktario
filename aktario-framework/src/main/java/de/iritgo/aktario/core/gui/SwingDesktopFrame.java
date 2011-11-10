@@ -46,9 +46,9 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	/**
 	 * Create a new desktop frame.
 	 */
-	public SwingDesktopFrame ()
+	public SwingDesktopFrame()
 	{
-		this (Engine.instance ().getResourceService ().getString ("app.title"));
+		this(Engine.instance().getResourceService().getString("app.title"));
 	}
 
 	/**
@@ -56,21 +56,21 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @param title The desktop frame's title.
 	 */
-	public SwingDesktopFrame (String title)
+	public SwingDesktopFrame(String title)
 	{
-		super (title);
-		getGlassPane ().addMouseListener (new MouseAdapter ()
+		super(title);
+		getGlassPane().addMouseListener(new MouseAdapter()
 		{
 		});
-		getGlassPane ().addMouseMotionListener (new MouseMotionAdapter ()
+		getGlassPane().addMouseMotionListener(new MouseMotionAdapter()
 		{
 		});
-		getGlassPane ().addKeyListener (new KeyAdapter ()
+		getGlassPane().addKeyListener(new KeyAdapter()
 		{
 		});
-		getGlassPane ().setVisible (false);
+		getGlassPane().setVisible(false);
 
-		setSize (getToolkit ().getScreenSize ());
+		setSize(getToolkit().getScreenSize());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @return The swing frame.
 	 */
-	public JFrame getJFrame ()
+	public JFrame getJFrame()
 	{
 		return this;
 	}
@@ -89,9 +89,9 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 * @param fullScreen If true, the desktop frame is displayed in
 	 *   fullscreen mode.
 	 */
-	public void setFullScreen (boolean fullScreen)
+	public void setFullScreen(boolean fullScreen)
 	{
-		setUndecorated (fullScreen);
+		setUndecorated(fullScreen);
 	}
 
 	/**
@@ -100,9 +100,9 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @return True if the desktop is displayed in fullscreen mode.
 	 */
-	public boolean isFullScreen ()
+	public boolean isFullScreen()
 	{
-		return isUndecorated ();
+		return isUndecorated();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @return True if the desktop frame supports the fullscreen mode.
 	 */
-	public boolean canFullScreen ()
+	public boolean canFullScreen()
 	{
 		return true;
 	}
@@ -119,51 +119,51 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	/**
 	 * Initialize the desktop frame.
 	 */
-	public void init ()
+	public void init()
 	{
-		addWindowListener (new WindowAdapter ()
+		addWindowListener(new WindowAdapter()
 		{
 			@Override
-			public void windowActivated (WindowEvent e)
+			public void windowActivated(WindowEvent e)
 			{
 			}
 
 			@Override
-			public void windowClosed (WindowEvent e)
+			public void windowClosed(WindowEvent e)
 			{
 			}
 
 			@Override
-			public void windowClosing (WindowEvent e)
+			public void windowClosing(WindowEvent e)
 			{
 				if (windowClosingEvent != null)
 				{
-					windowClosingEvent.actionPerformed (new ActionEvent (this, 0, "windowClosing"));
+					windowClosingEvent.actionPerformed(new ActionEvent(this, 0, "windowClosing"));
 				}
 			}
 
 			@Override
-			public void windowDeactivated (WindowEvent e)
+			public void windowDeactivated(WindowEvent e)
 			{
 			}
 
 			@Override
-			public void windowDeiconified (WindowEvent e)
+			public void windowDeiconified(WindowEvent e)
 			{
 			}
 
 			@Override
-			public void windowIconified (WindowEvent e)
+			public void windowIconified(WindowEvent e)
 			{
 			}
 
 			@Override
-			public void windowOpened (WindowEvent e)
+			public void windowOpened(WindowEvent e)
 			{
 			}
 		});
 
-		requestFocus ();
+		requestFocus();
 	}
 
 	/**
@@ -172,17 +172,17 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 * @param visible If true the desktop frame is displayed.
 	 */
 	@Override
-	public void setVisible (boolean visible)
+	public void setVisible(boolean visible)
 	{
-		super.setVisible (visible);
+		super.setVisible(visible);
 	}
 
 	/**
 	 * Show the desktop frame.
 	 */
-	public void setVisible ()
+	public void setVisible()
 	{
-		setVisible (true);
+		setVisible(true);
 	}
 
 	/**
@@ -190,9 +190,9 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @return The screen size.
 	 */
-	public Dimension getScreenSize ()
+	public Dimension getScreenSize()
 	{
-		return getToolkit ().getScreenSize ();
+		return getToolkit().getScreenSize();
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 *
 	 * @param listener The action listener.
 	 */
-	public void addCloseListener (ActionListener listener)
+	public void addCloseListener(ActionListener listener)
 	{
 		this.windowClosingEvent = listener;
 	}
@@ -209,10 +209,10 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	/**
 	 * Close the desktop manager and free all resources.
 	 */
-	public void close ()
+	public void close()
 	{
-		setVisible (false);
-		dispose ();
+		setVisible(false);
+		dispose();
 	}
 
 	/**
@@ -221,8 +221,8 @@ public class SwingDesktopFrame extends JFrame implements IDesktopFrame
 	 * @param enabled If true the desktop is enabled.
 	 */
 	@Override
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		getGlassPane ().setVisible (! enabled);
+		getGlassPane().setVisible(! enabled);
 	}
 }

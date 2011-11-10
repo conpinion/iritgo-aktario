@@ -30,61 +30,61 @@ public abstract class FileTransferService
 
 	protected byte[] data;
 
-	public abstract void startClientTransfer (FileTransferContext fileTransferContext);
+	public abstract void startClientTransfer(FileTransferContext fileTransferContext);
 
-	public abstract void startServerTransfer (FileTransferContext fileTransferContext);
+	public abstract void startServerTransfer(FileTransferContext fileTransferContext);
 
-	public void startTransfer (FileTransferContext fileTransferContext)
+	public void startTransfer(FileTransferContext fileTransferContext)
 	{
-		if (isServer ())
+		if (isServer())
 		{
-			startServerTransfer (fileTransferContext);
+			startServerTransfer(fileTransferContext);
 		}
 		else
 		{
-			startClientTransfer (fileTransferContext);
+			startClientTransfer(fileTransferContext);
 		}
 	}
 
-	public abstract int clientTransfer (FileTransferContext fileTransferContext);
+	public abstract int clientTransfer(FileTransferContext fileTransferContext);
 
-	public abstract int serverTransfer (FileTransferContext fileTransferContext);
+	public abstract int serverTransfer(FileTransferContext fileTransferContext);
 
-	public int transfer (FileTransferContext fileTransferContext, byte[] data)
+	public int transfer(FileTransferContext fileTransferContext, byte[] data)
 	{
 		this.data = data;
 
-		if (isServer ())
+		if (isServer())
 		{
-			return serverTransfer (fileTransferContext);
+			return serverTransfer(fileTransferContext);
 		}
 		else
 		{
-			return clientTransfer (fileTransferContext);
+			return clientTransfer(fileTransferContext);
 		}
 	}
 
-	public abstract void endClientTransfer (FileTransferContext fileTransferContext);
+	public abstract void endClientTransfer(FileTransferContext fileTransferContext);
 
-	public abstract void endServerTransfer (FileTransferContext fileTransferContext);
+	public abstract void endServerTransfer(FileTransferContext fileTransferContext);
 
-	public void endTransfer (FileTransferContext fileTransferContext)
+	public void endTransfer(FileTransferContext fileTransferContext)
 	{
-		if (isServer ())
+		if (isServer())
 		{
-			endServerTransfer (fileTransferContext);
+			endServerTransfer(fileTransferContext);
 		}
 		else
 		{
-			endClientTransfer (fileTransferContext);
+			endClientTransfer(fileTransferContext);
 		}
 	}
 
 	@Override
-	public abstract FileTransferService clone ();
+	public abstract FileTransferService clone();
 
-	public boolean isServer ()
+	public boolean isServer()
 	{
-		return IritgoEngine.instance ().isServer ();
+		return IritgoEngine.instance().isServer();
 	}
 }

@@ -40,50 +40,50 @@ public class EditIObject extends Command
 {
 	private List prototypes;
 
-	public EditIObject ()
+	public EditIObject()
 	{
-		super ("EditIObject");
-		prototypes = new LinkedList ();
+		super("EditIObject");
+		prototypes = new LinkedList();
 	}
 
-	public EditIObject (IObject prototype)
+	public EditIObject(IObject prototype)
 	{
-		this ();
-		prototypes.add (prototype);
+		this();
+		prototypes.add(prototype);
 	}
 
-	public void addPrototype (IObject prototype)
+	public void addPrototype(IObject prototype)
 	{
-		prototypes.add (prototype);
+		prototypes.add(prototype);
 	}
 
 	/**
 	 * Send all connected users the edit command, now the client will refresh the object.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ClientTransceiver clientTransceiver = new ClientTransceiver (0);
+		ClientTransceiver clientTransceiver = new ClientTransceiver(0);
 
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.onlineUserIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.onlineUserIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			clientTransceiver.addReceiver (user.getNetworkChannel ());
+			clientTransceiver.addReceiver(user.getNetworkChannel());
 		}
 
-		EditIObjectAction editPrototypeAction = new EditIObjectAction (EditIObjectAction.OK);
+		EditIObjectAction editPrototypeAction = new EditIObjectAction(EditIObjectAction.OK);
 
-		for (Iterator i = prototypes.iterator (); i.hasNext ();)
+		for (Iterator i = prototypes.iterator(); i.hasNext();)
 		{
-			editPrototypeAction.addIObject ((IObject) i.next ());
+			editPrototypeAction.addIObject((IObject) i.next());
 		}
 
-		editPrototypeAction.setTransceiver (clientTransceiver);
-		editPrototypeAction.setUniqueId (getUniqueId ());
+		editPrototypeAction.setTransceiver(clientTransceiver);
+		editPrototypeAction.setUniqueId(getUniqueId());
 
-		ActionTools.sendToClient (editPrototypeAction);
+		ActionTools.sendToClient(editPrototypeAction);
 	}
 }

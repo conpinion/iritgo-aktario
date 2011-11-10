@@ -144,38 +144,38 @@ public class Engine
 	 *
 	 * @param commandLine Command line options.
 	 */
-	private Engine (String name, CommandLine commandLine)
+	private Engine(String name, CommandLine commandLine)
 	{
 		this.name = name;
 		this.commandLine = commandLine;
-		userHomeDir = System.getProperty ("user.home");
-		systemDir = System.getProperty ("user.dir");
-		fileSeparator = System.getProperty ("file.separator");
+		userHomeDir = System.getProperty("user.home");
+		systemDir = System.getProperty("user.dir");
+		fileSeparator = System.getProperty("file.separator");
 
-		if (commandLine.hasOption ("s"))
+		if (commandLine.hasOption("s"))
 		{
-			File dir = new File (commandLine.getOptionValue ("s").trim ());
+			File dir = new File(commandLine.getOptionValue("s").trim());
 
-			if (dir.isAbsolute ())
+			if (dir.isAbsolute())
 			{
-				systemDir = dir.getPath ();
+				systemDir = dir.getPath();
 			}
 			else
 			{
-				systemDir += fileSeparator + dir.getPath ();
+				systemDir += fileSeparator + dir.getPath();
 			}
 		}
-		else if (System.getProperty ("iritgo.system.dir") != null)
+		else if (System.getProperty("iritgo.system.dir") != null)
 		{
-			File dir = new File (System.getProperty ("iritgo.system.dir").trim ());
+			File dir = new File(System.getProperty("iritgo.system.dir").trim());
 
-			if (dir.isAbsolute ())
+			if (dir.isAbsolute())
 			{
-				systemDir = dir.getPath ();
+				systemDir = dir.getPath();
 			}
 			else
 			{
-				systemDir += fileSeparator + dir.getPath ();
+				systemDir += fileSeparator + dir.getPath();
 			}
 		}
 	}
@@ -185,10 +185,10 @@ public class Engine
 	 *
 	 * @param commandLine Command line options.
 	 */
-	public static void create (String name, CommandLine commandLine)
+	public static void create(String name, CommandLine commandLine)
 	{
-		engine = new Engine (name, commandLine);
-		engine.init ();
+		engine = new Engine(name, commandLine);
+		engine.init();
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class Engine
 	 *
 	 * @return The engine instance.
 	 */
-	static public Engine instance ()
+	static public Engine instance()
 	{
 		return engine;
 	}
@@ -204,145 +204,145 @@ public class Engine
 	/**
 	 * Initialize the engine.
 	 */
-	private void init ()
+	private void init()
 	{
-		initLoggingEngine ();
+		initLoggingEngine();
 
-		systemProperties = new SystemProperties ();
-		systemProperties.load (userHomeDir + fileSeparator + name + ".properties");
+		systemProperties = new SystemProperties();
+		systemProperties.load(userHomeDir + fileSeparator + name + ".properties");
 
-		iObjectFactory = new IObjectFactory ();
-		actionProcessorRegistry = new ActionProcessorRegistry ();
+		iObjectFactory = new IObjectFactory();
+		actionProcessorRegistry = new ActionProcessorRegistry();
 
-		eventRegistry = new EventRegistry ();
-		proxyEventRegistry = new IObjectProxyEventRegistry ();
-		persistentIdGenerator = new DefaultIDGenerator ();
+		eventRegistry = new EventRegistry();
+		proxyEventRegistry = new IObjectProxyEventRegistry();
+		persistentIdGenerator = new DefaultIDGenerator();
 
-		flowControl = new FlowControl ();
+		flowControl = new FlowControl();
 
-		proxyRegistry = new IObjectProxyRegistry ();
-		baseRegistry = new BaseRegistry ();
+		proxyRegistry = new IObjectProxyRegistry();
+		baseRegistry = new BaseRegistry();
 
-		managerRegistry = new ManagerRegistry ();
+		managerRegistry = new ManagerRegistry();
 
-		sessionContext = new SessionContext ("root");
+		sessionContext = new SessionContext("root");
 
-		commandRegistry = new CommandRegistry ();
+		commandRegistry = new CommandRegistry();
 
-		commandProcessorRegistry = new CommandProcessorRegistry ();
+		commandProcessorRegistry = new CommandProcessorRegistry();
 
-		initThreadPooling ();
-		initResourceEngine ();
-		initPluginManager ();
+		initThreadPooling();
+		initResourceEngine();
+		initPluginManager();
 	}
 
 	/**
 	 * Initialize the logging subsystem.
 	 */
-	private void initLoggingEngine ()
+	private void initLoggingEngine()
 	{
-		loggerRegistry = new LoggerRegistry ();
+		loggerRegistry = new LoggerRegistry();
 
 		String loggerId = "Console";
 
-		loggerRegistry.addLogger (new ConsoleLogger ());
+		loggerRegistry.addLogger(new ConsoleLogger());
 
-		if (commandLine.hasOption ("l"))
+		if (commandLine.hasOption("l"))
 		{
-			if (commandLine.getOptionValue ("l").equals ("_DIALOG_"))
+			if (commandLine.getOptionValue("l").equals("_DIALOG_"))
 			{
-				loggerRegistry.addLogger (new DialogLogger ());
+				loggerRegistry.addLogger(new DialogLogger());
 				loggerId = "Dialog";
 			}
 			else
 			{
 				try
 				{
-					File logFile = new File (commandLine.getOptionValue ("l"));
+					File logFile = new File(commandLine.getOptionValue("l"));
 
-					logFile.createNewFile ();
-					loggerRegistry.addLogger (new OutputStreamLogger (new FileOutputStream (logFile)));
+					logFile.createNewFile();
+					loggerRegistry.addLogger(new OutputStreamLogger(new FileOutputStream(logFile)));
 					loggerId = "OutputStream";
 				}
 				catch (IOException x)
 				{
-					System.err.println ("Unable to create log file '" + commandLine.getOptionValue ("l") + "': "
-									+ x.toString ());
+					System.err.println("Unable to create log file '" + commandLine.getOptionValue("l") + "': "
+									+ x.toString());
 				}
 			}
 		}
-		else if (System.getProperty ("iritgo.log.file") != null)
+		else if (System.getProperty("iritgo.log.file") != null)
 		{
 			try
 			{
-				File logFile = new File (System.getProperty ("iritgo.log.file"));
+				File logFile = new File(System.getProperty("iritgo.log.file"));
 
-				logFile.createNewFile ();
-				loggerRegistry.addLogger (new OutputStreamLogger (new FileOutputStream (logFile)));
+				logFile.createNewFile();
+				loggerRegistry.addLogger(new OutputStreamLogger(new FileOutputStream(logFile)));
 				loggerId = "OutputStream";
 			}
 			catch (IOException x)
 			{
-				System.err.println ("Unable to create log file '" + System.getProperty ("iritgo.log.file") + "': "
-								+ x.toString ());
+				System.err.println("Unable to create log file '" + System.getProperty("iritgo.log.file") + "': "
+								+ x.toString());
 			}
 		}
-		else if (System.getProperty ("iritgo.log.window") != null)
+		else if (System.getProperty("iritgo.log.window") != null)
 		{
-			loggerRegistry.addLogger (new DialogLogger ());
+			loggerRegistry.addLogger(new DialogLogger());
 			loggerId = "Dialog";
 		}
 
-		loggerRegistry.addLogger ("system", loggerId);
-		loggerRegistry.addLogger ("resource", loggerId);
-		loggerRegistry.addLogger ("thread", loggerId);
-		loggerRegistry.addLogger ("network", loggerId);
-		loggerRegistry.addLogger ("plugin", loggerId);
-		loggerRegistry.addLogger ("client", loggerId);
-		loggerRegistry.addLogger ("server", loggerId);
-		loggerRegistry.addLogger ("persist", loggerId);
+		loggerRegistry.addLogger("system", loggerId);
+		loggerRegistry.addLogger("resource", loggerId);
+		loggerRegistry.addLogger("thread", loggerId);
+		loggerRegistry.addLogger("network", loggerId);
+		loggerRegistry.addLogger("plugin", loggerId);
+		loggerRegistry.addLogger("client", loggerId);
+		loggerRegistry.addLogger("server", loggerId);
+		loggerRegistry.addLogger("persist", loggerId);
 
-		Log.logInfo ("system", "Engine", "Logging subsystem initialized");
+		Log.logInfo("system", "Engine", "Logging subsystem initialized");
 	}
 
 	/**
 	 * Initialize the resource subsystem.
 	 */
-	private void initResourceEngine ()
+	private void initResourceEngine()
 	{
-		resourceService = new ResourceService (new ResourceNode ("resource.engine.root", "root"));
-		Log.logInfo ("system", "Engine", "Resource subsystem initialized");
+		resourceService = new ResourceService(new ResourceNode("resource.engine.root", "root"));
+		Log.logInfo("system", "Engine", "Resource subsystem initialized");
 	}
 
 	/**
 	 * Initialize the threading subsystem.
 	 */
-	private void initThreadPooling ()
+	private void initThreadPooling()
 	{
-		threadService = new ThreadService (4);
-		Log.logInfo ("system", "Engine", "Threading subsystem initialized");
+		threadService = new ThreadService(4);
+		Log.logInfo("system", "Engine", "Threading subsystem initialized");
 	}
 
 	/**
 	 * Initialize the plugin subsystem.
 	 */
-	private void initPluginManager ()
+	private void initPluginManager()
 	{
-		pluginManager = new PluginManager (this);
+		pluginManager = new PluginManager(this);
 	}
 
 	/**
 	 * Store the system properties.
 	 */
-	public void storeSystemProperties ()
+	public void storeSystemProperties()
 	{
-		systemProperties.store (userHomeDir + fileSeparator + name + ".properties");
+		systemProperties.store(userHomeDir + fileSeparator + name + ".properties");
 	}
 
 	/**
 	 * Start the engine.
 	 */
-	public void start ()
+	public void start()
 	{
 	}
 
@@ -351,13 +351,13 @@ public class Engine
 	 *
 	 * @return True if all resources are successfully released.
 	 */
-	public boolean stop ()
+	public boolean stop()
 	{
-		storeSystemProperties ();
+		storeSystemProperties();
 
-		boolean res = getThreadService ().stopThreadEngine ();
+		boolean res = getThreadService().stopThreadEngine();
 
-		loggerRegistry.dispose ();
+		loggerRegistry.dispose();
 
 		return res;
 	}
@@ -367,7 +367,7 @@ public class Engine
 	 *
 	 * @return The action processor registry.
 	 */
-	public ActionProcessorRegistry getActionProcessorRegistry ()
+	public ActionProcessorRegistry getActionProcessorRegistry()
 	{
 		return actionProcessorRegistry;
 	}
@@ -377,7 +377,7 @@ public class Engine
 	 *
 	 * @return The iritgo object factory.
 	 */
-	public IObjectFactoryInterface getIObjectFactory ()
+	public IObjectFactoryInterface getIObjectFactory()
 	{
 		return iObjectFactory;
 	}
@@ -387,7 +387,7 @@ public class Engine
 	 *
 	 * @param iObjectFactoryInterface The iritgo object factory.
 	 */
-	public void setIObjectFactory (IObjectFactoryInterface iObjectFactoryInterface)
+	public void setIObjectFactory(IObjectFactoryInterface iObjectFactoryInterface)
 	{
 		iObjectFactory = iObjectFactoryInterface;
 	}
@@ -397,7 +397,7 @@ public class Engine
 	 *
 	 * @return The resource service.
 	 */
-	public ResourceService getResourceService ()
+	public ResourceService getResourceService()
 	{
 		return resourceService;
 	}
@@ -407,7 +407,7 @@ public class Engine
 	 *
 	 * @return The threading service.
 	 */
-	public ThreadService getThreadService ()
+	public ThreadService getThreadService()
 	{
 		return threadService;
 	}
@@ -417,7 +417,7 @@ public class Engine
 	 *
 	 * @return The plugin manager.
 	 */
-	public PluginManager getPluginManager ()
+	public PluginManager getPluginManager()
 	{
 		return pluginManager;
 	}
@@ -427,7 +427,7 @@ public class Engine
 	 *
 	 * @return The system directory.
 	 */
-	public String getSystemDir ()
+	public String getSystemDir()
 	{
 		return systemDir;
 	}
@@ -437,7 +437,7 @@ public class Engine
 	 *
 	 * @return The file separator.
 	 */
-	public String getFileSeparator ()
+	public String getFileSeparator()
 	{
 		return fileSeparator;
 	}
@@ -447,7 +447,7 @@ public class Engine
 	 *
 	 * @return The system properties.
 	 */
-	public SystemProperties getSystemProperties ()
+	public SystemProperties getSystemProperties()
 	{
 		return systemProperties;
 	}
@@ -457,7 +457,7 @@ public class Engine
 	 *
 	 * @return The event registry.
 	 */
-	public EventRegistry getEventRegistry ()
+	public EventRegistry getEventRegistry()
 	{
 		return eventRegistry;
 	}
@@ -467,7 +467,7 @@ public class Engine
 	 *
 	 * @return The proxy event registry.
 	 */
-	public IObjectProxyEventRegistry getProxyEventRegistry ()
+	public IObjectProxyEventRegistry getProxyEventRegistry()
 	{
 		return proxyEventRegistry;
 	}
@@ -477,7 +477,7 @@ public class Engine
 	 *
 	 * @return The unique id generator.
 	 */
-	public IDGenerator getPersistentIDGenerator ()
+	public IDGenerator getPersistentIDGenerator()
 	{
 		return persistentIdGenerator;
 	}
@@ -487,7 +487,7 @@ public class Engine
 	 *
 	 * @param idGenerator The id generator.
 	 */
-	public void installPersistentIDGenerator (IDGenerator idGenerator)
+	public void installPersistentIDGenerator(IDGenerator idGenerator)
 	{
 		this.persistentIdGenerator = idGenerator;
 	}
@@ -497,7 +497,7 @@ public class Engine
 	 *
 	 * @return The unique id generator.
 	 */
-	public IDGenerator getTransientIDGenerator ()
+	public IDGenerator getTransientIDGenerator()
 	{
 		return transientIdGenerator;
 	}
@@ -507,7 +507,7 @@ public class Engine
 	 *
 	 * @param idGenerator The unique id generator.
 	 */
-	public void installTransientIDGenerator (IDGenerator idGenerator)
+	public void installTransientIDGenerator(IDGenerator idGenerator)
 	{
 		this.transientIdGenerator = idGenerator;
 	}
@@ -517,7 +517,7 @@ public class Engine
 	 *
 	 * @return The flow controller.
 	 */
-	public FlowControl getFlowControl ()
+	public FlowControl getFlowControl()
 	{
 		return flowControl;
 	}
@@ -527,7 +527,7 @@ public class Engine
 	 *
 	 * @return The base registry.
 	 */
-	public BaseRegistry getBaseRegistry ()
+	public BaseRegistry getBaseRegistry()
 	{
 		return baseRegistry;
 	}
@@ -537,7 +537,7 @@ public class Engine
 	 *
 	 * @return The proxy registry.
 	 */
-	public IObjectProxyRegistry getProxyRegistry ()
+	public IObjectProxyRegistry getProxyRegistry()
 	{
 		return proxyRegistry;
 	}
@@ -547,7 +547,7 @@ public class Engine
 	 *
 	 * @return The manager registry.
 	 */
-	public ManagerRegistry getManagerRegistry ()
+	public ManagerRegistry getManagerRegistry()
 	{
 		return managerRegistry;
 	}
@@ -558,9 +558,9 @@ public class Engine
 	 * @param id The id of the manager to retrieve.
 	 * @return The specified manager or null if none was found.
 	 */
-	public Manager getManager (String id)
+	public Manager getManager(String id)
 	{
-		return instance ().getManagerRegistry ().getManager (id);
+		return instance().getManagerRegistry().getManager(id);
 	}
 
 	/**
@@ -568,7 +568,7 @@ public class Engine
 	 *
 	 * @return The session context.
 	 */
-	public SessionContext getSessionContext ()
+	public SessionContext getSessionContext()
 	{
 		return sessionContext;
 	}
@@ -578,7 +578,7 @@ public class Engine
 	 *
 	 * @return The session context.
 	 */
-	public CommandRegistry getCommandRegistry ()
+	public CommandRegistry getCommandRegistry()
 	{
 		return commandRegistry;
 	}
@@ -588,7 +588,7 @@ public class Engine
 	 *
 	 * @return The command processor registry.
 	 */
-	public CommandProcessorRegistry getCommandProcessorRegistry ()
+	public CommandProcessorRegistry getCommandProcessorRegistry()
 	{
 		return commandProcessorRegistry;
 	}
@@ -598,11 +598,11 @@ public class Engine
 	 *
 	 * @return The gui factory.
 	 */
-	public IGUIFactory getGUIFactory ()
+	public IGUIFactory getGUIFactory()
 	{
 		if (guiFactory == null)
 		{
-			Log.logError ("system", "Engine", "No gui factory set");
+			Log.logError("system", "Engine", "No gui factory set");
 		}
 
 		return guiFactory;
@@ -613,7 +613,7 @@ public class Engine
 	 *
 	 * @param guiFactory The new gui factory.
 	 */
-	public void setGUIFactory (IGUIFactory guiFactory)
+	public void setGUIFactory(IGUIFactory guiFactory)
 	{
 		this.guiFactory = guiFactory;
 	}
@@ -623,7 +623,7 @@ public class Engine
 	 *
 	 * @return The configuration.
 	 */
-	public Configuration getConfiguration ()
+	public Configuration getConfiguration()
 	{
 		return configuration;
 	}
@@ -633,7 +633,7 @@ public class Engine
 	 *
 	 * @param configuration The new configuration.
 	 */
-	public void setConfiguration (Configuration configuration)
+	public void setConfiguration(Configuration configuration)
 	{
 		this.configuration = configuration;
 	}
@@ -643,7 +643,7 @@ public class Engine
 	 *
 	 * @return The engine name.
 	 */
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}

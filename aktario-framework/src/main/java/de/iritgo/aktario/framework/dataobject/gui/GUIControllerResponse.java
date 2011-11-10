@@ -41,18 +41,18 @@ public class GUIControllerResponse extends FrameworkAction
 	/**
 	 *
 	 */
-	public GUIControllerResponse ()
+	public GUIControllerResponse()
 	{
-		setTypeId ("GUIControllerResponse");
-		controller = new Controller ();
+		setTypeId("GUIControllerResponse");
+		controller = new Controller();
 	}
 
 	/**
 	 *
 	 */
-	public GUIControllerResponse (String controllerTypeId, DataObject controller)
+	public GUIControllerResponse(String controllerTypeId, DataObject controller)
 	{
-		this ();
+		this();
 		this.controllerTypeId = controllerTypeId;
 		this.controller = controller;
 	}
@@ -62,13 +62,13 @@ public class GUIControllerResponse extends FrameworkAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		controllerTypeId = stream.readUTF ();
+		controllerTypeId = stream.readUTF();
 
 		try
 		{
-			controller.readObject (stream);
+			controller.readObject(stream);
 		}
 		catch (ClassNotFoundException x)
 		{
@@ -80,26 +80,26 @@ public class GUIControllerResponse extends FrameworkAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (controllerTypeId);
-		controller.writeObject (stream);
+		stream.writeUTF(controllerTypeId);
+		controller.writeObject(stream);
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Engine.instance ().getBaseRegistry ().add (controller);
+		Engine.instance().getBaseRegistry().add(controller);
 
-		IObjectProxy proxy = new IObjectProxy (controller);
+		IObjectProxy proxy = new IObjectProxy(controller);
 
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, controller.getTypeId ());
+		Engine.instance().getProxyRegistry().addProxy(proxy, controller.getTypeId());
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		guiManager.addController (controllerTypeId, (Controller) controller);
-		guiManager.controllerChanged (controller);
+		guiManager.addController(controllerTypeId, (Controller) controller);
+		guiManager.controllerChanged(controller);
 	}
 }

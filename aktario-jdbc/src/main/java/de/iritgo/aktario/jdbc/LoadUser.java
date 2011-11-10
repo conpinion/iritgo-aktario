@@ -45,43 +45,43 @@ public class LoadUser extends Command
 	/**
 	 * Create a new <code>LoadUser</code> command.
 	 */
-	public LoadUser ()
+	public LoadUser()
 	{
-		super ("persist.LoadUser");
+		super("persist.LoadUser");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("id") == null)
+		if (properties.get("id") == null)
 		{
-			Log.logError ("persist", "LoadUser", "Missing unique id for the user to load");
+			Log.logError("persist", "LoadUser", "Missing unique id for the user to load");
 
 			return;
 		}
 
-		long uniqueId = ((Long) properties.get ("id")).longValue ();
+		long uniqueId = ((Long) properties.get("id")).longValue();
 
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
-			final User user = (User) query.query ("select * from IritgoUser where id=?", new Long (uniqueId),
-							new ResultSetHandler ()
+			QueryRunner query = new QueryRunner(dataSource);
+			final User user = (User) query.query("select * from IritgoUser where id=?", new Long(uniqueId),
+							new ResultSetHandler()
 							{
-								public Object handle (ResultSet rs) throws SQLException
+								public Object handle(ResultSet rs) throws SQLException
 								{
-									if (rs.next ())
+									if (rs.next())
 									{
-										User user = new User (rs.getString ("name"), rs.getString ("email"), rs
-														.getInt ("id"), rs.getString ("password"), 0);
+										User user = new User(rs.getString("name"), rs.getString("email"), rs
+														.getInt("id"), rs.getString("password"), 0);
 
-										Server.instance ().getUserRegistry ().addUser (user);
-										Engine.instance ().getBaseRegistry ().add (user);
+										Server.instance().getUserRegistry().addUser(user);
+										Engine.instance().getBaseRegistry().add(user);
 
 										return user;
 									}
@@ -94,17 +94,17 @@ public class LoadUser extends Command
 
 			if (user == null)
 			{
-				Log.logError ("persist", "LoadUser", "Unable to find user with id " + uniqueId);
+				Log.logError("persist", "LoadUser", "Unable to find user with id " + uniqueId);
 
 				return;
 			}
 
-			Log.logVerbose ("persist", "LoadUser", "Successfully loaded user " + user.getName () + ":"
-							+ user.getUniqueId ());
+			Log.logVerbose("persist", "LoadUser", "Successfully loaded user " + user.getName() + ":"
+							+ user.getUniqueId());
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "LoadUser", "Error while loading the users: " + x);
+			Log.logError("persist", "LoadUser", "Error while loading the users: " + x);
 		}
 	}
 }

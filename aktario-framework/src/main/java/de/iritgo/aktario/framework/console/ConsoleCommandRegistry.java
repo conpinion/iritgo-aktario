@@ -35,37 +35,37 @@ public class ConsoleCommandRegistry
 	 * Constructor
 	 *
 	 */
-	public ConsoleCommandRegistry ()
+	public ConsoleCommandRegistry()
 	{
-		consoleCommands = new HashMap ();
+		consoleCommands = new HashMap();
 	}
 
 	/**
 	 * Add a ConsoleCommand.
 	 */
-	public void add (ConsoleCommand consoleCommand)
+	public void add(ConsoleCommand consoleCommand)
 	{
-		consoleCommands.put (consoleCommand.getCommandId (), consoleCommand);
+		consoleCommands.put(consoleCommand.getCommandId(), consoleCommand);
 	}
 
 	/**
 	 * Get a ConsoleCommand.
 	 */
-	public ConsoleCommand get (String id)
+	public ConsoleCommand get(String id)
 	{
-		return (ConsoleCommand) consoleCommands.get (id);
+		return (ConsoleCommand) consoleCommands.get(id);
 	}
 
 	/**
 	 * Remove a ConsoleCommand.
 	 */
-	public void remove (ConsoleCommand consoleCommand)
+	public void remove(ConsoleCommand consoleCommand)
 	{
-		consoleCommands.remove (consoleCommand.getCommandId ());
+		consoleCommands.remove(consoleCommand.getCommandId());
 	}
 
-	public Iterator getCommandIterator ()
+	public Iterator getCommandIterator()
 	{
-		return consoleCommands.values ().iterator ();
+		return consoleCommands.values().iterator();
 	}
 }

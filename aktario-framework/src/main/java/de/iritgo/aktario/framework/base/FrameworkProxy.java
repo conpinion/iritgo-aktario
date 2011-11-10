@@ -32,33 +32,33 @@ public class FrameworkProxy extends IObjectProxy
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkProxy ()
+	public FrameworkProxy()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkProxy (IObject prototypeable)
+	public FrameworkProxy(IObject prototypeable)
 	{
-		super (prototypeable);
+		super(prototypeable);
 	}
 
 	/**
 	 * Create a instance of the iritgo object.
 	 */
 	@Override
-	public IObject create ()
+	public IObject create()
 	{
-		return new FrameworkProxy ();
+		return new FrameworkProxy();
 	}
 
 	/**
 	 * Create a new instance of the Proxy.
 	 */
 	@Override
-	public IObjectProxy createProxy ()
+	public IObjectProxy createProxy()
 	{
-		return new FrameworkProxy ();
+		return new FrameworkProxy();
 	}
 }

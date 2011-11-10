@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface UserListener extends EventListener
 {
-	public void userEvent (UserEvent event);
+	public void userEvent(UserEvent event);
 }

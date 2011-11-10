@@ -31,23 +31,23 @@ import java.util.Iterator;
  */
 public interface Query
 {
-	public boolean workingWithThisDataObjectTypeId (String dataObjectTypeId);
+	public boolean workingWithThisDataObjectTypeId(String dataObjectTypeId);
 
-	public void doQuery ();
+	public void doQuery();
 
-	public void doCreatedDataObjectQuery (DataObject dataObject);
+	public void doCreatedDataObjectQuery(DataObject dataObject);
 
-	public void doDeletedDataObjectQuery (DataObject dataObject);
+	public void doDeletedDataObjectQuery(DataObject dataObject);
 
-	public long getUserUniqueId ();
+	public long getUserUniqueId();
 
-	public void createdUpdateOwner ();
+	public void createdUpdateOwner();
 
-	public void removedUpdateOwner (IObject iObject);
+	public void removedUpdateOwner(IObject iObject);
 
-	public Iterator getResults ();
+	public Iterator getResults();
 
-	public void refresh ();
+	public void refresh();
 
-	public IObjectList getIObjectListResults ();
+	public IObjectList getIObjectListResults();
 }

@@ -33,17 +33,17 @@ public class TestKillCommand extends Command
 	/**
 	 * Create a new KillCommand.
 	 */
-	public TestKillCommand ()
+	public TestKillCommand()
 	{
-		super ("test.aktario-xmlrpc.testKillCommand");
+		super("test.aktario-xmlrpc.testKillCommand");
 	}
 
 	/**
 	 * Execute the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		System.out.println ("RPC KILL!");
-		System.exit (0);
+		System.out.println("RPC KILL!");
+		System.exit(0);
 	}
 }

@@ -49,14 +49,14 @@ public class ProxyAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyAction ()
+	public ProxyAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ProxyAction (long prototypeUniqueId, String prototypeTypeId, IObject prototype)
+	public ProxyAction(long prototypeUniqueId, String prototypeTypeId, IObject prototype)
 	{
 		this.iObjectUniqueId = prototypeUniqueId;
 		this.iObject = prototype;
@@ -67,7 +67,7 @@ public class ProxyAction extends FrameworkAction
 	 * Get the id of the iritgo object.
 	 */
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.proxy";
 	}
@@ -75,7 +75,7 @@ public class ProxyAction extends FrameworkAction
 	/**
 	 * Get the PrototypeUnqiueId.
 	 */
-	public long getPrototypeUniqueId ()
+	public long getPrototypeUniqueId()
 	{
 		return iObjectUniqueId;
 	}
@@ -84,34 +84,34 @@ public class ProxyAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		iObjectUniqueId = stream.readLong ();
-		iObjectTypeId = stream.readUTF ();
+		iObjectUniqueId = stream.readLong();
+		iObjectTypeId = stream.readUTF();
 
 		if (iObjectUniqueId <= 0)
 		{
 			// A new object, and we have not received the real uniqueId. Now we show in the registry and try to get the real object...
-			User user = AppContext.instance ().getUser ();
-			Long newUniqueId = user.getNewObjectsMapping (new Long (iObjectUniqueId));
+			User user = AppContext.instance().getUser();
+			Long newUniqueId = user.getNewObjectsMapping(new Long(iObjectUniqueId));
 
 			if (newUniqueId != null)
 			{
-				iObjectUniqueId = newUniqueId.longValue ();
+				iObjectUniqueId = newUniqueId.longValue();
 			}
 		}
 
-		IObject proto = (IObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+		IObject proto = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
 		if (proto == null)
 		{
-			Log.logError ("system", "ProxyAction.readObject", "Unable to find the IObject");
+			Log.logError("system", "ProxyAction.readObject", "Unable to find the IObject");
 		}
 		else
 		{
 			try
 			{
-				iObject = (IObject) Engine.instance ().getIObjectFactory ().newInstance (iObjectTypeId);
+				iObject = (IObject) Engine.instance().getIObjectFactory().newInstance(iObjectTypeId);
 			}
 			catch (NoSuchIObjectException x)
 			{
@@ -119,12 +119,12 @@ public class ProxyAction extends FrameworkAction
 
 			if (iObject == null)
 			{
-				Log.logError ("system", "ProxyAction.readObject", "Unable to create a new IObject instance");
+				Log.logError("system", "ProxyAction.readObject", "Unable to create a new IObject instance");
 
 				return;
 			}
 
-			iObject.readObject (stream);
+			iObject.readObject(stream);
 		}
 	}
 
@@ -132,47 +132,47 @@ public class ProxyAction extends FrameworkAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (iObjectUniqueId);
-		stream.writeUTF (iObjectTypeId);
+		stream.writeLong(iObjectUniqueId);
+		stream.writeUTF(iObjectTypeId);
 
-		Engine.instance ().getBaseRegistry ().get (iObject.getUniqueId (), iObject.getTypeId ());
-		iObject.writeObject (stream);
+		Engine.instance().getBaseRegistry().get(iObject.getUniqueId(), iObject.getTypeId());
+		iObject.writeObject(stream);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		assignCachedObjectToProxyPrototype (); //TODO: Performance problem?
+		assignCachedObjectToProxyPrototype(); //TODO: Performance problem?
 	}
 
-	public void assignCachedObjectToProxyPrototype ()
+	public void assignCachedObjectToProxyPrototype()
 	{
 		try
 		{
-			ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-			iObject.writeObject (new DataOutputStream (buffer));
+			iObject.writeObject(new DataOutputStream(buffer));
 
-			IObjectProxy proxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (iObjectUniqueId,
-							iObject.getTypeId ());
+			IObjectProxy proxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(iObjectUniqueId,
+							iObject.getTypeId());
 
-			proxy.update (new DataInputStream (new ByteArrayInputStream (buffer.toByteArray ())));
+			proxy.update(new DataInputStream(new ByteArrayInputStream(buffer.toByteArray())));
 
-			Engine.instance ().getEventRegistry ().fire ("objectmodified",
-							new IObjectModifiedEvent (proxy.getRealObject (), null));
+			Engine.instance().getEventRegistry().fire("objectmodified",
+							new IObjectModifiedEvent(proxy.getRealObject(), null));
 		}
 		catch (IOException x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 		catch (ClassNotFoundException x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 }

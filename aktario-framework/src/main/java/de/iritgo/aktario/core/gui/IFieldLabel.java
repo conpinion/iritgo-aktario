@@ -36,7 +36,7 @@ public class IFieldLabel extends JLabel
 	/**
 	 * Create a field label with no text or icon.
 	 */
-	public IFieldLabel ()
+	public IFieldLabel()
 	{
 	}
 
@@ -45,9 +45,9 @@ public class IFieldLabel extends JLabel
 	 *
 	 * @param textKey The text of the label.
 	 */
-	public IFieldLabel (String textKey)
+	public IFieldLabel(String textKey)
 	{
-		super (textKey);
+		super(textKey);
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class IFieldLabel extends JLabel
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey) + ":");
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey) + ":");
 	}
 }

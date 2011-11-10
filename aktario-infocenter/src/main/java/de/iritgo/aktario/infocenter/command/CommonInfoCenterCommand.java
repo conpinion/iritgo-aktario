@@ -52,9 +52,9 @@ public class CommonInfoCenterCommand extends Command
 	 * Standard constructor
 	 *
 	 */
-	public CommonInfoCenterCommand (String id)
+	public CommonInfoCenterCommand(String id)
 	{
-		super (id);
+		super(id);
 	}
 
 	/**
@@ -62,17 +62,17 @@ public class CommonInfoCenterCommand extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
-		super.setProperties (properties);
-		context = Integer.parseInt (properties.getProperty ("context", "0"));
-		category = properties.getProperty ("category", "system");
-		icon = properties.getProperty ("icon", "none");
-		message = properties.getProperty ("message", "no message");
-		guiPaneId = properties.getProperty ("guiPaneId", "none");
-		uniqueId = Long.parseLong (properties.getProperty ("uniqueId", "0"));
-		level = Integer.parseInt (properties.getProperty ("level", "0"));
-		user = (User) properties.get ("user");
-		iObjectTypeId = (String) properties.get ("typeId");
+		super.setProperties(properties);
+		context = Integer.parseInt(properties.getProperty("context", "0"));
+		category = properties.getProperty("category", "system");
+		icon = properties.getProperty("icon", "none");
+		message = properties.getProperty("message", "no message");
+		guiPaneId = properties.getProperty("guiPaneId", "none");
+		uniqueId = Long.parseLong(properties.getProperty("uniqueId", "0"));
+		level = Integer.parseInt(properties.getProperty("level", "0"));
+		user = (User) properties.get("user");
+		iObjectTypeId = (String) properties.get("typeId");
 	}
 }

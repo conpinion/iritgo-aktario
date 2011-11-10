@@ -31,22 +31,22 @@ public class NamePartIterator implements Iterator
 {
 	private StringTokenizer tokens;
 
-	public NamePartIterator (String name)
+	public NamePartIterator(String name)
 	{
-		tokens = new StringTokenizer (name, ".");
+		tokens = new StringTokenizer(name, ".");
 	}
 
-	public boolean hasNext ()
+	public boolean hasNext()
 	{
-		return tokens.hasMoreTokens ();
+		return tokens.hasMoreTokens();
 	}
 
-	public Object next ()
+	public Object next()
 	{
-		return tokens.nextToken ();
+		return tokens.nextToken();
 	}
 
-	public void remove ()
+	public void remove()
 	{
 	}
 }

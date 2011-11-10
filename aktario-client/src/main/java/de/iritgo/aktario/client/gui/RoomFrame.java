@@ -45,49 +45,49 @@ public class RoomFrame extends SwingDesktopFrame
 {
 	/**
 	 */
-	public Action closeAction = new AbstractAction ()
+	public Action closeAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance ().getObject ("aktarioGui"));
+			AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance().getObject("aktarioGui"));
 
-			SwingDesktopManager desktopManager = ((SwingDesktopManager) aktarioGUI.getDesktopManager ());
+			SwingDesktopManager desktopManager = ((SwingDesktopManager) aktarioGUI.getDesktopManager());
 
-			desktopManager.getDisplay ("RoomPane").systemClose ();
-			setVisible (false);
-			dispose ();
+			desktopManager.getDisplay("RoomPane").systemClose();
+			setVisible(false);
+			dispose();
 		}
 	};
 
 	/**
 	 */
-	public RoomFrame ()
+	public RoomFrame()
 	{
-		setTitle (Engine.instance ().getResourceService ().getString ("app.title"));
-		setIconImage (new ImageIcon (getClass ().getResource ("/resources/aktario-icon-16.png")).getImage ());
-		init ();
-		addCloseListener (new ActionListener ()
+		setTitle(Engine.instance().getResourceService().getString("app.title"));
+		setIconImage(new ImageIcon(getClass().getResource("/resources/aktario-icon-16.png")).getImage());
+		init();
+		addCloseListener(new ActionListener()
 		{
-			public void actionPerformed (ActionEvent e)
+			public void actionPerformed(ActionEvent e)
 			{
-				closeAction.actionPerformed (e);
+				closeAction.actionPerformed(e);
 			}
 		});
 
-		JFrame jframe = getJFrame ();
+		JFrame jframe = getJFrame();
 
-		jframe.getContentPane ().setLayout (new BorderLayout ());
+		jframe.getContentPane().setLayout(new BorderLayout());
 
-		JDesktopPane desktopPane = new JDesktopPane ();
+		JDesktopPane desktopPane = new JDesktopPane();
 
-		desktopPane.setDesktopManager (new IDockingDesktopLayouter ());
-		jframe.getContentPane ().add (desktopPane, BorderLayout.CENTER);
+		desktopPane.setDesktopManager(new IDockingDesktopLayouter());
+		jframe.getContentPane().add(desktopPane, BorderLayout.CENTER);
 
-		AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance ().getObject ("aktarioGui"));
+		AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance().getObject("aktarioGui"));
 
-		((SwingDesktopManager) aktarioGUI.getDesktopManager ()).addDesktopPaneNoActivation ("roomFrame", desktopPane);
+		((SwingDesktopManager) aktarioGUI.getDesktopManager()).addDesktopPaneNoActivation("roomFrame", desktopPane);
 
-		setVisible ();
-		setExtendedState (JFrame.MAXIMIZED_BOTH);
+		setVisible();
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 }

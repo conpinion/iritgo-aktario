@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public interface DataObjectInterface
 {
-	public Map getAttributes ();
+	public Map getAttributes();
 
-	public void setAttributes (Map attributes);
+	public void setAttributes(Map attributes);
 }

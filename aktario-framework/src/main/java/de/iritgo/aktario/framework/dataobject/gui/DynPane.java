@@ -28,19 +28,19 @@ public interface DynPane
 	/**
 	 * Update the gui, is used if a widget or command description has changed.
 	 */
-	public void updateGUI ();
+	public void updateGUI();
 
 	/**
 	 * Get the ControllerTypeId. The controller id for this pane and data object.
 	 *
 	 * @param String The controller type id.
 	 */
-	public String getControllerTypeId ();
+	public String getControllerTypeId();
 
 	/**
 	 * Get RendererTypeId. Is the Renderer for this Pane.
 	 *
 	 * @return String Return RendererTypeId
 	 */
-	public String getRendererTypeId ();
+	public String getRendererTypeId();
 }

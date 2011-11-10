@@ -34,11 +34,11 @@ public class IritgoServer
 	 *
 	 * @param args The program args.
 	 */
-	public static void main (String[] args)
+	public static void main(String[] args)
 	{
-		Options options = new Options ();
+		Options options = new Options();
 
-		IritgoEngine.create (IritgoEngine.START_SERVER, options, args);
+		IritgoEngine.create(IritgoEngine.START_SERVER, options, args);
 	}
 
 	/**
@@ -46,8 +46,8 @@ public class IritgoServer
 	 *
 	 * @return True if the server is up and running.
 	 */
-	public static boolean isUpAndRunning ()
+	public static boolean isUpAndRunning()
 	{
-		return Server.instance ().isUpAndRunning ();
+		return Server.instance().isUpAndRunning();
 	}
 }

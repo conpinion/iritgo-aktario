@@ -30,40 +30,40 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
  */
 public class JDBCPlugin extends FrameworkPlugin
 {
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new JDBCManager ());
+		registerManager(Plugin.SERVER, new JDBCManager());
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new LoadUser ());
-		registerCommand (new LoadAllUsers ());
-		registerCommand (new LoadObject ());
-		registerCommand (new LoadAllObjects ());
-		registerCommand (new StoreUser ());
-		registerCommand (new UpdateObject ());
-		registerCommand (new StoreObject ());
-		registerCommand (new DeleteUser ());
-		registerCommand (new Insert ());
-		registerCommand (new Select ());
-		registerCommand (new GetDatabaseVersion ());
-		registerCommand (new GetDefaultDataSource ());
+		registerCommand(new LoadUser());
+		registerCommand(new LoadAllUsers());
+		registerCommand(new LoadObject());
+		registerCommand(new LoadAllObjects());
+		registerCommand(new StoreUser());
+		registerCommand(new UpdateObject());
+		registerCommand(new StoreObject());
+		registerCommand(new DeleteUser());
+		registerCommand(new Insert());
+		registerCommand(new Select());
+		registerCommand(new GetDatabaseVersion());
+		registerCommand(new GetDefaultDataSource());
 	}
 
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 }

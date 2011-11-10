@@ -33,7 +33,7 @@ public class BlockedActionProcessor extends BaseObject implements ActionProcesso
 {
 	BlockedNetworkActionProcessor processor;
 
-	public BlockedActionProcessor (BlockedNetworkActionProcessor processor)
+	public BlockedActionProcessor(BlockedNetworkActionProcessor processor)
 	{
 		this.processor = processor;
 	}
@@ -41,11 +41,11 @@ public class BlockedActionProcessor extends BaseObject implements ActionProcesso
 	/**
 	 * Perform an action.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
-		if (action.getUniqueId () == processor.getBlockedId ())
+		if (action.getUniqueId() == processor.getBlockedId())
 		{
-			processor.resume ();
+			processor.resume();
 		}
 	}
 
@@ -55,12 +55,12 @@ public class BlockedActionProcessor extends BaseObject implements ActionProcesso
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		perform (action);
+		perform(action);
 	}
 
-	public void close ()
+	public void close()
 	{
 	}
 
@@ -69,7 +69,7 @@ public class BlockedActionProcessor extends BaseObject implements ActionProcesso
 	 *
 	 * @return NetworkActionProcessor
 	 */
-	public Object clone ()
+	public Object clone()
 	{
 		return null;
 	}

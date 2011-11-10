@@ -36,13 +36,13 @@ public class ChatMessageAction extends FrameworkAction
 
 	private int channelId;
 
-	public ChatMessageAction ()
+	public ChatMessageAction()
 	{
 	}
 
-	public ChatMessageAction (String chatMessage, int channelId, long userUniqueId, String userName)
+	public ChatMessageAction(String chatMessage, int channelId, long userUniqueId, String userName)
 	{
-		super (userUniqueId);
+		super(userUniqueId);
 
 		this.userName = userName;
 		this.chatMessage = chatMessage;
@@ -50,33 +50,33 @@ public class ChatMessageAction extends FrameworkAction
 	}
 
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.chatmessage";
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		chatMessage = stream.readUTF ();
-		channelId = stream.readInt ();
+		userName = stream.readUTF();
+		chatMessage = stream.readUTF();
+		channelId = stream.readInt();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (chatMessage);
-		stream.writeInt (channelId);
+		stream.writeUTF(userName);
+		stream.writeUTF(chatMessage);
+		stream.writeInt(channelId);
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
-		chatManager.messageChannel (chatMessage, channelId, userUniqueId, userName);
+		chatManager.messageChannel(chatMessage, channelId, userUniqueId, userName);
 	}
 }

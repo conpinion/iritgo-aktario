@@ -36,9 +36,9 @@ public class LongContext extends BaseObject
 	 *
 	 * @param longValue the longValue
 	 */
-	public LongContext (Long longValue)
+	public LongContext(Long longValue)
 	{
-		super ("longcontext");
+		super("longcontext");
 		this.longValue = longValue;
 	}
 
@@ -47,10 +47,10 @@ public class LongContext extends BaseObject
 	 *
 	 * @param longValue the longValue
 	 */
-	public LongContext (long longValue)
+	public LongContext(long longValue)
 	{
-		super ("longcontext");
-		this.longValue = new Long (longValue);
+		super("longcontext");
+		this.longValue = new Long(longValue);
 	}
 
 	/**
@@ -58,9 +58,9 @@ public class LongContext extends BaseObject
 	 *
 	 * @param longValue the longValue
 	 */
-	public LongContext (String id, Long longValue)
+	public LongContext(String id, Long longValue)
 	{
-		super (id);
+		super(id);
 		this.longValue = longValue;
 	}
 
@@ -69,16 +69,16 @@ public class LongContext extends BaseObject
 	 *
 	 * @param longValue the longValue
 	 */
-	public LongContext (String id, long longValue)
+	public LongContext(String id, long longValue)
 	{
-		super (id);
-		this.longValue = new Long (longValue);
+		super(id);
+		this.longValue = new Long(longValue);
 	}
 
 	/**
 	 * Get the longValue
 	 */
-	public Long getLong ()
+	public Long getLong()
 	{
 		return longValue;
 	}

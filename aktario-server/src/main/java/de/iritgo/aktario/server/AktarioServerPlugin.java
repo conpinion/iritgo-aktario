@@ -31,28 +31,28 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
  */
 public class AktarioServerPlugin extends FrameworkPlugin
 {
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new AktarioServerManager ());
+		registerManager(Plugin.SERVER, new AktarioServerManager());
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
 	}
 
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 }

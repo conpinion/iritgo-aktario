@@ -79,9 +79,9 @@ public class WhiteBoardAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public WhiteBoardAction ()
+	public WhiteBoardAction()
 	{
-		setTypeId ("WB");
+		setTypeId("WB");
 	}
 
 	/**
@@ -89,69 +89,69 @@ public class WhiteBoardAction extends FrameworkAction
 	 *
 	 * @param action The server action.
 	 */
-	public WhiteBoardAction (WhiteBoardServerAction action)
+	public WhiteBoardAction(WhiteBoardServerAction action)
 	{
-		this ();
-		this.userId = action.getUserId ();
-		this.pointerId = action.getPointerId ();
-		this.type = action.getType ();
-		this.x = action.getX ();
-		this.y = action.getY ();
-		this.paint = action.getPaint ();
+		this();
+		this.userId = action.getUserId();
+		this.pointerId = action.getPointerId();
+		this.type = action.getType();
+		this.x = action.getX();
+		this.y = action.getY();
+		this.paint = action.getPaint();
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		pointerId = stream.readInt ();
-		type = stream.readInt ();
-		x = stream.readInt ();
-		y = stream.readInt ();
-		paint = stream.readInt ();
+		userId = stream.readLong();
+		pointerId = stream.readInt();
+		type = stream.readInt();
+		x = stream.readInt();
+		y = stream.readInt();
+		paint = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeInt (pointerId);
-		stream.writeInt (type);
-		stream.writeInt (x);
-		stream.writeInt (y);
-		stream.writeInt (paint);
+		stream.writeLong(userId);
+		stream.writeInt(pointerId);
+		stream.writeInt(type);
+		stream.writeInt(x);
+		stream.writeInt(y);
+		stream.writeInt(paint);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ApplicationPane appPane = (ApplicationPane) AppContext.instance ().getObject ("applicationPane");
+		ApplicationPane appPane = (ApplicationPane) AppContext.instance().getObject("applicationPane");
 
 		if (appPane == null)
 		{
 			return;
 		}
 
-		ApplicationGlassPane glassPane = appPane.getGlassPane ();
+		ApplicationGlassPane glassPane = appPane.getGlassPane();
 
 		switch (type)
 		{
 			case ACTION_POINTER:
-				glassPane.movePointer (pointerId, x, y);
+				glassPane.movePointer(pointerId, x, y);
 
 				break;
 
 			case ACTION_PAINT:
-				glassPane.paint (x, y, paint);
+				glassPane.paint(x, y, paint);
 
 				break;
 		}

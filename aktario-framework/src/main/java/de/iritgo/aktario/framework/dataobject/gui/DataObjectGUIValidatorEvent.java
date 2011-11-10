@@ -37,39 +37,39 @@ public class DataObjectGUIValidatorEvent implements Event
 
 	private boolean error;
 
-	public DataObjectGUIValidatorEvent (DataObject object, Controller controller)
+	public DataObjectGUIValidatorEvent(DataObject object, Controller controller)
 	{
 		this.object = object;
 		this.controller = controller;
 		this.error = false;
 	}
 
-	public Controller getController ()
+	public Controller getController()
 	{
 		return controller;
 	}
 
-	public void setController (Controller controller)
+	public void setController(Controller controller)
 	{
 		this.controller = controller;
 	}
 
-	public DataObject getObject ()
+	public DataObject getObject()
 	{
 		return object;
 	}
 
-	public void setObject (DataObject object)
+	public void setObject(DataObject object)
 	{
 		this.object = object;
 	}
 
-	public boolean isError ()
+	public boolean isError()
 	{
 		return error;
 	}
 
-	public void setError (boolean error)
+	public void setError(boolean error)
 	{
 		this.error = error;
 	}

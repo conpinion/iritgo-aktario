@@ -76,10 +76,10 @@ public class Channel extends Threadable
 	 * @param socket The Socket for input/output action
 	 * @param networkService Networkbase for storge received objects
 	 */
-	public Channel (Socket socket, NetworkService networkService) throws IOException
+	public Channel(Socket socket, NetworkService networkService) throws IOException
 	{
-		super ("Channel:" + (networkService.getNumChannels ()));
-		init (socket, networkService, networkService.getNumChannels ());
+		super("Channel:" + (networkService.getNumChannels()));
+		init(socket, networkService, networkService.getNumChannels());
 	}
 
 	/**
@@ -89,10 +89,10 @@ public class Channel extends Threadable
 	 * @param networkService Networkbase for storge received objects
 	 * @param channelNumber The ChannelNumber
 	 */
-	public Channel (Socket socket, NetworkService networkService, double channelNumber) throws IOException
+	public Channel(Socket socket, NetworkService networkService, double channelNumber) throws IOException
 	{
-		super ("channel" + channelNumber);
-		init (socket, networkService, channelNumber);
+		super("channel" + channelNumber);
+		init(socket, networkService, channelNumber);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class Channel extends Threadable
 	 * @param Networkbase for storge received objects
 	 * @param The ChannelNumber
 	 */
-	private void init (Socket socket, NetworkService networkService, double channelNumber) throws IOException
+	private void init(Socket socket, NetworkService networkService, double channelNumber) throws IOException
 	{
 		this.socket = socket;
 		this.networkService = networkService;
@@ -111,7 +111,7 @@ public class Channel extends Threadable
 		numReceivedObjects = 0;
 		numSendObjects = 0;
 		connectionState = NETWORK_OK;
-		streamOrganizer = networkService.getDefaultStreamOrganizer (socket);
+		streamOrganizer = networkService.getDefaultStreamOrganizer(socket);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class Channel extends Threadable
 	 *
 	 * @param customerContextObject The custom object
 	 */
-	public void setCustomerContextObject (Object customerContextObject)
+	public void setCustomerContextObject(Object customerContextObject)
 	{
 		this.customerContextObject = customerContextObject;
 	}
@@ -129,7 +129,7 @@ public class Channel extends Threadable
 	 *
 	 * @return object The custom object
 	 */
-	public Object getCustomerContextObject ()
+	public Object getCustomerContextObject()
 	{
 		return customerContextObject;
 	}
@@ -139,7 +139,7 @@ public class Channel extends Threadable
 	 *
 	 * @param channelNumber The ChannelNumber
 	 */
-	public void setChannelNumber (double channelNumber)
+	public void setChannelNumber(double channelNumber)
 	{
 		this.channelNumber = channelNumber;
 	}
@@ -149,7 +149,7 @@ public class Channel extends Threadable
 	 *
 	 * @return The ChannelNumber
 	 */
-	public double getChannelNumber ()
+	public double getChannelNumber()
 	{
 		return channelNumber;
 	}
@@ -159,93 +159,93 @@ public class Channel extends Threadable
 	 *
 	 */
 	@Override
-	public void run ()
+	public void run()
 	{
 		Object object = null;
 
-		setState (Threadable.RUNNING);
+		setState(Threadable.RUNNING);
 
-		while (getState () == Threadable.RUNNING)
+		while (getState() == Threadable.RUNNING)
 		{
 			try
 			{
 				if (connectionState != NETWORK_OK)
 				{
-					Log.logWarn ("network", "Channel", "A network error occurred. Closing connection");
-					setState (Threadable.CLOSING);
+					Log.logWarn("network", "Channel", "A network error occurred. Closing connection");
+					setState(Threadable.CLOSING);
 
 					return;
 				}
 
-				object = streamOrganizer.receive ();
+				object = streamOrganizer.receive();
 
 				if (object == null)
 				{
-					Log.logError ("network", "Channel", "Receiving NULL-Object" + channelNumber + ").");
-					setConnectionState (NETWORK_ERROR);
-					networkService.fireError (this, new NoSuchIObjectException ("null"));
-					networkService.fireConnectionTerminated (this);
+					Log.logError("network", "Channel", "Receiving NULL-Object" + channelNumber + ").");
+					setConnectionState(NETWORK_ERROR);
+					networkService.fireError(this, new NoSuchIObjectException("null"));
+					networkService.fireConnectionTerminated(this);
 					return;
 				}
 
-				Log.logDebug ("network", "Channel", "Receiving Object (Channel:" + channelNumber + ").");
+				Log.logDebug("network", "Channel", "Receiving Object (Channel:" + channelNumber + ").");
 
 				++numReceivedObjects;
-				networkService.callReceiveNetworkActionProcessor ((Action) object, this);
+				networkService.callReceiveNetworkActionProcessor((Action) object, this);
 			}
 			catch (SocketTimeoutException x)
 			{
-				Log.logDebug ("network", "Channel", "SocketTimeoutException");
-				networkService.fireError (this, x);
+				Log.logDebug("network", "Channel", "SocketTimeoutException");
+				networkService.fireError(this, x);
 			}
 			catch (NoSuchIObjectException x)
 			{
-				Log.logError ("network", "Channel", "NoSuchPrototypeRegisteredException: " + x);
+				Log.logError("network", "Channel", "NoSuchPrototypeRegisteredException: " + x);
 				object = null;
-				setConnectionState (NETWORK_ERROR);
-				networkService.fireError (this, x);
-				networkService.fireConnectionTerminated (this);
+				setConnectionState(NETWORK_ERROR);
+				networkService.fireError(this, x);
+				networkService.fireConnectionTerminated(this);
 
 				return;
 			}
 			catch (ClassNotFoundException x)
 			{
-				Log.logError ("network", "Channel", "ClassNotFoundException");
-				setConnectionState (NETWORK_ERROR);
-				networkService.fireError (this, x);
-				networkService.fireConnectionTerminated (this);
+				Log.logError("network", "Channel", "ClassNotFoundException");
+				setConnectionState(NETWORK_ERROR);
+				networkService.fireError(this, x);
+				networkService.fireConnectionTerminated(this);
 
 				return;
 			}
 			catch (EOFException x)
 			{
-				Log.logDebug ("network", "Channel", "EOFException (ConnectionClosed?!)");
-				setConnectionState (NETWORK_CLOSE);
-				setState (Threadable.CLOSING);
-				networkService.fireError (this, x);
-				networkService.fireConnectionTerminated (this);
+				Log.logDebug("network", "Channel", "EOFException (ConnectionClosed?!)");
+				setConnectionState(NETWORK_CLOSE);
+				setState(Threadable.CLOSING);
+				networkService.fireError(this, x);
+				networkService.fireConnectionTerminated(this);
 
 				return;
 			}
 			catch (SocketException x)
 			{
-				Log.logDebug ("network", "Channel", "SocketClosed.");
-				setConnectionState (NETWORK_CLOSE);
-				setState (Threadable.CLOSING);
-				networkService.fireError (this, x);
-				networkService.fireConnectionTerminated (this);
+				Log.logDebug("network", "Channel", "SocketClosed.");
+				setConnectionState(NETWORK_CLOSE);
+				setState(Threadable.CLOSING);
+				networkService.fireError(this, x);
+				networkService.fireConnectionTerminated(this);
 
 				return;
 			}
 			catch (IOException x)
 			{
-				setState (Threadable.CLOSING);
-				Log.logError ("network", "Channel", "IOException: " + x);
-				x.printStackTrace ();
+				setState(Threadable.CLOSING);
+				Log.logError("network", "Channel", "IOException: " + x);
+				x.printStackTrace();
 
-				setConnectionState (NETWORK_ERROR);
-				networkService.fireError (this, x);
-				networkService.fireConnectionTerminated (this);
+				setConnectionState(NETWORK_ERROR);
+				networkService.fireError(this, x);
+				networkService.fireConnectionTerminated(this);
 
 				return;
 			}
@@ -259,18 +259,18 @@ public class Channel extends Threadable
 	 *
 	 * @param object The Object to send.
 	 */
-	public void send (Object object)
+	public void send(Object object)
 	{
 		try
 		{
-			Log.logDebug ("network", "Channel", "Sending Object (Channel:" + channelNumber + "):" + object);
+			Log.logDebug("network", "Channel", "Sending Object (Channel:" + channelNumber + "):" + object);
 
 			++numSendObjects;
-			streamOrganizer.send (object);
+			streamOrganizer.send(object);
 		}
 		catch (IOException e)
 		{
-			Log.logError ("network", "Channel", "Serializeable?" + e);
+			Log.logError("network", "Channel", "Serializeable?" + e);
 		}
 	}
 
@@ -279,7 +279,7 @@ public class Channel extends Threadable
 	 *
 	 * @return the Connection State.
 	 */
-	public int getConnectionState ()
+	public int getConnectionState()
 	{
 		return connectionState;
 	}
@@ -289,7 +289,7 @@ public class Channel extends Threadable
 	 *
 	 * @param connectionState The connection state
 	 */
-	public void setConnectionState (int connectionState)
+	public void setConnectionState(int connectionState)
 	{
 		this.connectionState = connectionState;
 	}
@@ -298,20 +298,20 @@ public class Channel extends Threadable
 	 * Close this Channel
 	 */
 	@Override
-	public void dispose ()
+	public void dispose()
 	{
-		setState (Threadable.CLOSING);
+		setState(Threadable.CLOSING);
 		connectionState = NETWORK_CLOSE;
 
 		try
 		{
-			streamOrganizer.flush ();
-			streamOrganizer.close ();
+			streamOrganizer.flush();
+			streamOrganizer.close();
 		}
 		catch (IOException x)
 		{
-			Log.logError ("network", "Channel", x.toString ());
-			setConnectionState (NETWORK_ERROR_CLOSING);
+			Log.logError("network", "Channel", x.toString());
+			setConnectionState(NETWORK_ERROR_CLOSING);
 		}
 	}
 
@@ -320,7 +320,7 @@ public class Channel extends Threadable
 	 *
 	 * @return The NetworkService
 	 */
-	public NetworkService getNetworkBase ()
+	public NetworkService getNetworkBase()
 	{
 		return networkService;
 	}
@@ -330,7 +330,7 @@ public class Channel extends Threadable
 	 *
 	 * @return Number of received objects.
 	 */
-	public int getNumReceivedObjects ()
+	public int getNumReceivedObjects()
 	{
 		return numReceivedObjects;
 	}
@@ -340,7 +340,7 @@ public class Channel extends Threadable
 	 *
 	 * @return Number of send objects.
 	 */
-	public int getNumSendObjects ()
+	public int getNumSendObjects()
 	{
 		return numSendObjects;
 	}
@@ -350,7 +350,7 @@ public class Channel extends Threadable
 	 *
 	 * @return Number of send objects.
 	 */
-	public int getNumAllObjects ()
+	public int getNumAllObjects()
 	{
 		return numReceivedObjects + numSendObjects;
 	}
@@ -358,15 +358,15 @@ public class Channel extends Threadable
 	/**
 	 * Flush the streams.
 	 */
-	public void flush ()
+	public void flush()
 	{
 		try
 		{
-			streamOrganizer.flush ();
+			streamOrganizer.flush();
 		}
 		catch (IOException x)
 		{
-			Log.logError ("network", "Channel", x.toString ());
+			Log.logError("network", "Channel", x.toString());
 		}
 	}
 
@@ -375,14 +375,14 @@ public class Channel extends Threadable
 	 *
 	 * @param streamOrganizer The stream organizer.
 	 */
-	public void setStreamOrganizer (StreamOrganizer streamOrganizer) throws IOException
+	public void setStreamOrganizer(StreamOrganizer streamOrganizer) throws IOException
 	{
 		if (streamOrganizer != null)
 		{
-			streamOrganizer.flush ();
+			streamOrganizer.flush();
 		}
 
-		this.streamOrganizer = streamOrganizer.create (socket);
+		this.streamOrganizer = streamOrganizer.create(socket);
 	}
 
 	/**
@@ -390,7 +390,7 @@ public class Channel extends Threadable
 	 *
 	 * @return The current flag.
 	 */
-	public boolean isAliveCheckSent ()
+	public boolean isAliveCheckSent()
 	{
 		return aliveCheckSent;
 	}
@@ -400,7 +400,7 @@ public class Channel extends Threadable
 	 *
 	 * @param aliveCheckSent The new flag.
 	 */
-	public void setAliveCheckSent (boolean aliveCheckSent)
+	public void setAliveCheckSent(boolean aliveCheckSent)
 	{
 		this.aliveCheckSent = aliveCheckSent;
 	}

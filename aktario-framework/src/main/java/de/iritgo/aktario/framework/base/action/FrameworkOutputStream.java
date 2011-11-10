@@ -32,8 +32,8 @@ public class FrameworkOutputStream extends DataOutputStream
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkOutputStream (OutputStream stream)
+	public FrameworkOutputStream(OutputStream stream)
 	{
-		super (stream);
+		super(stream);
 	}
 }

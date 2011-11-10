@@ -44,7 +44,7 @@ public class Action extends BaseObject implements IObject
 	/**
 	 * Create a new action.
 	 */
-	public Action ()
+	public Action()
 	{
 	}
 
@@ -53,7 +53,7 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param uniqueId The unique id of the action.
 	 */
-	public Action (long uniqueId)
+	public Action(long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
@@ -61,20 +61,21 @@ public class Action extends BaseObject implements IObject
 	/**
 	 * Create a new action instance.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
 		try
 		{
-			IObject newAction = (IObject) getClass ().newInstance ();
+			IObject newAction = (IObject) getClass().newInstance();
 
-			newAction.setTypeId (getTypeId ());
+			newAction.setTypeId(getTypeId());
 
 			return newAction;
 		}
 		catch (Exception x)
 		{
-			Log.logError ("system", "Action", "Cannot create instance for action '" + getTypeId () + "': "
-							+ x.toString ());
+			Log
+							.logError("system", "Action", "Cannot create instance for action '" + getTypeId() + "': "
+											+ x.toString());
 
 			return null;
 		}
@@ -85,9 +86,9 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		readObject (new DataInputStream (stream));
+		readObject(new DataInputStream(stream));
 	}
 
 	/**
@@ -95,9 +96,9 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		writeObject (new DataOutputStream (stream));
+		writeObject(new DataOutputStream(stream));
 	}
 
 	/**
@@ -105,9 +106,9 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
-		uniqueId = stream.readLong ();
+		uniqueId = stream.readLong();
 	}
 
 	/**
@@ -115,9 +116,9 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
-		stream.writeLong (uniqueId);
+		stream.writeLong(uniqueId);
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class Action extends BaseObject implements IObject
 	 * Subclasses should override this method to provide their custom
 	 * action code.
 	 */
-	public void perform ()
+	public void perform()
 	{
 	}
 
@@ -136,7 +137,7 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @return True if the action can be performed.
 	 */
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}
@@ -146,7 +147,7 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @param transceiver The new transceiver.
 	 */
-	public void setTransceiver (Transceiver transceiver)
+	public void setTransceiver(Transceiver transceiver)
 	{
 		this.transceiver = transceiver;
 	}
@@ -156,7 +157,7 @@ public class Action extends BaseObject implements IObject
 	 *
 	 * @return The transceiver.
 	 */
-	public Transceiver getTransceiver ()
+	public Transceiver getTransceiver()
 	{
 		return transceiver;
 	}
@@ -164,7 +165,7 @@ public class Action extends BaseObject implements IObject
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		return null;
 	}
@@ -173,7 +174,7 @@ public class Action extends BaseObject implements IObject
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
 		return null;
 	}

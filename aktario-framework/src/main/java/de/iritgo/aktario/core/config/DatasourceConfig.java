@@ -34,62 +34,62 @@ public class DatasourceConfig
 
 	private String url;
 
-	public String getId ()
+	public String getId()
 	{
 		return id;
 	}
 
-	public void setId (String id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public String getDataSourceClass ()
+	public String getDataSourceClass()
 	{
 		return dataSourceClass;
 	}
 
-	public void setDataSourceClass (String dataSourceClass)
+	public void setDataSourceClass(String dataSourceClass)
 	{
 		this.dataSourceClass = dataSourceClass;
 	}
 
-	public String getDriverClass ()
+	public String getDriverClass()
 	{
 		return driverClass;
 	}
 
-	public void setDriverClass (String driverClass)
+	public void setDriverClass(String driverClass)
 	{
 		this.driverClass = driverClass;
 	}
 
-	public String getUser ()
+	public String getUser()
 	{
 		return user;
 	}
 
-	public void setUser (String user)
+	public void setUser(String user)
 	{
 		this.user = user;
 	}
 
-	public String getPassword ()
+	public String getPassword()
 	{
 		return password;
 	}
 
-	public void setPassword (String password)
+	public void setPassword(String password)
 	{
 		this.password = password;
 	}
 
-	public String getUrl ()
+	public String getUrl()
 	{
 		return url;
 	}
 
-	public void setUrl (String url)
+	public void setUrl(String url)
 	{
 		this.url = url;
 	}

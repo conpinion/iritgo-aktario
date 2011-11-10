@@ -31,18 +31,18 @@ public class IObjectRegisteredEvent implements Event
 {
 	private IObject iObject;
 
-	public IObjectRegisteredEvent (IObject iObject)
+	public IObjectRegisteredEvent(IObject iObject)
 	{
 		this.iObject = iObject;
 	}
 
-	public IObject getIObject ()
+	public IObject getIObject()
 	{
 		return iObject;
 	}
 
-	public String getTypeId ()
+	public String getTypeId()
 	{
-		return iObject.getTypeId ();
+		return iObject.getTypeId();
 	}
 }

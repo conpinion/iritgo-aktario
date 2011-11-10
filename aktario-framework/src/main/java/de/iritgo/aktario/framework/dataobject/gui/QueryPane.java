@@ -54,32 +54,32 @@ public class QueryPane extends SwingGUIPane implements DynPane
 
 		private DefaultRenderer.ComboboxItem lastSelectedItem;
 
-		public ComboBoxListener (AbstractQuery query, DefaultRenderer.ComboboxItem lastSelectedItem)
+		public ComboBoxListener(AbstractQuery query, DefaultRenderer.ComboboxItem lastSelectedItem)
 		{
 			this.query = query;
 			this.lastSelectedItem = lastSelectedItem;
 		}
 
-		public void itemStateChanged (ItemEvent e)
+		public void itemStateChanged(ItemEvent e)
 		{
-			if (e.getStateChange () == ItemEvent.SELECTED)
+			if (e.getStateChange() == ItemEvent.SELECTED)
 			{
-				DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) e.getItem ();
+				DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) e.getItem();
 
 				lastSelectedItem = item;
 
-				String id = item.getId ();
+				String id = item.getId();
 
-				query.setAttribute ("listSearchCategory", id);
+				query.setAttribute("listSearchCategory", id);
 
-				IObjectList results = (IObjectList) query.getIObjectListResults ();
+				IObjectList results = (IObjectList) query.getIObjectListResults();
 
-				results.clearIObjectList ();
-				query.update ();
+				results.clearIObjectList();
+				query.update();
 			}
 		}
 
-		public DefaultRenderer.ComboboxItem getLastSelectedItem ()
+		public DefaultRenderer.ComboboxItem getLastSelectedItem()
 		{
 			return lastSelectedItem;
 		}
@@ -107,20 +107,20 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * Close the display
 	 */
 	@SuppressWarnings("serial")
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new UserListGUIPane.
 	 */
-	public QueryPane ()
+	public QueryPane()
 	{
-		super ("QueryPane");
+		super("QueryPane");
 		combobox = null;
 	}
 
@@ -128,51 +128,51 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * Initialize the gui. Subclasses should override this method to create a
 	 * custom gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		rendererTypeId = properties.getProperty ("renderer", ((DataObject) getIObject ())
-						.getStringAttribute ("dataObjectTypeId"));
-		controllerTypeId = properties.getProperty ("controller", ((DataObject) getIObject ())
-						.getStringAttribute ("dataObjectTypeId"));
+		rendererTypeId = properties.getProperty("renderer", ((DataObject) getIObject())
+						.getStringAttribute("dataObjectTypeId"));
+		controllerTypeId = properties.getProperty("controller", ((DataObject) getIObject())
+						.getStringAttribute("dataObjectTypeId"));
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		guiManager.registerGUIPane (this);
+		guiManager.registerGUIPane(this);
 
-		Controller controller = guiManager.getController (controllerTypeId);
+		Controller controller = guiManager.getController(controllerTypeId);
 
 		if (controller == null)
 		{
-			GUIControllerRequest guiControllerRequest = new GUIControllerRequest (controllerTypeId,
+			GUIControllerRequest guiControllerRequest = new GUIControllerRequest(controllerTypeId,
 							GUIControllerRequest.QUERY);
 
-			ActionTools.sendToServer (guiControllerRequest);
+			ActionTools.sendToServer(guiControllerRequest);
 		}
 		else
 		{
-			if (controller.isValid ())
+			if (controller.isValid())
 			{
-				updateGUI ();
+				updateGUI();
 			}
 		}
 	}
 
-	public void setModel (IObjectTableModelSorted model)
+	public void setModel(IObjectTableModelSorted model)
 	{
 		this.model = model;
 	}
 
-	public IObjectTableModelSorted getModel ()
+	public IObjectTableModelSorted getModel()
 	{
 		return model;
 	}
 
-	public String getControllerTypeId ()
+	public String getControllerTypeId()
 	{
 		return controllerTypeId;
 	}
 
-	public String getRendererTypeId ()
+	public String getRendererTypeId()
 	{
 		return controllerTypeId;
 	}
@@ -181,62 +181,62 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * Update the gui if a widget or command description has changed. All
 	 * descriptions must have a valid state.
 	 */
-	public void updateGUI ()
+	public void updateGUI()
 	{
 		final QueryPane pane = this;
 
 		try
 		{
-			SwingUtilities.invokeAndWait (new Runnable ()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					combobox = new JComboBox ();
+					combobox = new JComboBox();
 
-					GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager (
-									"GUIManager");
+					GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry()
+									.getManager("GUIManager");
 
-					final Controller controller = guiManager.getController (controllerTypeId);
+					final Controller controller = guiManager.getController(controllerTypeId);
 
-					renderer = guiManager.getQueryRenderer (rendererTypeId);
+					renderer = guiManager.getQueryRenderer(rendererTypeId);
 
 					if (panel != null)
 					{
-						content.remove (panel);
+						content.remove(panel);
 					}
 
-					panel = new JPanel ();
+					panel = new JPanel();
 
-					content.add (panel, createConstraints (0, 1, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+					content.add(panel, createConstraints(0, 1, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-					renderer.workOn (controller, (DataObject) getIObject (), panel, pane);
+					renderer.workOn(controller, (DataObject) getIObject(), panel, pane);
 
-					table = ((DefaultQueryRenderer) renderer).getTable ();
+					table = ((DefaultQueryRenderer) renderer).getTable();
 
-					if (properties.containsKey ("autoResizeColumns"))
+					if (properties.containsKey("autoResizeColumns"))
 					{
-						table.setAutoResizeMode ((Integer) properties.get ("autoResizeColumns"));
+						table.setAutoResizeMode((Integer) properties.get("autoResizeColumns"));
 					}
 
-					if (properties.containsKey ("rowHeight"))
+					if (properties.containsKey("rowHeight"))
 					{
-						table.setAlignmentY (JTable.TOP_ALIGNMENT);
-						table.setRowHeight ((Integer) properties.get ("rowHeight"));
+						table.setAlignmentY(JTable.TOP_ALIGNMENT);
+						table.setRowHeight((Integer) properties.get("rowHeight"));
 					}
 
-					if (properties.containsKey ("headerOff"))
+					if (properties.containsKey("headerOff"))
 					{
-						table.setTableHeader (null);
+						table.setTableHeader(null);
 					}
 
-					content.revalidate ();
-					table.revalidate ();
+					content.revalidate();
+					table.revalidate();
 
 					guiRendered = true;
 
-					loadFromObject ();
+					loadFromObject();
 
-					table.revalidate ();
+					table.revalidate();
 				}
 			});
 		}
@@ -251,36 +251,36 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * @param IObject
 	 *            The loaded object.
 	 */
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		if (guiRendered)
 		{
 			final AbstractQuery query = (AbstractQuery) iobject;
 
-			GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+			GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-			Controller controller = guiManager.getController (controllerTypeId);
+			Controller controller = guiManager.getController(controllerTypeId);
 
 			DefaultRenderer.ComboboxItem lastSelectedItem = null;
 
-			if (controller.getWidgetDescription ("listSearchCategory") != null)
+			if (controller.getWidgetDescription("listSearchCategory") != null)
 			{
-				combobox = (JComboBox) controller.getWidgetDescription ("listSearchCategory").getControl (
-								getOnScreenUniqueId () + "_" + "listSearchCategory");
+				combobox = (JComboBox) controller.getWidgetDescription("listSearchCategory").getControl(
+								getOnScreenUniqueId() + "_" + "listSearchCategory");
 
 				int selectedIndex = 0;
 
 				if (comboBoxListenerImpl != null)
 				{
-					lastSelectedItem = comboBoxListenerImpl.getLastSelectedItem ();
-					combobox.setSelectedItem (lastSelectedItem);
-					selectedIndex = combobox.getSelectedIndex ();
-					combobox.removeItemListener (comboBoxListenerImpl);
+					lastSelectedItem = comboBoxListenerImpl.getLastSelectedItem();
+					combobox.setSelectedItem(lastSelectedItem);
+					selectedIndex = combobox.getSelectedIndex();
+					combobox.removeItemListener(comboBoxListenerImpl);
 				}
 
-				combobox.removeAllItems ();
+				combobox.removeAllItems();
 
-				String[] validValues = ((String) query.getAttribute ("listSearchValues")).split ("\\|");
+				String[] validValues = ((String) query.getAttribute("listSearchValues")).split("\\|");
 
 				String defaultKey = validValues[0];
 				int defaultIndex = 0;
@@ -293,41 +293,41 @@ public class QueryPane extends SwingGUIPane implements DynPane
 					{
 						String value = validValues[j];
 
-						if (key.equals (defaultKey))
+						if (key.equals(defaultKey))
 						{
 							defaultIndex = (j / 2) - 1;
 						}
 
-						combobox.addItem (new DefaultRenderer.ComboboxItem (key, value));
+						combobox.addItem(new DefaultRenderer.ComboboxItem(key, value));
 					}
 				}
 
 				if (lastSelectedItem != null)
 				{
-					combobox.setSelectedIndex (selectedIndex);
+					combobox.setSelectedIndex(selectedIndex);
 				}
 				else
 				{
-					combobox.setSelectedIndex (defaultIndex);
-					selectedIndex = combobox.getSelectedIndex ();
-					lastSelectedItem = (ComboboxItem) combobox.getSelectedItem ();
+					combobox.setSelectedIndex(defaultIndex);
+					selectedIndex = combobox.getSelectedIndex();
+					lastSelectedItem = (ComboboxItem) combobox.getSelectedItem();
 
 					DefaultRenderer.ComboboxItem item = (DefaultRenderer.ComboboxItem) lastSelectedItem;
-					String id = item.getId ();
+					String id = item.getId();
 
-					query.setAttribute ("listSearchCategory", id);
+					query.setAttribute("listSearchCategory", id);
 				}
 			}
 
-			model.update (query.getIObjectListResults ());
+			model.update(query.getIObjectListResults());
 
 			if (table != null)
 			{
-				table.revalidate ();
+				table.revalidate();
 			}
 
-			comboBoxListenerImpl = new ComboBoxListener ((AbstractQuery) iobject, lastSelectedItem);
-			combobox.addItemListener (comboBoxListenerImpl);
+			comboBoxListenerImpl = new ComboBoxListener((AbstractQuery) iobject, lastSelectedItem);
+			combobox.addItemListener(comboBoxListenerImpl);
 
 			return;
 		}
@@ -336,7 +336,7 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	/**
 	 * Store the gui values to the data object.
 	 */
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -344,11 +344,11 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * This method is called when the gui pane starts waiting for the attributes
 	 * of it's iobject.
 	 */
-	public void waitingForNewObject ()
+	public void waitingForNewObject()
 	{
 		if (renderer != null)
 		{
-			((DefaultQueryRenderer) renderer).setSearchWaitIcon ();
+			((DefaultQueryRenderer) renderer).setSearchWaitIcon();
 		}
 	}
 
@@ -356,13 +356,13 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 * This method is called when the attributes of the gui pane's iobject are
 	 * received.
 	 */
-	public void waitingForNewObjectFinished ()
+	public void waitingForNewObjectFinished()
 	{
-		super.waitingForNewObjectFinished ();
+		super.waitingForNewObjectFinished();
 
 		if (renderer != null)
 		{
-			((DefaultQueryRenderer) renderer).setSearchIcon ();
+			((DefaultQueryRenderer) renderer).setSearchIcon();
 		}
 	}
 
@@ -371,90 +371,90 @@ public class QueryPane extends SwingGUIPane implements DynPane
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new QueryPane ();
+		return new QueryPane();
 	}
 
 	/**
 	 * Retrieve the data object by the current selection.
 	 */
-	public DataObject getSelectedItem ()
+	public DataObject getSelectedItem()
 	{
-		int row = table.getSelectedRow ();
+		int row = table.getSelectedRow();
 
-		if (row < 0 || (table.getRowCount () == 0))
+		if (row < 0 || (table.getRowCount() == 0))
 		{
 			return null;
 		}
 
-		DataObject dataObject = (DataObject) ((ITableSorter) table.getModel ()).getObjectByRow (row);
+		DataObject dataObject = (DataObject) ((ITableSorter) table.getModel()).getObjectByRow(row);
 
 		return dataObject;
 	}
 
-	public void refreshQuery ()
+	public void refreshQuery()
 	{
-		table.clearSelection ();
+		table.clearSelection();
 
-		AbstractQuery query = (AbstractQuery) getIObject ();
+		AbstractQuery query = (AbstractQuery) getIObject();
 
-		IObjectList results = (IObjectList) query.getIObjectListResults ();
+		IObjectList results = (IObjectList) query.getIObjectListResults();
 
-		results.clearIObjectList ();
-		query.update ();
+		results.clearIObjectList();
+		query.update();
 
-		table.revalidate ();
+		table.revalidate();
 	}
 
-	public void deleteListEntry (long dataObjectUniqueId, @SuppressWarnings("unused") String dataObjectType)
+	public void deleteListEntry(long dataObjectUniqueId, @SuppressWarnings("unused") String dataObjectType)
 	{
-		AbstractQuery query = (AbstractQuery) getIObject ();
-		DataObject dataObject = (DataObject) Engine.instance ().getBaseRegistry ().get (dataObjectUniqueId,
-						query.getDataObjectTypeId ());
+		AbstractQuery query = (AbstractQuery) getIObject();
+		DataObject dataObject = (DataObject) Engine.instance().getBaseRegistry().get(dataObjectUniqueId,
+						query.getDataObjectTypeId());
 
-		query.getIObjectListResults ().remove ((IObject) dataObject);
-	}
-
-	/**
-	 * Close the display.
-	 */
-	public void close ()
-	{
-		if (renderer != null)
-		{
-			renderer.close ();
-		}
-
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
-
-		guiManager.unregisterGUIPane (this);
-
-		renderer = null;
-		super.close ();
+		query.getIObjectListResults().remove((IObject) dataObject);
 	}
 
 	/**
 	 * Close the display.
 	 */
-	public void systemClose ()
+	public void close()
 	{
 		if (renderer != null)
 		{
-			renderer.close ();
+			renderer.close();
 		}
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		guiManager.unregisterGUIPane (this);
+		guiManager.unregisterGUIPane(this);
+
+		renderer = null;
+		super.close();
+	}
+
+	/**
+	 * Close the display.
+	 */
+	public void systemClose()
+	{
+		if (renderer != null)
+		{
+			renderer.close();
+		}
+
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
+
+		guiManager.unregisterGUIPane(this);
 
 		renderer = null;
 
-		super.systemClose ();
+		super.systemClose();
 	}
 
-	public void refresh ()
+	public void refresh()
 	{
-		renderer.refresh ();
+		renderer.refresh();
 	}
 }

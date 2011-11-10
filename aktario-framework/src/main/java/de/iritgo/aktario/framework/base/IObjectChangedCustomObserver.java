@@ -28,7 +28,7 @@ import de.iritgo.aktario.core.iobject.IObject;
  */
 public interface IObjectChangedCustomObserver
 {
-	public void iObjectChanged (IObject iobject);
+	public void iObjectChanged(IObject iobject);
 
-	public boolean isTheObservedObject (IObject iObject);
+	public boolean isTheObservedObject(IObject iObject);
 }

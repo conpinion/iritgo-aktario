@@ -32,23 +32,23 @@ public class SwingGUIFactory implements IGUIFactory
 	/**
 	 * Create a new SwingGUIFactory.
 	 */
-	public SwingGUIFactory ()
+	public SwingGUIFactory()
 	{
-		SwingTagLibrary.getInstance ().registerTag ("ilabel", ILabel.class);
-		SwingTagLibrary.getInstance ().registerTag ("ifieldlabel", IFieldLabel.class);
-		SwingTagLibrary.getInstance ().registerTag ("ibutton", IButton.class);
-		SwingTagLibrary.getInstance ().registerTag ("icheckbox", ICheckBox.class);
-		SwingTagLibrary.getInstance ().registerTag ("icombobox", IComboBox.class);
-		SwingTagLibrary.getInstance ().registerTag ("imenubar", IMenuBar.class);
-		SwingTagLibrary.getInstance ().registerTag ("imenu", IMenu.class);
-		SwingTagLibrary.getInstance ().registerTag ("imenuitem", IMenuItem.class);
-		SwingTagLibrary.getInstance ().registerTag ("itoolbar", IToolBar.class);
-		SwingTagLibrary.getInstance ().registerTag ("iradiobutton", IRadioButton.class);
-		SwingTagLibrary.getInstance ().registerTag ("ititledpanel", ITitledPanel.class);
-		SwingTagLibrary.getInstance ().registerTag ("iclocktextfield", IClockTextField.class);
-		SwingTagLibrary.getInstance ().registerTag ("itextfield", ITextField.class);
-		SwingTagLibrary.getInstance ().registerTag ("iformattedtextfield", IFormattedTextField.class);
-		SwingTagLibrary.getInstance ().registerTag ("ibusybutton", IBusyButton.class);
+		SwingTagLibrary.getInstance().registerTag("ilabel", ILabel.class);
+		SwingTagLibrary.getInstance().registerTag("ifieldlabel", IFieldLabel.class);
+		SwingTagLibrary.getInstance().registerTag("ibutton", IButton.class);
+		SwingTagLibrary.getInstance().registerTag("icheckbox", ICheckBox.class);
+		SwingTagLibrary.getInstance().registerTag("icombobox", IComboBox.class);
+		SwingTagLibrary.getInstance().registerTag("imenubar", IMenuBar.class);
+		SwingTagLibrary.getInstance().registerTag("imenu", IMenu.class);
+		SwingTagLibrary.getInstance().registerTag("imenuitem", IMenuItem.class);
+		SwingTagLibrary.getInstance().registerTag("itoolbar", IToolBar.class);
+		SwingTagLibrary.getInstance().registerTag("iradiobutton", IRadioButton.class);
+		SwingTagLibrary.getInstance().registerTag("ititledpanel", ITitledPanel.class);
+		SwingTagLibrary.getInstance().registerTag("iclocktextfield", IClockTextField.class);
+		SwingTagLibrary.getInstance().registerTag("itextfield", ITextField.class);
+		SwingTagLibrary.getInstance().registerTag("iformattedtextfield", IFormattedTextField.class);
+		SwingTagLibrary.getInstance().registerTag("ibusybutton", IBusyButton.class);
 	}
 
 	/**
@@ -63,11 +63,11 @@ public class SwingGUIFactory implements IGUIFactory
 	 * @param titlebar True if the title bar should be displayed.
 	 * @param properties Additional properties.
 	 */
-	public IWindowFrame createWindowFrame (IWindow window, String titleKey, boolean resizable, boolean closable,
+	public IWindowFrame createWindowFrame(IWindow window, String titleKey, boolean resizable, boolean closable,
 					boolean maximizable, boolean iconifiable, boolean titlebar, boolean initVisible,
 					Properties properties)
 	{
-		return new SwingWindowFrame (window, titleKey, resizable, closable, maximizable, iconifiable, titlebar,
+		return new SwingWindowFrame(window, titleKey, resizable, closable, maximizable, iconifiable, titlebar,
 						initVisible);
 	}
 
@@ -79,14 +79,14 @@ public class SwingGUIFactory implements IGUIFactory
 	 * @param properties Creation properties.
 	 * @return The new dialog frame.
 	 */
-	public IDialogFrame createDialogFrame (IDialog dialog, String titleKey, Properties properties)
+	public IDialogFrame createDialogFrame(IDialog dialog, String titleKey, Properties properties)
 	{
-		if (properties.get ("parent") != null)
+		if (properties.get("parent") != null)
 		{
-			return new SwingDialogFrame (dialog, titleKey, (IDialogFrame) ((IDialog) properties.get ("parent"))
-							.getDialogFrame ());
+			return new SwingDialogFrame(dialog, titleKey, (IDialogFrame) ((IDialog) properties.get("parent"))
+							.getDialogFrame());
 		}
 
-		return new SwingDialogFrame (dialog, titleKey);
+		return new SwingDialogFrame(dialog, titleKey);
 	}
 }

@@ -47,9 +47,9 @@ public class AktarioUserReadyServerAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public AktarioUserReadyServerAction ()
+	public AktarioUserReadyServerAction()
 	{
-		setTypeId ("AktarioUserReadyServerAction");
+		setTypeId("AktarioUserReadyServerAction");
 	}
 
 	/**
@@ -58,10 +58,10 @@ public class AktarioUserReadyServerAction extends FrameworkAction
 	 * @param user The user.
 	 * @param ready The ready state.
 	 */
-	public AktarioUserReadyServerAction (User user, boolean ready)
+	public AktarioUserReadyServerAction(User user, boolean ready)
 	{
-		this ();
-		this.userId = user.getUniqueId ();
+		this();
+		this.userId = user.getUniqueId();
 		this.ready = ready;
 	}
 
@@ -69,47 +69,47 @@ public class AktarioUserReadyServerAction extends FrameworkAction
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeBoolean (ready);
+		stream.writeLong(userId);
+		stream.writeBoolean(ready);
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		ready = stream.readBoolean ();
+		userId = stream.readLong();
+		ready = stream.readBoolean();
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		AktarioUserManager userManager = (AktarioUserManager) Engine.instance ().getManager ("AktarioUserManager");
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		AktarioUserManager userManager = (AktarioUserManager) Engine.instance().getManager("AktarioUserManager");
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
 		ClientTransceiver ct = (ClientTransceiver) transceiver;
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			if (user.isOnline ())
+			if (user.isOnline())
 			{
-				ct.addReceiver (user.getNetworkChannel ());
+				ct.addReceiver(user.getNetworkChannel());
 			}
 		}
 
-		AktarioUserReadyAction action = new AktarioUserReadyAction (userManager.getUserRegistry ().getUserByName (
-						userRegistry.getUser (userId).getName ()), ready);
+		AktarioUserReadyAction action = new AktarioUserReadyAction(userManager.getUserRegistry().getUserByName(
+						userRegistry.getUser(userId).getName()), ready);
 
-		action.setTransceiver (transceiver);
-		ActionTools.sendToClient (action);
+		action.setTransceiver(transceiver);
+		ActionTools.sendToClient(action);
 	}
 }

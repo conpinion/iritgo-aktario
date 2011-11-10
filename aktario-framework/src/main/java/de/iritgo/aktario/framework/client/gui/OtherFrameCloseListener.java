@@ -25,5 +25,5 @@ package de.iritgo.aktario.framework.client.gui;
  */
 public interface OtherFrameCloseListener
 {
-	public void otherFrameClosed (OtherFrame otherFrame);
+	public void otherFrameClosed(OtherFrame otherFrame);
 }

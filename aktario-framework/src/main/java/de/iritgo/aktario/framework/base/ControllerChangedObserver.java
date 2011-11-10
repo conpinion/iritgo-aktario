@@ -28,5 +28,5 @@ import de.iritgo.aktario.core.iobject.IObject;
  */
 public interface ControllerChangedObserver extends IObjectChangedObserver
 {
-	public void controllerChanged (IObject iobject);
+	public void controllerChanged(IObject iobject);
 }

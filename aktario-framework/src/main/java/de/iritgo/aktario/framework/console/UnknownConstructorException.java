@@ -25,8 +25,8 @@ package de.iritgo.aktario.framework.console;
  */
 public class UnknownConstructorException extends Exception
 {
-	public UnknownConstructorException (String message)
+	public UnknownConstructorException(String message)
 	{
-		super (message);
+		super(message);
 	}
 }

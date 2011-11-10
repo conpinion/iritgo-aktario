@@ -109,9 +109,9 @@ public class ParticipantControlPane extends SwingGUIPane
 	/**
 	 * Send a message to a participant.
 	 */
-	public Action messageAction = new AbstractAction ()
+	public Action messageAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -119,9 +119,9 @@ public class ParticipantControlPane extends SwingGUIPane
 	/**
 	 * Search for a user.
 	 */
-	public Action searchAction = new AbstractAction ()
+	public Action searchAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -129,9 +129,9 @@ public class ParticipantControlPane extends SwingGUIPane
 	/**
 	 * Delete a participant.
 	 */
-	public Action deleteAction = new AbstractAction ()
+	public Action deleteAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -139,9 +139,9 @@ public class ParticipantControlPane extends SwingGUIPane
 	/**
 	 * Display participant information.
 	 */
-	public Action infoAction = new AbstractAction ()
+	public Action infoAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -149,90 +149,88 @@ public class ParticipantControlPane extends SwingGUIPane
 	/**
 	 * Create a new ParticipantControlPane.
 	 */
-	public ParticipantControlPane ()
+	public ParticipantControlPane()
 	{
-		super ("ParticipantControlPane");
-		onlineParticipants = new HashSet ();
-		busyParticipants = new HashSet ();
-		boardParticipants = new HashSet ();
+		super("ParticipantControlPane");
+		onlineParticipants = new HashSet();
+		busyParticipants = new HashSet();
+		boardParticipants = new HashSet();
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			final ResourceService resources = Engine.instance ().getResourceService ();
+			final ResourceService resources = Engine.instance().getResourceService();
 
-			Properties props = new Properties ();
-			final int role = ((Integer) CommandTools.performSimple ("GetUserRole", props)).intValue ();
+			Properties props = new Properties();
+			final int role = ((Integer) CommandTools.performSimple("GetUserRole", props)).intValue();
 
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (ParticipantControlPane.class.getClassLoader ());
+			swingEngine.setClassLoader(ParticipantControlPane.class.getClassLoader());
 
-			String participantSwixmlDescription = properties.getProperty ("participantSwixmlDescription",
+			String participantSwixmlDescription = properties.getProperty("participantSwixmlDescription",
 							"ParticipantControlPane.xml");
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource (
-							"/swixml/" + participantSwixmlDescription));
+			JPanel panel = (JPanel) swingEngine.render(getClass()
+							.getResource("/swixml/" + participantSwixmlDescription));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			offlineParticipantIcon = new ImageIcon (ParticipantControlPane.class
-							.getResource ("/resources/user-offline.png"));
+			offlineParticipantIcon = new ImageIcon(ParticipantControlPane.class
+							.getResource("/resources/user-offline.png"));
 
-			ImageIcon onlineParticipantIcon = new ImageIcon (ParticipantControlPane.class
-							.getResource ("/resources/user-online.png"));
+			ImageIcon onlineParticipantIcon = new ImageIcon(ParticipantControlPane.class
+							.getResource("/resources/user-online.png"));
 
 			ImageIcon[] emblems = new ImageIcon[3];
 
-			emblems[0] = new ImageIcon (ParticipantControlPane.class.getResource ("/resources/admin-emblem.png"));
+			emblems[0] = new ImageIcon(ParticipantControlPane.class.getResource("/resources/admin-emblem.png"));
 
-			emblems[1] = new ImageIcon (ParticipantControlPane.class.getResource ("/resources/student-emblem.png"));
+			emblems[1] = new ImageIcon(ParticipantControlPane.class.getResource("/resources/student-emblem.png"));
 
-			emblems[2] = new ImageIcon (ParticipantControlPane.class.getResource ("/resources/teacher-emblem.png"));
+			emblems[2] = new ImageIcon(ParticipantControlPane.class.getResource("/resources/teacher-emblem.png"));
 
 			readyParticipantIcons = new ImageIcon[3];
 
 			for (int i = 0; i < 3; ++i)
 			{
-				BufferedImage image = new BufferedImage (onlineParticipantIcon.getIconWidth (), onlineParticipantIcon
-								.getIconHeight (), BufferedImage.TYPE_INT_ARGB);
-				Graphics g = image.getGraphics ();
+				BufferedImage image = new BufferedImage(onlineParticipantIcon.getIconWidth(), onlineParticipantIcon
+								.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics g = image.getGraphics();
 
-				g.drawImage (onlineParticipantIcon.getImage (), 0, 0, panel);
-				g.drawImage (emblems[i].getImage (),
-								onlineParticipantIcon.getIconWidth () - emblems[i].getIconWidth (),
-								onlineParticipantIcon.getIconHeight () - emblems[i].getIconHeight (), panel);
-				readyParticipantIcons[i] = new ImageIcon (image);
+				g.drawImage(onlineParticipantIcon.getImage(), 0, 0, panel);
+				g.drawImage(emblems[i].getImage(), onlineParticipantIcon.getIconWidth() - emblems[i].getIconWidth(),
+								onlineParticipantIcon.getIconHeight() - emblems[i].getIconHeight(), panel);
+				readyParticipantIcons[i] = new ImageIcon(image);
 			}
 
-			ImageIcon busyEmblem = new ImageIcon (ParticipantControlPane.class
-							.getResource ("/resources/busy-emblem.png"));
+			ImageIcon busyEmblem = new ImageIcon(ParticipantControlPane.class.getResource("/resources/busy-emblem.png"));
 
 			busyParticipantIcons = new ImageIcon[3];
 
 			for (int i = 0; i < 3; ++i)
 			{
-				BufferedImage image = new BufferedImage (onlineParticipantIcon.getIconWidth (), onlineParticipantIcon
-								.getIconHeight (), BufferedImage.TYPE_INT_ARGB);
-				Graphics g = image.getGraphics ();
+				BufferedImage image = new BufferedImage(onlineParticipantIcon.getIconWidth(), onlineParticipantIcon
+								.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics g = image.getGraphics();
 
-				g.drawImage (readyParticipantIcons[i].getImage (), 0, 0, panel);
-				g.drawImage (busyEmblem.getImage (),
-								onlineParticipantIcon.getIconWidth () - busyEmblem.getIconWidth (), 0, panel);
-				busyParticipantIcons[i] = new ImageIcon (image);
+				g.drawImage(readyParticipantIcons[i].getImage(), 0, 0, panel);
+				g.drawImage(busyEmblem.getImage(), onlineParticipantIcon.getIconWidth() - busyEmblem.getIconWidth(), 0,
+								panel);
+				busyParticipantIcons[i] = new ImageIcon(image);
 			}
 
-			participantModel = new IObjectTableModel ()
+			participantModel = new IObjectTableModel()
 			{
 				private String[] columnNames = new String[]
 				{
-					resources.getString ("aktario.participant")
+					resources.getString("aktario.participant")
 				};
 
 				private Class[] columnClasses = new Class[]
@@ -240,39 +238,39 @@ public class ParticipantControlPane extends SwingGUIPane
 					String.class
 				};
 
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
 					return columnNames.length;
 				}
 
 				@Override
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
 					return columnNames[col];
 				}
 
 				@Override
-				public Class getColumnClass (int col)
+				public Class getColumnClass(int col)
 				{
 					return columnClasses[col];
 				}
 
 				@Override
-				public boolean isCellEditable (int row, int column)
+				public boolean isCellEditable(int row, int column)
 				{
 					return false;
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
-					AktarioUserRegistry users = (AktarioUserRegistry) getIObject ();
+					AktarioUserRegistry users = (AktarioUserRegistry) getIObject();
 
-					AktarioUser user = (AktarioUser) users.getUser (row);
+					AktarioUser user = (AktarioUser) users.getUser(row);
 
 					switch (col)
 					{
 						case 0:
-							return user.getFullName ();
+							return user.getFullName();
 
 						default:
 							return null;
@@ -280,12 +278,12 @@ public class ParticipantControlPane extends SwingGUIPane
 				}
 
 				@Override
-				public void setValueAt (Object value, int row, int col)
+				public void setValueAt(Object value, int row, int col)
 				{
-					AktarioUserRegistry users = (AktarioUserRegistry) getIObject ();
+					AktarioUserRegistry users = (AktarioUserRegistry) getIObject();
 
 					@SuppressWarnings("unused")
-					AktarioUser user = (AktarioUser) users.getUser (row);
+					AktarioUser user = (AktarioUser) users.getUser(row);
 
 					switch (col)
 					{
@@ -297,120 +295,119 @@ public class ParticipantControlPane extends SwingGUIPane
 					}
 				}
 			};
-			participantTable.setModel (participantModel);
+			participantTable.setModel(participantModel);
 
-			participantTable.getColumnModel ().getColumn (0).setCellRenderer (new DefaultTableCellRenderer ()
+			participantTable.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer()
 			{
 				Color disabledFg;
 
 				Font enabledFont;
 
 				@Override
-				public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected,
+				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 								boolean hasFocus, int row, int column)
 				{
-					super.getTableCellRendererComponent (table, value, isSelected, hasFocus, row, column);
+					super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-					AktarioUserRegistry users = (AktarioUserRegistry) getIObject ();
+					AktarioUserRegistry users = (AktarioUserRegistry) getIObject();
 
-					AktarioUser user = (AktarioUser) users.getUser (row);
+					AktarioUser user = (AktarioUser) users.getUser(row);
 
-					if (onlineParticipants.contains (user))
+					if (onlineParticipants.contains(user))
 					{
 						if (enabledFont == null)
 						{
-							enabledFont = new Font (getFont ().getFamily (), Font.BOLD, getFont ().getSize ());
+							enabledFont = new Font(getFont().getFamily(), Font.BOLD, getFont().getSize());
 						}
 
-						setIcon (busyParticipants.contains (user) ? busyParticipantIcons[user.getRole ()]
-										: readyParticipantIcons[user.getRole ()]);
-						setFont (enabledFont);
+						setIcon(busyParticipants.contains(user) ? busyParticipantIcons[user.getRole()]
+										: readyParticipantIcons[user.getRole()]);
+						setFont(enabledFont);
 					}
 					else
 					{
 						if (disabledFg == null)
 						{
-							disabledFg = new Color ((getForeground ().getRed () + getBackground ().getRed ()) / 2,
-											(getForeground ().getGreen () + getBackground ().getGreen ()) / 2,
-											(getForeground ().getBlue () + getBackground ().getBlue ()) / 2);
+							disabledFg = new Color((getForeground().getRed() + getBackground().getRed()) / 2,
+											(getForeground().getGreen() + getBackground().getGreen()) / 2,
+											(getForeground().getBlue() + getBackground().getBlue()) / 2);
 						}
 
-						setIcon (offlineParticipantIcon);
+						setIcon(offlineParticipantIcon);
 
 						if (! isSelected)
 						{
-							setForeground (disabledFg);
+							setForeground(disabledFg);
 						}
 
-						setFont (table.getFont ());
+						setFont(table.getFont());
 					}
 
 					return this;
 				}
 			});
 
-			participantTable.setShowGrid (false);
-			participantTable.setRowHeight (Math.max (participantTable.getRowHeight () + 4, offlineParticipantIcon
-							.getIconHeight () + 4));
-			participantScrollPane.getColumnHeader ().setVisible (false);
+			participantTable.setShowGrid(false);
+			participantTable.setRowHeight(Math.max(participantTable.getRowHeight() + 4, offlineParticipantIcon
+							.getIconHeight() + 4));
+			participantScrollPane.getColumnHeader().setVisible(false);
 
 			if (role == AktarioUser.ROLE_ADMIN)
 			{
-				participantTable.addMouseListener (new MouseAdapter ()
+				participantTable.addMouseListener(new MouseAdapter()
 				{
 					@Override
-					public void mouseClicked (MouseEvent e)
+					public void mouseClicked(MouseEvent e)
 					{
-						if (e.getClickCount () == 1)
+						if (e.getClickCount() == 1)
 						{
-							sendEnableLessonAction ();
+							sendEnableLessonAction();
 						}
 					}
 				});
 			}
 
-			participantTable.getSelectionModel ().addListSelectionListener (new ListSelectionListener ()
+			participantTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 			{
-				public void valueChanged (ListSelectionEvent e)
+				public void valueChanged(ListSelectionEvent e)
 				{
-					messageAction.setEnabled (participantTable.getSelectedRow () != - 1);
-					deleteAction.setEnabled (participantTable.getSelectedRow () != - 1);
-					infoAction.setEnabled (participantTable.getSelectedRow () != - 1);
+					messageAction.setEnabled(participantTable.getSelectedRow() != - 1);
+					deleteAction.setEnabled(participantTable.getSelectedRow() != - 1);
+					infoAction.setEnabled(participantTable.getSelectedRow() != - 1);
 				}
 			});
 
-			tabs.setTitleAt (0, resources.getString ("aktario.contacts"));
+			tabs.setTitleAt(0, resources.getString("aktario.contacts"));
 
-			if (tabs.getTabCount () > 1)
+			if (tabs.getTabCount() > 1)
 			{
-				tabs.setTitleAt (1, resources.getString ("aktario.room"));
+				tabs.setTitleAt(1, resources.getString("aktario.room"));
 			}
 
-			messageAction.setEnabled (false);
-			deleteAction.setEnabled (false);
-			infoAction.setEnabled (false);
+			messageAction.setEnabled(false);
+			deleteAction.setEnabled(false);
+			infoAction.setEnabled(false);
 
-			getDisplay ().setIcon (new ImageIcon (ParticipantControlPane.class.getResource ("/resources/people.png")));
+			getDisplay().setIcon(new ImageIcon(ParticipantControlPane.class.getResource("/resources/people.png")));
 
-			AppContext.instance ().put ("participantControlPane", this);
+			AppContext.instance().put("participantControlPane", this);
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "Navigator", x.toString ());
+			Log.logError("client", "Navigator", x.toString());
 		}
 
-		CommandTools.performAsync (new Command ()
+		CommandTools.performAsync(new Command()
 		{
 			@Override
-			public void perform ()
+			public void perform()
 			{
-				AktarioUserStateServerAction action = new AktarioUserStateServerAction (AppContext.instance ()
-								.getUser ());
-				ClientTransceiver transceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+				AktarioUserStateServerAction action = new AktarioUserStateServerAction(AppContext.instance().getUser());
+				ClientTransceiver transceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-				transceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-				action.setTransceiver (transceiver);
-				ActionTools.sendToServer (action);
+				transceiver.addReceiver(AppContext.instance().getChannelNumber());
+				action.setTransceiver(transceiver);
+				ActionTools.sendToServer(action);
 			}
 		});
 	}
@@ -419,18 +416,18 @@ public class ParticipantControlPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		AktarioUserRegistry userRegistry = (AktarioUserRegistry) iobject;
 
-		participantModel.update (userRegistry.getUsers ());
+		participantModel.update(userRegistry.getUsers());
 	}
 
 	/**
 	 * Store the current gui values into the data object attributes.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -440,9 +437,9 @@ public class ParticipantControlPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new ParticipantControlPane ();
+		return new ParticipantControlPane();
 	}
 
 	/**
@@ -450,15 +447,15 @@ public class ParticipantControlPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new AktarioUserRegistry ();
+		return new AktarioUserRegistry();
 	}
 
 	/**
 	 * Send an action to enable/disable lesson displays.
 	 */
-	public void sendEnableLessonAction ()
+	public void sendEnableLessonAction()
 	{
 		// 		ClientTransceiver transceiver =
 		// 			new ClientTransceiver(AppContext.instance ().getChannelNumber ());
@@ -479,62 +476,62 @@ public class ParticipantControlPane extends SwingGUIPane
 	 * @param participantIds The ids of the participants.
 	 * @param connected True if the participant is currently connected.
 	 */
-	public void setUserConnectionState (List participantIds, boolean connected)
+	public void setUserConnectionState(List participantIds, boolean connected)
 	{
-		for (Iterator i = participantIds.iterator (); i.hasNext ();)
+		for (Iterator i = participantIds.iterator(); i.hasNext();)
 		{
-			long participantId = ((Long) i.next ()).longValue ();
+			long participantId = ((Long) i.next()).longValue();
 
-			AktarioUser user = ((AktarioUserRegistry) getIObject ()).getUserById (participantId);
+			AktarioUser user = ((AktarioUserRegistry) getIObject()).getUserById(participantId);
 
 			if (connected)
 			{
-				onlineParticipants.add (user);
+				onlineParticipants.add(user);
 			}
 			else
 			{
-				onlineParticipants.remove (user);
+				onlineParticipants.remove(user);
 			}
 		}
 
-		participantTable.repaint ();
+		participantTable.repaint();
 	}
 
 	/**
 	 * Set all participants busy.
 	 */
-	public void setUsersBusy ()
+	public void setUsersBusy()
 	{
-		for (Iterator i = ((AktarioUserRegistry) getIObject ()).userIterator (); i.hasNext ();)
+		for (Iterator i = ((AktarioUserRegistry) getIObject()).userIterator(); i.hasNext();)
 		{
-			AktarioUser user = (AktarioUser) i.next ();
+			AktarioUser user = (AktarioUser) i.next();
 
-			if (user.getRole () == AktarioUser.ROLE_USER)
+			if (user.getRole() == AktarioUser.ROLE_USER)
 			{
-				busyParticipants.add (user);
+				busyParticipants.add(user);
 			}
 		}
 
-		participantTable.repaint ();
+		participantTable.repaint();
 	}
 
 	/**
 	 * Set a participant ready.
 	 */
-	public void setUserReady (long participantId, boolean ready)
+	public void setUserReady(long participantId, boolean ready)
 	{
-		AktarioUser user = ((AktarioUserRegistry) getIObject ()).getUserById (participantId);
+		AktarioUser user = ((AktarioUserRegistry) getIObject()).getUserById(participantId);
 
 		if (ready)
 		{
-			busyParticipants.remove (user);
+			busyParticipants.remove(user);
 		}
 		else
 		{
-			busyParticipants.add (user);
+			busyParticipants.add(user);
 		}
 
-		participantTable.repaint ();
+		participantTable.repaint();
 	}
 
 	/**
@@ -542,19 +539,19 @@ public class ParticipantControlPane extends SwingGUIPane
 	 *
 	 * @param enabledParticipantIds List of ids of the enabled participants.
 	 */
-	public void setEnabledUserIds (List enabledParticipantIds)
+	public void setEnabledUserIds(List enabledParticipantIds)
 	{
-		boardParticipants.clear ();
+		boardParticipants.clear();
 
-		AktarioUserRegistry users = (AktarioUserRegistry) getIObject ();
+		AktarioUserRegistry users = (AktarioUserRegistry) getIObject();
 
-		for (Iterator i = enabledParticipantIds.iterator (); i.hasNext ();)
+		for (Iterator i = enabledParticipantIds.iterator(); i.hasNext();)
 		{
-			long participantId = ((Long) i.next ()).longValue ();
+			long participantId = ((Long) i.next()).longValue();
 
-			boardParticipants.add (users.getUserById (participantId));
+			boardParticipants.add(users.getUserById(participantId));
 		}
 
-		participantTable.repaint ();
+		participantTable.repaint();
 	}
 }

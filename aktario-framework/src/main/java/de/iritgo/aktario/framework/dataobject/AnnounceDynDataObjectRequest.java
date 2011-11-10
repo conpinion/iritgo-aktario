@@ -43,17 +43,17 @@ public class AnnounceDynDataObjectRequest extends NetworkFrameworkServerAction
 	/**
 	 * Create a new HistoricalDataServerAction.
 	 */
-	public AnnounceDynDataObjectRequest ()
+	public AnnounceDynDataObjectRequest()
 	{
-		setTypeId ("ADDOREQ");
+		setTypeId("ADDOREQ");
 	}
 
 	/**
 	 * Create a new HistoricalDataServerAction.
 	 */
-	public AnnounceDynDataObjectRequest (DynDataObject dynDataObject)
+	public AnnounceDynDataObjectRequest(DynDataObject dynDataObject)
 	{
-		this ();
+		this();
 		this.dynDataObject = dynDataObject;
 	}
 
@@ -62,19 +62,19 @@ public class AnnounceDynDataObjectRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		String dynDataObjectTypeId = stream.readUTF ();
+		String dynDataObjectTypeId = stream.readUTF();
 
-		dynDataObject = new DynDataObject (dynDataObjectTypeId);
+		dynDataObject = new DynDataObject(dynDataObjectTypeId);
 
 		try
 		{
-			dynDataObject.readTypeInformations (stream, dynDataObject);
+			dynDataObject.readTypeInformations(stream, dynDataObject);
 		}
 		catch (Exception x)
 		{
-			Log.log ("network", "AnnounceDynDataObjectRequest.readObject", "Unknown objectType in:"
+			Log.log("network", "AnnounceDynDataObjectRequest.readObject", "Unknown objectType in:"
 							+ dynDataObjectTypeId, Log.FATAL);
 		}
 	}
@@ -84,10 +84,10 @@ public class AnnounceDynDataObjectRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (dynDataObject.getTypeId ());
-		dynDataObject.writeTypeInformations (stream, dynDataObject);
+		stream.writeUTF(dynDataObject.getTypeId());
+		dynDataObject.writeTypeInformations(stream, dynDataObject);
 	}
 
 	/**
@@ -96,17 +96,17 @@ public class AnnounceDynDataObjectRequest extends NetworkFrameworkServerAction
 	 * @param clientTransceiver The client transceiver.
 	 * @return The client action.
 	 */
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
-		Engine.instance ().getIObjectFactory ().register (dynDataObject);
+		Engine.instance().getIObjectFactory().register(dynDataObject);
 
-		Iterator iterator = Server.instance ().getUserRegistry ().onlineUserIterator ();
+		Iterator iterator = Server.instance().getUserRegistry().onlineUserIterator();
 
-		while (iterator.hasNext ())
+		while (iterator.hasNext())
 		{
-			clientTransceiver.addReceiver (((User) iterator.next ()).getNetworkChannel ());
+			clientTransceiver.addReceiver(((User) iterator.next()).getNetworkChannel());
 		}
 
-		return new AnnounceDynDataObjectResponse (dynDataObject);
+		return new AnnounceDynDataObjectResponse(dynDataObject);
 	}
 }

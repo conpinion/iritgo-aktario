@@ -40,23 +40,22 @@ public class SaveBetwixtBean extends Command
 
 	private String filename;
 
-	public SaveBetwixtBean ()
+	public SaveBetwixtBean()
 	{
-		super ("savebetwixtbean");
+		super("savebetwixtbean");
 	}
 
-	public SaveBetwixtBean (Object bean)
+	public SaveBetwixtBean(Object bean)
 	{
-		this (bean, Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator (), bean.getClass ()
-						.getName ());
+		this(bean, Engine.instance().getSystemDir() + Engine.instance().getFileSeparator(), bean.getClass().getName());
 	}
 
-	public SaveBetwixtBean (Object bean, String path)
+	public SaveBetwixtBean(Object bean, String path)
 	{
-		this (bean, path, bean.getClass ().getName ());
+		this(bean, path, bean.getClass().getName());
 	}
 
-	public SaveBetwixtBean (Object bean, String path, String filename)
+	public SaveBetwixtBean(Object bean, String path, String filename)
 	{
 		this.bean = bean;
 		this.path = path;
@@ -69,37 +68,37 @@ public class SaveBetwixtBean extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
-		bean = (Object) properties.get ("bean");
+		bean = (Object) properties.get("bean");
 
-		path = (String) properties.get ("path");
+		path = (String) properties.get("path");
 
 		if (path == null)
 		{
-			path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator ();
+			path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator();
 		}
 
-		filename = (String) properties.get ("filename");
+		filename = (String) properties.get("filename");
 
 		if (filename == null)
 		{
-			filename = bean.getClass ().getName ();
+			filename = bean.getClass().getName();
 		}
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		BeanWriter writer = null;
 
 		try
 		{
-			writer = new BeanWriter (new BufferedOutputStream (new FileOutputStream (path + filename)));
-			writer.getXMLIntrospector ().setAttributesForPrimitives (true);
-			writer.enablePrettyPrint ();
+			writer = new BeanWriter(new BufferedOutputStream(new FileOutputStream(path + filename)));
+			writer.getXMLIntrospector().setAttributesForPrimitives(true);
+			writer.enablePrettyPrint();
 			//			writer.getBindingConfiguration ().setMapIDs (false);
-			writer.write ((DataObject) bean);
+			writer.write((DataObject) bean);
 		}
 		catch (Exception x)
 		{
@@ -107,7 +106,7 @@ public class SaveBetwixtBean extends Command
 
 		try
 		{
-			writer.close ();
+			writer.close();
 		}
 		catch (Exception x)
 		{

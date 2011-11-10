@@ -43,14 +43,14 @@ public class StartFileTransferResponse extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public StartFileTransferResponse ()
+	public StartFileTransferResponse()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public StartFileTransferResponse (String fileId, Properties properties)
+	public StartFileTransferResponse(String fileId, Properties properties)
 	{
 		this.properties = properties;
 		this.fileId = fileId;
@@ -60,37 +60,37 @@ public class StartFileTransferResponse extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		fileId = stream.readUTF ();
+		fileId = stream.readUTF();
 
-		ObjectInputStream s = new ObjectInputStream (stream);
+		ObjectInputStream s = new ObjectInputStream(stream);
 
-		properties = (Properties) s.readObject ();
+		properties = (Properties) s.readObject();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (fileId);
+		stream.writeUTF(fileId);
 
-		ObjectOutputStream s = new ObjectOutputStream (stream);
+		ObjectOutputStream s = new ObjectOutputStream(stream);
 
-		s.writeObject (properties);
+		s.writeObject(properties);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		FileTransferSessionManager fileTransferSessionManager = (FileTransferSessionManager) Engine.instance ()
-						.getManager ("FileTransferSessionManager");
+		FileTransferSessionManager fileTransferSessionManager = (FileTransferSessionManager) Engine.instance()
+						.getManager("FileTransferSessionManager");
 
-		fileTransferSessionManager.addFileTransfer (fileId);
+		fileTransferSessionManager.addFileTransfer(fileId);
 	}
 }

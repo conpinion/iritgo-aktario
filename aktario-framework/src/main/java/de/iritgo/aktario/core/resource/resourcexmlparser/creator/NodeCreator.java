@@ -30,5 +30,5 @@ import de.iritgo.aktario.core.resource.resourcexmlparser.NodeContainer;
  */
 public interface NodeCreator
 {
-	public void work (NodeContainer node, ElementIterator i) throws ContinueException;
+	public void work(NodeContainer node, ElementIterator i) throws ContinueException;
 }

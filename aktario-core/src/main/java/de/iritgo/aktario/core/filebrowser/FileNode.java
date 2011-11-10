@@ -57,12 +57,12 @@ public class FileNode implements MutableTreeNode
 	 * @param file the encapsuled file
 	 * @param filter the Filename filter
 	 */
-	public FileNode (FileBrowser browser, FileNode parent, File file)
+	public FileNode(FileBrowser browser, FileNode parent, File file)
 	{
 		this.browser = browser;
 		this.file = file;
 		this.filter = parent.filter;
-		this.name = file.getName ();
+		this.name = file.getName();
 		this.parent = parent;
 	}
 
@@ -71,28 +71,28 @@ public class FileNode implements MutableTreeNode
 	 * @param name the root node name
 	 * @param filter the Filename filter
 	 */
-	public FileNode (String name, FilenameFilter filter)
+	public FileNode(String name, FilenameFilter filter)
 	{
 		this.name = name;
 		this.file = null;
 		this.parent = null;
 		this.filter = filter;
-		this.children = new Vector (3);
+		this.children = new Vector(3);
 
-		File[] roots = File.listRoots ();
+		File[] roots = File.listRoots();
 
 		for (int i = 0; i < roots.length; i++)
 		{
 			File root = roots[i];
-			String path = root.getAbsolutePath ();
+			String path = root.getAbsolutePath();
 
-			if (! path.startsWith ("A:"))
+			if (! path.startsWith("A:"))
 			{ //ugly hack
 
-				FileNode node = new FileNode (this, root, filter);
+				FileNode node = new FileNode(this, root, filter);
 
-				node.setName (path);
-				children.addElement (node);
+				node.setName(path);
+				children.addElement(node);
 			}
 		}
 	}
@@ -103,22 +103,22 @@ public class FileNode implements MutableTreeNode
 	 * @param file the encapsuled file
 	 * @param filter the Filename filter
 	 */
-	protected FileNode (FileNode parent, File file, FilenameFilter filter)
+	protected FileNode(FileNode parent, File file, FilenameFilter filter)
 	{
 		this.file = file;
 		this.filter = filter;
-		this.name = file.getName ();
+		this.name = file.getName();
 		this.parent = parent;
 	}
 
-	public FileNode (File file, FilenameFilter filter)
+	public FileNode(File file, FilenameFilter filter)
 	{
-		this.name = file.getName ();
+		this.name = file.getName();
 		this.file = file;
 		this.parent = null;
 		this.filter = filter;
-		this.children = new Vector (4);
-		loadChildren ();
+		this.children = new Vector(4);
+		loadChildren();
 	}
 
 	//Children
@@ -127,16 +127,16 @@ public class FileNode implements MutableTreeNode
 	 * Load the children of this node and sort them, first directory
 	 * then files in alphabetical order.
 	 */
-	protected synchronized void loadChildren ()
+	protected synchronized void loadChildren()
 	{
-		children = new Vector (0);
+		children = new Vector(0);
 
 		if (file == null)
 		{
 			return;
 		}
 
-		File[] files = file.listFiles (filter);
+		File[] files = file.listFiles(filter);
 
 		if (files == null)
 		{
@@ -145,63 +145,63 @@ public class FileNode implements MutableTreeNode
 
 		//sort
 		int len = files.length;
-		Vector vfiles = new Vector (len);
+		Vector vfiles = new Vector(len);
 
 		for (int i = 0; i < len; i++)
 		{
-			Sorter.orderedFileInsert (files[i], vfiles);
+			Sorter.orderedFileInsert(files[i], vfiles);
 		}
 
 		//create Nodes
-		children = new Vector (files.length);
+		children = new Vector(files.length);
 
 		for (int i = 0; i < len; i++)
 		{
-			children.addElement (new FileNode (browser, this, (File) vfiles.elementAt (i)));
+			children.addElement(new FileNode(browser, this, (File) vfiles.elementAt(i)));
 		}
 	}
 
-	protected synchronized void updateChildrenFile ()
+	protected synchronized void updateChildrenFile()
 	{
 		if (children != null)
 		{
-			for (int i = 0; i < children.size (); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
-				FileNode child = (FileNode) children.elementAt (i);
+				FileNode child = (FileNode) children.elementAt(i);
 
-				child.updateFile ();
+				child.updateFile();
 			}
 		}
 	}
 
-	protected void updateFile ()
+	protected void updateFile()
 	{
 		if (parent != null)
 		{
-			file = new File (parent.getFile (), name);
+			file = new File(parent.getFile(), name);
 		}
 
-		updateChildrenFile ();
+		updateChildrenFile();
 	}
 
-	protected void setCursor (int cursor)
+	protected void setCursor(int cursor)
 	{
 		if (browser != null)
 		{
-			browser.setCursor (cursor);
+			browser.setCursor(cursor);
 		}
 	}
 
 	/**
 	 * Load the children if needed.
 	 */
-	protected void acquireChildren ()
+	protected void acquireChildren()
 	{
 		if (children == null)
 		{
-			setCursor (Cursor.WAIT_CURSOR);
-			loadChildren ();
-			setCursor (Cursor.DEFAULT_CURSOR);
+			setCursor(Cursor.WAIT_CURSOR);
+			loadChildren();
+			setCursor(Cursor.DEFAULT_CURSOR);
 		}
 	}
 
@@ -212,29 +212,29 @@ public class FileNode implements MutableTreeNode
 	 * @param childIndex the index of the child to return
 	 * @return a TreeNode instance
 	 */
-	public TreeNode getChildAt (int childIndex)
+	public TreeNode getChildAt(int childIndex)
 	{
-		acquireChildren ();
+		acquireChildren();
 
-		return (TreeNode) children.elementAt (childIndex);
+		return (TreeNode) children.elementAt(childIndex);
 	}
 
 	/**
 	 * Returns the number of children TreeNodes the receiver contains.
 	 * @return the number of children TreeNodes the receiver contains
 	 */
-	public int getChildCount ()
+	public int getChildCount()
 	{
-		acquireChildren ();
+		acquireChildren();
 
-		return children.size ();
+		return children.size();
 	}
 
 	/**
 	 * Returns the parent TreeNode of the receiver.
 	 * @return a TreeNode
 	 */
-	public TreeNode getParent ()
+	public TreeNode getParent()
 	{
 		return parent;
 	}
@@ -244,40 +244,40 @@ public class FileNode implements MutableTreeNode
 	 * does not contain node, -1 will be returned.
 	 * @return an int.
 	 */
-	public int getIndex (TreeNode node)
+	public int getIndex(TreeNode node)
 	{
-		acquireChildren ();
+		acquireChildren();
 
-		return children.indexOf (node);
+		return children.indexOf(node);
 	}
 
 	/**
 	 * Returns true if the receiver allows children.
 	 * @return an int.
 	 */
-	public boolean getAllowsChildren ()
+	public boolean getAllowsChildren()
 	{
-		return ((parent == null) ? true : file.isDirectory ());
+		return ((parent == null) ? true : file.isDirectory());
 	}
 
 	/**
 	 * Returns true if the receiver is a leaf.
 	 * @return a boolean
 	 */
-	public boolean isLeaf ()
+	public boolean isLeaf()
 	{
-		return ((parent == null) ? false : file.isFile ());
+		return ((parent == null) ? false : file.isFile());
 	}
 
 	/**
 	 * Returns the children of the reciever as an Enumeration.
 	 * @return an Enumeration
 	 */
-	public Enumeration children ()
+	public Enumeration children()
 	{
-		acquireChildren ();
+		acquireChildren();
 
-		return children.elements ();
+		return children.elements();
 	}
 
 	//MutableTreeNode part
@@ -288,49 +288,49 @@ public class FileNode implements MutableTreeNode
 	 * @param child the child to add.
 	 * @param index the index of the new child.
 	 */
-	public void insert (MutableTreeNode child, int index)
+	public void insert(MutableTreeNode child, int index)
 	{
-		acquireChildren ();
-		children.insertElementAt (child, index);
+		acquireChildren();
+		children.insertElementAt(child, index);
 	}
 
 	/**
 	 * Removes the child at index from the receiver.
 	 * @param the index of the child to remove.
 	 */
-	public void remove (int index)
+	public void remove(int index)
 	{
-		acquireChildren ();
-		children.remove (index);
+		acquireChildren();
+		children.remove(index);
 	}
 
 	/**
 	 * Removes node from the receiver. setParent will be messaged on node
 	 * @param node the node to remove
 	 */
-	public void remove (MutableTreeNode node)
+	public void remove(MutableTreeNode node)
 	{
-		children.remove (node);
+		children.remove(node);
 	}
 
 	/**
 	 * Resets the user object of the receiver to object.
 	 * @param object the new user object, actually the new identifier.
 	 */
-	public void setUserObject (Object object)
+	public void setUserObject(Object object)
 	{
 		if (object instanceof String)
 		{
 			if (file != null)
 			{
 				String newname = (String) object;
-				File newfile = new File (file.getParent (), newname);
+				File newfile = new File(file.getParent(), newname);
 
-				if (file.renameTo (newfile))
+				if (file.renameTo(newfile))
 				{
 					name = newname;
 					file = newfile;
-					updateChildrenFile ();
+					updateChildrenFile();
 				}
 			}
 		}
@@ -339,11 +339,11 @@ public class FileNode implements MutableTreeNode
 	/**
 	 * Removes the receiver from its parent.
 	 */
-	public void removeFromParent ()
+	public void removeFromParent()
 	{
 		if (parent != null)
 		{
-			parent.remove (this);
+			parent.remove(this);
 		}
 	}
 
@@ -351,21 +351,21 @@ public class FileNode implements MutableTreeNode
 	 * Sets the parent of the receiver to newParent.
 	 * @param newParent the new parent.
 	 */
-	public void setParent (MutableTreeNode newParent)
+	public void setParent(MutableTreeNode newParent)
 	{
 		this.parent = (FileNode) newParent;
 
-		if (parent.hasFile ())
+		if (parent.hasFile())
 		{
-			this.file = new File (parent.getFile (), name);
+			this.file = new File(parent.getFile(), name);
 
 			if (children == null)
 			{
-				loadChildren ();
+				loadChildren();
 			}
 			else
 			{
-				updateChildrenFile ();
+				updateChildrenFile();
 			}
 		}
 	}
@@ -375,7 +375,7 @@ public class FileNode implements MutableTreeNode
 	 * @return its name
 	 */
 	@Override
-	public String toString ()
+	public String toString()
 	{
 		return name;
 	}
@@ -384,7 +384,7 @@ public class FileNode implements MutableTreeNode
 	 * Get the file
 	 * @return the encapsuled file
 	 */
-	public File getFile ()
+	public File getFile()
 	{
 		return file;
 	}
@@ -392,7 +392,7 @@ public class FileNode implements MutableTreeNode
 	/**
 	 * Is the node associated to a file
 	 */
-	public boolean hasFile ()
+	public boolean hasFile()
 	{
 		return (file != null);
 	}
@@ -401,101 +401,101 @@ public class FileNode implements MutableTreeNode
 	 * Get the node name
 	 * @return
 	 */
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}
 
-	public boolean equals (FileNode node)
+	public boolean equals(FileNode node)
 	{
 		if (file == null)
 		{
-			return (! node.hasFile ());
+			return (! node.hasFile());
 		}
 
-		return file.equals (node.getFile ());
+		return file.equals(node.getFile());
 	}
 
 	/**
 	 * Set the node's name
 	 * @param name the node name
 	 */
-	protected void setName (String name)
+	protected void setName(String name)
 	{
 		this.name = name;
 	}
 
-	protected void setBrowser (FileBrowser browser)
+	protected void setBrowser(FileBrowser browser)
 	{
 		this.browser = browser;
 	}
 
-	protected boolean isOwner (FileBrowser browser)
+	protected boolean isOwner(FileBrowser browser)
 	{
 		return (this.browser == browser);
 	}
 
-	public FileNode findNode (File tofind)
+	public FileNode findNode(File tofind)
 	{
-		if (hasFile () && (file.equals (tofind)))
+		if (hasFile() && (file.equals(tofind)))
 		{
 			return this;
 		}
 
-		acquireChildren ();
+		acquireChildren();
 
-		String path = tofind.getAbsolutePath ();
+		String path = tofind.getAbsolutePath();
 
-		for (int i = 0; i < children.size (); i++)
+		for (int i = 0; i < children.size(); i++)
 		{
-			FileNode node = (FileNode) children.elementAt (i);
+			FileNode node = (FileNode) children.elementAt(i);
 
-			if (node.hasFile () && (node.file.equals (tofind)))
+			if (node.hasFile() && (node.file.equals(tofind)))
 			{
 				return node;
 			}
 		}
 
-		for (int i = 0; i < children.size (); i++)
+		for (int i = 0; i < children.size(); i++)
 		{
-			FileNode node = (FileNode) children.elementAt (i);
-			String nodepath = node.getFile ().getAbsolutePath () + Engine.instance ().getFileSeparator ();
+			FileNode node = (FileNode) children.elementAt(i);
+			String nodepath = node.getFile().getAbsolutePath() + Engine.instance().getFileSeparator();
 
-			if (path.startsWith (nodepath))
+			if (path.startsWith(nodepath))
 			{
-				return node.findNode (tofind);
+				return node.findNode(tofind);
 			}
 		}
 
 		return null;
 	}
 
-	public TreePath findTreePath (File tofind)
+	public TreePath findTreePath(File tofind)
 	{
-		FileNode node = findNode (tofind);
+		FileNode node = findNode(tofind);
 
-		LinkedList pathList = new LinkedList ();
+		LinkedList pathList = new LinkedList();
 
 		while (node != null)
 		{
-			pathList.addFirst (node);
+			pathList.addFirst(node);
 			node = node.parent;
 		}
 
-		if (pathList.size () == 0)
+		if (pathList.size() == 0)
 		{
 			return null;
 		}
 		else
 		{
-			return new TreePath (pathList.toArray ());
+			return new TreePath(pathList.toArray());
 		}
 	}
 
 	/**
 	 * Invoked whenever this node is about to be expanded.
 	 */
-	public void nodeWillExpand ()
+	public void nodeWillExpand()
 	{
 		children = null;
 	}
@@ -503,22 +503,22 @@ public class FileNode implements MutableTreeNode
 	/**
 	 * Invoked whenever this node is about to be collapsed.
 	 */
-	public void nodeWillCollapse ()
+	public void nodeWillCollapse()
 	{
 		//children = null;
 	}
 
-	public void initializeRootNode (FileBrowser browser)
+	public void initializeRootNode(FileBrowser browser)
 	{
 		if (parent == null)
 		{ //we are a root node
 			this.browser = browser;
 
-			for (int i = 0; i < children.size (); i++)
+			for (int i = 0; i < children.size(); i++)
 			{
-				FileNode node = (FileNode) children.elementAt (i);
+				FileNode node = (FileNode) children.elementAt(i);
 
-				node.setBrowser (browser);
+				node.setBrowser(browser);
 			}
 		}
 	}

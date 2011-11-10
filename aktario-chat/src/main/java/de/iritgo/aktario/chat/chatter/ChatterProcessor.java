@@ -33,36 +33,36 @@ public class ChatterProcessor
 
 	private ChatChannel chatChannel;
 
-	public ChatterProcessor (Long userId, ChatChannel chatChannel)
+	public ChatterProcessor(Long userId, ChatChannel chatChannel)
 	{
 		this.userId = userId;
 		this.chatChannel = chatChannel;
 	}
 
-	public void doProcessor (Processor processor)
+	public void doProcessor(Processor processor)
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		User newUser = userRegistry.getUser (userId);
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		User newUser = userRegistry.getUser(userId);
 
 		if (chatChannel == null)
 		{
 			return;
 		}
 
-		Iterator i = chatChannel.getMembersIterator ();
+		Iterator i = chatChannel.getMembersIterator();
 
-		while (i.hasNext ())
+		while (i.hasNext())
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			if (! user.isOnline ())
+			if (! user.isOnline())
 			{
 				continue;
 			}
 
-			de.iritgo.aktario.core.action.AbstractAction action = processor.getAction (user, newUser);
+			de.iritgo.aktario.core.action.AbstractAction action = processor.getAction(user, newUser);
 
-			ActionTools.sendToClient (action);
+			ActionTools.sendToClient(action);
 		}
 	}
 }

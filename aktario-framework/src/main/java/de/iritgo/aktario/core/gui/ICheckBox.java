@@ -36,9 +36,9 @@ public class ICheckBox extends JCheckBox
 	/**
 	 * Create a check box with no text or icon.
 	 */
-	public ICheckBox ()
+	public ICheckBox()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class ICheckBox extends JCheckBox
 	 *
 	 * @param textKey The text of the check box.
 	 */
-	public ICheckBox (String textKey)
+	public ICheckBox(String textKey)
 	{
-		super (textKey);
+		super(textKey);
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class ICheckBox extends JCheckBox
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 }

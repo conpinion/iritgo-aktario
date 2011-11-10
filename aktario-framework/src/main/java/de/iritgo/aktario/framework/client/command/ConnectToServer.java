@@ -46,7 +46,7 @@ public class ConnectToServer extends Command
 	 * @param guiPaneId The id of the gui pane used as a connection
 	 *   progress observer.
 	 */
-	public ConnectToServer (String guiPaneId)
+	public ConnectToServer(String guiPaneId)
 	{
 		this.observerGuiPaneId = guiPaneId;
 	}
@@ -54,7 +54,7 @@ public class ConnectToServer extends Command
 	/**
 	 * Create a mew ConnectToServer command.
 	 */
-	public ConnectToServer ()
+	public ConnectToServer()
 	{
 	}
 
@@ -63,45 +63,44 @@ public class ConnectToServer extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * ConnectToServer
 	 */
-	public void perform ()
+	public void perform()
 	{
-		AppContext appContext = AppContext.instance ();
+		AppContext appContext = AppContext.instance();
 
 		ConnectObserver observer = null;
 
 		if (observerGuiPaneId != null)
 		{
-			IDisplay display = Client.instance ().getClientGUI ().getDesktopManager ().waitForDisplay (
-							observerGuiPaneId);
+			IDisplay display = Client.instance().getClientGUI().getDesktopManager().waitForDisplay(observerGuiPaneId);
 
-			observer = (ConnectObserver) display.getGUIPane ();
+			observer = (ConnectObserver) display.getGUIPane();
 		}
 
-		NetworkService networkService = Client.instance ().getNetworkService ();
+		NetworkService networkService = Client.instance().getNetworkService();
 
-		Configuration config = IritgoEngine.instance ().getConfiguration ();
-		SocketConfig socketConfig = config.getNetwork ().getSocket ();
+		Configuration config = IritgoEngine.instance().getConfiguration();
+		SocketConfig socketConfig = config.getNetwork().getSocket();
 
-		int port = socketConfig.getPort ();
+		int port = socketConfig.getPort();
 
-		double channelNumber = networkService.connect (appContext.getServerIP (), port, observer);
+		double channelNumber = networkService.connect(appContext.getServerIP(), port, observer);
 
 		if (channelNumber < 0)
 		{
-			appContext.setConnectionState (false);
+			appContext.setConnectionState(false);
 
 			return;
 		}
 
-		appContext.setConnectionState (true);
-		appContext.setChannelNumber (channelNumber);
+		appContext.setConnectionState(true);
+		appContext.setChannelNumber(channelNumber);
 
 		return;
 	}

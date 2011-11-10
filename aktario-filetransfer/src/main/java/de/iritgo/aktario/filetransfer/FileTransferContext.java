@@ -56,100 +56,100 @@ public class FileTransferContext
 
 	private long userUniqueId;
 
-	public FileTransferContext (FileTransferService fileTransferService, Properties properties)
+	public FileTransferContext(FileTransferService fileTransferService, Properties properties)
 	{
 		this.fileTransferService = fileTransferService;
-		filename = properties.getProperty ("filename", "");
-		fileDescription = properties.getProperty ("fileDescription", "");
-		fileId = properties.getProperty ("fileId", "");
-		path = properties.getProperty ("path", "");
-		service = properties.getProperty ("service", "default");
+		filename = properties.getProperty("filename", "");
+		fileDescription = properties.getProperty("fileDescription", "");
+		fileId = properties.getProperty("fileId", "");
+		path = properties.getProperty("path", "");
+		service = properties.getProperty("service", "default");
 
-		if (properties.get ("userUniqueId") != null)
+		if (properties.get("userUniqueId") != null)
 		{
-			userUniqueId = ((Long) properties.get ("userUniqueId")).longValue ();
+			userUniqueId = ((Long) properties.get("userUniqueId")).longValue();
 		}
 
 		this.properties = properties;
 		sended = 0;
 	}
 
-	public void startFileTransfer ()
+	public void startFileTransfer()
 	{
-		fileTransferService.startTransfer (this);
+		fileTransferService.startTransfer(this);
 	}
 
-	public int fileTransfer (byte[] data)
+	public int fileTransfer(byte[] data)
 	{
-		return fileTransferService.transfer (this, data);
+		return fileTransferService.transfer(this, data);
 	}
 
-	public void endFileTransfer ()
+	public void endFileTransfer()
 	{
-		fileTransferService.endTransfer (this);
+		fileTransferService.endTransfer(this);
 	}
 
-	public void setFilename (String filename)
+	public void setFilename(String filename)
 	{
 		this.filename = filename;
 	}
 
-	public String getFilename ()
+	public String getFilename()
 	{
 		return filename;
 	}
 
-	public void setPath (String path)
+	public void setPath(String path)
 	{
 		this.path = path;
 	}
 
-	public String getPath ()
+	public String getPath()
 	{
 		return path;
 	}
 
-	public void setFileSize (long fileSize)
+	public void setFileSize(long fileSize)
 	{
 		this.fileSize = fileSize;
 	}
 
-	public long getFileSize ()
+	public long getFileSize()
 	{
 		return fileSize;
 	}
 
-	public long getSended ()
+	public long getSended()
 	{
 		return sended;
 	}
 
-	public String getFileDescription ()
+	public String getFileDescription()
 	{
 		return fileDescription;
 	}
 
-	public String getFileId ()
+	public String getFileId()
 	{
 		return fileId;
 	}
 
-	public String getService ()
+	public String getService()
 	{
 		return service;
 	}
 
-	public long getUserUniqueId ()
+	public long getUserUniqueId()
 	{
 		return userUniqueId;
 	}
 
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}
 
-	public void calculateSendedBytes (int sended)
+	public void calculateSendedBytes(int sended)
 	{
 		this.sended += sended;
 	}

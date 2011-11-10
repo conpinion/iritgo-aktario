@@ -40,10 +40,10 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 * @param channel The channel for this processor
 	 * @param parentNetworkActionProcessor The network action processor
 	 */
-	public ConcurrencyNetworkActionProcessor (Channel channel,
+	public ConcurrencyNetworkActionProcessor(Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super ("Server.ConcurrencyNetworkActionProcessor", channel, parentNetworkActionProcessor);
+		super("Server.ConcurrencyNetworkActionProcessor", channel, parentNetworkActionProcessor);
 	}
 
 	/**
@@ -53,11 +53,11 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 * @param parentNetworkActionProcessor The network action processor
 	 * @param threadNetworkActionProcessor The thread network action processor
 	 */
-	public ConcurrencyNetworkActionProcessor (Channel channel,
+	public ConcurrencyNetworkActionProcessor(Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor,
 					ThreadNetworkActionProcessor threadNetworkActionProcessor)
 	{
-		super ("Server.ConcurrencyNetworkActionProcessor", channel, parentNetworkActionProcessor);
+		super("Server.ConcurrencyNetworkActionProcessor", channel, parentNetworkActionProcessor);
 		this.threadNetworkActionProcessor = threadNetworkActionProcessor;
 	}
 
@@ -66,7 +66,7 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 *
 	 * @param threadNetworkActionProcessor The action processor.
 	 */
-	public void setThreadNetworkActionProcessor (ThreadNetworkActionProcessor threadNetworkActionProcessor)
+	public void setThreadNetworkActionProcessor(ThreadNetworkActionProcessor threadNetworkActionProcessor)
 	{
 		this.threadNetworkActionProcessor = threadNetworkActionProcessor;
 	}
@@ -77,10 +77,10 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 * @param channel The new channel.
 	 */
 	@Override
-	public void newChannelCreated (Channel channel)
+	public void newChannelCreated(Channel channel)
 	{
-		addOutput (channel, (ActionProcessor) threadNetworkActionProcessor.clone ());
-		super.newChannelCreated (channel);
+		addOutput(channel, (ActionProcessor) threadNetworkActionProcessor.clone());
+		super.newChannelCreated(channel);
 	}
 
 	/**
@@ -89,11 +89,11 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 * @param channel The new channel.
 	 */
 	@Override
-	public void channelClosed (Channel channel)
+	public void channelClosed(Channel channel)
 	{
-		((NetworkActionProcessorInterface) channelProcessorMapping.get (channel)).channelClosed (channel);
-		((NetworkActionProcessorInterface) channelProcessorMapping.get (channel)).close ();
-		removeOutput (channel);
+		((NetworkActionProcessorInterface) channelProcessorMapping.get(channel)).channelClosed(channel);
+		((NetworkActionProcessorInterface) channelProcessorMapping.get(channel)).close();
+		removeOutput(channel);
 	}
 
 	/**
@@ -102,12 +102,12 @@ public class ConcurrencyNetworkActionProcessor extends NetworkActionProcessor
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		ConcurrencyNetworkActionProcessor clone = new ConcurrencyNetworkActionProcessor (channel,
+		ConcurrencyNetworkActionProcessor clone = new ConcurrencyNetworkActionProcessor(channel,
 						parentNetworkActionProcessor, threadNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

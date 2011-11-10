@@ -71,9 +71,9 @@ public class ScriptAgent extends DataObject implements Agent
 	/**
 	 * Create a new ScriptAgent.
 	 */
-	public ScriptAgent ()
+	public ScriptAgent()
 	{
-		super ("ScriptAgent");
+		super("ScriptAgent");
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param agentManager The agent manager.
 	 */
-	public void init (AgentManager agentManager)
+	public void init(AgentManager agentManager)
 	{
 		this.agentManager = agentManager;
 	}
@@ -91,7 +91,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void awake (AgentContainer container)
+	public void awake(AgentContainer container)
 	{
 		boolean isNew = false;
 
@@ -100,16 +100,16 @@ public class ScriptAgent extends DataObject implements Agent
 			isNew = true;
 		}
 
-		initInterpreter ();
+		initInterpreter();
 
-		container.simpleThreadAwake (this);
+		container.simpleThreadAwake(this);
 
 		try
 		{
 			if (isNew)
 			{
-				interpreter.eval (initCode);
-				System.out.println ("avake init!");
+				interpreter.eval(initCode);
+				System.out.println("avake init!");
 			}
 		}
 		catch (Exception x)
@@ -121,7 +121,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 * Initialize the BeanShell interpreter.
 	 *
 	 */
-	private void initInterpreter ()
+	private void initInterpreter()
 	{
 		try
 		{
@@ -129,56 +129,56 @@ public class ScriptAgent extends DataObject implements Agent
 
 			if (interpreter != null)
 			{
-				nameSpace = interpreter.getGlobalNameSpace ();
+				nameSpace = interpreter.getGlobalNameSpace();
 			}
 
 			if (nameSpace == null)
 			{
-				System.out.println ("init!");
+				System.out.println("init!");
 
-				interpreter = new bsh.AgentInterpreter ();
-				nameSpace = interpreter.getGlobalNameSpace ();
+				interpreter = new bsh.AgentInterpreter();
+				nameSpace = interpreter.getGlobalNameSpace();
 			}
 
 			if (sourceIn != null)
 			{
-				sourceIn.close ();
+				sourceIn.close();
 			}
 
-			sourceIn = new BufferedReader (new StringReader (code));
+			sourceIn = new BufferedReader(new StringReader(code));
 
-			interpreter.init (sourceIn, (NameSpace) nameSpace, "tmp");
+			interpreter.init(sourceIn, (NameSpace) nameSpace, "tmp");
 		}
 		catch (Exception x)
 		{
-			System.out.println ("Create Interpreter:" + x);
+			System.out.println("Create Interpreter:" + x);
 		}
 	}
 
 	/**
 	 * The heartbeat will called at regular intervals
 	 */
-	public void heartbeat ()
+	public void heartbeat()
 	{
 		try
 		{
-			if (interpreter.isEOF ())
+			if (interpreter.isEOF())
 			{
-				initInterpreter ();
+				initInterpreter();
 			}
 
-			interpreter.evalSingleLine (sourceIn, interpreter.getGlobalNameSpace (), "tmp");
+			interpreter.evalSingleLine(sourceIn, interpreter.getGlobalNameSpace(), "tmp");
 
 			++time;
 
 			if (time > 5)
 			{
-				agentManager.getContainer ().sendToFirstDispatcher (this);
+				agentManager.getContainer().sendToFirstDispatcher(this);
 			}
 		}
 		catch (Exception x)
 		{
-			System.out.println ("Out:" + x);
+			System.out.println("Out:" + x);
 		}
 	}
 
@@ -187,9 +187,9 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void sleep (AgentContainer container)
+	public void sleep(AgentContainer container)
 	{
-		container.simpleThreadSleep (this);
+		container.simpleThreadSleep(this);
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void shutdown (AgentContainer container)
+	public void shutdown(AgentContainer container)
 	{
 	}
 
@@ -207,7 +207,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param heartBeat True if the agent is alive and has a heart beat.
 	 */
-	public void setHeartBeat (boolean heartBeat)
+	public void setHeartBeat(boolean heartBeat)
 	{
 		this.heartBeat = heartBeat;
 	}
@@ -217,7 +217,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @return True if the agent is alive and has a heart beat.
 	 */
-	public boolean hasHeartBeat ()
+	public boolean hasHeartBeat()
 	{
 		return heartBeat;
 	}
@@ -225,7 +225,7 @@ public class ScriptAgent extends DataObject implements Agent
 	/**
 	 * Get an an overview of all functions of this agent.
 	 */
-	public String getFunctions ()
+	public String getFunctions()
 	{
 		return "";
 	}
@@ -236,7 +236,7 @@ public class ScriptAgent extends DataObject implements Agent
 	 * @param communication A message string.
 	 * @return A message string.
 	 */
-	public String communication (String communication)
+	public String communication(String communication)
 	{
 		return "";
 	}
@@ -247,10 +247,10 @@ public class ScriptAgent extends DataObject implements Agent
 	 * @param stream The output stream.
 	 */
 	@Override
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
-		new ObjectOutputStream (stream).writeObject (interpreter);
+		super.writeObject(stream);
+		new ObjectOutputStream(stream).writeObject(interpreter);
 	}
 
 	/**
@@ -259,10 +259,10 @@ public class ScriptAgent extends DataObject implements Agent
 	 * @param stream The input stream.
 	 */
 	@Override
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
-		interpreter = (AgentInterpreter) new ObjectInputStream (stream).readObject ();
+		super.readObject(stream);
+		interpreter = (AgentInterpreter) new ObjectInputStream(stream).readObject();
 	}
 
 	/**
@@ -271,8 +271,8 @@ public class ScriptAgent extends DataObject implements Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void die (AgentContainer container)
+	public void die(AgentContainer container)
 	{
-		sleep (container);
+		sleep(container);
 	}
 }

@@ -49,9 +49,9 @@ public class IObjectProxy extends BaseObject implements IObject
 	/**
 	 * Create a new <code>IObjectProxy</code>.
 	 */
-	public IObjectProxy ()
+	public IObjectProxy()
 	{
-		super ("IObjectProxy");
+		super("IObjectProxy");
 	}
 
 	/**
@@ -59,15 +59,15 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @param object The real object.
 	 */
-	public IObjectProxy (IObject object)
+	public IObjectProxy(IObject object)
 	{
-		this ();
-		this.uniqueId = object.getUniqueId ();
-		this.iObjectUniqueId = object.getUniqueId ();
-		this.iObjectTypeId = object.getTypeId ();
+		this();
+		this.uniqueId = object.getUniqueId();
+		this.iObjectUniqueId = object.getUniqueId();
+		this.iObjectTypeId = object.getTypeId();
 	}
 
-	public String getIObjectTypeId ()
+	public String getIObjectTypeId()
 	{
 		return iObjectTypeId;
 	}
@@ -77,9 +77,9 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @return A new <code>IObject</code> (In this case a proxy version).
 	 */
-	public IObject create ()
+	public IObject create()
 	{
-		return new IObjectProxy ();
+		return new IObjectProxy();
 	}
 
 	/**
@@ -87,9 +87,9 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @return A new proxy instance.
 	 */
-	public IObjectProxy createProxy ()
+	public IObjectProxy createProxy()
 	{
-		return new IObjectProxy ();
+		return new IObjectProxy();
 	}
 
 	/**
@@ -100,9 +100,9 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @throws ClassNotFoundException If the object class could not be
 	 *   instantiated.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		readObject (new DataInputStream (stream));
+		readObject(new DataInputStream(stream));
 	}
 
 	/**
@@ -111,9 +111,9 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @param stream The output stream to write to.
 	 * @throws IOException In case of a write error.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		writeObject (new DataOutputStream (stream));
+		writeObject(new DataOutputStream(stream));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @throws ClassNotFoundException If the object class could not be
 	 *   instantiated.
 	 */
-	public void readObject (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
 	}
 
@@ -134,7 +134,7 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @param stream The odata utput stream to write to.
 	 * @throws IOException In case of a write error.
 	 */
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
 	}
 
@@ -146,28 +146,28 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @throws ClassNotFoundException If the object class could not be
 	 *             instantiated.
 	 */
-	public void update (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void update(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
 		try
 		{
-			setUpToDate (true);
+			setUpToDate(true);
 			updateRunning = false;
 
-			IObject object = (IObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+			IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
-			object.readObject (stream);
+			object.readObject(stream);
 
-			Engine.instance ().getProxyEventRegistry ().fire (object, new IObjectProxyEvent (object, false));
+			Engine.instance().getProxyEventRegistry().fire(object, new IObjectProxyEvent(object, false));
 
-			Engine.instance ().getEventRegistry ().fire ("proxyisuptodate", new IObjectProxyEvent (object, false));
+			Engine.instance().getEventRegistry().fire("proxyisuptodate", new IObjectProxyEvent(object, false));
 		}
 		catch (IOException x)
 		{
-			throw new IOException ();
+			throw new IOException();
 		}
 		catch (ClassNotFoundException x)
 		{
-			throw new ClassNotFoundException ();
+			throw new ClassNotFoundException();
 		}
 	}
 
@@ -176,7 +176,7 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @param upToDate If true, the proxy object is up-to-date.
 	 */
-	public void setUpToDate (boolean upToDate)
+	public void setUpToDate(boolean upToDate)
 	{
 		this.upToDate = upToDate;
 	}
@@ -186,7 +186,7 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @return True if the proxy object is up-to-date.
 	 */
-	public boolean isUpToDate ()
+	public boolean isUpToDate()
 	{
 		return upToDate;
 	}
@@ -196,12 +196,12 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @param object The real object.
 	 */
-	public void setRealObject (IObject object)
+	public void setRealObject(IObject object)
 	{
-		setUniqueId (object.getUniqueId ());
-		setUpToDate (true);
-		this.iObjectUniqueId = object.getUniqueId ();
-		this.iObjectTypeId = object.getTypeId ();
+		setUniqueId(object.getUniqueId());
+		setUpToDate(true);
+		this.iObjectUniqueId = object.getUniqueId();
+		this.iObjectTypeId = object.getTypeId();
 	}
 
 	/**
@@ -209,20 +209,20 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @param object The object example.
 	 */
-	public void setSampleRealObject (IObject object)
+	public void setSampleRealObject(IObject object)
 	{
-		if (object.getUniqueId () == 0)
+		if (object.getUniqueId() == 0)
 		{
-			Log.logFatal ("system", "IObjectProxy", "Tried to set a sample object with uniqueId = 0");
+			Log.logFatal("system", "IObjectProxy", "Tried to set a sample object with uniqueId = 0");
 
 			// TODO: Enter a safe halt mode.
 			return;
 		}
 
-		setUniqueId (object.getUniqueId ());
-		setUpToDate (false);
-		this.iObjectUniqueId = object.getUniqueId ();
-		this.iObjectTypeId = object.getTypeId ();
+		setUniqueId(object.getUniqueId());
+		setUpToDate(false);
+		this.iObjectUniqueId = object.getUniqueId();
+		this.iObjectTypeId = object.getTypeId();
 	}
 
 	/**
@@ -230,14 +230,14 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @return The real object.
 	 */
-	public IObject getRealObject ()
+	public IObject getRealObject()
 	{
-		if ((! isUpToDate ()) && (getUniqueId () > 0))
+		if ((! isUpToDate()) && (getUniqueId() > 0))
 		{
-			reset ();
+			reset();
 		}
 
-		IObject object = (IObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+		IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
 		return object;
 	}
@@ -247,10 +247,10 @@ public class IObjectProxy extends BaseObject implements IObject
 	 *
 	 * @return The sample real object.
 	 */
-	public IObject getSampleRealObject ()
+	public IObject getSampleRealObject()
 	{
 		// TODO: Check the transaction
-		IObject object = (IObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+		IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
 		return object;
 	}
@@ -258,26 +258,26 @@ public class IObjectProxy extends BaseObject implements IObject
 	/**
 	 * Reset the proxy and try to get a new real object.
 	 */
-	public void reset ()
+	public void reset()
 	{
 		if (updateRunning)
 		{
 			return;
 		}
 
-		IObject object = (IObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+		IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
-		setUpToDate (false);
+		setUpToDate(false);
 		updateRunning = true;
 
-		Engine.instance ().getEventRegistry ().fire ("proxyupdate", new IObjectProxyEvent (object, true));
-		Engine.instance ().getProxyEventRegistry ().fire (object, new IObjectProxyEvent (object, true));
+		Engine.instance().getEventRegistry().fire("proxyupdate", new IObjectProxyEvent(object, true));
+		Engine.instance().getProxyEventRegistry().fire(object, new IObjectProxyEvent(object, true));
 	}
 
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		return null;
 	}
@@ -286,7 +286,7 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
 		return null;
 	}

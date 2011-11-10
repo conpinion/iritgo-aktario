@@ -37,27 +37,27 @@ public class SimpleThreadAgentContainer extends Threadable
 	 *
 	 * @param agent The sphere for this technocore
 	 */
-	public SimpleThreadAgentContainer (Agent agent)
+	public SimpleThreadAgentContainer(Agent agent)
 	{
 		this.agent = agent;
-		setState (FREE);
-		setUniqueId (agent.getUniqueId ());
+		setState(FREE);
+		setUniqueId(agent.getUniqueId());
 	}
 
 	@Override
-	public void run ()
+	public void run()
 	{
 		try
 		{
-			Thread.sleep (1000);
+			Thread.sleep(1000);
 		}
 		catch (Exception x)
 		{
 		}
 
-		if (getState () != CLOSING)
+		if (getState() != CLOSING)
 		{
-			agent.heartbeat ();
+			agent.heartbeat();
 		}
 	}
 }

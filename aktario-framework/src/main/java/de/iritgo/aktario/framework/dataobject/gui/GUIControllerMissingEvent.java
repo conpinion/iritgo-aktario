@@ -40,7 +40,7 @@ public class GUIControllerMissingEvent implements Event
 	/**
 	 * Standard constructor
 	 */
-	public GUIControllerMissingEvent (String controllerTypeId, GUIManager guiManager, int displayType, long userUniqueId)
+	public GUIControllerMissingEvent(String controllerTypeId, GUIManager guiManager, int displayType, long userUniqueId)
 	{
 		this.controllerTypeId = controllerTypeId;
 		this.guiManager = guiManager;
@@ -48,22 +48,22 @@ public class GUIControllerMissingEvent implements Event
 		this.userUniqueId = userUniqueId;
 	}
 
-	public String getControllerTypeId ()
+	public String getControllerTypeId()
 	{
 		return controllerTypeId;
 	}
 
-	public GUIManager getGUIManager ()
+	public GUIManager getGUIManager()
 	{
 		return guiManager;
 	}
 
-	public int getDisplayType ()
+	public int getDisplayType()
 	{
 		return displayType;
 	}
 
-	public long getUserUniqueId ()
+	public long getUserUniqueId()
 	{
 		return userUniqueId;
 	}

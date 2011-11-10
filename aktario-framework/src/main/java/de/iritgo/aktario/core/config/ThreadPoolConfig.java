@@ -26,22 +26,22 @@ public class ThreadPoolConfig
 
 	private int minThreads = 8;
 
-	public String getId ()
+	public String getId()
 	{
 		return id;
 	}
 
-	public void setId (String id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public int getMinThreads ()
+	public int getMinThreads()
 	{
 		return minThreads;
 	}
 
-	public void setMinThreads (int minThreads)
+	public void setMinThreads(int minThreads)
 	{
 		this.minThreads = minThreads;
 	}

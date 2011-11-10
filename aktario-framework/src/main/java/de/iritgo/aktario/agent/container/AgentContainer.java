@@ -53,12 +53,12 @@ public class AgentContainer
 	 *
 	 * @param agentManager The sphere for this technocore
 	 */
-	public AgentContainer (AgentManager agentManager)
+	public AgentContainer(AgentManager agentManager)
 	{
 		this.agentManager = agentManager;
-		agents = new HashMap ();
-		dispatcherMap = new HashMap ();
-		container = new HashMap ();
+		agents = new HashMap();
+		dispatcherMap = new HashMap();
+		container = new HashMap();
 	}
 
 	/**
@@ -66,14 +66,14 @@ public class AgentContainer
 	 *
 	 * @param agent The agent to thread.
 	 */
-	public void simpleThreadAwake (DataObject agent)
+	public void simpleThreadAwake(DataObject agent)
 	{
-		ThreadService threadService = Engine.instance ().getThreadService ();
-		SimpleThreadAgentContainer simpleThreadContainer = new SimpleThreadAgentContainer ((Agent) agent);
+		ThreadService threadService = Engine.instance().getThreadService();
+		SimpleThreadAgentContainer simpleThreadContainer = new SimpleThreadAgentContainer((Agent) agent);
 
-		container.put (new Long (agent.getUniqueId ()), simpleThreadContainer);
-		threadService.add (simpleThreadContainer);
-		((Agent) agent).setHeartBeat (true);
+		container.put(new Long(agent.getUniqueId()), simpleThreadContainer);
+		threadService.add(simpleThreadContainer);
+		((Agent) agent).setHeartBeat(true);
 	}
 
 	/**
@@ -81,13 +81,13 @@ public class AgentContainer
 	 *
 	 * @param agent The agent to thread.
 	 */
-	public void simpleThreadSleep (DataObject agent)
+	public void simpleThreadSleep(DataObject agent)
 	{
-		SimpleThreadAgentContainer simpleThreadContainer = (SimpleThreadAgentContainer) container.get (new Long (agent
-						.getUniqueId ()));
+		SimpleThreadAgentContainer simpleThreadContainer = (SimpleThreadAgentContainer) container.get(new Long(agent
+						.getUniqueId()));
 
-		simpleThreadContainer.setState (SimpleThreadAgentContainer.CLOSING);
-		container.remove (simpleThreadContainer);
+		simpleThreadContainer.setState(SimpleThreadAgentContainer.CLOSING);
+		container.remove(simpleThreadContainer);
 	}
 
 	/**
@@ -95,9 +95,9 @@ public class AgentContainer
 	 *
 	 * @param agent The agent.
 	 */
-	public void addAgent (Agent agent)
+	public void addAgent(Agent agent)
 	{
-		agents.put (new Long (agent.getUniqueId ()), agent);
+		agents.put(new Long(agent.getUniqueId()), agent);
 	}
 
 	/**
@@ -105,9 +105,9 @@ public class AgentContainer
 	 *
 	 * @param agent The agent.
 	 */
-	public void removeAgent (Agent agent)
+	public void removeAgent(Agent agent)
 	{
-		agents.remove (new Long (agent.getUniqueId ()));
+		agents.remove(new Long(agent.getUniqueId()));
 	}
 
 	/**
@@ -115,9 +115,9 @@ public class AgentContainer
 	 *
 	 * @param dispatcher The dispatcher.
 	 */
-	public void addDispatcher (Dispatcher dispatcher)
+	public void addDispatcher(Dispatcher dispatcher)
 	{
-		dispatcherMap.put (dispatcher.getUniqueId (), dispatcher);
+		dispatcherMap.put(dispatcher.getUniqueId(), dispatcher);
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class AgentContainer
 	 *
 	 * @param dispatcher The dispatcher.
 	 */
-	public void removeDispatcher (Dispatcher dispatcher)
+	public void removeDispatcher(Dispatcher dispatcher)
 	{
-		dispatcherMap.remove (dispatcher.getUniqueId ());
+		dispatcherMap.remove(dispatcher.getUniqueId());
 	}
 
 	/**
@@ -135,16 +135,16 @@ public class AgentContainer
 	 *
 	 * @param dispatcherId The dispatcher id.
 	 */
-	public void removeDispatcher (String dispatcherId)
+	public void removeDispatcher(String dispatcherId)
 	{
-		dispatcherMap.remove (dispatcherId);
+		dispatcherMap.remove(dispatcherId);
 	}
 
-	synchronized public boolean sendToFirstDispatcher (Agent agent)
+	synchronized public boolean sendToFirstDispatcher(Agent agent)
 	{
-		if (dispatcherMap.values ().iterator ().hasNext ())
+		if (dispatcherMap.values().iterator().hasNext())
 		{
-			send (((Dispatcher) dispatcherMap.values ().iterator ().next ()).getUniqueId (), agent);
+			send(((Dispatcher) dispatcherMap.values().iterator().next()).getUniqueId(), agent);
 
 			return true;
 		}
@@ -152,21 +152,21 @@ public class AgentContainer
 		return false;
 	}
 
-	public void send (String dispatcherId, Agent agent)
+	public void send(String dispatcherId, Agent agent)
 	{
-		Dispatcher dispatcher = (Dispatcher) dispatcherMap.get (dispatcherId);
+		Dispatcher dispatcher = (Dispatcher) dispatcherMap.get(dispatcherId);
 
-		agent.sleep (this);
-		dispatcher.sendAgent (agent);
+		agent.sleep(this);
+		dispatcher.sendAgent(agent);
 	}
 
-	public void close ()
+	public void close()
 	{
-		for (Iterator i = agents.values ().iterator (); i.hasNext ();)
+		for (Iterator i = agents.values().iterator(); i.hasNext();)
 		{
-			Agent agent = (Agent) i.next ();
+			Agent agent = (Agent) i.next();
 
-			agent.die (this);
+			agent.die(this);
 		}
 	}
 }

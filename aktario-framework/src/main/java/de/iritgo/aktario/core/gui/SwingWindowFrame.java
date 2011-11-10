@@ -71,27 +71,27 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 * @param iconifiable True if the window should be iconifiable.
 	 * @param titlebar True if the title bar should be displayed.
 	 */
-	public SwingWindowFrame (IWindow window, String titleKey, boolean resizable, boolean closable, boolean maximizable,
+	public SwingWindowFrame(IWindow window, String titleKey, boolean resizable, boolean closable, boolean maximizable,
 					boolean iconifiable, boolean titlebar, boolean initVisible)
 	{
-		super (titlebar ? Engine.instance ().getResourceService ().getStringWithoutException (titleKey)
+		super(titlebar ? Engine.instance().getResourceService().getStringWithoutException(titleKey)
 						: "$$$ IRITGO-HIDE $$$", resizable, closable, maximizable, iconifiable);
 
 		this.initVisible = initVisible;
 		firstView = true;
 
-		addInternalFrameListener (this);
+		addInternalFrameListener(this);
 
 		this.window = window;
 
-		this.desktopPane = ((SwingDesktopManager) window.getDesktopManager ()).getDesktopPane (window.getDesktopId ());
+		this.desktopPane = ((SwingDesktopManager) window.getDesktopManager()).getDesktopPane(window.getDesktopId());
 
-		getContentPanel ().setLayout (new GridBagLayout ());
+		getContentPanel().setLayout(new GridBagLayout());
 
-		setBounds (getUserBounds ());
+		setBounds(getUserBounds());
 
 		// setGlassPane (new IGlassPane());
-		desktopPane.add (this);
+		desktopPane.add(this);
 	}
 
 	/**
@@ -99,9 +99,9 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @return Return the ContentPanel
 	 */
-	public JPanel getContentPanel ()
+	public JPanel getContentPanel()
 	{
-		return (JPanel) getContentPane ();
+		return (JPanel) getContentPane();
 	}
 
 	/**
@@ -109,15 +109,15 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param properties The properties
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 		this.properties = properties;
 
-		if (properties.get ("client") != null)
+		if (properties.get("client") != null)
 		{
-			for (Map.Entry clientProp : ((Properties) properties.get ("client")).entrySet ())
+			for (Map.Entry clientProp : ((Properties) properties.get("client")).entrySet())
 			{
-				putClientProperty (clientProp.getKey (), clientProp.getValue ());
+				putClientProperty(clientProp.getKey(), clientProp.getValue());
 			}
 		}
 	}
@@ -127,9 +127,9 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameClosing (InternalFrameEvent e)
+	public void internalFrameClosing(InternalFrameEvent e)
 	{
-		window.systemClose ();
+		window.systemClose();
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameClosed (InternalFrameEvent e)
+	public void internalFrameClosed(InternalFrameEvent e)
 	{
 	}
 
@@ -146,7 +146,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameOpened (InternalFrameEvent e)
+	public void internalFrameOpened(InternalFrameEvent e)
 	{
 	}
 
@@ -155,7 +155,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameIconified (InternalFrameEvent e)
+	public void internalFrameIconified(InternalFrameEvent e)
 	{
 	}
 
@@ -164,7 +164,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameDeiconified (InternalFrameEvent e)
+	public void internalFrameDeiconified(InternalFrameEvent e)
 	{
 	}
 
@@ -173,14 +173,14 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameActivated (InternalFrameEvent e)
+	public void internalFrameActivated(InternalFrameEvent e)
 	{
 		//		((IGlassPane) getGlassPane ()).setVisible (true);
-		saveBounds ();
+		saveBounds();
 
-		if (window.getDesktopManager () != null)
+		if (window.getDesktopManager() != null)
 		{
-			window.getDesktopManager ().setActiveDisplay (window);
+			window.getDesktopManager().setActiveDisplay(window);
 		}
 	}
 
@@ -189,31 +189,31 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param e The window event.
 	 */
-	public void internalFrameDeactivated (InternalFrameEvent e)
+	public void internalFrameDeactivated(InternalFrameEvent e)
 	{
-		saveBounds ();
+		saveBounds();
 	}
 
 	/**
 	 * Controlls the Minimize and Close functions
 	 */
-	public void actionPerformed (@SuppressWarnings("unused") ActionEvent event)
+	public void actionPerformed(@SuppressWarnings("unused") ActionEvent event)
 	{
 	}
 
 	/**
 	 * Generates a constraints object.
 	 */
-	protected GridBagConstraints getConstraints (int x, int y, int width, int height, int anchor, int fill, int wx,
+	protected GridBagConstraints getConstraints(int x, int y, int width, int height, int anchor, int fill, int wx,
 					int wy)
 	{
-		GridBagConstraints gbc = new GridBagConstraints ();
+		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = x;
 		gbc.gridy = y;
 		gbc.gridwidth = width;
 		gbc.gridheight = height;
-		gbc.insets = new Insets (0, 0, 0, 0);
+		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.fill = fill;
 		gbc.weightx = wx;
 		gbc.weighty = wy;
@@ -227,17 +227,17 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @return Return the ContentPanel
 	 */
-	protected Rectangle getUserBounds ()
+	protected Rectangle getUserBounds()
 	{
-		Engine engine = Engine.instance ();
-		long iObjectUniqueId = window.getDataObject () != null ? window.getDataObject ().getUniqueId () : 0;
+		Engine engine = Engine.instance();
+		long iObjectUniqueId = window.getDataObject() != null ? window.getDataObject().getUniqueId() : 0;
 
-		int x = engine.getSystemProperties ().getInt (window.getTypeId () + iObjectUniqueId + ".x", 300);
-		int y = engine.getSystemProperties ().getInt (window.getTypeId () + iObjectUniqueId + ".y", 300);
-		int xw = engine.getSystemProperties ().getInt (window.getTypeId () + iObjectUniqueId + ".xw", 300);
-		int yw = engine.getSystemProperties ().getInt (window.getTypeId () + iObjectUniqueId + ".yw", 300);
+		int x = engine.getSystemProperties().getInt(window.getTypeId() + iObjectUniqueId + ".x", 300);
+		int y = engine.getSystemProperties().getInt(window.getTypeId() + iObjectUniqueId + ".y", 300);
+		int xw = engine.getSystemProperties().getInt(window.getTypeId() + iObjectUniqueId + ".xw", 300);
+		int yw = engine.getSystemProperties().getInt(window.getTypeId() + iObjectUniqueId + ".yw", 300);
 
-		return new Rectangle (x, y, xw, yw);
+		return new Rectangle(x, y, xw, yw);
 	}
 
 	/**
@@ -245,12 +245,12 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @return True for a maxmimized window.
 	 */
-	public boolean isUserMaximized ()
+	public boolean isUserMaximized()
 	{
-		Engine engine = Engine.instance ();
-		long iObjectUniqueId = window.getDataObject () != null ? window.getDataObject ().getUniqueId () : 0;
+		Engine engine = Engine.instance();
+		long iObjectUniqueId = window.getDataObject() != null ? window.getDataObject().getUniqueId() : 0;
 
-		return engine.getSystemProperties ().getInt (window.getTypeId () + iObjectUniqueId + ".maximized", 0) != 0;
+		return engine.getSystemProperties().getInt(window.getTypeId() + iObjectUniqueId + ".maximized", 0) != 0;
 	}
 
 	/**
@@ -258,52 +258,51 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @return The window bounds.
 	 */
-	public Rectangle getWindowBounds ()
+	public Rectangle getWindowBounds()
 	{
-		return getBounds ();
+		return getBounds();
 	}
 
 	/**
 	 * Save the window bounds into the system properties.
 	 */
-	private void saveBounds ()
+	private void saveBounds()
 	{
-		if (getContentPanel ().isVisible ())
+		if (getContentPanel().isVisible())
 		{
-			Engine engine = Engine.instance ();
+			Engine engine = Engine.instance();
 
-			long iObjectUniqueId = window.getDataObject () != null ? window.getDataObject ().getUniqueId () : 0;
+			long iObjectUniqueId = window.getDataObject() != null ? window.getDataObject().getUniqueId() : 0;
 
-			engine.getSystemProperties ().put (window.getTypeId () + iObjectUniqueId + ".x", getBounds ().x);
-			engine.getSystemProperties ().put (window.getTypeId () + iObjectUniqueId + ".y", getBounds ().y);
-			engine.getSystemProperties ().put (window.getTypeId () + iObjectUniqueId + ".xw", getWidth ());
-			engine.getSystemProperties ().put (window.getTypeId () + iObjectUniqueId + ".yw", getHeight ());
-			engine.getSystemProperties ().put (window.getTypeId () + iObjectUniqueId + ".maximized",
-							isMaximum () ? 1 : 0);
+			engine.getSystemProperties().put(window.getTypeId() + iObjectUniqueId + ".x", getBounds().x);
+			engine.getSystemProperties().put(window.getTypeId() + iObjectUniqueId + ".y", getBounds().y);
+			engine.getSystemProperties().put(window.getTypeId() + iObjectUniqueId + ".xw", getWidth());
+			engine.getSystemProperties().put(window.getTypeId() + iObjectUniqueId + ".yw", getHeight());
+			engine.getSystemProperties().put(window.getTypeId() + iObjectUniqueId + ".maximized", isMaximum() ? 1 : 0);
 		}
 	}
 
 	/**
 	 * Close the window frame.
 	 */
-	public void close ()
+	public void close()
 	{
-		saveBounds ();
-		setVisible (false);
-		dispose ();
-		desktopPane.remove (this);
+		saveBounds();
+		setVisible(false);
+		dispose();
+		desktopPane.remove(this);
 		window = null;
 	}
 
 	/**
 	 * Close the window frame.
 	 */
-	public void systemClose ()
+	public void systemClose()
 	{
-		saveBounds ();
-		setVisible (false);
-		dispose ();
-		desktopPane.remove (this);
+		saveBounds();
+		setVisible(false);
+		dispose();
+		desktopPane.remove(this);
 		window = null;
 	}
 
@@ -314,9 +313,9 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 * @param title The new title.
 	 */
 	@Override
-	public void setTitle (String title)
+	public void setTitle(String title)
 	{
-		super.setTitle (title);
+		super.setTitle(title);
 	}
 
 	/**
@@ -325,9 +324,9 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @param icon The new icon.
 	 */
-	public void setIcon (Icon icon)
+	public void setIcon(Icon icon)
 	{
-		setFrameIcon (icon);
+		setFrameIcon(icon);
 	}
 
 	/**
@@ -335,15 +334,15 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 *
 	 * @return The frame's icon.
 	 */
-	public Icon getIcon ()
+	public Icon getIcon()
 	{
-		return getFrameIcon ();
+		return getFrameIcon();
 	}
 
 	/**
 	 * Show the window frame
 	 */
-	public void showWindow ()
+	public void showWindow()
 	{
 		try
 		{
@@ -357,8 +356,8 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 				}
 			}
 
-			setSelected (true);
-			setVisible (true);
+			setSelected(true);
+			setVisible(true);
 		}
 		catch (java.beans.PropertyVetoException e)
 		{
@@ -368,11 +367,11 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	/**
 	 * Set the maxmized state of the window frame.
 	 */
-	public void setMaximized (boolean maximized)
+	public void setMaximized(boolean maximized)
 	{
 		try
 		{
-			setMaximum (maximized);
+			setMaximum(maximized);
 		}
 		catch (Exception x)
 		{
@@ -385,7 +384,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 * @param enabled If true the window frame is enabled.
 	 */
 	@Override
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
 		//		((IGlassPane) getGlassPane ()).setEnabled (enabled);
 	}
@@ -396,7 +395,7 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	 * @return True if the display is enabled.
 	 */
 	@Override
-	public boolean isEnabled ()
+	public boolean isEnabled()
 	{
 		//		return ((IGlassPane) getGlassPane ()).isEnabled ();
 		return true;
@@ -405,12 +404,12 @@ public class SwingWindowFrame extends JInternalFrame implements InternalFrameLis
 	/**
 	 * Make this window the topmost window.
 	 */
-	public void bringToFront ()
+	public void bringToFront()
 	{
-		moveToFront ();
+		moveToFront();
 	}
 
-	public IWindow getWindow ()
+	public IWindow getWindow()
 	{
 		return window;
 	}

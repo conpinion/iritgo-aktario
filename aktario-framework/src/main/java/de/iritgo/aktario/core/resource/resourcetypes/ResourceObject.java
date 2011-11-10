@@ -39,9 +39,9 @@ public class ResourceObject extends ResourcePersistent
 	 * @param name The description of the resource.
 	 * @param nodeName The node Name
 	 */
-	public ResourceObject (String name, String nodeName, String resourcePath)
+	public ResourceObject(String name, String nodeName, String resourcePath)
 	{
-		super (name, nodeName, resourcePath);
+		super(name, nodeName, resourcePath);
 	}
 
 	/**
@@ -49,20 +49,20 @@ public class ResourceObject extends ResourcePersistent
 	 *
 	 * @return The Object.
 	 */
-	public Object getClone () throws ResourceNotFoundException
+	public Object getClone() throws ResourceNotFoundException
 	{
 		Object object = null;
 
 		try
 		{
-			object = ((Class) Class.forName ((String) getResourcePath ())).newInstance ();
+			object = ((Class) Class.forName((String) getResourcePath())).newInstance();
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace ();
+			e.printStackTrace();
 
-			Log.log ("resource", "ResourceService.addNode", "ResourceLoader not found:(C)" + e.getMessage (), 5);
-			throw new ResourceNotFoundException (("ClassNotFoundException: " + (String) getResourcePath ()));
+			Log.log("resource", "ResourceService.addNode", "ResourceLoader not found:(C)" + e.getMessage(), 5);
+			throw new ResourceNotFoundException(("ClassNotFoundException: " + (String) getResourcePath()));
 		}
 
 		return object;

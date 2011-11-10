@@ -25,5 +25,5 @@ import de.iritgo.aktario.core.event.*;
 
 public interface FileTransferEventListener extends EventListener
 {
-	public void fileTransferEvent (FileTransferEvent event);
+	public void fileTransferEvent(FileTransferEvent event);
 }

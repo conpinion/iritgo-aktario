@@ -33,5 +33,5 @@ public interface ClientManager
 	 *
 	 * @return ClientManager
 	 */
-	public ClientGUI getClientGUI ();
+	public ClientGUI getClientGUI();
 }

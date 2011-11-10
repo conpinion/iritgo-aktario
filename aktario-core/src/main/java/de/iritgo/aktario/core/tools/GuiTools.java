@@ -37,8 +37,8 @@ public class GuiTools
 	 *
 	 * @return The factory with the formatter for the JFormattedTextField.
 	 */
-	public static DefaultFormatterFactory getDoubleFormatter ()
+	public static DefaultFormatterFactory getDoubleFormatter()
 	{
-		return new DefaultFormatterFactory (new NumberFormatter (new DecimalFormat ("#")));
+		return new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#")));
 	}
 }

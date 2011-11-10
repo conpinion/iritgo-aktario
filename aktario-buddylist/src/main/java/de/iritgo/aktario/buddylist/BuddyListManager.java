@@ -44,231 +44,248 @@ public class BuddyListManager extends BaseObject implements Manager, UserListene
 {
 	private BuddyListRegistry buddyListRegistry;
 
-	public BuddyListManager ()
+	public BuddyListManager()
 	{
-		super ("BuddyListManager");
+		super("BuddyListManager");
 	}
 
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
 
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 	}
 
-	public BuddyListRegistry getBuddyListRegistry ()
+	public BuddyListRegistry getBuddyListRegistry()
 	{
 		return buddyListRegistry;
 	}
 
-	public void iObjectCreatedEvent (@SuppressWarnings("unused") IObjectCreatedEvent event)
+	public void iObjectCreatedEvent(@SuppressWarnings("unused") IObjectCreatedEvent event)
 	{
 	}
 
-	public void iObjectModifiedEvent (@SuppressWarnings("unused") IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(@SuppressWarnings("unused") IObjectModifiedEvent event)
 	{
 	}
 
-	public void iObjectDeletedEvent (IObjectDeletedEvent event)
+	public void iObjectDeletedEvent(IObjectDeletedEvent event)
 	{
-		if (event.getDeletedObject () instanceof AktarioUser)
+		if (event.getDeletedObject() instanceof AktarioUser)
 		{
 			try
 			{
-				UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+				UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-				User user = userRegistry.getUser (((AktarioUser) event.getDeletedObject ()).getUserId ());
+				User user = userRegistry.getUser(((AktarioUser) event.getDeletedObject()).getUserId());
 
 				DynDataObject participant = null;
 
-				for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("Participant"); i.hasNext ();)
+				for (Iterator i = Engine.instance().getBaseRegistry().iterator("Participant"); i.hasNext();)
 				{
-					participant = (DynDataObject) i.next ();
+					participant = (DynDataObject) i.next();
 
-					if (participant.getStringAttribute ("iritgoUserName").equals (user.getName ()))
+					if (participant.getStringAttribute("iritgoUserName").equals(user.getName()))
 					{
 						break;
 					}
 				}
 
-				Engine.instance ().getEventRegistry ()
-								.fire ("objectremoved", new IObjectDeletedEvent (participant, null, null, null));
-				Engine.instance ().getBaseRegistry ().remove (participant);
+				Engine.instance().getEventRegistry().fire("objectremoved",
+								new IObjectDeletedEvent(participant, null, null, null));
+				Engine.instance().getBaseRegistry().remove(participant);
 			}
 			catch (Exception x)
 			{
-				Log.logFatal ("system", "ParicipantManager:pluginEvent(delete participant )",
+				Log.logFatal("system", "ParicipantManager:pluginEvent(delete participant )",
 								"Can not delete participant  error.");
 			}
 		}
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
-		if (event.allPluginsInitialized ())
+		if (event.allPluginsInitialized())
 		{
 		}
 	}
 
-	public void generateGroups (final User user)
+	public void generateGroups(final User user)
 	{
-		final DataSource dataSource = (DataSource) CommandTools.performSimple ("persist.GetDefaultDataSource");
-		final BuddyList buddyList = addBuddyList (user);
-		final ResourceService resources = Engine.instance ().getResourceService ();
+		final DataSource dataSource = (DataSource) CommandTools.performSimple("persist.GetDefaultDataSource");
+		final BuddyList buddyList = addBuddyList(user);
+		final ResourceService resources = Engine.instance().getResourceService();
 
-		QueryRunner query = new QueryRunner (dataSource);
+		QueryRunner query = new QueryRunner(dataSource);
 		try
 		{
-			query.query ("select * from akteragroup left join akteragroupentry on akteragroup.id = akteragroupentry.groupid left join keelusers on keelusers.uniqid = akteragroupentry.userid where keelusers.username="
-							+ "'" + user.getName () + "' and akteragroup.visible = true", new ResultSetHandler ()
-			{
-				public Object handle (ResultSet rs) throws SQLException
-				{
-					while (rs.next ())
-					{
-						try
-						{
-							long groupId = rs.getLong ("groupId");
+			query
+							.query(
+											"select * from akteragroup left join akteragroupentry on akteragroup.id = akteragroupentry.groupid left join keelusers on keelusers.uniqid = akteragroupentry.userid where keelusers.username="
+															+ "'" + user.getName() + "' and akteragroup.visible = true",
+											new ResultSetHandler()
+											{
+												public Object handle(ResultSet rs) throws SQLException
+												{
+													while (rs.next())
+													{
+														try
+														{
+															long groupId = rs.getLong("groupId");
 
-							String displayName = rs.getString ("title");
-							if (StringTools.isTrimEmpty (displayName))
-							{
-								displayName = rs.getString ("name");
-							}
-							displayName = resources.getStringWithoutException (displayName);
-							final BuddyListGroup buddyListGroup = addBuddyListGroup (user, buddyList, groupId,
-											displayName);
+															String displayName = rs.getString("title");
+															if (StringTools.isTrimEmpty(displayName))
+															{
+																displayName = rs.getString("name");
+															}
+															displayName = resources
+																			.getStringWithoutException(displayName);
+															final BuddyListGroup buddyListGroup = addBuddyListGroup(
+																			user, buddyList, groupId, displayName);
 
-							QueryRunner query2 = new QueryRunner (dataSource);
+															QueryRunner query2 = new QueryRunner(dataSource);
 
-							query2.query ("select * from akteragroup left join akteragroupentry on akteragroup.id = akteragroupentry.groupid "
-											+ "left join keelusers on keelusers.uniqid = akteragroupentry.userid where akteragroup.id="
-											+ groupId, new ResultSetHandler ()
-							{
-								public Object handle (ResultSet rs) throws SQLException
-								{
-									while (rs.next ())
-									{
-										try
-										{
-											addParticipant (rs.getString ("username"), buddyListGroup);
-										}
-										catch (Exception ignored)
-										{
-											Log.logError ("persist", "LoadObject", "NoSuchIObjectException");
-											ignored.printStackTrace ();
-										}
-									}
+															query2
+																			.query(
+																							"select * from akteragroup left join akteragroupentry on akteragroup.id = akteragroupentry.groupid "
+																											+ "left join keelusers on keelusers.uniqid = akteragroupentry.userid where akteragroup.id="
+																											+ groupId,
+																							new ResultSetHandler()
+																							{
+																								public Object handle(
+																												ResultSet rs)
+																									throws SQLException
+																								{
+																									while (rs.next())
+																									{
+																										try
+																										{
+																											addParticipant(
+																															rs
+																																			.getString("username"),
+																															buddyListGroup);
+																										}
+																										catch (Exception ignored)
+																										{
+																											Log
+																															.logError(
+																																			"persist",
+																																			"LoadObject",
+																																			"NoSuchIObjectException");
+																											ignored
+																															.printStackTrace();
+																										}
+																									}
 
-									return null;
-								}
-							});
-						}
-						catch (Exception x)
-						{
-							Log.logError ("plugin", "BuddyListManager.generateGroups", x.toString ());
-						}
-					}
+																									return null;
+																								}
+																							});
+														}
+														catch (Exception x)
+														{
+															Log.logError("plugin", "BuddyListManager.generateGroups", x
+																			.toString());
+														}
+													}
 
-					return null;
-				}
-			});
+													return null;
+												}
+											});
 		}
 		catch (Exception x)
 		{
-			Log.logError ("plugin", "BuddyListManager.generateGroups", x.toString ());
+			Log.logError("plugin", "BuddyListManager.generateGroups", x.toString());
 		}
 	}
 
-	public void addParticipant (String name, BuddyListGroup buddyListGroup)
+	public void addParticipant(String name, BuddyListGroup buddyListGroup)
 	{
-		for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+		for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 		{
-			DynDataObject participantState = (DynDataObject) i.next ();
+			DynDataObject participantState = (DynDataObject) i.next();
 
-			if (participantState.getStringAttribute ("iritgoUserName").equals (name))
+			if (participantState.getStringAttribute("iritgoUserName").equals(name))
 			{
-				buddyListGroup.addParticipant (participantState);
+				buddyListGroup.addParticipant(participantState);
 			}
 		}
 	}
 
-	public BuddyListGroup addBuddyListGroup (User user, BuddyList buddyList, long groupId, String name)
+	public BuddyListGroup addBuddyListGroup(User user, BuddyList buddyList, long groupId, String name)
 	{
 		try
 		{
-			BuddyListGroup buddyListGroup = (BuddyListGroup) Engine.instance ().getIObjectFactory ()
-							.newInstance ("BuddyListGroup");
+			BuddyListGroup buddyListGroup = (BuddyListGroup) Engine.instance().getIObjectFactory().newInstance(
+							"BuddyListGroup");
 
-			buddyListGroup.setName (name);
-			buddyListGroup.setIritgoUserName (user.getName ());
-			buddyListGroup.setUniqueId (groupId);
-			registerIObject ((IObject) buddyListGroup);
+			buddyListGroup.setName(name);
+			buddyListGroup.setIritgoUserName(user.getName());
+			buddyListGroup.setUniqueId(groupId);
+			registerIObject((IObject) buddyListGroup);
 
-			buddyList.addBuddyListGroup (buddyListGroup);
+			buddyList.addBuddyListGroup(buddyListGroup);
 
 			return buddyListGroup;
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "BuddyListManager:addBuddyList(Create BuddyList)",
+			Log.logFatal("system", "BuddyListManager:addBuddyList(Create BuddyList)",
 							"Can not create buddy list error.");
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 
 		return null;
 	}
 
-	public BuddyList addBuddyList (User user)
+	public BuddyList addBuddyList(User user)
 	{
 		try
 		{
-			BuddyList buddyList = (BuddyList) Engine.instance ().getIObjectFactory ().newInstance ("BuddyList");
+			BuddyList buddyList = (BuddyList) Engine.instance().getIObjectFactory().newInstance("BuddyList");
 
-			buddyList.setIritgoUserName (user.getName ());
-			buddyList.setUniqueId (user.getUniqueId ());
-			registerIObject ((IObject) buddyList);
+			buddyList.setIritgoUserName(user.getName());
+			buddyList.setUniqueId(user.getUniqueId());
+			registerIObject((IObject) buddyList);
 
 			return buddyList;
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "BuddyListManager:addBuddyList(Create BuddyList)",
+			Log.logFatal("system", "BuddyListManager:addBuddyList(Create BuddyList)",
 							"Can not create buddy list error.");
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 
 		return null;
 	}
 
-	private void registerIObject (IObject iObject)
+	private void registerIObject(IObject iObject)
 	{
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		proxy.setSampleRealObject ((IObject) iObject);
+		proxy.setSampleRealObject((IObject) iObject);
 
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) iObject);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, iObject.getTypeId ());
+		Engine.instance().getBaseRegistry().add((BaseObject) iObject);
+		Engine.instance().getProxyRegistry().addProxy(proxy, iObject.getTypeId());
 	}
 
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		User user = event.getUser ();
+		User user = event.getUser();
 
 		if (user == null)
 		{
 			return;
 		}
 
-		if (event.isLoggedIn ())
+		if (event.isLoggedIn())
 		{
-			generateGroups (user);
+			generateGroups(user);
 		}
 
-		if (event.isLoggedOut ())
+		if (event.isLoggedOut())
 		{
-			BuddyList buddyList = (BuddyList) Engine.instance ().getBaseRegistry ()
-							.get (user.getUniqueId (), "BuddyList");
+			BuddyList buddyList = (BuddyList) Engine.instance().getBaseRegistry().get(user.getUniqueId(), "BuddyList");
 
 			if (buddyList == null)
 			{
@@ -276,22 +293,22 @@ public class BuddyListManager extends BaseObject implements Manager, UserListene
 			}
 			try
 			{
-				for (Iterator groups = buddyList.buddyListGroupIterator (); groups.hasNext ();)
+				for (Iterator groups = buddyList.buddyListGroupIterator(); groups.hasNext();)
 				{
-					BuddyListGroup buddyListGroup = (BuddyListGroup) groups.next ();
-					Engine.instance ().getBaseRegistry ().remove (buddyListGroup);
+					BuddyListGroup buddyListGroup = (BuddyListGroup) groups.next();
+					Engine.instance().getBaseRegistry().remove(buddyListGroup);
 				}
 			}
 			catch (Exception x)
 			{
-				System.out.println ("BuddyListManager error: " + x.getMessage ());
+				System.out.println("BuddyListManager error: " + x.getMessage());
 			}
 
-			Engine.instance ().getBaseRegistry ().remove (buddyList);
+			Engine.instance().getBaseRegistry().remove(buddyList);
 		}
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }

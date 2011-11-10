@@ -33,10 +33,10 @@ import de.iritgo.aktario.framework.appcontext.AppContext;
  */
 public class SimpleSyncNetworkActionProcessor extends NetworkActionProcessor
 {
-	public SimpleSyncNetworkActionProcessor (Channel channel,
+	public SimpleSyncNetworkActionProcessor(Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super ("SimpleSyncNetworkActionProcessor", channel, parentNetworkActionProcessor);
+		super("SimpleSyncNetworkActionProcessor", channel, parentNetworkActionProcessor);
 	}
 
 	/**
@@ -45,13 +45,13 @@ public class SimpleSyncNetworkActionProcessor extends NetworkActionProcessor
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		Object lockObject = AppContext.instance ().getLockObject ();
+		Object lockObject = AppContext.instance().getLockObject();
 
 		synchronized (lockObject)
 		{
-			super.perform (action, transceiver);
+			super.perform(action, transceiver);
 		}
 	}
 
@@ -60,12 +60,12 @@ public class SimpleSyncNetworkActionProcessor extends NetworkActionProcessor
 	 *
 	 * @return NetworkActionProcessor
 	 */
-	public Object clone ()
+	public Object clone()
 	{
-		SimpleSyncNetworkActionProcessor clone = new SimpleSyncNetworkActionProcessor (channel,
+		SimpleSyncNetworkActionProcessor clone = new SimpleSyncNetworkActionProcessor(channel,
 						parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

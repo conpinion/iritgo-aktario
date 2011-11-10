@@ -51,11 +51,11 @@ public class IOverlayIcon implements Icon
 		public Icon activeIcon;
 
 		/** Create a new Overlay instance. */
-		public Overlay (int x, int y)
+		public Overlay(int x, int y)
 		{
 			this.x = x;
 			this.y = y;
-			this.icons = new HashMap ();
+			this.icons = new HashMap();
 			activeIcon = null;
 		}
 	}
@@ -83,14 +83,14 @@ public class IOverlayIcon implements Icon
 	 *
 	 * @param backgroundIcon The default background icon.
 	 */
-	public IOverlayIcon (Icon backgroundIcon)
+	public IOverlayIcon(Icon backgroundIcon)
 	{
 		this.backgroundIcon = backgroundIcon;
-		overlays = new LinkedList ();
-		overlayByName = new HashMap ();
-		addOverlay (BACKGROUND, 0, 0);
-		addIcon (BACKGROUND, DEFAULT, backgroundIcon);
-		setIcon (BACKGROUND, DEFAULT);
+		overlays = new LinkedList();
+		overlayByName = new HashMap();
+		addOverlay(BACKGROUND, 0, 0);
+		addIcon(BACKGROUND, DEFAULT, backgroundIcon);
+		setIcon(BACKGROUND, DEFAULT);
 	}
 
 	/**
@@ -103,12 +103,12 @@ public class IOverlayIcon implements Icon
 	 * @param x The x position of the overlay top/left corner.
 	 * @param y The y position of the overlay top/left corner.
 	 */
-	public void addOverlay (String name, int x, int y)
+	public void addOverlay(String name, int x, int y)
 	{
-		Overlay overlay = new Overlay (x, y);
+		Overlay overlay = new Overlay(x, y);
 
-		overlays.add (overlay);
-		overlayByName.put (name, overlay);
+		overlays.add(overlay);
+		overlayByName.put(name, overlay);
 	}
 
 	/**
@@ -118,16 +118,16 @@ public class IOverlayIcon implements Icon
 	 * @param iconName The name of the icon.
 	 * @param icon The icon.
 	 */
-	public void addIcon (String overlayName, String iconName, Icon icon)
+	public void addIcon(String overlayName, String iconName, Icon icon)
 	{
-		Overlay overlay = (Overlay) overlayByName.get (overlayName);
+		Overlay overlay = (Overlay) overlayByName.get(overlayName);
 
 		if (overlay == null)
 		{
-			throw new IllegalArgumentException ("Unknown overlay specified: " + overlayName);
+			throw new IllegalArgumentException("Unknown overlay specified: " + overlayName);
 		}
 
-		overlay.icons.put (iconName, icon);
+		overlay.icons.put(iconName, icon);
 	}
 
 	/**
@@ -136,20 +136,20 @@ public class IOverlayIcon implements Icon
 	 * @param overlayName The name of the overlay.
 	 * @param iconName The name of the icon.
 	 */
-	public void setIcon (String overlayName, String iconName)
+	public void setIcon(String overlayName, String iconName)
 	{
-		Overlay overlay = (Overlay) overlayByName.get (overlayName);
+		Overlay overlay = (Overlay) overlayByName.get(overlayName);
 
 		if (overlay == null)
 		{
-			throw new IllegalArgumentException ("Unknown overlay specified: " + overlayName);
+			throw new IllegalArgumentException("Unknown overlay specified: " + overlayName);
 		}
 
-		Icon icon = (Icon) overlay.icons.get (iconName);
+		Icon icon = (Icon) overlay.icons.get(iconName);
 
 		if (icon == null)
 		{
-			throw new IllegalArgumentException ("Unknown icon specified: " + iconName);
+			throw new IllegalArgumentException("Unknown icon specified: " + iconName);
 		}
 
 		overlay.activeIcon = icon;
@@ -161,9 +161,9 @@ public class IOverlayIcon implements Icon
 	 *
 	 * @return The icon height.
 	 */
-	public int getIconHeight ()
+	public int getIconHeight()
 	{
-		return backgroundIcon.getIconHeight ();
+		return backgroundIcon.getIconHeight();
 	}
 
 	/**
@@ -172,9 +172,9 @@ public class IOverlayIcon implements Icon
 	 *
 	 * @return The icon width.
 	 */
-	public int getIconWidth ()
+	public int getIconWidth()
 	{
-		return backgroundIcon.getIconWidth ();
+		return backgroundIcon.getIconWidth();
 	}
 
 	/**
@@ -185,15 +185,15 @@ public class IOverlayIcon implements Icon
 	 * @param x The x coordinate at which to paint.
 	 * @param y The y coordinate at which to paint.
 	 */
-	public void paintIcon (Component c, Graphics g, int x, int y)
+	public void paintIcon(Component c, Graphics g, int x, int y)
 	{
-		for (Iterator i = overlays.iterator (); i.hasNext ();)
+		for (Iterator i = overlays.iterator(); i.hasNext();)
 		{
-			Overlay overlay = (Overlay) i.next ();
+			Overlay overlay = (Overlay) i.next();
 
 			if (overlay.activeIcon != null)
 			{
-				overlay.activeIcon.paintIcon (c, g, x + overlay.x, y + overlay.y);
+				overlay.activeIcon.paintIcon(c, g, x + overlay.x, y + overlay.y);
 			}
 		}
 	}

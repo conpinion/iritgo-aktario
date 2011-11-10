@@ -36,120 +36,120 @@ public class GUIExtensionManager extends BaseObject implements Manager
 {
 	private Map<String, Map<String, List<ExtensionTile>>> extensions;
 
-	public GUIExtensionManager ()
+	public GUIExtensionManager()
 	{
-		super ("GUIExtensionManager");
-		extensions = new HashMap<String, Map<String, List<ExtensionTile>>> ();
-		init ();
+		super("GUIExtensionManager");
+		extensions = new HashMap<String, Map<String, List<ExtensionTile>>>();
+		init();
 	}
 
-	public void registerExtension (String extensionId, String extensionTileId, ExtensionTile extensionTile)
+	public void registerExtension(String extensionId, String extensionTileId, ExtensionTile extensionTile)
 	{
-		Map extension = (Map) extensions.get (extensionId);
+		Map extension = (Map) extensions.get(extensionId);
 
 		if (extension == null)
 		{
-			extension = new HashMap ();
-			extensions.put (extensionId, extension);
+			extension = new HashMap();
+			extensions.put(extensionId, extension);
 		}
 
-		List extensionTiles = (List) extension.get (extensionTileId);
+		List extensionTiles = (List) extension.get(extensionTileId);
 
 		if (extensionTiles == null)
 		{
-			extensionTiles = new LinkedList ();
-			extension.put (extensionTileId, extensionTiles);
+			extensionTiles = new LinkedList();
+			extension.put(extensionTileId, extensionTiles);
 		}
 
-		extensionTiles.add (extensionTile);
+		extensionTiles.add(extensionTile);
 	}
 
-	public void removeExtension (String extensionId, String extensionTileId, ExtensionTile extensionTile)
+	public void removeExtension(String extensionId, String extensionTileId, ExtensionTile extensionTile)
 	{
-		Map extension = (Map) extensions.get (extensionId);
+		Map extension = (Map) extensions.get(extensionId);
 
 		if (extension == null)
 		{
-			extension = new HashMap ();
-			extensions.put (extensionId, extension);
+			extension = new HashMap();
+			extensions.put(extensionId, extension);
 		}
 
-		List extensionTiles = (List) extension.get (extensionTileId);
+		List extensionTiles = (List) extension.get(extensionTileId);
 
 		if (extensionTiles == null)
 		{
-			extensionTiles = new LinkedList ();
-			extension.put (extensionTileId, extensionTiles);
+			extensionTiles = new LinkedList();
+			extension.put(extensionTileId, extensionTiles);
 		}
 
-		extensionTiles.remove (extensionTile);
+		extensionTiles.remove(extensionTile);
 	}
 
-	public ExtensionTile getExtension (String extensionId, String extensionTileId, int index)
+	public ExtensionTile getExtension(String extensionId, String extensionTileId, int index)
 	{
-		Map extension = (Map) extensions.get (extensionId);
-		List extensionTiles = (List) extension.get (extensionTileId);
+		Map extension = (Map) extensions.get(extensionId);
+		List extensionTiles = (List) extension.get(extensionTileId);
 
-		return (ExtensionTile) extensionTiles.get (index);
+		return (ExtensionTile) extensionTiles.get(index);
 	}
 
-	public boolean existsExtension (String extensionId, String extensionTileId)
+	public boolean existsExtension(String extensionId, String extensionTileId)
 	{
-		Map extension = (Map) extensions.get (extensionId);
+		Map extension = (Map) extensions.get(extensionId);
 
 		if (extension == null)
 		{
 			return false;
 		}
 
-		List extensionTiles = (List) extension.get (extensionTileId);
+		List extensionTiles = (List) extension.get(extensionTileId);
 
 		return extensionTiles != null;
 	}
 
-	public List<ExtensionTile> getExtensions (String extensionId, String extensionTileId)
+	public List<ExtensionTile> getExtensions(String extensionId, String extensionTileId)
 	{
-		Map extension = (Map) extensions.get (extensionId);
+		Map extension = (Map) extensions.get(extensionId);
 
 		if (extension == null)
 		{
-			extension = new HashMap ();
-			extensions.put (extensionId, extension);
+			extension = new HashMap();
+			extensions.put(extensionId, extension);
 		}
 
-		List extensionTiles = (List) extension.get (extensionTileId);
+		List extensionTiles = (List) extension.get(extensionTileId);
 
 		if (extensionTiles == null)
 		{
-			extensionTiles = new LinkedList ();
+			extensionTiles = new LinkedList();
 		}
 
 		return extensionTiles;
 	}
 
-	public Iterator getExtensionIterator (String extensionId, String extensionTileId)
+	public Iterator getExtensionIterator(String extensionId, String extensionTileId)
 	{
-		return getExtensions (extensionId, extensionTileId).iterator ();
+		return getExtensions(extensionId, extensionTileId).iterator();
 	}
 
-	public ExtensionTile getExtension (String extensionId, String extensionTileId, String id)
+	public ExtensionTile getExtension(String extensionId, String extensionTileId, String id)
 	{
 		if (id == null)
 		{
 			return null;
 		}
 
-		Map<String, List<ExtensionTile>> exts = extensions.get (extensionId);
+		Map<String, List<ExtensionTile>> exts = extensions.get(extensionId);
 
 		if (exts != null)
 		{
-			List<ExtensionTile> tiles = exts.get (extensionTileId);
+			List<ExtensionTile> tiles = exts.get(extensionTileId);
 
 			if (tiles != null)
 			{
 				for (ExtensionTile tile : tiles)
 				{
-					if (id.equals (tile.getTileId ()))
+					if (id.equals(tile.getTileId()))
 					{
 						return tile;
 					}
@@ -160,28 +160,28 @@ public class GUIExtensionManager extends BaseObject implements Manager
 		return null;
 	}
 
-	public List<ExtensionTile> getExtensionsCopy (String extensionId, String extensionTileId)
+	public List<ExtensionTile> getExtensionsCopy(String extensionId, String extensionTileId)
 	{
-		Map<String, List<ExtensionTile>> exts = extensions.get (extensionId);
+		Map<String, List<ExtensionTile>> exts = extensions.get(extensionId);
 
 		if (exts != null)
 		{
-			List<ExtensionTile> tiles = exts.get (extensionTileId);
+			List<ExtensionTile> tiles = exts.get(extensionTileId);
 
 			if (tiles != null)
 			{
-				return new LinkedList<ExtensionTile> (tiles);
+				return new LinkedList<ExtensionTile>(tiles);
 			}
 		}
 
-		return new LinkedList<ExtensionTile> ();
+		return new LinkedList<ExtensionTile>();
 	}
 
-	public void init ()
+	public void init()
 	{
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }

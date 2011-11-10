@@ -33,39 +33,39 @@ import de.iritgo.aktario.core.plugin.Plugin;
 public class BuddyListPlugin extends AktarioPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new BuddyListRegistry ());
-		registerDataObject (new BuddyList ());
-		registerDataObject (new BuddyListGroup ());
+		registerDataObject(new BuddyListRegistry());
+		registerDataObject(new BuddyList());
+		registerDataObject(new BuddyListGroup());
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new BuddyListPane ());
+		registerGUIPane(new BuddyListPane());
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new BuddyListManager ());
+		registerManager(Plugin.SERVER, new BuddyListManager());
 
 		// 		registerManager (new BuddyListGroupManager());
 	}
 
 	@Override
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
 	}
 }

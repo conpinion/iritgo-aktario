@@ -35,9 +35,9 @@ public class ActionProcessorRegistry
 	/**
 	 * Create a new ActionProcessorRegistry.
 	 */
-	public ActionProcessorRegistry ()
+	public ActionProcessorRegistry()
 	{
-		actionProcessors = new HashMap ();
+		actionProcessors = new HashMap();
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class ActionProcessorRegistry
 	 *
 	 * @param processor The action processor.
 	 */
-	public void put (ActionProcessor processor)
+	public void put(ActionProcessor processor)
 	{
-		actionProcessors.put (processor.getTypeId (), processor);
+		actionProcessors.put(processor.getTypeId(), processor);
 	}
 
 	/**
@@ -56,9 +56,9 @@ public class ActionProcessorRegistry
 	 * @param id The id of the action processor.
 	 * @return The action processor
 	 */
-	public ActionProcessor get (String id)
+	public ActionProcessor get(String id)
 	{
-		return (ActionProcessor) actionProcessors.get (id);
+		return (ActionProcessor) actionProcessors.get(id);
 	}
 
 	/**
@@ -66,9 +66,9 @@ public class ActionProcessorRegistry
 	 *
 	 * @param processor Type action processor to remove.
 	 */
-	public void remove (ActionProcessor processor)
+	public void remove(ActionProcessor processor)
 	{
-		actionProcessors.remove (processor.getTypeId ());
-		processor.close ();
+		actionProcessors.remove(processor.getTypeId());
+		processor.close();
 	}
 }

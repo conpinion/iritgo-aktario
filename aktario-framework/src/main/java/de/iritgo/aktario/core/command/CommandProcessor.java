@@ -41,7 +41,7 @@ public interface CommandProcessor
 	 *
 	 * @return The command processor id.
 	 */
-	public String getTypeId ();
+	public String getTypeId();
 
 	/**
 	 * Perform a command.
@@ -49,5 +49,5 @@ public interface CommandProcessor
 	 * @param command The command to execute.
 	 * @return The command results.
 	 */
-	public Object perform (Command command);
+	public Object perform(Command command);
 }

@@ -47,9 +47,9 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 * @param start The initial id value.
 	 * @param step The step increment.
 	 */
-	public DefaultIDGenerator (String typeId, long start, long step)
+	public DefaultIDGenerator(String typeId, long start, long step)
 	{
-		super (typeId);
+		super(typeId);
 		this.id = start;
 		this.step = step;
 	}
@@ -60,9 +60,9 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 * @param start The initial id value.
 	 * @param step The step increment.
 	 */
-	public DefaultIDGenerator (long start, long step)
+	public DefaultIDGenerator(long start, long step)
 	{
-		super ("DefaultIDGenerator");
+		super("DefaultIDGenerator");
 		this.id = start;
 		this.step = step;
 	}
@@ -70,9 +70,9 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	/**
 	 * Create a new id generator.
 	 */
-	public DefaultIDGenerator ()
+	public DefaultIDGenerator()
 	{
-		this ("DefaultIDGenerator", 1, 1);
+		this("DefaultIDGenerator", 1, 1);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The new unique id.
 	 */
-	public synchronized long createId ()
+	public synchronized long createId()
 	{
 		long nextId = id;
 
@@ -94,7 +94,7 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The next id value.
 	 */
-	public long peekNextId ()
+	public long peekNextId()
 	{
 		return id;
 	}
@@ -104,22 +104,22 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The fresh instance.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
-		return new DefaultIDGenerator ();
+		return new DefaultIDGenerator();
 	}
 
 	/**
 	 * Load the last generator state.
 	 */
-	public void load ()
+	public void load()
 	{
 	}
 
 	/**
 	 * Store the generator state.
 	 */
-	public void save ()
+	public void save()
 	{
 	}
 
@@ -128,11 +128,11 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
-		id = dataStream.readLong ();
+		id = dataStream.readLong();
 	}
 
 	/**
@@ -140,17 +140,17 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
-		dataStream.writeLong (id);
+		dataStream.writeLong(id);
 	}
 
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		return null;
 	}
@@ -159,7 +159,7 @@ public class DefaultIDGenerator extends BaseObject implements IDGenerator
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
 		return null;
 	}

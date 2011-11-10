@@ -84,9 +84,9 @@ public class EventRegistry
 	/**
 	 * Create a new EventRegistry
 	 */
-	public EventRegistry ()
+	public EventRegistry()
 	{
-		categoryList = new HashMap ();
+		categoryList = new HashMap();
 	}
 
 	/**
@@ -95,18 +95,18 @@ public class EventRegistry
 	 * @param category The event category.
 	 * @param listener The event listener to add.
 	 */
-	public void addListener (String category, EventListener listener)
+	public void addListener(String category, EventListener listener)
 	{
-		if (! categoryList.containsKey (category))
+		if (! categoryList.containsKey(category))
 		{
-			categoryList.put (category, new LinkedList ());
+			categoryList.put(category, new LinkedList());
 		}
 
-		List listeners = (List) categoryList.get (category);
+		List listeners = (List) categoryList.get(category);
 
-		if (! listeners.contains (listener)) //Dobble registration make no sense.
+		if (! listeners.contains(listener)) //Dobble registration make no sense.
 		{
-			listeners.add (listener);
+			listeners.add(listener);
 		}
 	}
 
@@ -116,22 +116,22 @@ public class EventRegistry
 	 * @param category The event category.
 	 * @param listener The event listener to remove.
 	 */
-	public void removeListener (String category, EventListener listener)
+	public void removeListener(String category, EventListener listener)
 	{
-		List listeners = (List) categoryList.get (category);
+		List listeners = (List) categoryList.get(category);
 
 		if (listeners != null)
 		{
-			listeners.remove (listener);
+			listeners.remove(listener);
 		}
 	}
 
 	/**
 	 * Remove all from the registry
 	 */
-	public void clear ()
+	public void clear()
 	{
-		categoryList.clear ();
+		categoryList.clear();
 	}
 
 	/**
@@ -140,35 +140,35 @@ public class EventRegistry
 	 * @param category The event category which listener should be notified.
 	 * @param event The event object that is send to the listener.
 	 */
-	public void fire (String category, Event event)
+	public void fire(String category, Event event)
 	{
-		List listeners = (List) categoryList.get (category);
+		List listeners = (List) categoryList.get(category);
 
 		if (listeners == null)
 		{
 			return;
 		}
 
-		listeners = new LinkedList (listeners);
+		listeners = new LinkedList(listeners);
 
-		for (Iterator i = listeners.iterator (); i.hasNext ();)
+		for (Iterator i = listeners.iterator(); i.hasNext();)
 		{
-			EventListener listener = (EventListener) i.next ();
+			EventListener listener = (EventListener) i.next();
 
-			Class klass = listener.getClass ();
+			Class klass = listener.getClass();
 			boolean fired = false;
 
 			while (klass != null && ! fired)
 			{
-				Class[] interfaces = klass.getInterfaces ();
+				Class[] interfaces = klass.getInterfaces();
 
 				for (int j = 0; j < interfaces.length; ++j)
 				{
-					if (de.iritgo.aktario.core.event.EventListener.class.isAssignableFrom (interfaces[j]))
+					if (de.iritgo.aktario.core.event.EventListener.class.isAssignableFrom(interfaces[j]))
 					{
 						try
 						{
-							interfaces[j].getDeclaredMethods ()[0].invoke (listener, new Object[]
+							interfaces[j].getDeclaredMethods()[0].invoke(listener, new Object[]
 							{
 								event
 							});
@@ -187,25 +187,24 @@ public class EventRegistry
 						}
 						catch (InvocationTargetException x)
 						{
-							Log.logError ("system", "EventRegistry.fire",
+							Log.logError("system", "EventRegistry.fire",
 											"Called listener method has a InvocationTargetException in Class: " + klass
 															+ ": " + interfaces[j]);
 
-							ByteArrayOutputStream trace = new ByteArrayOutputStream ();
-							PrintWriter traceOut = new PrintWriter (trace);
+							ByteArrayOutputStream trace = new ByteArrayOutputStream();
+							PrintWriter traceOut = new PrintWriter(trace);
 
-							x.getCause ().printStackTrace (traceOut);
-							traceOut.close ();
+							x.getCause().printStackTrace(traceOut);
+							traceOut.close();
 
-							Log.logError ("system", "EventRegistry.fire", "Root cause was: " + x.getCause ());
+							Log.logError("system", "EventRegistry.fire", "Root cause was: " + x.getCause());
 
-							Log.logError ("system", "EventRegistry.fire", "Root cause stack trace: "
-											+ trace.toString ());
+							Log.logError("system", "EventRegistry.fire", "Root cause stack trace: " + trace.toString());
 						}
 					}
 				}
 
-				klass = klass.getSuperclass ();
+				klass = klass.getSuperclass();
 			}
 		}
 	}

@@ -69,8 +69,8 @@ public class TabChatView extends SwingGUIPane
 	/** Default user colors. */
 	protected Color[] defaultLineColors =
 	{
-					Color.RED, Color.BLUE, Color.GREEN.darker (), Color.YELLOW.darker (), Color.ORANGE, Color.MAGENTA,
-					Color.CYAN.darker (), Color.PINK, Color.DARK_GRAY
+					Color.RED, Color.BLUE, Color.GREEN.darker(), Color.YELLOW.darker(), Color.ORANGE, Color.MAGENTA,
+					Color.CYAN.darker(), Color.PINK, Color.DARK_GRAY
 	};
 
 	/** Next default color to choose. */
@@ -79,142 +79,142 @@ public class TabChatView extends SwingGUIPane
 	/** Colors by user name. */
 	protected Map userColors;
 
-	public TabChatView ()
+	public TabChatView()
 	{
-		super ("common.tabchatview");
-		userColors = new HashMap ();
+		super("common.tabchatview");
+		userColors = new HashMap();
 	}
 
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
 		return null;
 	}
 
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new TabChatView ();
+		return new TabChatView();
 	}
 
 	@SuppressWarnings("serial")
-	public JPanel createTabChatView (int tabCount, String tabName)
+	public JPanel createTabChatView(int tabCount, String tabName)
 	{
 		tabPos = tabCount;
 		this.tabName = tabName;
 
-		tabComponent = new JPanel (new BorderLayout ());
+		tabComponent = new JPanel(new BorderLayout());
 
-		JSplitPane split = new JSplitPane ();
+		JSplitPane split = new JSplitPane();
 
-		tabComponent.add (BorderLayout.CENTER, split);
+		tabComponent.add(BorderLayout.CENTER, split);
 
-		chatArea = new JTextPane ();
+		chatArea = new JTextPane();
 
-		users = new DefaultListModel ();
-		usersGUI = new JList (users);
-		usersGUI.setCellRenderer (new DefaultListCellRenderer ()
+		users = new DefaultListModel();
+		usersGUI = new JList(users);
+		usersGUI.setCellRenderer(new DefaultListCellRenderer()
 		{
 			@Override
-			public Component getListCellRendererComponent (JList list, Object value, int index, boolean isSelected,
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 							boolean cellHasFocus)
 			{
-				super.getListCellRendererComponent (list, value, index, isSelected, cellHasFocus);
-				setForeground ((Color) userColors.get ((String) value));
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				setForeground((Color) userColors.get((String) value));
 
 				return this;
 			}
 		});
 
-		split.setLeftComponent (new JScrollPane (usersGUI));
+		split.setLeftComponent(new JScrollPane(usersGUI));
 
-		split.setRightComponent (new JScrollPane (chatArea));
+		split.setRightComponent(new JScrollPane(chatArea));
 
-		split.setDividerLocation (120);
+		split.setDividerLocation(120);
 
 		return tabComponent;
 	}
 
-	public int getTabPos ()
+	public int getTabPos()
 	{
 		return tabPos;
 	}
 
-	public String getTabName ()
+	public String getTabName()
 	{
 		return tabName;
 	}
 
-	public JPanel getTabPanel ()
+	public JPanel getTabPanel()
 	{
 		return tabComponent;
 	}
 
-	public void chatMessage (String userName, String message)
+	public void chatMessage(String userName, String message)
 	{
-		Color color = (Color) userColors.get (userName);
+		Color color = (Color) userColors.get(userName);
 
 		if (color == null)
 		{
 			color = Color.BLACK;
 		}
 
-		chatArea.setEditable (true);
+		chatArea.setEditable(true);
 
-		StyleContext sc = StyleContext.getDefaultStyleContext ();
-		AttributeSet aset = sc.addAttribute (SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
+		StyleContext sc = StyleContext.getDefaultStyleContext();
+		AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
 
-		chatArea.setCaretPosition (chatArea.getDocument ().getLength ());
-		chatArea.setCharacterAttributes (aset, false);
-		chatArea.replaceSelection (message + "\n");
-		chatArea.setEditable (false);
+		chatArea.setCaretPosition(chatArea.getDocument().getLength());
+		chatArea.setCharacterAttributes(aset, false);
+		chatArea.replaceSelection(message + "\n");
+		chatArea.setEditable(false);
 	}
 
-	public void addUser (String user)
+	public void addUser(String user)
 	{
-		if (userColors.get (user) == null)
+		if (userColors.get(user) == null)
 		{
-			userColors.put (user, defaultLineColors[nextColor]);
+			userColors.put(user, defaultLineColors[nextColor]);
 		}
 
 		nextColor = (nextColor + 1) % defaultLineColors.length;
-		users.addElement (user);
-		usersGUI.revalidate ();
-		usersGUI.repaint ();
+		users.addElement(user);
+		usersGUI.revalidate();
+		usersGUI.repaint();
 	}
 
-	public void removeUser (String user)
+	public void removeUser(String user)
 	{
-		users.removeElement (user);
-		usersGUI.revalidate ();
-		usersGUI.repaint ();
+		users.removeElement(user);
+		usersGUI.revalidate();
+		usersGUI.repaint();
 	}
 
 	/**
 	 * Register a new User.
 	 */
-	public void onUserInformation (@SuppressWarnings("unused") ActionEvent event)
+	public void onUserInformation(@SuppressWarnings("unused") ActionEvent event)
 	{
-		UserRegistry userRegistry = Client.instance ().getUserRegistry ();
-		String userName = (String) users.get (usersGUI.getSelectedIndex ());
+		UserRegistry userRegistry = Client.instance().getUserRegistry();
+		String userName = (String) users.get(usersGUI.getSelectedIndex());
 
-		User user = userRegistry.getUser (userName);
+		User user = userRegistry.getUser(userName);
 
-		FrameworkProxy userProxy = new FrameworkProxy (user);
+		FrameworkProxy userProxy = new FrameworkProxy(user);
 
-		Engine.instance ().getProxyRegistry ().addProxy (userProxy, user.getTypeId ());
-		Engine.instance ().getBaseRegistry ().add (user);
+		Engine.instance().getProxyRegistry().addProxy(userProxy, user.getTypeId());
+		Engine.instance().getBaseRegistry().add(user);
 
-		CommandTools.performAsync (new ShowWindow ("main.user_" + userName, user));
+		CommandTools.performAsync(new ShowWindow("main.user_" + userName, user));
 	}
 
 	@Override
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 		/* empty */
 	}
 
 	@Override
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 		/* empty */
 	}

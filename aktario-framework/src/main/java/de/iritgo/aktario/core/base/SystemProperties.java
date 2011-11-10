@@ -40,7 +40,7 @@ public class SystemProperties extends Properties
 	/**
 	 * Create a new SystemProperties
 	 */
-	public SystemProperties ()
+	public SystemProperties()
 	{
 	}
 
@@ -49,20 +49,20 @@ public class SystemProperties extends Properties
 	 *
 	 * @param fileName The name of the property file.
 	 */
-	public void load (String fileName)
+	public void load(String fileName)
 	{
 		@SuppressWarnings("unused")
-		Engine engine = Engine.instance ();
+		Engine engine = Engine.instance();
 
 		try
 		{
-			super.load (new FileInputStream (fileName));
+			super.load(new FileInputStream(fileName));
 
-			Log.logInfo ("system", "SystemProperties.load", "System properties loaded from file '" + fileName + "'");
+			Log.logInfo("system", "SystemProperties.load", "System properties loaded from file '" + fileName + "'");
 		}
 		catch (IOException x)
 		{
-			Log.logWarn ("system", "SystemProperties.load", "Unable to load system properties file '" + fileName + "'");
+			Log.logWarn("system", "SystemProperties.load", "Unable to load system properties file '" + fileName + "'");
 		}
 	}
 
@@ -71,22 +71,22 @@ public class SystemProperties extends Properties
 	 *
 	 * @param fileName The name of the property file.
 	 */
-	public void store (String fileName)
+	public void store(String fileName)
 	{
 		@SuppressWarnings("unused")
-		Engine engine = Engine.instance ();
+		Engine engine = Engine.instance();
 
 		try
 		{
-			super.store (new FileOutputStream (fileName), fileName);
+			super.store(new FileOutputStream(fileName), fileName);
 
-			Log.logInfo ("system", "SystemProperties.store", "System properties stored to file '" + fileName + "'");
+			Log.logInfo("system", "SystemProperties.store", "System properties stored to file '" + fileName + "'");
 		}
 		catch (IOException x)
 		{
-			Log.logError ("system", "SystemProperties.store", "Unable to store system properties file '" + fileName
+			Log.logError("system", "SystemProperties.store", "Unable to store system properties file '" + fileName
 							+ "'");
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 
@@ -96,9 +96,9 @@ public class SystemProperties extends Properties
 	 * @param key The value key.
 	 * @param value The value.
 	 */
-	public void put (String key, String value)
+	public void put(String key, String value)
 	{
-		setProperty (key, value);
+		setProperty(key, value);
 	}
 
 	/**
@@ -108,9 +108,9 @@ public class SystemProperties extends Properties
 	 * @param defaultValue A default value in case the property wasn't found.
 	 * @return The value of the property.
 	 */
-	public String getString (String key, String defaultValue)
+	public String getString(String key, String defaultValue)
 	{
-		return getProperty (key, defaultValue);
+		return getProperty(key, defaultValue);
 	}
 
 	/**
@@ -119,9 +119,9 @@ public class SystemProperties extends Properties
 	 * @param key The value key.
 	 * @param value The value.
 	 */
-	public void put (String key, int value)
+	public void put(String key, int value)
 	{
-		setProperty (key, String.valueOf (value));
+		setProperty(key, String.valueOf(value));
 	}
 
 	/**
@@ -131,9 +131,9 @@ public class SystemProperties extends Properties
 	 * @param defaultValue A default value in case the property wasn't found.
 	 * @return The value of the property.
 	 */
-	public int getInt (String key, int defaultValue)
+	public int getInt(String key, int defaultValue)
 	{
-		return NumberTools.toInt (getProperty (key), defaultValue);
+		return NumberTools.toInt(getProperty(key), defaultValue);
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class SystemProperties extends Properties
 	 * @param key The value key.
 	 * @param value The value.
 	 */
-	public void put (String key, long value)
+	public void put(String key, long value)
 	{
-		setProperty (key, String.valueOf (value));
+		setProperty(key, String.valueOf(value));
 	}
 
 	/**
@@ -154,9 +154,9 @@ public class SystemProperties extends Properties
 	 * @param defaultValue A default value in case the property wasn't found.
 	 * @return The value of the property.
 	 */
-	public long getLong (String key, long defaultValue)
+	public long getLong(String key, long defaultValue)
 	{
-		return NumberTools.toLong (getProperty (key), defaultValue);
+		return NumberTools.toLong(getProperty(key), defaultValue);
 	}
 
 	/**
@@ -165,9 +165,9 @@ public class SystemProperties extends Properties
 	 * @param key The value key.
 	 * @param value The value.
 	 */
-	public void put (String key, boolean value)
+	public void put(String key, boolean value)
 	{
-		setProperty (key, String.valueOf (value));
+		setProperty(key, String.valueOf(value));
 	}
 
 	/**
@@ -177,8 +177,8 @@ public class SystemProperties extends Properties
 	 * @param defaultValue A default value in case the property wasn't found.
 	 * @return The value of the property.
 	 */
-	public boolean getBool (String key, boolean defaultValue)
+	public boolean getBool(String key, boolean defaultValue)
 	{
-		return NumberTools.toBool (getProperty (key), defaultValue);
+		return NumberTools.toBool(getProperty(key), defaultValue);
 	}
 }

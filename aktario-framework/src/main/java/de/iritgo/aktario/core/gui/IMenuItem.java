@@ -41,9 +41,9 @@ public class IMenuItem extends JMenuItem
 	/**
 	 * Creates a menu item with no set text or icon.
 	 */
-	public IMenuItem ()
+	public IMenuItem()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -51,9 +51,9 @@ public class IMenuItem extends JMenuItem
 	 *
 	 * @param action The Action used to specify the new menu item.
 	 */
-	public IMenuItem (Action action)
+	public IMenuItem(Action action)
 	{
-		super (action);
+		super(action);
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class IMenuItem extends JMenuItem
 	 *
 	 * @param icon The Icon image to display on the menu item.
 	 */
-	public IMenuItem (Icon icon)
+	public IMenuItem(Icon icon)
 	{
-		super (icon);
+		super(icon);
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class IMenuItem extends JMenuItem
 	 *
 	 * @param text The text of the menu item.
 	 */
-	public IMenuItem (String text)
+	public IMenuItem(String text)
 	{
-		super (text);
+		super(text);
 	}
 
 	/**
@@ -82,9 +82,9 @@ public class IMenuItem extends JMenuItem
 	 * @param text The text of the menu item.
 	 * @param icon The Icon image to display on the menu item.
 	 */
-	public IMenuItem (String text, Icon icon)
+	public IMenuItem(String text, Icon icon)
 	{
-		super (text, icon);
+		super(text, icon);
 	}
 
 	/**
@@ -93,17 +93,17 @@ public class IMenuItem extends JMenuItem
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
 		this.textKey = textKey;
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 
 	/**
 	 * Reload the labels of all menu items in this menu bar.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+		super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 	}
 }

@@ -40,23 +40,22 @@ public class LoadBetwixtBean extends Command
 
 	private String filename;
 
-	public LoadBetwixtBean ()
+	public LoadBetwixtBean()
 	{
-		super ("loadbetwixtbean");
+		super("loadbetwixtbean");
 	}
 
-	public LoadBetwixtBean (Object bean)
+	public LoadBetwixtBean(Object bean)
 	{
-		this (bean, Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator (), bean.getClass ()
-						.getName ());
+		this(bean, Engine.instance().getSystemDir() + Engine.instance().getFileSeparator(), bean.getClass().getName());
 	}
 
-	public LoadBetwixtBean (Object bean, String path)
+	public LoadBetwixtBean(Object bean, String path)
 	{
-		this (bean, path, bean.getClass ().getName ());
+		this(bean, path, bean.getClass().getName());
 	}
 
-	public LoadBetwixtBean (Object bean, String path, String filename)
+	public LoadBetwixtBean(Object bean, String path, String filename)
 	{
 		this.bean = bean;
 		this.path = path;
@@ -69,42 +68,42 @@ public class LoadBetwixtBean extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
-		super.setProperties (properties);
+		super.setProperties(properties);
 
-		bean = (Object) properties.get ("bean");
+		bean = (Object) properties.get("bean");
 
-		path = (String) properties.get ("path");
+		path = (String) properties.get("path");
 
 		if (path == null)
 		{
-			path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator ();
+			path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator();
 		}
 
-		filename = (String) properties.get ("filename");
+		filename = (String) properties.get("filename");
 
 		if (filename == null)
 		{
-			filename = bean.getClass ().getName ();
+			filename = bean.getClass().getName();
 		}
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		BufferedReader xmlReader = null;
 
 		try
 		{
-			xmlReader = new BufferedReader (new InputStreamReader (new FileInputStream (path + filename)));
+			xmlReader = new BufferedReader(new InputStreamReader(new FileInputStream(path + filename)));
 
-			BeanReader beanReader = new BeanReader ();
+			BeanReader beanReader = new BeanReader();
 
-			beanReader.getXMLIntrospector ().setAttributesForPrimitives (true);
+			beanReader.getXMLIntrospector().setAttributesForPrimitives(true);
 			//			beanReader.getBindingConfiguration ().setMapIDs (false);
-			beanReader.registerBeanClass (bean.getClass ());
-			properties.put ("bean", beanReader.parse (xmlReader));
+			beanReader.registerBeanClass(bean.getClass());
+			properties.put("bean", beanReader.parse(xmlReader));
 		}
 		catch (Exception x)
 		{
@@ -112,7 +111,7 @@ public class LoadBetwixtBean extends Command
 
 		try
 		{
-			xmlReader.close ();
+			xmlReader.close();
 		}
 		catch (Exception x)
 		{

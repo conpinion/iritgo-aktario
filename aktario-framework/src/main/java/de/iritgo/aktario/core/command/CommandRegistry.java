@@ -38,10 +38,10 @@ public class CommandRegistry extends BaseObject
 	/**
 	 * Create a new empty command registry.
 	 */
-	public CommandRegistry ()
+	public CommandRegistry()
 	{
-		super ("commandregistry");
-		commands = new HashMap ();
+		super("commandregistry");
+		commands = new HashMap();
 	}
 
 	/**
@@ -49,9 +49,9 @@ public class CommandRegistry extends BaseObject
 	 *
 	 * @param command The command to add.
 	 */
-	public void add (Command command)
+	public void add(Command command)
 	{
-		commands.put (command.getTypeId (), command);
+		commands.put(command.getTypeId(), command);
 	}
 
 	/**
@@ -59,13 +59,13 @@ public class CommandRegistry extends BaseObject
 	 *
 	 * @param commandId The id of the command to retrieve.
 	 */
-	public Command get (String commandId)
+	public Command get(String commandId)
 	{
-		Command command = (Command) commands.get (commandId);
+		Command command = (Command) commands.get(commandId);
 
 		if (command == null)
 		{
-			Log.logError ("system", "CommandRegistry", "Attempting to get not existing command '" + commandId + "'");
+			Log.logError("system", "CommandRegistry", "Attempting to get not existing command '" + commandId + "'");
 		}
 
 		return command;
@@ -76,9 +76,9 @@ public class CommandRegistry extends BaseObject
 	 *
 	 * @param command The command to remove.
 	 */
-	public void remove (Command command)
+	public void remove(Command command)
 	{
-		commands.remove (command.getTypeId ());
+		commands.remove(command.getTypeId());
 	}
 
 	/**
@@ -87,9 +87,9 @@ public class CommandRegistry extends BaseObject
 	 * @param commandId The id of the command to search.
 	 * @return True if the command was found.
 	 */
-	public boolean commandExists (String commandId)
+	public boolean commandExists(String commandId)
 	{
-		return commands.containsKey (commandId);
+		return commands.containsKey(commandId);
 	}
 
 	/**
@@ -99,20 +99,20 @@ public class CommandRegistry extends BaseObject
 	 * @param commandId The id of the command to execute.
 	 * @param properties The execution properties.
 	 */
-	public Object perform (String commandProcessor, String commandId, Properties properties)
+	public Object perform(String commandProcessor, String commandId, Properties properties)
 	{
-		Command cmd = (Command) get (commandId);
+		Command cmd = (Command) get(commandId);
 
 		if (cmd == null)
 		{
 			return null;
 		}
 
-		cmd.setProperties (properties);
+		cmd.setProperties(properties);
 
-		CommandProcessor cmdProc = Engine.instance ().getCommandProcessorRegistry ().get (commandProcessor);
+		CommandProcessor cmdProc = Engine.instance().getCommandProcessorRegistry().get(commandProcessor);
 
-		return cmdProc.perform (cmd);
+		return cmdProc.perform(cmd);
 	}
 
 	/**
@@ -123,16 +123,16 @@ public class CommandRegistry extends BaseObject
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public Object perform (String commandProcessor, String commandId, Object[] properties)
+	public Object perform(String commandProcessor, String commandId, Object[] properties)
 	{
-		Command cmd = (Command) get (commandId);
+		Command cmd = (Command) get(commandId);
 
 		if (cmd == null)
 		{
 			return null;
 		}
 
-		return perform (commandProcessor, cmd, properties);
+		return perform(commandProcessor, cmd, properties);
 	}
 
 	/**
@@ -143,13 +143,13 @@ public class CommandRegistry extends BaseObject
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public Object perform (String commandProcessor, Command command, Properties properties)
+	public Object perform(String commandProcessor, Command command, Properties properties)
 	{
-		command.setProperties (properties);
+		command.setProperties(properties);
 
-		CommandProcessor cmdProc = Engine.instance ().getCommandProcessorRegistry ().get (commandProcessor);
+		CommandProcessor cmdProc = Engine.instance().getCommandProcessorRegistry().get(commandProcessor);
 
-		return cmdProc.perform (command);
+		return cmdProc.perform(command);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class CommandRegistry extends BaseObject
 	 * @param properties The execution properties.
 	 * @return The command results.
 	 */
-	public Object perform (String commandProcessor, Command command, Object[] properties)
+	public Object perform(String commandProcessor, Command command, Object[] properties)
 	{
 		int numPropElements = properties.length;
 
@@ -169,19 +169,19 @@ public class CommandRegistry extends BaseObject
 			--numPropElements;
 		}
 
-		Properties props = new Properties ();
+		Properties props = new Properties();
 
 		for (int i = 0; i < numPropElements; ++i)
 		{
-			props.put (properties[i], properties[i + 1]);
+			props.put(properties[i], properties[i + 1]);
 			++i;
 		}
 
-		command.setProperties (props);
+		command.setProperties(props);
 
-		CommandProcessor cmdProc = Engine.instance ().getCommandProcessorRegistry ().get (commandProcessor);
+		CommandProcessor cmdProc = Engine.instance().getCommandProcessorRegistry().get(commandProcessor);
 
-		return cmdProc.perform (command);
+		return cmdProc.perform(command);
 	}
 
 	/**
@@ -191,18 +191,18 @@ public class CommandRegistry extends BaseObject
 	 * @param commandId The id of the command to execute.
 	 * @return The command results.
 	 */
-	public Object perform (String commandProcessor, String commandId)
+	public Object perform(String commandProcessor, String commandId)
 	{
-		Command cmd = (Command) get (commandId);
+		Command cmd = (Command) get(commandId);
 
 		if (cmd == null)
 		{
 			return null;
 		}
 
-		CommandProcessor cmdProc = Engine.instance ().getCommandProcessorRegistry ().get (commandProcessor);
+		CommandProcessor cmdProc = Engine.instance().getCommandProcessorRegistry().get(commandProcessor);
 
-		return cmdProc.perform (cmd);
+		return cmdProc.perform(cmd);
 	}
 
 	/**
@@ -212,18 +212,18 @@ public class CommandRegistry extends BaseObject
 	 * @param command The command to execute.
 	 * @return The command results.
 	 */
-	public Object perform (String commandProcessor, Command command)
+	public Object perform(String commandProcessor, Command command)
 	{
-		CommandProcessor cmdProc = Engine.instance ().getCommandProcessorRegistry ().get (commandProcessor);
+		CommandProcessor cmdProc = Engine.instance().getCommandProcessorRegistry().get(commandProcessor);
 
-		return cmdProc.perform (command);
+		return cmdProc.perform(command);
 	}
 
 	/**
 	 * Remove all commands from the registry.
 	 */
-	public void clear ()
+	public void clear()
 	{
-		commands.clear ();
+		commands.clear();
 	}
 }

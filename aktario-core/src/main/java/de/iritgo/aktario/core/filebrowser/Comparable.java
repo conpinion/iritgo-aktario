@@ -22,7 +22,7 @@ package de.iritgo.aktario.core.filebrowser;
 
 public interface Comparable
 {
-	public boolean greaterThan (Comparable comp);
+	public boolean greaterThan(Comparable comp);
 
-	public String getStringValue ();
+	public String getStringValue();
 }

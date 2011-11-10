@@ -56,9 +56,9 @@ public class EditIObjectAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public EditIObjectAction ()
+	public EditIObjectAction()
 	{
-		iObjects = new LinkedList ();
+		iObjects = new LinkedList();
 	}
 
 	/**
@@ -67,12 +67,12 @@ public class EditIObjectAction extends FrameworkAction
 	 * @param state The state of this edit
 	 * @param iObjectId The iObjectId
 	 */
-	public EditIObjectAction (int state, IObject iObject)
+	public EditIObjectAction(int state, IObject iObject)
 	{
-		this ();
+		this();
 
 		this.state = state;
-		iObjects.add (iObject);
+		iObjects.add(iObject);
 	}
 
 	/**
@@ -80,9 +80,9 @@ public class EditIObjectAction extends FrameworkAction
 	 *
 	 * @param state The state of this edit
 	 */
-	public EditIObjectAction (int state)
+	public EditIObjectAction(int state)
 	{
-		this ();
+		this();
 
 		this.state = state;
 	}
@@ -90,28 +90,28 @@ public class EditIObjectAction extends FrameworkAction
 	/**
 	 * Add a changed prototype...
 	 */
-	public void addIObject (IObject iObject)
+	public void addIObject(IObject iObject)
 	{
-		iObjects.add (iObject);
+		iObjects.add(iObject);
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		state = stream.readInt ();
+		state = stream.readInt();
 
-		int size = stream.readInt ();
+		int size = stream.readInt();
 
 		for (int i = 0; i < size; ++i)
 		{
-			Helper helper = new Helper ();
+			Helper helper = new Helper();
 
-			helper.uniqueId = stream.readLong ();
-			helper.typeId = stream.readUTF ();
-			iObjects.add (helper);
+			helper.uniqueId = stream.readLong();
+			helper.typeId = stream.readUTF();
+			iObjects.add(helper);
 		}
 	}
 
@@ -119,17 +119,17 @@ public class EditIObjectAction extends FrameworkAction
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (state);
-		stream.writeInt (iObjects.size ());
+		stream.writeInt(state);
+		stream.writeInt(iObjects.size());
 
-		for (Iterator i = iObjects.iterator (); i.hasNext ();)
+		for (Iterator i = iObjects.iterator(); i.hasNext();)
 		{
-			IObject object = (IObject) i.next ();
+			IObject object = (IObject) i.next();
 
-			stream.writeLong (object.getUniqueId ());
-			stream.writeUTF (object.getTypeId ());
+			stream.writeLong(object.getUniqueId());
+			stream.writeUTF(object.getTypeId());
 		}
 	}
 
@@ -137,18 +137,18 @@ public class EditIObjectAction extends FrameworkAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		for (Iterator i = iObjects.iterator (); i.hasNext ();)
+		for (Iterator i = iObjects.iterator(); i.hasNext();)
 		{
-			Helper helper = (Helper) i.next ();
+			Helper helper = (Helper) i.next();
 
-			IObjectProxy proxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (helper.uniqueId,
+			IObjectProxy proxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(helper.uniqueId,
 							helper.typeId);
 
 			if (proxy != null)
 			{
-				proxy.reset ();
+				proxy.reset();
 			}
 			else
 			{

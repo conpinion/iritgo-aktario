@@ -32,9 +32,9 @@ public class TestLogoffCommand extends Command
 	/**
 	 * Login command
 	 */
-	public TestLogoffCommand ()
+	public TestLogoffCommand()
 	{
-		super ("test.aktera-client.logoffCommand");
+		super("test.aktera-client.logoffCommand");
 	}
 
 	/**
@@ -43,8 +43,8 @@ public class TestLogoffCommand extends Command
 	 * @see de.iritgo.aktario.core.command.Command#perform()
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		IritgoEngine.instance ().shutdown ();
+		IritgoEngine.instance().shutdown();
 	}
 }

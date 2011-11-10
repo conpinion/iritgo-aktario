@@ -32,9 +32,9 @@ import de.iritgo.aktario.core.network.Channel;
  */
 public class ReceiveNetworkActionProcessor extends NetworkActionProcessor
 {
-	public ReceiveNetworkActionProcessor (Channel channel, NetworkActionProcessorInterface parentNetworkActionProcessor)
+	public ReceiveNetworkActionProcessor(Channel channel, NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super ("ReceiveNetworkActionProcessor", channel, parentNetworkActionProcessor);
+		super("ReceiveNetworkActionProcessor", channel, parentNetworkActionProcessor);
 	}
 
 	/**
@@ -44,10 +44,10 @@ public class ReceiveNetworkActionProcessor extends NetworkActionProcessor
 	 * @param transceiver The transceiver for this action.
 	 */
 	@Override
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		action.setTransceiver (transceiver);
-		super.perform (action, transceiver);
+		action.setTransceiver(transceiver);
+		super.perform(action, transceiver);
 	}
 
 	/**
@@ -56,11 +56,11 @@ public class ReceiveNetworkActionProcessor extends NetworkActionProcessor
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		ReceiveNetworkActionProcessor clone = new ReceiveNetworkActionProcessor (channel, parentNetworkActionProcessor);
+		ReceiveNetworkActionProcessor clone = new ReceiveNetworkActionProcessor(channel, parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

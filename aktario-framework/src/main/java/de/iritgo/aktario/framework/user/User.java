@@ -55,49 +55,49 @@ public class User extends DataObject implements IObject
 
 	private Map newObjectsMapping;
 
-	private Date loggedOutDate = new Date ();
+	private Date loggedOutDate = new Date();
 
 	/**
 	 * Standard constructor
 	 */
-	public User ()
+	public User()
 	{
-		super ("user");
-		newObjectsMapping = new HashMap ();
-		addAttribute ("email", "");
-		addAttribute ("userName", "");
-		addAttribute ("password", "");
+		super("user");
+		newObjectsMapping = new HashMap();
+		addAttribute("email", "");
+		addAttribute("userName", "");
+		addAttribute("password", "");
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public User (String userName, String email, long id, String password, double networkChannel)
+	public User(String userName, String email, long id, String password, double networkChannel)
 	{
-		this ();
+		this();
 		this.uniqueId = id;
-		setEmail (email);
-		setName (userName);
-		setPassword (password);
+		setEmail(email);
+		setName(userName);
+		setPassword(password);
 		this.networkChannel = networkChannel;
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public User (String userName, String password)
+	public User(String userName, String password)
 	{
-		this ();
+		this();
 		this.uniqueId = 10000000;
-		setName (userName);
-		setPassword (password);
+		setName(userName);
+		setPassword(password);
 		networkChannel = 0.0;
 	}
 
 	/**
 	 * Get the id of the iritgo object.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "user";
 	}
@@ -105,7 +105,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Set the OnlineState
 	 */
-	public void setOnline (boolean online)
+	public void setOnline(boolean online)
 	{
 		this.online = online;
 	}
@@ -113,7 +113,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the OnlineState.
 	 */
-	public boolean getOnline ()
+	public boolean getOnline()
 	{
 		return online;
 	}
@@ -121,7 +121,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Is the User Online?
 	 */
-	public boolean isOnline ()
+	public boolean isOnline()
 	{
 		return online;
 	}
@@ -129,7 +129,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Set the LoggedOutDate
 	 */
-	public void setLoggedOutDate (Date loggedOutDate)
+	public void setLoggedOutDate(Date loggedOutDate)
 	{
 		this.loggedOutDate = loggedOutDate;
 	}
@@ -137,7 +137,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the LoggedOutDate.
 	 */
-	public Date getLoggedOutDate ()
+	public Date getLoggedOutDate()
 	{
 		return loggedOutDate;
 	}
@@ -145,7 +145,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the Timestamp of the prototypeable
 	 */
-	public double getTimeStamp ()
+	public double getTimeStamp()
 	{
 		return 0.0;
 	}
@@ -153,14 +153,14 @@ public class User extends DataObject implements IObject
 	/**
 	 * Set the Timestamp of the prototypeable
 	 */
-	public void setTimeStamp (double timeStamp)
+	public void setTimeStamp(double timeStamp)
 	{
 	}
 
 	/**
 	 * Get the ping time for the user.
 	 */
-	public long getLastRealPingTime ()
+	public long getLastRealPingTime()
 	{
 		return lastRealPingTime;
 	}
@@ -168,7 +168,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the ping time for the user.
 	 */
-	public long getPingTime ()
+	public long getPingTime()
 	{
 		return pingTime;
 	}
@@ -176,7 +176,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Set the ping time for this user.
 	 */
-	public void setPingTime (long pingTime)
+	public void setPingTime(long pingTime)
 	{
 		this.pingTime = pingTime;
 	}
@@ -184,7 +184,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Add ping time for ping interval calc.
 	 */
-	public void addPingTime (long pingTime)
+	public void addPingTime(long pingTime)
 	{
 		lastRealPingTime = pingTime;
 		allPingTime += pingTime;
@@ -203,7 +203,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the ping time for the user.
 	 */
-	public long getOldPingTime ()
+	public long getOldPingTime()
 	{
 		return oldPingTime;
 	}
@@ -211,7 +211,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Set the ping time for this user.
 	 */
-	public void setOldPingTime (long pingTime)
+	public void setOldPingTime(long pingTime)
 	{
 		this.oldPingTime = pingTime;
 	}
@@ -219,17 +219,17 @@ public class User extends DataObject implements IObject
 	/**
 	 * Create a instance of the iritgo object.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
-		return new User ();
+		return new User();
 	}
 
 	/**
 	 * Add an id
 	 */
-	public void putNewObjectsMapping (Long id, Long newId)
+	public void putNewObjectsMapping(Long id, Long newId)
 	{
-		newObjectsMapping.put (id, newId);
+		newObjectsMapping.put(id, newId);
 	}
 
 	/**
@@ -237,97 +237,97 @@ public class User extends DataObject implements IObject
 	 *
 	 * @return The id
 	 */
-	public Long getNewObjectsMapping (Long id)
+	public Long getNewObjectsMapping(Long id)
 	{
-		return (Long) newObjectsMapping.get (id);
+		return (Long) newObjectsMapping.get(id);
 	}
 
 	/**
 	 * Clean up the new objects mapping, will called by a logoff.
 	 */
-	public void clearNewObjectsMapping ()
+	public void clearNewObjectsMapping()
 	{
-		newObjectsMapping.clear ();
+		newObjectsMapping.clear();
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
+		super.readObject(stream);
 
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
-		networkChannel = dataStream.readDouble ();
-		online = dataStream.readBoolean ();
+		networkChannel = dataStream.readDouble();
+		online = dataStream.readBoolean();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
+		super.writeObject(stream);
 
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
-		dataStream.writeDouble (networkChannel);
-		dataStream.writeBoolean (online);
+		dataStream.writeDouble(networkChannel);
+		dataStream.writeBoolean(online);
 	}
 
 	/**
 	 * Set the Username.
 	 */
-	public void setName (String userName)
+	public void setName(String userName)
 	{
-		setAttribute ("userName", userName);
+		setAttribute("userName", userName);
 	}
 
 	/**
 	 * Get the Username.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return getStringAttribute ("userName");
+		return getStringAttribute("userName");
 	}
 
 	/**
 	 * Get the Username.
 	 */
-	public String getPassword ()
+	public String getPassword()
 	{
-		return getStringAttribute ("password");
+		return getStringAttribute("password");
 	}
 
 	/**
 	 * Set the password.
 	 */
-	public void setPassword (String password)
+	public void setPassword(String password)
 	{
-		setAttribute ("password", password);
+		setAttribute("password", password);
 	}
 
 	/**
 	 * Get the Username.
 	 */
-	public String getEmail ()
+	public String getEmail()
 	{
-		return getStringAttribute ("email");
+		return getStringAttribute("email");
 	}
 
 	/**
 	 * Get the Username.
 	 */
-	public void setEmail (String email)
+	public void setEmail(String email)
 	{
-		setAttribute ("email", email);
+		setAttribute("email", email);
 	}
 
 	/**
 	 * Set the NetworkChannel.
 	 */
-	public void setNetworkChannel (double networkChannel)
+	public void setNetworkChannel(double networkChannel)
 	{
 		this.networkChannel = networkChannel;
 	}
@@ -335,7 +335,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Get the NetworkChannel.
 	 */
-	public double getNetworkChannel ()
+	public double getNetworkChannel()
 	{
 		return networkChannel;
 	}
@@ -343,7 +343,7 @@ public class User extends DataObject implements IObject
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		return this;
 	}
@@ -352,7 +352,7 @@ public class User extends DataObject implements IObject
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
 		return this;
 	}
@@ -362,14 +362,14 @@ public class User extends DataObject implements IObject
 	 *
 	 * @return String The current dump
 	 */
-	public String dump ()
+	public String dump()
 	{
-		return toString ();
+		return toString();
 	}
 
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return getName () + "->" + super.toString ();
+		return getName() + "->" + super.toString();
 	}
 }

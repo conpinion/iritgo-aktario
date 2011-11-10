@@ -36,73 +36,73 @@ public interface IDisplay
 	 *
 	 * @return The display's id.
 	 */
-	public String getTypeId ();
+	public String getTypeId();
 
 	/**
 	 * Get the on screen unique id of this display.
 	 *
 	 * @return The display's id.
 	 */
-	public String getOnScreenUniqueId ();
+	public String getOnScreenUniqueId();
 
 	/**
 	 * Get the gui pane of this display.
 	 *
 	 * @return The gui pane.
 	 */
-	public GUIPane getGUIPane ();
+	public GUIPane getGUIPane();
 
 	/**
 	 * Set the gui pane of this display.
 	 *
 	 * @param The gui pane.
 	 */
-	public void setGUIPane (GUIPane guiPane);
+	public void setGUIPane(GUIPane guiPane);
 
 	/**
 	 * Get the id of the desktop on which this display is displayed.
 	 *
 	 * @return The desktop id (or null if this display is a dialog).
 	 */
-	public String getDesktopId ();
+	public String getDesktopId();
 
 	/**
 	 * Set the id of the desktop on which this display is displayed.
 	 *
 	 * @param desktopId The desktop id.
 	 */
-	public void setDesktopId (String desktopId);
+	public void setDesktopId(String desktopId);
 
 	/**
 	 * Set the desktop manager.
 	 *
 	 * @param desktopManager The desktop manager.
 	 */
-	public void setDesktopManager (IDesktopManager desktopManager);
+	public void setDesktopManager(IDesktopManager desktopManager);
 
 	/**
 	 * Get the desktop manager.
 	 *
 	 * @return The desktop manager.
 	 */
-	public IDesktopManager getDesktopManager ();
+	public IDesktopManager getDesktopManager();
 
 	/**
 	 * Close this display element.
 	 */
-	public void close ();
+	public void close();
 
 	/**
 	 * This method is called by classes implementing window or dialog frames.
 	 */
-	public void systemClose ();
+	public void systemClose();
 
 	/**
 	 * Get the data object shown in this display.
 	 *
 	 * @return The data object.
 	 */
-	public IObject getDataObject ();
+	public IObject getDataObject();
 
 	/**
 	 * Set the display title. This title will be displayed on the
@@ -110,28 +110,28 @@ public interface IDisplay
 	 *
 	 * @param title The new title.
 	 */
-	public void setTitle (String title);
+	public void setTitle(String title);
 
 	/**
 	 * Get the display title.
 	 *
 	 * @return The display title.
 	 */
-	public String getTitle ();
+	public String getTitle();
 
 	/**
 	 * Set the display icon.
 	 *
 	 * @param icon The icon.
 	 */
-	public void setIcon (Icon icon);
+	public void setIcon(Icon icon);
 
 	/**
 	 * Get the display's icon.
 	 *
 	 * @return The display's icon.
 	 */
-	public Icon getIcon ();
+	public Icon getIcon();
 
 	/**
 	 * Set a display property.
@@ -139,7 +139,7 @@ public interface IDisplay
 	 * @param key The key under which to store the property.
 	 * @param value The property value.
 	 */
-	public void putProperty (String key, Object value);
+	public void putProperty(String key, Object value);
 
 	/**
 	 * Get a display property.
@@ -147,50 +147,50 @@ public interface IDisplay
 	 * @param key The key of the property to retrieve.
 	 * @return The property value.
 	 */
-	public Object getProperty (String key);
+	public Object getProperty(String key);
 
 	/**
 	 * Set the display properties.
 	 *
 	 * @param properties The new properties.
 	 */
-	public void setProperties (Properties properties);
+	public void setProperties(Properties properties);
 
 	/**
 	 * Get the display properties.
 	 *
 	 * @return The display properties.
 	 */
-	public Properties getProperties ();
+	public Properties getProperties();
 
 	/**
 	 * Remove a display property.
 	 *
 	 * @param key The key of the property to remove.
 	 */
-	public void removeProperty (String key);
+	public void removeProperty(String key);
 
 	/**
 	 * Displays this display on the screen
 	 */
-	public void show ();
+	public void show();
 
 	/**
 	 * Enable/disable the display.
 	 *
 	 * @param enabled If true the display is enabled.
 	 */
-	public void setEnabled (boolean enabled);
+	public void setEnabled(boolean enabled);
 
 	/**
 	 * Check wether the display is enabled or not.
 	 *
 	 * @return True if the display is enabled.
 	 */
-	public boolean isEnabled ();
+	public boolean isEnabled();
 
 	/**
 	 * Make this display the topmost display.
 	 */
-	public void bringToFront ();
+	public void bringToFront();
 }

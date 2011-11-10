@@ -85,9 +85,9 @@ public class RoomPane extends SwingGUIPane
 	/**
 	 * Close the current application.
 	 */
-	public Action closeApplicationAction = new AbstractAction ()
+	public Action closeApplicationAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -95,9 +95,9 @@ public class RoomPane extends SwingGUIPane
 	/**
 	 * Delete the current application.
 	 */
-	public Action deleteApplicationAction = new AbstractAction ()
+	public Action deleteApplicationAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 		}
 	};
@@ -105,115 +105,115 @@ public class RoomPane extends SwingGUIPane
 	/**
 	 * Create a new RoomPane.
 	 */
-	public RoomPane ()
+	public RoomPane()
 	{
-		super ("RoomPane");
+		super("RoomPane");
 
-		dummyApplication = new Application ("dummy", (AktarioPlugin) Engine.instance ().getPluginManager ().getPlugin (
+		dummyApplication = new Application("dummy", (AktarioPlugin) Engine.instance().getPluginManager().getPlugin(
 						"aktario-client"), "aktario.applications", "/resources/application.png", null);
 
-		spacingBorder = new EmptyBorder (2, 2, 2, 2);
+		spacingBorder = new EmptyBorder(2, 2, 2, 2);
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (RoomControlPane.class.getClassLoader ());
+			swingEngine.setClassLoader(RoomControlPane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/RoomPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/RoomPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			applicationsModel = new IObjectComboBoxModel ();
-			applications.setModel (applicationsModel);
+			applicationsModel = new IObjectComboBoxModel();
+			applications.setModel(applicationsModel);
 
-			applications.setRenderer (new BasicComboBoxRenderer ()
+			applications.setRenderer(new BasicComboBoxRenderer()
 			{
 				@Override
-				public Component getListCellRendererComponent (JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 								boolean hasFocus)
 				{
-					super.getListCellRendererComponent (list, value, index, isSelected, hasFocus);
+					super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 
 					ApplicationInstance instance = (ApplicationInstance) value;
 
-					setIcon (null);
+					setIcon(null);
 
 					if (instance != null)
 					{
-						Application application = Application.get (instance.getApplicationId ());
+						Application application = Application.get(instance.getApplicationId());
 
 						if (application != null)
 						{
-							setIcon (application.getIcon ());
+							setIcon(application.getIcon());
 						}
 					}
 
-					setBorder (spacingBorder);
+					setBorder(spacingBorder);
 
 					return this;
 				}
 			});
 
-			applicationMenu.setRenderer (new BasicComboBoxRenderer ()
+			applicationMenu.setRenderer(new BasicComboBoxRenderer()
 			{
 				@Override
-				public Component getListCellRendererComponent (JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 								boolean hasFocus)
 				{
-					super.getListCellRendererComponent (list, value, index, isSelected, hasFocus);
+					super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 
 					Application application = (Application) value;
 
-					setIcon (application.getIcon ());
-					setBorder (spacingBorder);
+					setIcon(application.getIcon());
+					setBorder(spacingBorder);
 
 					return this;
 				}
 			});
 
-			applicationMenu.addItem (dummyApplication);
+			applicationMenu.addItem(dummyApplication);
 
-			for (Iterator i = Application.iterator (); i.hasNext ();)
+			for (Iterator i = Application.iterator(); i.hasNext();)
 			{
-				applicationMenu.addItem (i.next ());
+				applicationMenu.addItem(i.next());
 			}
 
-			applicationMenu.addItemListener (new ItemListener ()
+			applicationMenu.addItemListener(new ItemListener()
 			{
-				public void itemStateChanged (ItemEvent e)
+				public void itemStateChanged(ItemEvent e)
 				{
-					if (e.getStateChange () == ItemEvent.SELECTED)
+					if (e.getStateChange() == ItemEvent.SELECTED)
 					{
-						if (applicationMenu.getSelectedIndex () != 0)
+						if (applicationMenu.getSelectedIndex() != 0)
 						{
-							addApplication ((Application) applicationMenu.getSelectedItem ());
-							applicationMenu.setSelectedIndex (0);
+							addApplication((Application) applicationMenu.getSelectedItem());
+							applicationMenu.setSelectedIndex(0);
 						}
 					}
 				}
 			});
 
-			roomDesktop.setBorder (new SoftBevelBorder (SoftBevelBorder.LOWERED));
+			roomDesktop.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
 
-			AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance ().getObject ("aktarioGui"));
+			AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance().getObject("aktarioGui"));
 
-			((SwingDesktopManager) aktarioGUI.getDesktopManager ()).addDesktopPaneNoActivation ("room", roomDesktop);
+			((SwingDesktopManager) aktarioGUI.getDesktopManager()).addDesktopPaneNoActivation("room", roomDesktop);
 
-			getDisplay ().setIcon (new ImageIcon (RoomControlPane.class.getResource ("/resources/rooms.png")));
+			getDisplay().setIcon(new ImageIcon(RoomControlPane.class.getResource("/resources/rooms.png")));
 
-			AppContext.instance ().put ("roomPane", this);
+			AppContext.instance().put("roomPane", this);
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "RoomPane.initGUI", x.toString ());
+			Log.logError("client", "RoomPane.initGUI", x.toString());
 		}
 	}
 
@@ -221,34 +221,34 @@ public class RoomPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
-		ResourceService resources = Engine.instance ().getResourceService ();
+		ResourceService resources = Engine.instance().getResourceService();
 		Room room = (Room) iobject;
 
-		applicationsModel.update (room.getApplications ());
+		applicationsModel.update(room.getApplications());
 
-		applications.addItemListener (new ItemListener ()
+		applications.addItemListener(new ItemListener()
 		{
-			public void itemStateChanged (ItemEvent e)
+			public void itemStateChanged(ItemEvent e)
 			{
-				if (e.getStateChange () == ItemEvent.SELECTED)
+				if (e.getStateChange() == ItemEvent.SELECTED)
 				{
-					activateApplication ((ApplicationInstance) applications.getSelectedItem ());
+					activateApplication((ApplicationInstance) applications.getSelectedItem());
 				}
 			}
 		});
 
-		setTitle (resources.getString ("RoomPane") + " - " + room.getName ());
+		setTitle(resources.getString("RoomPane") + " - " + room.getName());
 
-		((AktarioGUI) AppContext.instance ().getObject ("aktarioGui")).setApplicationMenuEnabled (true);
+		((AktarioGUI) AppContext.instance().getObject("aktarioGui")).setApplicationMenuEnabled(true);
 	}
 
 	/**
 	 * Store the current gui values into the data object attributes.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -258,9 +258,9 @@ public class RoomPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new RoomPane ();
+		return new RoomPane();
 	}
 
 	/**
@@ -268,30 +268,30 @@ public class RoomPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new Room ();
+		return new Room();
 	}
 
 	/**
 	 * Close the display.
 	 */
 	@Override
-	public void systemClose ()
+	public void systemClose()
 	{
-		super.systemClose ();
+		super.systemClose();
 
-		AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance ().getObject ("aktarioGui"));
+		AktarioGUI aktarioGUI = ((AktarioGUI) AppContext.instance().getObject("aktarioGui"));
 
-		aktarioGUI.getDesktopManager ().closeAllDisplays ("room");
+		aktarioGUI.getDesktopManager().closeAllDisplays("room");
 
-		((SwingDesktopManager) aktarioGUI.getDesktopManager ()).removeDesktopPane ("room");
+		((SwingDesktopManager) aktarioGUI.getDesktopManager()).removeDesktopPane("room");
 
-		AppContext.instance ().remove ("roomPane");
+		AppContext.instance().remove("roomPane");
 
-		((RoomControlPane) AppContext.instance ().getObject ("roomControlPane")).roomClosed ();
+		((RoomControlPane) AppContext.instance().getObject("roomControlPane")).roomClosed();
 
-		aktarioGUI.setApplicationMenuEnabled (false);
+		aktarioGUI.setApplicationMenuEnabled(false);
 	}
 
 	/**
@@ -299,46 +299,46 @@ public class RoomPane extends SwingGUIPane
 	 *
 	 * @parm application The application to add.
 	 */
-	public void addApplication (Application application)
+	public void addApplication(Application application)
 	{
-		Room room = (Room) getIObject ();
+		Room room = (Room) getIObject();
 
-		if (application.getId ().equals ("aktario.Chat"))
+		if (application.getId().equals("aktario.Chat"))
 		{
-			for (Iterator i = room.applicationIterator (); i.hasNext ();)
+			for (Iterator i = room.applicationIterator(); i.hasNext();)
 			{
-				ApplicationInstance ai = (ApplicationInstance) i.next ();
+				ApplicationInstance ai = (ApplicationInstance) i.next();
 
-				if (ai.getApplicationId ().equals ("aktario.Chat"))
+				if (ai.getApplicationId().equals("aktario.Chat"))
 				{
-					new Thread (new Runnable ()
+					new Thread(new Runnable()
 					{
-						public void run ()
+						public void run()
 						{
-							JOptionPane.showMessageDialog (content.getTopLevelAncestor (), Engine.instance ()
-											.getResourceService ().getString (
+							JOptionPane.showMessageDialog(content.getTopLevelAncestor(),
+											Engine.instance().getResourceService().getString(
 															"aktario.onlyOneChatApplicationCanBeAdded"), "Aktario",
 											JOptionPane.OK_OPTION);
 						}
-					}).start ();
+					}).start();
 
 					return;
 				}
 			}
 		}
 
-		ApplicationInstance instance = new ApplicationInstance ();
+		ApplicationInstance instance = new ApplicationInstance();
 
-		instance.setApplicationId (application.getId ());
-		room.addApplication (instance);
+		instance.setApplicationId(application.getId());
+		room.addApplication(instance);
 
-		Properties props = new Properties ();
+		Properties props = new Properties();
 
-		props.put ("maximizable", new Boolean (false));
-		props.put ("iconifiable", new Boolean (false));
-		props.put ("maximized", new Boolean (true));
-		props.put ("titlebar", new Boolean (false));
-		CommandTools.performAsync (new ShowWindow (application.getGuiPaneId (), "room"), props);
+		props.put("maximizable", new Boolean(false));
+		props.put("iconifiable", new Boolean(false));
+		props.put("maximized", new Boolean(true));
+		props.put("titlebar", new Boolean(false));
+		CommandTools.performAsync(new ShowWindow(application.getGuiPaneId(), "room"), props);
 	}
 
 	/**
@@ -346,26 +346,26 @@ public class RoomPane extends SwingGUIPane
 	 *
 	 * @parm instance The application instance.
 	 */
-	public void activateApplication (ApplicationInstance instance)
+	public void activateApplication(ApplicationInstance instance)
 	{
-		GUIPane appPane = (GUIPane) AppContext.instance ().getObject ("applicationPane." + instance.getUniqueId ());
+		GUIPane appPane = (GUIPane) AppContext.instance().getObject("applicationPane." + instance.getUniqueId());
 
 		if (appPane == null)
 		{
-			Application application = Application.get (instance.getApplicationId ());
+			Application application = Application.get(instance.getApplicationId());
 
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.put ("maximizable", new Boolean (false));
-			props.put ("iconifiable", new Boolean (false));
-			props.put ("maximized", new Boolean (true));
-			props.put ("titlebar", new Boolean (false));
-			props.put ("aktario.applicationInstanceId", new Long (instance.getUniqueId ()));
-			CommandTools.performAsync (new ShowWindow (application.getGuiPaneId (), "room"), props);
+			props.put("maximizable", new Boolean(false));
+			props.put("iconifiable", new Boolean(false));
+			props.put("maximized", new Boolean(true));
+			props.put("titlebar", new Boolean(false));
+			props.put("aktario.applicationInstanceId", new Long(instance.getUniqueId()));
+			CommandTools.performAsync(new ShowWindow(application.getGuiPaneId(), "room"), props);
 		}
 		else
 		{
-			appPane.getDisplay ().bringToFront ();
+			appPane.getDisplay().bringToFront();
 		}
 	}
 }

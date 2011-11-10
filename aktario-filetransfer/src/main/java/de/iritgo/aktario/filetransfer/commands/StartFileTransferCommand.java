@@ -33,22 +33,22 @@ public class StartFileTransferCommand extends Command
 	/**
 	 * Create a new ShowSystemMonitor command.
 	 */
-	public StartFileTransferCommand ()
+	public StartFileTransferCommand()
 	{
-		super ("StartFileTransferCommand");
+		super("StartFileTransferCommand");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance ().getManager (
+		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance().getManager(
 						"FileTransferManager");
-		String fileId = properties.getProperty ("fileId", "id-"
-						+ Engine.instance ().getTransientIDGenerator ().createId ());
+		String fileId = properties
+						.getProperty("fileId", "id-" + Engine.instance().getTransientIDGenerator().createId());
 
-		fileTransferManager.startFileTransfer (fileId, properties);
+		fileTransferManager.startFileTransfer(fileId, properties);
 	}
 }

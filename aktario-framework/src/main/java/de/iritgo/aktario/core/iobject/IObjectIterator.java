@@ -32,9 +32,9 @@ public class IObjectIterator implements Iterator
 {
 	Iterator iterator;
 
-	public IObjectIterator (IObjectList linkedList)
+	public IObjectIterator(IObjectList linkedList)
 	{
-		iterator = linkedList.getListIterator ();
+		iterator = linkedList.getListIterator();
 	}
 
 	/**
@@ -44,9 +44,9 @@ public class IObjectIterator implements Iterator
 	 *
 	 * @return <tt>true</tt> if the iterator has more elements.
 	 */
-	synchronized public boolean hasNext ()
+	synchronized public boolean hasNext()
 	{
-		return iterator.hasNext ();
+		return iterator.hasNext();
 	}
 
 	/**
@@ -55,11 +55,11 @@ public class IObjectIterator implements Iterator
 	 * @return the next element in the iteration.
 	 * @exception NoSuchElementException iteration has no more elements.
 	 */
-	synchronized public Object next ()
+	synchronized public Object next()
 	{
-		IObjectProxy proxy = (IObjectProxy) iterator.next ();
+		IObjectProxy proxy = (IObjectProxy) iterator.next();
 
-		return proxy.getRealObject ();
+		return proxy.getRealObject();
 	}
 
 	/**
@@ -69,13 +69,13 @@ public class IObjectIterator implements Iterator
 	 * @return the next element in the iteration.
 	 * @exception NoSuchElementException iteration has no more elements.
 	 */
-	synchronized public Object next (IObjectProxyListener listener)
+	synchronized public Object next(IObjectProxyListener listener)
 	{
-		IObjectProxy proxy = (IObjectProxy) iterator.next ();
+		IObjectProxy proxy = (IObjectProxy) iterator.next();
 
-		Engine.instance ().getProxyEventRegistry ().addEventListener (proxy.getSampleRealObject (), listener);
+		Engine.instance().getProxyEventRegistry().addEventListener(proxy.getSampleRealObject(), listener);
 
-		return proxy.getRealObject ();
+		return proxy.getRealObject();
 	}
 
 	/**
@@ -94,8 +94,8 @@ public class IObjectIterator implements Iterator
 	 *                  been called after the last call to the <tt>next</tt>
 	 *                  method.
 	 */
-	public void remove ()
+	public void remove()
 	{
-		iterator.remove ();
+		iterator.remove();
 	}
 }

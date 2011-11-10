@@ -68,7 +68,7 @@ public abstract class IDesktopManager extends BaseObject
 		 * @param desktopId Id of the desktop of this display.
 		 * @param iObject IObject displayed in the gui pane.
 		 */
-		public DisplayItem (String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject,
+		public DisplayItem(String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject,
 						Properties properties)
 		{
 			this.guiPaneId = guiPaneId;
@@ -78,8 +78,8 @@ public abstract class IDesktopManager extends BaseObject
 
 			if (iObject != null)
 			{
-				this.iObjectUniqueId = iObject.getUniqueId ();
-				this.iObjectTypeId = iObject.getTypeId ();
+				this.iObjectUniqueId = iObject.getUniqueId();
+				this.iObjectTypeId = iObject.getTypeId();
 			}
 		}
 	}
@@ -102,10 +102,10 @@ public abstract class IDesktopManager extends BaseObject
 	/**
 	 * Create a new IDesktopManager.
 	 */
-	public IDesktopManager ()
+	public IDesktopManager()
 	{
-		displays = new LinkedList ();
-		displayById = new HashMap ();
+		displays = new LinkedList();
+		displayById = new HashMap();
 	}
 
 	/**
@@ -113,9 +113,9 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param display The IDisplay to add.
 	 */
-	public void addDisplay (IDisplay display)
+	public void addDisplay(IDisplay display)
 	{
-		addDisplay (display, null);
+		addDisplay(display, null);
 	}
 
 	/**
@@ -124,11 +124,11 @@ public abstract class IDesktopManager extends BaseObject
 	 * @param display The IDisplay to add.
 	 * @param desktopId The id of the desktop on which to open the display.
 	 */
-	public void addDisplay (IDisplay display, String desktopId)
+	public void addDisplay(IDisplay display, String desktopId)
 	{
-		displays.add (display);
-		displayById.put (display.getOnScreenUniqueId (), display);
-		addImpl (display, desktopId);
+		displays.add(display);
+		displayById.put(display.getOnScreenUniqueId(), display);
+		addImpl(display, desktopId);
 	}
 
 	/**
@@ -136,9 +136,9 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @return Iterator Iterator for all Displays
 	 */
-	public Iterator getDisplayIterator ()
+	public Iterator getDisplayIterator()
 	{
-		return displays.iterator ();
+		return displays.iterator();
 	}
 
 	/**
@@ -146,12 +146,12 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param display The display to remove.
 	 */
-	public void removeDisplay (IDisplay display)
+	public void removeDisplay(IDisplay display)
 	{
 		if (display != null)
 		{
-			displays.remove (display);
-			displayById.remove (display.getOnScreenUniqueId ());
+			displays.remove(display);
+			displayById.remove(display.getOnScreenUniqueId());
 		}
 	}
 
@@ -161,9 +161,9 @@ public abstract class IDesktopManager extends BaseObject
 	 * @param onScreenUniqueId The id of the display to retrieve.
 	 * @return The display or null if no display was found.
 	 */
-	public IDisplay getDisplay (String onScreenUniqueId)
+	public IDisplay getDisplay(String onScreenUniqueId)
 	{
-		return (IDisplay) displayById.get (onScreenUniqueId);
+		return (IDisplay) displayById.get(onScreenUniqueId);
 	}
 
 	/**
@@ -172,19 +172,19 @@ public abstract class IDesktopManager extends BaseObject
 	 * @param onScreenUniqueId The id of the display to retrieve.
 	 * @return The display or null if no display was found.
 	 */
-	public IDisplay waitForDisplay (String onScreenUniqueId)
+	public IDisplay waitForDisplay(String onScreenUniqueId)
 	{
 		IDisplay display = null;
 
 		while (display == null)
 		{
-			display = (IDisplay) Client.instance ().getClientGUI ().getDesktopManager ().getDisplay (onScreenUniqueId);
+			display = (IDisplay) Client.instance().getClientGUI().getDesktopManager().getDisplay(onScreenUniqueId);
 
 			if (display == null)
 			{
 				try
 				{
-					Thread.sleep (100);
+					Thread.sleep(100);
 				}
 				catch (InterruptedException x)
 				{
@@ -198,13 +198,13 @@ public abstract class IDesktopManager extends BaseObject
 	/**
 	 * Close all displays.
 	 */
-	public void closeAllDisplays ()
+	public void closeAllDisplays()
 	{
-		List tmpDisplays = new LinkedList (displays);
+		List tmpDisplays = new LinkedList(displays);
 
-		for (Iterator i = tmpDisplays.iterator (); i.hasNext ();)
+		for (Iterator i = tmpDisplays.iterator(); i.hasNext();)
 		{
-			((IDisplay) i.next ()).close ();
+			((IDisplay) i.next()).close();
 		}
 	}
 
@@ -213,17 +213,17 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param desktopId The id of the desktop.
 	 */
-	public void closeAllDisplays (String desktopId)
+	public void closeAllDisplays(String desktopId)
 	{
-		List tmpDisplays = new LinkedList (displays);
+		List tmpDisplays = new LinkedList(displays);
 
-		for (Iterator i = tmpDisplays.iterator (); i.hasNext ();)
+		for (Iterator i = tmpDisplays.iterator(); i.hasNext();)
 		{
-			IDisplay display = (IDisplay) i.next ();
+			IDisplay display = (IDisplay) i.next();
 
-			if (display.getDesktopId ().equals (desktopId))
+			if (display.getDesktopId().equals(desktopId))
 			{
-				display.close ();
+				display.close();
 			}
 		}
 	}
@@ -231,53 +231,53 @@ public abstract class IDesktopManager extends BaseObject
 	/**
 	 * Temporarily save all currently visible displays.
 	 */
-	public void saveVisibleDisplays ()
+	public void saveVisibleDisplays()
 	{
-		savedDisplays = new LinkedList ();
+		savedDisplays = new LinkedList();
 
-		for (Iterator i = displays.iterator (); i.hasNext ();)
+		for (Iterator i = displays.iterator(); i.hasNext();)
 		{
-			IDisplay display = (IDisplay) i.next ();
+			IDisplay display = (IDisplay) i.next();
 
-			if (display.getDesktopId () == null)
+			if (display.getDesktopId() == null)
 			{
 				continue;
 			}
 
-			IObject businessObject = display.getGUIPane ().getObject ();
+			IObject businessObject = display.getGUIPane().getObject();
 
-			savedDisplays.add (new DisplayItem (display.getGUIPane ().getTypeId (), display.getGUIPane ()
-							.getOnScreenUniqueId (), display.getDesktopId (), businessObject, display.getGUIPane ()
-							.getProperties ()));
+			savedDisplays.add(new DisplayItem(display.getGUIPane().getTypeId(), display.getGUIPane()
+							.getOnScreenUniqueId(), display.getDesktopId(), businessObject, display.getGUIPane()
+							.getProperties()));
 		}
 	}
 
 	/**
 	 * Redisplay all saved displays.
 	 */
-	public void showSavedDisplays ()
+	public void showSavedDisplays()
 	{
 		ShowWindow show = null;
 
-		for (Iterator i = savedDisplays.iterator (); i.hasNext ();)
+		for (Iterator i = savedDisplays.iterator(); i.hasNext();)
 		{
-			DisplayItem entry = (DisplayItem) i.next ();
+			DisplayItem entry = (DisplayItem) i.next();
 
-			GUIPane guiPane = GUIPaneRegistry.instance ().create (entry.guiPaneId);
+			GUIPane guiPane = GUIPaneRegistry.instance().create(entry.guiPaneId);
 
 			if ((guiPane != null) && (entry.iObjectUniqueId != 0))
 			{
-				show = new ShowWindow (entry.guiPaneId, entry.onScreenUniqueId, entry.iObjectUniqueId,
+				show = new ShowWindow(entry.guiPaneId, entry.onScreenUniqueId, entry.iObjectUniqueId,
 								entry.iObjectTypeId, entry.desktopId);
 			}
 			else
 			{
-				show = new ShowWindow (entry.guiPaneId, entry.onScreenUniqueId, null, null, entry.desktopId);
+				show = new ShowWindow(entry.guiPaneId, entry.onScreenUniqueId, null, null, entry.desktopId);
 			}
 
-			show.setProperties (entry.properties);
+			show.setProperties(entry.properties);
 
-			IritgoEngine.instance ().getAsyncCommandProcessor ().perform (show);
+			IritgoEngine.instance().getAsyncCommandProcessor().perform(show);
 		}
 	}
 
@@ -286,7 +286,7 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param desktopFrame The desktop frame.
 	 */
-	public void setDesktopFrame (IDesktopFrame desktopFrame)
+	public void setDesktopFrame(IDesktopFrame desktopFrame)
 	{
 		this.desktopFrame = desktopFrame;
 	}
@@ -296,7 +296,7 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @return The desktop frame.
 	 */
-	public IDesktopFrame getDesktopFrame ()
+	public IDesktopFrame getDesktopFrame()
 	{
 		return desktopFrame;
 	}
@@ -306,7 +306,7 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @return The active display or null if no display is currently shown.
 	 */
-	public IDisplay getActiveDisplay ()
+	public IDisplay getActiveDisplay()
 	{
 		return activeDisplay;
 	}
@@ -316,7 +316,7 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param activeDisplay The active display.
 	 */
-	public void setActiveDisplay (IDisplay activeDisplay)
+	public void setActiveDisplay(IDisplay activeDisplay)
 	{
 		this.activeDisplay = activeDisplay;
 	}
@@ -326,7 +326,7 @@ public abstract class IDesktopManager extends BaseObject
 	 *
 	 * @param activeDisplay The display to activate.
 	 */
-	public void activateDisplay (IDisplay activeDisplay)
+	public void activateDisplay(IDisplay activeDisplay)
 	{
 	}
 
@@ -336,5 +336,5 @@ public abstract class IDesktopManager extends BaseObject
 	 * @param display The IDisplay to add.
 	 * @param desktopId The id of the desktop on which to open the display.
 	 */
-	public abstract void addImpl (IDisplay display, String desktopId);
+	public abstract void addImpl(IDisplay display, String desktopId);
 }

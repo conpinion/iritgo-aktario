@@ -41,39 +41,39 @@ public class DataObjectCommand extends Command
 	/**
 	 * Standard constructor
 	 */
-	public DataObjectCommand (String commandId)
+	public DataObjectCommand(String commandId)
 	{
-		super (commandId);
+		super(commandId);
 	}
 
 	/**
 	 * Perform the command
 	 */
-	public void perform ()
+	public void perform()
 	{
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}
 
-	public void setDataObject (DataObject dataObject)
+	public void setDataObject(DataObject dataObject)
 	{
 		this.dataObject = dataObject;
 	}
 
-	public void setSwingGUIPane (SwingGUIPane swingGUIPane)
+	public void setSwingGUIPane(SwingGUIPane swingGUIPane)
 	{
 		this.swingGUIPane = swingGUIPane;
 	}
 
-	public void setValue (String value)
+	public void setValue(String value)
 	{
 		this.value = value;
 	}
 
-	public void setDataObjectButton (DataObjectButton button)
+	public void setDataObjectButton(DataObjectButton button)
 	{
 		this.button = button;
 	}

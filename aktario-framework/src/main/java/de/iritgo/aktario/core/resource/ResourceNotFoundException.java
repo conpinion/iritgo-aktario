@@ -30,13 +30,13 @@ public class ResourceNotFoundException extends Exception
 
 	private String resourceName;
 
-	public ResourceNotFoundException (String resourceName)
+	public ResourceNotFoundException(String resourceName)
 	{
 		this.resourceName = resourceName;
 	}
 
 	@Override
-	public String getMessage ()
+	public String getMessage()
 	{
 		return resourceName;
 	}

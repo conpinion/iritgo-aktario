@@ -43,130 +43,130 @@ import java.util.List;
  */
 public class CreateNode extends BaseCreator
 {
-	public CreateNode ()
+	public CreateNode()
 	{
 	}
 
 	@Override
-	public void work (NodeContainer nodeContainer, ElementIterator i) throws ContinueException
+	public void work(NodeContainer nodeContainer, ElementIterator i) throws ContinueException
 	{
-		Object node = (ResourceNode) nodeContainer.getNode ();
+		Object node = (ResourceNode) nodeContainer.getNode();
 
-		Element element = ((ElementContainer) i.current ()).getElement ();
-		String tagName = element.getName ();
-		List attributeList = element.getAttributes ();
+		Element element = ((ElementContainer) i.current()).getElement();
+		String tagName = element.getName();
+		List attributeList = element.getAttributes();
 
-		String nodeClass = (String) classMap.get (tagName);
+		String nodeClass = (String) classMap.get(tagName);
 
 		if (nodeClass != null)
 		{
-			ResourceService resourceService = new ResourceService ((ResourceNode) node);
+			ResourceService resourceService = new ResourceService((ResourceNode) node);
 
 			try
 			{
-				Class classObject = Class.forName (nodeClass);
-				Object[] params = generateConstructorParams (classObject, tagName, attributeList);
-				Class[] classes = generateConstructorClasses (classObject, tagName, attributeList);
+				Class classObject = Class.forName(nodeClass);
+				Object[] params = generateConstructorParams(classObject, tagName, attributeList);
+				Class[] classes = generateConstructorClasses(classObject, tagName, attributeList);
 
-				resourceService = new ResourceService ((ResourceNode) node);
-				node = ((Constructor) classObject.getConstructor (classes)).newInstance (params);
-				resourceService.addNode ("", (ResourceNode) node);
-				nodeContainer.setNode (node);
-				Log.logDebug ("resource", "[XMLParser] CreateNode.work", "create node '" + tagName + "'-'"
-								+ (String) element.getAttribute ("treename").getValue () + "'.");
+				resourceService = new ResourceService((ResourceNode) node);
+				node = ((Constructor) classObject.getConstructor(classes)).newInstance(params);
+				resourceService.addNode("", (ResourceNode) node);
+				nodeContainer.setNode(node);
+				Log.logDebug("resource", "[XMLParser] CreateNode.work", "create node '" + tagName + "'-'"
+								+ (String) element.getAttribute("treename").getValue() + "'.");
 			}
 			catch (NoSuchMethodException e)
 			{
-				Log.logFatal ("resource", "[XMLParser] CreateNode.work", "NoSuchMethodException");
+				Log.logFatal("resource", "[XMLParser] CreateNode.work", "NoSuchMethodException");
 			}
 			catch (InvocationTargetException e)
 			{
-				Log.logFatal ("resource", "[XMLParser] CreateNode.work", "InvocationTargetException");
+				Log.logFatal("resource", "[XMLParser] CreateNode.work", "InvocationTargetException");
 			}
 			catch (ClassNotFoundException e)
 			{
-				Log.logFatal ("resource", "[XMLParser] CreateNode.work", "ClassNotFoundException");
+				Log.logFatal("resource", "[XMLParser] CreateNode.work", "ClassNotFoundException");
 			}
 			catch (IllegalAccessException e)
 			{
-				Log.logFatal ("resource", "[XMLParser] CreateNode.work", "IllegalAccessException");
+				Log.logFatal("resource", "[XMLParser] CreateNode.work", "IllegalAccessException");
 			}
 			catch (InstantiationException e)
 			{
-				Log.logFatal ("resource", "[XMLParser] CreateNode.work", "InstantiationException");
+				Log.logFatal("resource", "[XMLParser] CreateNode.work", "InstantiationException");
 			}
 
-			throw new ContinueException ();
+			throw new ContinueException();
 		}
 	}
 
 	/**
 	 * Generate the params object array
 	 */
-	public Object[] generateConstructorParams (Class classObject, @SuppressWarnings("unused") String methodName,
+	public Object[] generateConstructorParams(Class classObject, @SuppressWarnings("unused") String methodName,
 					List attributeList)
 	{
-		ArrayList objectParams = new ArrayList ();
-		MethodIterator mi = new MethodIterator (classObject.getConstructors ());
+		ArrayList objectParams = new ArrayList();
+		MethodIterator mi = new MethodIterator(classObject.getConstructors());
 
-		while (mi.hasNext ())
+		while (mi.hasNext())
 		{
-			Constructor constructor = (Constructor) mi.next ();
+			Constructor constructor = (Constructor) mi.next();
 
-			Class[] params = constructor.getParameterTypes ();
+			Class[] params = constructor.getParameterTypes();
 
-			if (params.length != attributeList.size ())
+			if (params.length != attributeList.size())
 			{
 				continue;
 			}
 
 			for (int i = 0; i < params.length; ++i)
 			{
-				Object o = getObject (params[i].getName (), (Attribute) attributeList.get (i));
+				Object o = getObject(params[i].getName(), (Attribute) attributeList.get(i));
 
-				objectParams.add (o);
+				objectParams.add(o);
 			}
 		}
 
-		return objectParams.toArray ();
+		return objectParams.toArray();
 	}
 
 	/**
 	 * Generate the class object array
 	 */
-	public Class[] generateConstructorClasses (Class classObject, @SuppressWarnings("unused") String methodName,
+	public Class[] generateConstructorClasses(Class classObject, @SuppressWarnings("unused") String methodName,
 					List attributeList)
 	{
 		Object objectParams = null;
 
 		try
 		{
-			objectParams = Array.newInstance (Class.forName ("java.lang.Class"), attributeList.size ());
+			objectParams = Array.newInstance(Class.forName("java.lang.Class"), attributeList.size());
 		}
 		catch (ClassNotFoundException e)
 		{
-			Log.log ("resource", "[XMLParser] CreateNode.generateConstructorClasses", "ClassNotFoundException",
+			Log.log("resource", "[XMLParser] CreateNode.generateConstructorClasses", "ClassNotFoundException",
 							Log.FATAL);
 		}
 
-		MethodIterator mi = new MethodIterator (classObject.getConstructors ());
+		MethodIterator mi = new MethodIterator(classObject.getConstructors());
 
-		while (mi.hasNext ())
+		while (mi.hasNext())
 		{
-			Constructor constructor = (Constructor) mi.next ();
+			Constructor constructor = (Constructor) mi.next();
 
-			Class[] params = constructor.getParameterTypes ();
+			Class[] params = constructor.getParameterTypes();
 
-			if (params.length != attributeList.size ())
+			if (params.length != attributeList.size())
 			{
 				continue;
 			}
 
 			for (int i = 0; i < params.length; ++i)
 			{
-				Object o = getObject (params[i].getName (), (Attribute) attributeList.get (i));
+				Object o = getObject(params[i].getName(), (Attribute) attributeList.get(i));
 
-				Array.set (objectParams, i, o.getClass ());
+				Array.set(objectParams, i, o.getClass());
 			}
 		}
 

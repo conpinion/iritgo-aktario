@@ -40,9 +40,9 @@ public class GetParticipantList extends Command
 	/**
 	 * Create a new GetParticipantList command.
 	 */
-	public GetParticipantList ()
+	public GetParticipantList()
 	{
-		super ("aktario-participant.GetParticipantList");
+		super("aktario-participant.GetParticipantList");
 	}
 
 	/**
@@ -50,27 +50,27 @@ public class GetParticipantList extends Command
 	 *
 	 * @return The command result.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		List res = new LinkedList ();
+		List res = new LinkedList();
 
-		for (Iterator i = Engine.instance ().getBaseRegistry ().iterator ("ParticipantState"); i.hasNext ();)
+		for (Iterator i = Engine.instance().getBaseRegistry().iterator("ParticipantState"); i.hasNext();)
 		{
-			DynDataObject participantState = (DynDataObject) i.next ();
+			DynDataObject participantState = (DynDataObject) i.next();
 
-			Map elem = new HashMap ();
+			Map elem = new HashMap();
 
-			for (Iterator j = participantState.getAttributes ().entrySet ().iterator (); j.hasNext ();)
+			for (Iterator j = participantState.getAttributes().entrySet().iterator(); j.hasNext();)
 			{
-				Map.Entry entry = (Map.Entry) j.next ();
+				Map.Entry entry = (Map.Entry) j.next();
 
-				if (entry.getValue ().getClass ().toString ().indexOf ("java.lang.") != - 1)
+				if (entry.getValue().getClass().toString().indexOf("java.lang.") != - 1)
 				{
-					elem.put (entry.getKey (), entry.getValue ());
+					elem.put(entry.getKey(), entry.getValue());
 				}
 			}
 
-			res.add (elem);
+			res.add(elem);
 		}
 
 		return res;

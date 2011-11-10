@@ -39,30 +39,30 @@ public class MessangerPane extends SwingGUIPane
 	/**
 	 * Create a new MessangerPane.
 	 */
-	public MessangerPane ()
+	public MessangerPane()
 	{
-		super ("MessangerPane");
+		super("MessangerPane");
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (MessangerPane.class.getClassLoader ());
+			swingEngine.setClassLoader(MessangerPane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/MessangerPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/MessangerPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "MessangerPane.initGUI", x.toString ());
+			Log.logError("client", "MessangerPane.initGUI", x.toString());
 		}
 	}
 
@@ -70,7 +70,7 @@ public class MessangerPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 	}
 
@@ -78,7 +78,7 @@ public class MessangerPane extends SwingGUIPane
 	 * Store the current gui values into the data object attributes.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -88,9 +88,9 @@ public class MessangerPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new MessangerPane ();
+		return new MessangerPane();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class MessangerPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
 		return null;
 	}

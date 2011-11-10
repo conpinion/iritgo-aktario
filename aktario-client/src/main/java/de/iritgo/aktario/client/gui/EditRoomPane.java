@@ -57,32 +57,32 @@ public class EditRoomPane extends SwingGUIPane
 	/**
 	 * Save the data object and close the display.
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			storeToObject ();
-			display.close ();
+			storeToObject();
+			display.close();
 		}
 	};
 
 	/**
 	 * Close the display.
 	 */
-	public Action cancelAction = new AbstractAction ()
+	public Action cancelAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new EditRoomPane.
 	 */
-	public EditRoomPane ()
+	public EditRoomPane()
 	{
-		super ("EditRoomPane");
+		super("EditRoomPane");
 	}
 
 	/**
@@ -90,23 +90,23 @@ public class EditRoomPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (AktarioClientPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(AktarioClientPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/EditRoomPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/EditRoomPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			participantModel = new IObjectTableModel ()
+			participantModel = new IObjectTableModel()
 			{
 				private String[] columnNames = new String[]
 				{
-					getResources ().getString ("aktario.name")
+					getResources().getString("aktario.name")
 				};
 
 				private Class[] columnClasses = new Class[]
@@ -114,44 +114,44 @@ public class EditRoomPane extends SwingGUIPane
 					String.class
 				};
 
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
 					return columnNames.length;
 				}
 
 				@Override
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
 					return columnNames[col];
 				}
 
 				@Override
-				public Class getColumnClass (int col)
+				public Class getColumnClass(int col)
 				{
 					return columnClasses[col];
 				}
 
 				@Override
-				public boolean isCellEditable (int row, int column)
+				public boolean isCellEditable(int row, int column)
 				{
 					return false;
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
 					return "";
 				}
 
 				@Override
-				public void setValueAt (Object value, int row, int col)
+				public void setValueAt(Object value, int row, int col)
 				{
 				}
 			};
-			participantTable.setModel (participantModel);
+			participantTable.setModel(participantModel);
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "EditRoomPane.initGUI", x.toString ());
+			Log.logError("client", "EditRoomPane.initGUI", x.toString());
 		}
 	}
 
@@ -159,29 +159,29 @@ public class EditRoomPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		Room room = (Room) iobject;
 
-		setTitle (getResources ().getString ("aktario.room") + " - " + room.getName ());
+		setTitle(getResources().getString("aktario.room") + " - " + room.getName());
 
-		name.setText (room.getName ());
-		name.selectAll ();
+		name.setText(room.getName());
+		name.selectAll();
 
-		participantModel.update (room.getParticipants ());
+		participantModel.update(room.getParticipants());
 	}
 
 	/**
 	 * StoreFormObject, load the Data form Object.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		Room room = (Room) iobject;
 
-		room.setName (name.getText ());
+		room.setName(name.getText());
 
-		room.update ();
+		room.update();
 	}
 
 	/**
@@ -190,8 +190,8 @@ public class EditRoomPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new EditRoomPane ();
+		return new EditRoomPane();
 	}
 }

@@ -47,47 +47,47 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
 public class AktarioCorePlugin extends FrameworkPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new AktarioUser ());
-		registerDataObject (new AktarioUserProfile ());
-		registerDataObject (new AktarioUserPreferences ());
-		registerDataObject (new AktarioUserRegistry ());
-		registerDataObject (new Room ());
-		registerDataObject (new ApplicationInstance ());
-		registerDataObject (new Participant ());
+		registerDataObject(new AktarioUser());
+		registerDataObject(new AktarioUserProfile());
+		registerDataObject(new AktarioUserPreferences());
+		registerDataObject(new AktarioUserRegistry());
+		registerDataObject(new Room());
+		registerDataObject(new ApplicationInstance());
+		registerDataObject(new Participant());
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new AktarioUserStateAction ());
-		registerAction (new AktarioUserStateServerAction ());
-		registerAction (new WhiteBoardServerAction ());
-		registerAction (new WhiteBoardAction ());
-		registerAction (new AktarioUserReadyAction ());
-		registerAction (new AktarioUserReadyServerAction ());
-		registerAction (new AktarioUserDeletedResponse ());
+		registerAction(new AktarioUserStateAction());
+		registerAction(new AktarioUserStateServerAction());
+		registerAction(new WhiteBoardServerAction());
+		registerAction(new WhiteBoardAction());
+		registerAction(new AktarioUserReadyAction());
+		registerAction(new AktarioUserReadyServerAction());
+		registerAction(new AktarioUserDeletedResponse());
 	}
 
 	@Override
-	protected void registerGUIPanes ()
-	{
-	}
-
-	@Override
-	protected void registerManagers ()
-	{
-		registerManager (Plugin.SERVER, new AktarioUserManager ());
-	}
-
-	@Override
-	protected void registerConsoleCommands ()
+	protected void registerGUIPanes()
 	{
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerManagers()
+	{
+		registerManager(Plugin.SERVER, new AktarioUserManager());
+	}
+
+	@Override
+	protected void registerConsoleCommands()
+	{
+	}
+
+	@Override
+	protected void registerCommands()
 	{
 	}
 }

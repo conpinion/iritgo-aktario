@@ -53,20 +53,20 @@ public class ProxyLinkedListRemoveServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListRemoveServerAction ()
+	public ProxyLinkedListRemoveServerAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListRemoveServerAction (long ownerUniqueId, String ownerTypeId, String iObjectListName,
+	public ProxyLinkedListRemoveServerAction(long ownerUniqueId, String ownerTypeId, String iObjectListName,
 					IObject prototype)
 	{
 		this.ownerUniqueId = ownerUniqueId;
 		this.ownerTypeId = ownerTypeId;
-		iObjectTypeId = prototype.getTypeId ();
-		iObjectUniqueId = prototype.getUniqueId ();
+		iObjectTypeId = prototype.getTypeId();
+		iObjectUniqueId = prototype.getUniqueId();
 		this.iObjectListName = iObjectListName;
 	}
 
@@ -74,104 +74,104 @@ public class ProxyLinkedListRemoveServerAction extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		ownerUniqueId = stream.readLong ();
-		ownerTypeId = stream.readUTF ();
-		iObjectUniqueId = stream.readLong ();
-		iObjectTypeId = stream.readUTF ();
-		iObjectListName = stream.readUTF ();
+		ownerUniqueId = stream.readLong();
+		ownerTypeId = stream.readUTF();
+		iObjectUniqueId = stream.readLong();
+		iObjectTypeId = stream.readUTF();
+		iObjectListName = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (ownerUniqueId);
-		stream.writeUTF (ownerTypeId);
-		stream.writeLong (iObjectUniqueId);
-		stream.writeUTF (iObjectTypeId);
-		stream.writeUTF (iObjectListName);
+		stream.writeLong(ownerUniqueId);
+		stream.writeUTF(ownerTypeId);
+		stream.writeLong(iObjectUniqueId);
+		stream.writeUTF(iObjectTypeId);
+		stream.writeUTF(iObjectListName);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
 		DataObject owner = null;
-		User user = (User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ();
+		User user = (User) clientTransceiver.getConnectedChannel().getCustomerContextObject();
 
 		if (ownerUniqueId <= 0)
 		{
 			// Its a new object and the client has always the wrong id;
 			// Look in the Mapping
-			owner = (DataObject) Engine.instance ().getBaseRegistry ().get (
-							user.getNewObjectsMapping (new Long (ownerUniqueId)).longValue (), ownerTypeId);
+			owner = (DataObject) Engine.instance().getBaseRegistry().get(
+							user.getNewObjectsMapping(new Long(ownerUniqueId)).longValue(), ownerTypeId);
 		}
 		else
 		{
-			owner = (DataObject) Engine.instance ().getBaseRegistry ().get (ownerUniqueId, ownerTypeId);
+			owner = (DataObject) Engine.instance().getBaseRegistry().get(ownerUniqueId, ownerTypeId);
 		}
 
 		DataObject iObject = null;
 
 		if (iObjectUniqueId <= 0)
 		{
-			iObject = (DataObject) Engine.instance ().getBaseRegistry ().get (
-							user.getNewObjectsMapping (new Long (iObjectUniqueId)).longValue (), iObjectTypeId);
+			iObject = (DataObject) Engine.instance().getBaseRegistry().get(
+							user.getNewObjectsMapping(new Long(iObjectUniqueId)).longValue(), iObjectTypeId);
 		}
 		else
 		{
-			iObject = (DataObject) Engine.instance ().getBaseRegistry ().get (iObjectUniqueId, iObjectTypeId);
+			iObject = (DataObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 		}
 
 		if ((owner == null) || (iObject == null))
 		{
-			Log.logError ("system", "ProxyLinkedListRemoveServerAction.perform", "Owner or object is null");
+			Log.logError("system", "ProxyLinkedListRemoveServerAction.perform", "Owner or object is null");
 
 			return;
 		}
 
-		IObjectList iObjectList = (IObjectList) owner.getAttribute (iObjectListName);
+		IObjectList iObjectList = (IObjectList) owner.getAttribute(iObjectListName);
 
-		iObjectList.removeIObject (iObject);
+		iObjectList.removeIObject(iObject);
 
 		if (iObjectList == null)
 		{
-			Log.logError ("system", "ProxyLinkedListRemoveServerAction.perform", "Object list is null");
+			Log.logError("system", "ProxyLinkedListRemoveServerAction.perform", "Object list is null");
 
 			return;
 		}
 
-		ProxyLinkedListRemoveAction proxyLinkedListRemoveAction = new ProxyLinkedListRemoveAction (iObject
-						.getUniqueId (), iObject.getTypeId (), ownerUniqueId, ownerTypeId, iObjectListName);
+		ProxyLinkedListRemoveAction proxyLinkedListRemoveAction = new ProxyLinkedListRemoveAction(
+						iObject.getUniqueId(), iObject.getTypeId(), ownerUniqueId, ownerTypeId, iObjectListName);
 
-		proxyLinkedListRemoveAction.setUniqueId (getUniqueId ());
+		proxyLinkedListRemoveAction.setUniqueId(getUniqueId());
 
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User onlineUser = (User) i.next ();
+			User onlineUser = (User) i.next();
 
-			if (onlineUser.isOnline ())
+			if (onlineUser.isOnline())
 			{
-				clientTransceiver.addReceiver (onlineUser.getNetworkChannel ());
+				clientTransceiver.addReceiver(onlineUser.getNetworkChannel());
 			}
 		}
 
-		proxyLinkedListRemoveAction.setTransceiver (clientTransceiver);
-		ActionTools.sendToClient (proxyLinkedListRemoveAction);
+		proxyLinkedListRemoveAction.setTransceiver(clientTransceiver);
+		ActionTools.sendToClient(proxyLinkedListRemoveAction);
 
-		Engine.instance ().getEventRegistry ().fire (
+		Engine.instance().getEventRegistry().fire(
 						"objectremoved",
-						new IObjectListEvent (iObject, owner, iObjectListName, clientTransceiver,
+						new IObjectListEvent(iObject, owner, iObjectListName, clientTransceiver,
 										IObjectListEvent.REMOVE));
 	}
 }

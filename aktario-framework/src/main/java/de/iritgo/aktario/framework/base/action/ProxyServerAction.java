@@ -39,7 +39,7 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyServerAction ()
+	public ProxyServerAction()
 	{
 	}
 
@@ -49,13 +49,13 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 	 * @param prototypeUniqueId
 	 * @param iObjectTypeId
 	 */
-	public ProxyServerAction (long prototypeUniqueId, String iObjectTypeId)
+	public ProxyServerAction(long prototypeUniqueId, String iObjectTypeId)
 	{
 		this.prototypeUniqueId = prototypeUniqueId;
 		this.iObjectTypeId = iObjectTypeId;
 	}
 
-	public long getPrototypeUniqueId ()
+	public long getPrototypeUniqueId()
 	{
 		return prototypeUniqueId;
 	}
@@ -64,7 +64,7 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 	 * Get the id of the iritgo object.
 	 */
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "server.action.proxy";
 	}
@@ -73,24 +73,24 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		prototypeUniqueId = stream.readLong ();
-		iObjectTypeId = stream.readUTF ();
+		prototypeUniqueId = stream.readLong();
+		iObjectTypeId = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (prototypeUniqueId);
-		stream.writeUTF (iObjectTypeId);
+		stream.writeLong(prototypeUniqueId);
+		stream.writeUTF(iObjectTypeId);
 	}
 
 	@Override
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
 		IObject prototype = null;
 
@@ -98,14 +98,14 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 		{
 			// Its a new object and the client has always the wrong id;
 			// Look in the Mapping
-			User user = (User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ();
+			User user = (User) clientTransceiver.getConnectedChannel().getCustomerContextObject();
 
-			prototype = (IObject) Engine.instance ().getBaseRegistry ().get (
-							user.getNewObjectsMapping (new Long (prototypeUniqueId)).longValue (), iObjectTypeId);
+			prototype = (IObject) Engine.instance().getBaseRegistry().get(
+							user.getNewObjectsMapping(new Long(prototypeUniqueId)).longValue(), iObjectTypeId);
 		}
 		else
 		{
-			prototype = (IObject) Engine.instance ().getBaseRegistry ().get (prototypeUniqueId, iObjectTypeId);
+			prototype = (IObject) Engine.instance().getBaseRegistry().get(prototypeUniqueId, iObjectTypeId);
 		}
 
 		if (prototype == null)
@@ -113,8 +113,8 @@ public class ProxyServerAction extends NetworkFrameworkServerAction
 			return null;
 		}
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
 
-		return (FrameworkAction) new ProxyAction (prototypeUniqueId, prototype.getTypeId (), prototype);
+		return (FrameworkAction) new ProxyAction(prototypeUniqueId, prototype.getTypeId(), prototype);
 	}
 }

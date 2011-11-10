@@ -72,61 +72,61 @@ public class UserListPane extends SwingGUIPane
 	/**
 	 * Create a new user.
 	 */
-	public Action addUserAction = new AbstractAction ()
+	public Action addUserAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			SimpleQuery list = (SimpleQuery) getIObject ();
+			SimpleQuery list = (SimpleQuery) getIObject();
 
-			AktarioUser user = new AktarioUser ();
-			SessionContext sessionContext = new SessionContext ("user");
+			AktarioUser user = new AktarioUser();
+			SessionContext sessionContext = new SessionContext("user");
 
-			sessionContext.add ("userlist", list);
-			list.getIObjectListResults ().add (user);
-			CommandTools.performAsync (new ShowDialog ("EditUserGUIPane", user, sessionContext));
+			sessionContext.add("userlist", list);
+			list.getIObjectListResults().add(user);
+			CommandTools.performAsync(new ShowDialog("EditUserGUIPane", user, sessionContext));
 		}
 	};
 
 	/**
 	 * Edit an existing user.
 	 */
-	public Action editUserAction = new AbstractAction ()
+	public Action editUserAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			int selectedRow = userTable.getSelectedRow ();
+			int selectedRow = userTable.getSelectedRow();
 
 			if (selectedRow < 0)
 			{
 				return;
 			}
 
-			CommandTools.performAsync (new ShowDialog ("EditUserGUIPane", (IObject) ((SimpleQuery) getIObject ())
-							.getIObjectListResults ().get (selectedRow)));
+			CommandTools.performAsync(new ShowDialog("EditUserGUIPane", (IObject) ((SimpleQuery) getIObject())
+							.getIObjectListResults().get(selectedRow)));
 		}
 	};
 
 	/**
 	 * Delete an existing user.
 	 */
-	public Action deleteUserAction = new AbstractAction ()
+	public Action deleteUserAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			SimpleQuery list = (SimpleQuery) getIObject ();
+			SimpleQuery list = (SimpleQuery) getIObject();
 
-			int selectedRow = userTable.getSelectedRow ();
+			int selectedRow = userTable.getSelectedRow();
 
 			if (selectedRow < 0)
 			{
 				return;
 			}
 
-			if (JOptionPane.showConfirmDialog (content, Engine.instance ().getResourceService ().getString (
+			if (JOptionPane.showConfirmDialog(content, Engine.instance().getResourceService().getString(
 							"aktario.removeConfirm"), "Clasroom", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			{
-				list.getIObjectListResults ().remove (
-								((SimpleQuery) getIObject ()).getIObjectListResults ().get (selectedRow));
+				list.getIObjectListResults().remove(
+								((SimpleQuery) getIObject()).getIObjectListResults().get(selectedRow));
 			}
 		}
 	};
@@ -134,20 +134,20 @@ public class UserListPane extends SwingGUIPane
 	/**
 	 * Close the display
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new UserListGUIPane.
 	 */
-	public UserListPane ()
+	public UserListPane()
 	{
-		super ("UserListGUIPane");
+		super("UserListGUIPane");
 	}
 
 	/**
@@ -155,84 +155,84 @@ public class UserListPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (AktarioClientPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(AktarioClientPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/UserListPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/UserListPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			userModel = new IObjectTableModel ()
+			userModel = new IObjectTableModel()
 			{
 				private String[] columnNames = new String[]
 				{
-								Engine.instance ().getResourceService ().getString ("aktario.name"),
-								Engine.instance ().getResourceService ().getString ("aktario.role")
+								Engine.instance().getResourceService().getString("aktario.name"),
+								Engine.instance().getResourceService().getString("aktario.role")
 				};
 
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
 					return columnNames.length;
 				}
 
 				@Override
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
 					return columnNames[col];
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
-					IObjectList list = ((SimpleQuery) getIObject ()).getIObjectListResults ();
+					IObjectList list = ((SimpleQuery) getIObject()).getIObjectListResults();
 
-					AktarioUser aktarioUser = (AktarioUser) list.get (row);
+					AktarioUser aktarioUser = (AktarioUser) list.get(row);
 
 					switch (col)
 					{
 						case 0:
-							return aktarioUser.getName ();
+							return aktarioUser.getName();
 
 						case 1:
-							return aktarioUser.getRoleString ();
+							return aktarioUser.getRoleString();
 
 						default:
 							return null;
 					}
 				}
 			};
-			userTable.setModel (userModel);
+			userTable.setModel(userModel);
 
-			userTable.addMouseListener (new MouseAdapter ()
+			userTable.addMouseListener(new MouseAdapter()
 			{
 				@Override
-				public void mouseClicked (MouseEvent e)
+				public void mouseClicked(MouseEvent e)
 				{
-					if (e.getClickCount () == 2)
+					if (e.getClickCount() == 2)
 					{
-						editUserAction.actionPerformed (null);
+						editUserAction.actionPerformed(null);
 					}
 				}
 			});
 
-			userTable.getSelectionModel ().addListSelectionListener (new ListSelectionListener ()
+			userTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 			{
-				public void valueChanged (ListSelectionEvent e)
+				public void valueChanged(ListSelectionEvent e)
 				{
-					btnEdit.setEnabled (userTable.getSelectedRow () != - 1);
-					btnDelete.setEnabled (userTable.getSelectedRow () != - 1);
+					btnEdit.setEnabled(userTable.getSelectedRow() != - 1);
+					btnDelete.setEnabled(userTable.getSelectedRow() != - 1);
 				}
 			});
 
-			getDisplay ().putProperty ("weighty", new Double (0.5));
+			getDisplay().putProperty("weighty", new Double(0.5));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "UserListGUIPane.initGUI", x.toString ());
+			Log.logError("client", "UserListGUIPane.initGUI", x.toString());
 		}
 	}
 
@@ -240,7 +240,7 @@ public class UserListPane extends SwingGUIPane
 	 * Load the data object into the gui.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		// 		AktarioUserRegistry userRegistry = (AktarioUserRegistry) iobject;
 		//
@@ -248,14 +248,14 @@ public class UserListPane extends SwingGUIPane
 		//
 		SimpleQuery simpleQuery = (SimpleQuery) iobject;
 
-		userModel.update (simpleQuery.getIObjectListResults ());
+		userModel.update(simpleQuery.getIObjectListResults());
 	}
 
 	/**
 	 * Store the gui values to the data object.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -265,8 +265,8 @@ public class UserListPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new UserListPane ();
+		return new UserListPane();
 	}
 }

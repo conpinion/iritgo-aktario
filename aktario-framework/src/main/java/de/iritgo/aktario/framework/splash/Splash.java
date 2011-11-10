@@ -51,11 +51,11 @@ public class Splash extends JFrame implements de.iritgo.aktario.core.splash.Spla
 
 	private JLabel status;
 
-	public Splash ()
+	public Splash()
 	{
-		super ();
-		setTitle (getAppTitle ());
-		setIconImage (getIcon ().getImage ());
+		super();
+		setTitle(getAppTitle());
+		setIconImage(getIcon().getImage());
 
 		//		try
 		//		{
@@ -67,17 +67,17 @@ public class Splash extends JFrame implements de.iritgo.aktario.core.splash.Spla
 		try
 		{
 			com.jgoodies.looks.plastic.PlasticLookAndFeel
-							.setPlasticTheme ((com.jgoodies.looks.plastic.PlasticTheme) Class.forName (
-											"com.jgoodies.looks.plastic.theme.KDE").newInstance ());
-			com.jgoodies.looks.Options.setPopupDropShadowEnabled (true);
-			UIManager.put ("jgoodies.popupDropShadowEnabled", Boolean.TRUE);
+							.setPlasticTheme((com.jgoodies.looks.plastic.PlasticTheme) Class.forName(
+											"com.jgoodies.looks.plastic.theme.KDE").newInstance());
+			com.jgoodies.looks.Options.setPopupDropShadowEnabled(true);
+			UIManager.put("jgoodies.popupDropShadowEnabled", Boolean.TRUE);
 
-			LookAndFeel lnf = (LookAndFeel) getClass ().getClassLoader ().loadClass (
-							"com.jgoodies.looks.plastic.PlasticXPLookAndFeelIritgo").newInstance ();
+			LookAndFeel lnf = (LookAndFeel) getClass().getClassLoader().loadClass(
+							"com.jgoodies.looks.plastic.PlasticXPLookAndFeelIritgo").newInstance();
 
-			UIManager.setLookAndFeel (lnf);
+			UIManager.setLookAndFeel(lnf);
 
-			UIManager.getLookAndFeelDefaults ().put ("ClassLoader", getClass ().getClassLoader ());
+			UIManager.getLookAndFeelDefaults().put("ClassLoader", getClass().getClassLoader());
 		}
 		catch (Exception x)
 		{
@@ -87,65 +87,65 @@ public class Splash extends JFrame implements de.iritgo.aktario.core.splash.Spla
 
 		try
 		{
-			SwingUtilities.invokeAndWait (new Runnable ()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					setUndecorated (true);
+					setUndecorated(true);
 
-					ImageIcon background = getBackgroundImage ();
+					ImageIcon background = getBackgroundImage();
 
-					int width = background.getIconWidth ();
-					int height = background.getIconHeight ();
+					int width = background.getIconWidth();
+					int height = background.getIconHeight();
 
-					JPanel content = (JPanel) getContentPane ();
+					JPanel content = (JPanel) getContentPane();
 
-					content.setLayout (new OverlayLayout (content));
+					content.setLayout(new OverlayLayout(content));
 
-					int borderMargin = getBorderMargin ();
+					int borderMargin = getBorderMargin();
 
-					content.setBorder (new CompoundBorder (new LineBorder (getBorderColor (), getBorderWidth ()),
-									new EmptyBorder (borderMargin, borderMargin, borderMargin, borderMargin)));
+					content.setBorder(new CompoundBorder(new LineBorder(getBorderColor(), getBorderWidth()),
+									new EmptyBorder(borderMargin, borderMargin, borderMargin, borderMargin)));
 
-					JPanel infoPanel = new JPanel (null);
+					JPanel infoPanel = new JPanel(null);
 
-					infoPanel.setOpaque (false);
+					infoPanel.setOpaque(false);
 
-					JLabel version = new JLabel (getAppTitle () + " " + getVersion ());
+					JLabel version = new JLabel(getAppTitle() + " " + getVersion());
 
-					version.setFont (new Font ("SansSerif", Font.BOLD | Font.ITALIC, 14));
-					version.setForeground (new Color (100, 100, 100));
-					version.setLocation (getVersionOrigin ());
-					version.setSize (width, 40);
-					infoPanel.add (version);
+					version.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
+					version.setForeground(new Color(100, 100, 100));
+					version.setLocation(getVersionOrigin());
+					version.setSize(width, 40);
+					infoPanel.add(version);
 
-					JLabel copyright = new JLabel ("<html>" + getCopyright ().replace ("\n", "<br>") + "</html>");
+					JLabel copyright = new JLabel("<html>" + getCopyright().replace("\n", "<br>") + "</html>");
 
-					copyright.setFont (new Font ("SansSerif", Font.BOLD | Font.ITALIC, 14));
-					copyright.setForeground (new Color (100, 100, 100));
-					copyright.setLocation (getCopyrightOrigin ());
-					copyright.setSize (width, 40);
-					infoPanel.add (copyright);
+					copyright.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
+					copyright.setForeground(new Color(100, 100, 100));
+					copyright.setLocation(getCopyrightOrigin());
+					copyright.setSize(width, 40);
+					infoPanel.add(copyright);
 
-					status = new JLabel ("");
-					status.setFont (new Font ("SansSerif", Font.BOLD | Font.ITALIC, 14));
-					status.setForeground (new Color (100, 100, 100));
-					status.setLocation (getStatusOrigin ());
-					status.setSize (width, 40);
-					infoPanel.add (status);
+					status = new JLabel("");
+					status.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
+					status.setForeground(new Color(100, 100, 100));
+					status.setLocation(getStatusOrigin());
+					status.setSize(width, 40);
+					infoPanel.add(status);
 
-					content.add (infoPanel);
+					content.add(infoPanel);
 
-					content.add (new JLabel (background));
+					content.add(new JLabel(background));
 
-					Dimension screenDim = getToolkit ().getScreenSize ();
+					Dimension screenDim = getToolkit().getScreenSize();
 
-					content.setPreferredSize (new Dimension (width, height));
+					content.setPreferredSize(new Dimension(width, height));
 
-					setBounds ((int) (screenDim.getWidth () - width) / 2, (int) (screenDim.getHeight () - height) / 2,
+					setBounds((int) (screenDim.getWidth() - width) / 2, (int) (screenDim.getHeight() - height) / 2,
 									width, height);
 
-					setVisible (true);
+					setVisible(true);
 				}
 			});
 		}
@@ -157,101 +157,101 @@ public class Splash extends JFrame implements de.iritgo.aktario.core.splash.Spla
 		}
 	}
 
-	protected String getAppTitle ()
+	protected String getAppTitle()
 	{
-		if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.title")))
+		if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.title")))
 		{
-			return System.getProperty ("iritgo.app.title");
+			return System.getProperty("iritgo.app.title");
 		}
 
 		return "Iritgo";
 	}
 
-	protected String getCopyright ()
+	protected String getCopyright()
 	{
-		if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.copyright")))
+		if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.copyright")))
 		{
-			return System.getProperty ("iritgo.app.copyright");
+			return System.getProperty("iritgo.app.copyright");
 		}
 
 		return "(C) 2004-2007 BueroByte";
 	}
 
-	protected String getVersion ()
+	protected String getVersion()
 	{
-		if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.version.long")))
+		if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.version.long")))
 		{
-			return System.getProperty ("iritgo.app.version.long");
+			return System.getProperty("iritgo.app.version.long");
 		}
 
 		return "1.0";
 	}
 
-	protected ImageIcon getIcon ()
+	protected ImageIcon getIcon()
 	{
-		return new ImageIcon (getClass ().getResource ("/resources/aktario-icon-16.png"));
+		return new ImageIcon(getClass().getResource("/resources/aktario-icon-16.png"));
 	}
 
-	protected ImageIcon getBackgroundImage ()
+	protected ImageIcon getBackgroundImage()
 	{
-		return new ImageIcon (getClass ().getResource ("/resources/app-splash.png"));
+		return new ImageIcon(getClass().getResource("/resources/app-splash.png"));
 	}
 
-	protected Point getVersionOrigin ()
+	protected Point getVersionOrigin()
 	{
-		return new Point (30, 120);
+		return new Point(30, 120);
 	}
 
-	protected Point getCopyrightOrigin ()
+	protected Point getCopyrightOrigin()
 	{
-		return new Point (30, 145);
+		return new Point(30, 145);
 	}
 
-	protected Point getStatusOrigin ()
+	protected Point getStatusOrigin()
 	{
-		return new Point (30, 170);
+		return new Point(30, 170);
 	}
 
-	protected Color getBorderColor ()
+	protected Color getBorderColor()
 	{
-		return new Color (24, 123, 173);
+		return new Color(24, 123, 173);
 	}
 
-	protected int getBorderWidth ()
+	protected int getBorderWidth()
 	{
 		return 2;
 	}
 
-	protected int getBorderMargin ()
+	protected int getBorderMargin()
 	{
 		return 0;
 	}
 
-	public void setText (String text)
+	public void setText(String text)
 	{
-		status.setText (text);
-		status.revalidate ();
+		status.setText(text);
+		status.revalidate();
 	}
 
-	public void startCoolDown ()
+	public void startCoolDown()
 	{
-		Thread thread = new Thread ()
+		Thread thread = new Thread()
 		{
-			public void run ()
+			public void run()
 			{
 				try
 				{
-					Thread.sleep (3000);
+					Thread.sleep(3000);
 				}
 				catch (Exception x)
 				{
 				}
 
-				splash.setVisible (false);
-				splash.dispose ();
+				splash.setVisible(false);
+				splash.dispose();
 			}
 		};
 
-		thread.start ();
+		thread.start();
 	}
 }

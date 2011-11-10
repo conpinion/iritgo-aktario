@@ -62,9 +62,9 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 * @param step The step increment.
 	 * @param chunk The chunk size.
 	 */
-	public JDBCIDGenerator (long start, long step, long chunk)
+	public JDBCIDGenerator(long start, long step, long chunk)
 	{
-		super ("JDBCIDGenerator");
+		super("JDBCIDGenerator");
 		this.id = start;
 		this.step = step;
 		this.chunk = chunk;
@@ -74,9 +74,9 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	/**
 	 * Create a new id generator.
 	 */
-	public JDBCIDGenerator ()
+	public JDBCIDGenerator()
 	{
-		this (1, 1, 10);
+		this(1, 1, 10);
 	}
 
 	/**
@@ -84,11 +84,11 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The new unique id.
 	 */
-	public synchronized long createId ()
+	public synchronized long createId()
 	{
 		if (free == 0)
 		{
-			allocateIds ();
+			allocateIds();
 		}
 
 		--free;
@@ -105,7 +105,7 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The next id value.
 	 */
-	public long peekNextId ()
+	public long peekNextId()
 	{
 		return id;
 	}
@@ -115,78 +115,78 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @return The fresh instance.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
-		return new JDBCIDGenerator ();
+		return new JDBCIDGenerator();
 	}
 
 	/**
 	 * Allocate new ids.
 	 */
-	protected void allocateIds ()
+	protected void allocateIds()
 	{
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			connection = dataSource.getConnection ();
+			connection = dataSource.getConnection();
 
-			stmt = connection.prepareStatement ("update IritgoProperties set value=? where name=?");
-			stmt.setLong (1, id + chunk * step);
-			stmt.setString (2, "persist.ids.nextvalue");
-			stmt.execute ();
+			stmt = connection.prepareStatement("update IritgoProperties set value=? where name=?");
+			stmt.setLong(1, id + chunk * step);
+			stmt.setString(2, "persist.ids.nextvalue");
+			stmt.execute();
 
 			free = chunk;
 
-			Log.logVerbose ("persist", "JDBCIDGenerator", "Successfully allocated new ids (id=" + id + ")");
+			Log.logVerbose("persist", "JDBCIDGenerator", "Successfully allocated new ids (id=" + id + ")");
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("persist", "JDBCIDGenerator", "Error while allocating new ids: " + x);
+			Log.logFatal("persist", "JDBCIDGenerator", "Error while allocating new ids: " + x);
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
 	/**
 	 * Load the last generator state.
 	 */
-	public void load ()
+	public void load()
 	{
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
-			Object[] res = (Object[]) query.query ("select value from IritgoProperties where name=?",
-							"persist.ids.nextvalue", new ArrayHandler ());
+			QueryRunner query = new QueryRunner(dataSource);
+			Object[] res = (Object[]) query.query("select value from IritgoProperties where name=?",
+							"persist.ids.nextvalue", new ArrayHandler());
 
-			id = Long.parseLong ((String) res[0]);
+			id = Long.parseLong((String) res[0]);
 
 			free = 0;
 
-			Log.logDebug ("persist", "JDBCIDGenerator", "Successfully loaded the generator state (id=" + id + ")");
+			Log.logDebug("persist", "JDBCIDGenerator", "Successfully loaded the generator state (id=" + id + ")");
 		}
 		catch (Exception x)
 		{
-			Log.logError ("persist", "JDBCIDGenerator", "Error while loading the generator state: " + x);
+			Log.logError("persist", "JDBCIDGenerator", "Error while loading the generator state: " + x);
 		}
 	}
 
 	/**
 	 * Store the generator state.
 	 */
-	public void save ()
+	public void save()
 	{
-		Log.logDebug ("persist", "JDBCIDGenerator", "Successfully saved the generator state (id=" + id + ")");
+		Log.logDebug("persist", "JDBCIDGenerator", "Successfully saved the generator state (id=" + id + ")");
 	}
 
 	/**
@@ -194,11 +194,11 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
-		id = dataStream.readLong ();
+		id = dataStream.readLong();
 	}
 
 	/**
@@ -206,17 +206,17 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
-		dataStream.writeLong (id);
+		dataStream.writeLong(id);
 	}
 
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
 		return this;
 	}
@@ -225,7 +225,7 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
 		return this;
 	}

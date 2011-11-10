@@ -34,9 +34,9 @@ public class ManagerRegistry
 	/**
 	 * Create a new empty manager registry.
 	 */
-	public ManagerRegistry ()
+	public ManagerRegistry()
 	{
-		managers = new HashMap ();
+		managers = new HashMap();
 	}
 
 	/**
@@ -44,9 +44,9 @@ public class ManagerRegistry
 	 *
 	 * @param manager The manager to add.
 	 */
-	public void addManager (Manager manager)
+	public void addManager(Manager manager)
 	{
-		managers.put (manager.getTypeId (), manager);
+		managers.put(manager.getTypeId(), manager);
 	}
 
 	/**
@@ -55,9 +55,9 @@ public class ManagerRegistry
 	 * @param id The id of the manager to retrieve.
 	 * @return The manager or null if none was found.
 	 */
-	public Manager getManager (String id)
+	public Manager getManager(String id)
 	{
-		return (Manager) managers.get (id);
+		return (Manager) managers.get(id);
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class ManagerRegistry
 	 *
 	 * @param manager The manager to remove.
 	 */
-	public void remove (Manager manager)
+	public void remove(Manager manager)
 	{
-		managers.remove (manager.getTypeId ());
+		managers.remove(manager.getTypeId());
 	}
 }

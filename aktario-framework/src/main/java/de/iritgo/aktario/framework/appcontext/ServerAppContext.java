@@ -30,19 +30,19 @@ public class ServerAppContext extends AppContext
 	/**
 	 * Standard constructor
 	 */
-	public ServerAppContext ()
+	public ServerAppContext()
 	{
-		super ();
+		super();
 	}
 
-	static public ServerAppContext serverInstance ()
+	static public ServerAppContext serverInstance()
 	{
 		if (serverAppContext != null)
 		{
 			return serverAppContext;
 		}
 
-		serverAppContext = new ServerAppContext ();
+		serverAppContext = new ServerAppContext();
 
 		return serverAppContext;
 	}

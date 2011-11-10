@@ -45,27 +45,27 @@ public class UserLogin extends Command
 	 * Standard constructor
 	 * Get the user information from the application context.
 	 */
-	public UserLogin ()
+	public UserLogin()
 	{
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 
-		User user = appContext.getUser ();
+		User user = appContext.getUser();
 
 		if (user == null)
 		{
 			return;
 		}
 
-		this.username = user.getName ();
-		this.password = user.getPassword ();
+		this.username = user.getName();
+		this.password = user.getPassword();
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public UserLogin (String username, String password)
+	public UserLogin(String username, String password)
 	{
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 		this.username = username;
 		this.password = password;
 	}
@@ -75,32 +75,32 @@ public class UserLogin extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * Create a Action to login.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		double channelNumber = appContext.getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = appContext.getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
-		AppContext.instance ().setUserPassword (password);
-		AppContext.instance ().setUserName (username);
+		clientTransceiver.addReceiver(channelNumber);
+		AppContext.instance().setUserPassword(password);
+		AppContext.instance().setUserName(username);
 
-		UserLoginServerAction userLoginServerAction = new UserLoginServerAction (username, password, System
-						.getProperty ("iritgo.app.version.long"));
+		UserLoginServerAction userLoginServerAction = new UserLoginServerAction(username, password, System
+						.getProperty("iritgo.app.version.long"));
 
-		userLoginServerAction.setTransceiver (clientTransceiver);
+		userLoginServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (userLoginServerAction);
+		ActionTools.sendToServer(userLoginServerAction);
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
-		return appContext.isConnectedWithServer ();
+		return appContext.isConnectedWithServer();
 	}
 }

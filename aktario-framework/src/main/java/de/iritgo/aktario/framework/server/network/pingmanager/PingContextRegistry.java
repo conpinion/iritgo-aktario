@@ -36,53 +36,53 @@ public class PingContextRegistry
 	 * Constructor
 	 *
 	 */
-	public PingContextRegistry ()
+	public PingContextRegistry()
 	{
-		pingContexts = new HashMap ();
+		pingContexts = new HashMap();
 	}
 
 	/**
 	 * Add a PingContext.
 	 */
-	public void add (PingContext pingContext)
+	public void add(PingContext pingContext)
 	{
-		pingContexts.put (pingContext.getTypeId (), pingContext);
+		pingContexts.put(pingContext.getTypeId(), pingContext);
 	}
 
 	/**
 	 * Get a PingContext.
 	 */
-	public PingContext get (String id)
+	public PingContext get(String id)
 	{
-		return (PingContext) pingContexts.get (id);
+		return (PingContext) pingContexts.get(id);
 	}
 
 	/**
 	 * Remove a PingContext.
 	 */
-	public void remove (PingContext pingContext)
+	public void remove(PingContext pingContext)
 	{
-		pingContexts.remove (pingContext.getTypeId ());
+		pingContexts.remove(pingContext.getTypeId());
 	}
 
 	/**
 	 * Remove a PingContext.
 	 */
-	public void remove (String id)
+	public void remove(String id)
 	{
-		pingContexts.remove (id);
+		pingContexts.remove(id);
 	}
 
 	/**
 	 * Remove all pingcontexts.
 	 */
-	public void clear ()
+	public void clear()
 	{
-		pingContexts.clear ();
+		pingContexts.clear();
 	}
 
-	public Iterator getPingContextIterator ()
+	public Iterator getPingContextIterator()
 	{
-		return pingContexts.values ().iterator ();
+		return pingContexts.values().iterator();
 	}
 }

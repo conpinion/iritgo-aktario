@@ -43,20 +43,19 @@ public class DataObjectTools
 	 * Register a new dynamic data object on the server. The dynamic will announced on the server.
 	 * The client must logged into the server to use this method.
 	 */
-	public static void registerDynDataObject (DynDataObject dynDataObject, ClientTransceiver clientTransceiver)
+	public static void registerDynDataObject(DynDataObject dynDataObject, ClientTransceiver clientTransceiver)
 	{
-		Action action = new AnnounceDynDataObjectRequest (dynDataObject);
+		Action action = new AnnounceDynDataObjectRequest(dynDataObject);
 
 		if (clientTransceiver == null)
 		{
-			clientTransceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+			clientTransceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 		}
 
-		clientTransceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		action.setTransceiver (clientTransceiver);
+		clientTransceiver.addReceiver(AppContext.instance().getChannelNumber());
+		action.setTransceiver(clientTransceiver);
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Client.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Client.SendEntryNetworkActionProcessor").perform(action);
 	}
 
 	/**
@@ -66,30 +65,29 @@ public class DataObjectTools
 	 *
 	 * @param dynDataObject The dynamic object.
 	 */
-	public static void registerOnStartupDynDataObject (DynDataObject dynDataObject)
+	public static void registerOnStartupDynDataObject(DynDataObject dynDataObject)
 	{
-		Engine.instance ().getIObjectFactory ().register (dynDataObject);
+		Engine.instance().getIObjectFactory().register(dynDataObject);
 	}
 
-	public static void registerDynDataObject (DynDataObject dynDataObject)
+	public static void registerDynDataObject(DynDataObject dynDataObject)
 	{
-		registerDynDataObject (dynDataObject, null);
+		registerDynDataObject(dynDataObject, null);
 	}
 
-	private static void generateUniqueIdAndRegisterDataObject (DataObject dataObject)
+	private static void generateUniqueIdAndRegisterDataObject(DataObject dataObject)
 	{
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		long tmpUniqueId = Engine.instance ().getPersistentIDGenerator ().createId () * - 1;
+		long tmpUniqueId = Engine.instance().getPersistentIDGenerator().createId() * - 1;
 
-		dataObject.setUniqueId (tmpUniqueId);
+		dataObject.setUniqueId(tmpUniqueId);
 
-		proxy.setSampleRealObject ((IObject) dataObject);
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) dataObject);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, dataObject.getTypeId ());
+		proxy.setSampleRealObject((IObject) dataObject);
+		Engine.instance().getBaseRegistry().add((BaseObject) dataObject);
+		Engine.instance().getProxyRegistry().addProxy(proxy, dataObject.getTypeId());
 
-		((User) AppContext.instance ().getUser ())
-						.putNewObjectsMapping (new Long (tmpUniqueId), new Long (tmpUniqueId));
+		((User) AppContext.instance().getUser()).putNewObjectsMapping(new Long(tmpUniqueId), new Long(tmpUniqueId));
 	}
 
 	/**
@@ -97,14 +95,14 @@ public class DataObjectTools
 	 *
 	 * @param dataobject Dataobject
 	 */
-	public static void registerDataObject (DataObject dataObject)
+	public static void registerDataObject(DataObject dataObject)
 	{
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		proxy.setSampleRealObject ((IObject) dataObject);
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) dataObject);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, dataObject.getTypeId ());
-		proxy.reset ();
+		proxy.setSampleRealObject((IObject) dataObject);
+		Engine.instance().getBaseRegistry().add((BaseObject) dataObject);
+		Engine.instance().getProxyRegistry().addProxy(proxy, dataObject.getTypeId());
+		proxy.reset();
 	}
 
 	/**
@@ -113,10 +111,10 @@ public class DataObjectTools
 	 * @param dataobject Dataobject
 	 * @param iObjectProxyListener IObjectProxyListener
 	 */
-	public static void registerDataObject (DataObject dataObject, IObjectProxyListener iObjectProxyListener)
+	public static void registerDataObject(DataObject dataObject, IObjectProxyListener iObjectProxyListener)
 	{
-		registerDataObject (dataObject);
-		Engine.instance ().getProxyEventRegistry ().addEventListener (dataObject, iObjectProxyListener);
+		registerDataObject(dataObject);
+		Engine.instance().getProxyEventRegistry().addEventListener(dataObject, iObjectProxyListener);
 	}
 
 	/**
@@ -125,14 +123,14 @@ public class DataObjectTools
 	 * @param String Dataobject type
 	 * @param long uniqueId of the dataobject
 	 */
-	public static DataObject registerDataObject (String typeId, long uniqueId)
+	public static DataObject registerDataObject(String typeId, long uniqueId)
 	{
 		try
 		{
-			DataObject dataObject = (DataObject) Engine.instance ().getIObjectFactory ().newInstance (typeId);
+			DataObject dataObject = (DataObject) Engine.instance().getIObjectFactory().newInstance(typeId);
 
-			dataObject.setUniqueId (uniqueId);
-			registerDataObject (dataObject);
+			dataObject.setUniqueId(uniqueId);
+			registerDataObject(dataObject);
 
 			return dataObject;
 		}
@@ -149,11 +147,11 @@ public class DataObjectTools
 	 * @param String Dataobject type
 	 * @param long uniqueId of the dataobject
 	 */
-	public static DataObject registerDataObject (String typeId, long uniqueId, IObjectProxyListener iObjectProxyListener)
+	public static DataObject registerDataObject(String typeId, long uniqueId, IObjectProxyListener iObjectProxyListener)
 	{
-		DataObject dataObject = registerDataObject (typeId, uniqueId);
+		DataObject dataObject = registerDataObject(typeId, uniqueId);
 
-		Engine.instance ().getProxyEventRegistry ().addEventListener (dataObject, iObjectProxyListener);
+		Engine.instance().getProxyEventRegistry().addEventListener(dataObject, iObjectProxyListener);
 
 		return dataObject;
 	}
@@ -164,54 +162,52 @@ public class DataObjectTools
 	 * @param dataObject The data object to add.
 	 * @param clientTransceiver The client transceiver.
 	 */
-	public static void addDataObject (DataObject dataObject, ClientTransceiver clientTransceiver)
+	public static void addDataObject(DataObject dataObject, ClientTransceiver clientTransceiver)
 	{
-		generateUniqueIdAndRegisterDataObject (dataObject);
+		generateUniqueIdAndRegisterDataObject(dataObject);
 
-		Action action = new AddDataObjectRequest (dataObject);
+		Action action = new AddDataObjectRequest(dataObject);
 
 		if (clientTransceiver == null)
 		{
-			clientTransceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+			clientTransceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 		}
 
-		clientTransceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		action.setTransceiver (clientTransceiver);
+		clientTransceiver.addReceiver(AppContext.instance().getChannelNumber());
+		action.setTransceiver(clientTransceiver);
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Client.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Client.SendEntryNetworkActionProcessor").perform(action);
 	}
 
-	public static void addDynDataObject (DataObject dataObject)
+	public static void addDynDataObject(DataObject dataObject)
 	{
-		addDataObject (dataObject, null);
+		addDataObject(dataObject, null);
 	}
 
-	public static void executeQuery (AbstractQuery abstractQuery)
+	public static void executeQuery(AbstractQuery abstractQuery)
 	{
-		generateUniqueIdAndRegisterDataObject (abstractQuery);
+		generateUniqueIdAndRegisterDataObject(abstractQuery);
 
-		Action action = new QueryRequest (abstractQuery);
+		Action action = new QueryRequest(abstractQuery);
 
-		ClientTransceiver clientTransceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-		clientTransceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		action.setTransceiver (clientTransceiver);
+		clientTransceiver.addReceiver(AppContext.instance().getChannelNumber());
+		action.setTransceiver(clientTransceiver);
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Client.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Client.SendEntryNetworkActionProcessor").perform(action);
 	}
 
-	public static DataObject createDataObject (String typeId, long uniqueId)
+	public static DataObject createDataObject(String typeId, long uniqueId)
 	{
-		return createDynDataObject (typeId, uniqueId);
+		return createDynDataObject(typeId, uniqueId);
 	}
 
-	public static DataObject createDynDataObject (String typeId, long uniqueId)
+	public static DataObject createDynDataObject(String typeId, long uniqueId)
 	{
 		DataObject dataObject = null;
 
-		dataObject = (DataObject) Engine.instance ().getBaseRegistry ().get (uniqueId, typeId);
+		dataObject = (DataObject) Engine.instance().getBaseRegistry().get(uniqueId, typeId);
 
 		if (dataObject != null)
 		{
@@ -220,24 +216,24 @@ public class DataObjectTools
 
 		try
 		{
-			dataObject = (DataObject) Engine.instance ().getIObjectFactory ().newInstance (typeId);
+			dataObject = (DataObject) Engine.instance().getIObjectFactory().newInstance(typeId);
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "DataObjecTools.createDynDataObject", "DynDataObject can not created: " + typeId
+			Log.log("system", "DataObjecTools.createDynDataObject", "DynDataObject can not created: " + typeId
 							+ " Error: " + x, Log.FATAL);
 
 			return null;
 		}
 
-		dataObject.setUniqueId (uniqueId);
+		dataObject.setUniqueId(uniqueId);
 
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		proxy.setSampleRealObject ((IObject) dataObject);
+		proxy.setSampleRealObject((IObject) dataObject);
 
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) dataObject);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, dataObject.getTypeId ());
+		Engine.instance().getBaseRegistry().add((BaseObject) dataObject);
+		Engine.instance().getProxyRegistry().addProxy(proxy, dataObject.getTypeId());
 
 		return dataObject;
 	}

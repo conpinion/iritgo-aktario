@@ -46,17 +46,17 @@ public class GUIControllerRequest extends NetworkFrameworkServerAction
 	/**
 	 * Create a new GUIControllerRequerst.
 	 */
-	public GUIControllerRequest ()
+	public GUIControllerRequest()
 	{
-		setTypeId ("GUIControllerRequest");
+		setTypeId("GUIControllerRequest");
 	}
 
 	/**
 	 * Create a new GUIControllerRequerst.
 	 */
-	public GUIControllerRequest (String controllerTypeId, int displayType)
+	public GUIControllerRequest(String controllerTypeId, int displayType)
 	{
-		this ();
+		this();
 		this.controllerTypeId = controllerTypeId;
 		this.displayType = displayType;
 	}
@@ -66,10 +66,10 @@ public class GUIControllerRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		controllerTypeId = stream.readUTF ();
-		displayType = stream.readInt ();
+		controllerTypeId = stream.readUTF();
+		displayType = stream.readInt();
 	}
 
 	/**
@@ -77,10 +77,10 @@ public class GUIControllerRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (controllerTypeId);
-		stream.writeInt (displayType);
+		stream.writeUTF(controllerTypeId);
+		stream.writeInt(displayType);
 	}
 
 	/**
@@ -89,34 +89,34 @@ public class GUIControllerRequest extends NetworkFrameworkServerAction
 	 * @param clientTransceiver The client transceiver.
 	 * @return The client action.
 	 */
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
 
-		GUIManager guiManager = (GUIManager) Engine.instance ().getManagerRegistry ().getManager ("GUIManager");
+		GUIManager guiManager = (GUIManager) Engine.instance().getManagerRegistry().getManager("GUIManager");
 
-		Controller controller = guiManager.getController (controllerTypeId);
+		Controller controller = guiManager.getController(controllerTypeId);
 
 		if (controller == null)
 		{
-			Engine.instance ().getEventRegistry ().fire ("guimanager",
-							new GUIControllerMissingEvent (controllerTypeId, guiManager, displayType, userUniqueId));
+			Engine.instance().getEventRegistry().fire("guimanager",
+							new GUIControllerMissingEvent(controllerTypeId, guiManager, displayType, userUniqueId));
 
-			controller = guiManager.getController (controllerTypeId);
+			controller = guiManager.getController(controllerTypeId);
 
 			if (controller == null)
 			{
-				controller = guiManager.createDefaultController (controllerTypeId);
-				guiManager.addController (controllerTypeId, controller);
+				controller = guiManager.createDefaultController(controllerTypeId);
+				guiManager.addController(controllerTypeId, controller);
 			}
 
-			Engine.instance ().getBaseRegistry ().add (controller);
+			Engine.instance().getBaseRegistry().add(controller);
 
-			IObjectProxy proxy = new IObjectProxy (controller);
+			IObjectProxy proxy = new IObjectProxy(controller);
 
-			Engine.instance ().getProxyRegistry ().addProxy (proxy, controller.getTypeId ());
+			Engine.instance().getProxyRegistry().addProxy(proxy, controller.getTypeId());
 		}
 
-		return new GUIControllerResponse (controllerTypeId, controller);
+		return new GUIControllerResponse(controllerTypeId, controller);
 	}
 }

@@ -42,10 +42,10 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 	/**
 	 * Default constructer
 	 */
-	public SendNetworkActionProcessor (NetworkService networkService, Channel channel,
+	public SendNetworkActionProcessor(NetworkService networkService, Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super ("Server.SendNetworkActionProcessor", channel, parentNetworkActionProcessor);
+		super("Server.SendNetworkActionProcessor", channel, parentNetworkActionProcessor);
 		this.networkService = networkService;
 	}
 
@@ -54,7 +54,7 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 	 *
 	 * @return The id.
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "Server.SendNetworkActionProcessor";
 	}
@@ -62,9 +62,9 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 	/**
 	 * Perform an action.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
-		perform (action, action.getTransceiver ());
+		perform(action, action.getTransceiver());
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
 		AbstractAction networkAction = (AbstractAction) action;
 
@@ -81,14 +81,14 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 		{
 			ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-			Iterator i = clientTransceiver.getReceiverIterator ();
+			Iterator i = clientTransceiver.getReceiverIterator();
 
-			while (i.hasNext ())
+			while (i.hasNext())
 			{
 				// TODO:Optimize the clienttranscleiver
-				double channelNumber = ((Double) i.next ()).doubleValue ();
+				double channelNumber = ((Double) i.next()).doubleValue();
 
-				Channel channel = (Channel) networkService.getConnectedChannel (channelNumber);
+				Channel channel = (Channel) networkService.getConnectedChannel(channelNumber);
 
 				if (channel == null)
 				{
@@ -96,10 +96,10 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 					continue;
 				}
 
-				networkAction.setNumObjects (channel.getNumAllObjects ());
+				networkAction.setNumObjects(channel.getNumAllObjects());
 
-				networkService.send (networkAction, channel);
-				networkService.flush (channelNumber);
+				networkService.send(networkAction, channel);
+				networkService.flush(channelNumber);
 			}
 
 			return;
@@ -108,7 +108,7 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 		{
 			BroadcastTransceiver clientTransceiver = (BroadcastTransceiver) transceiver;
 
-			networkService.sendBroadcast (networkAction);
+			networkService.sendBroadcast(networkAction);
 		}
 	}
 
@@ -117,12 +117,12 @@ public class SendNetworkActionProcessor extends NetworkActionProcessor
 	 *
 	 * @return NetworkActionProcessor
 	 */
-	public Object clone ()
+	public Object clone()
 	{
-		SendNetworkActionProcessor clone = new SendNetworkActionProcessor (networkService, channel,
+		SendNetworkActionProcessor clone = new SendNetworkActionProcessor(networkService, channel,
 						parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

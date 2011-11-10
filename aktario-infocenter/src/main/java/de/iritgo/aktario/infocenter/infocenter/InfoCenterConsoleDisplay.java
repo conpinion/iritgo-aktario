@@ -32,7 +32,7 @@ public class InfoCenterConsoleDisplay implements InfoCenterDisplay
 	 * Constructor
 	 *
 	 */
-	public InfoCenterConsoleDisplay ()
+	public InfoCenterConsoleDisplay()
 	{
 	}
 
@@ -40,7 +40,7 @@ public class InfoCenterConsoleDisplay implements InfoCenterDisplay
 	 * Get the Id of the Logger
 	 *
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "system.out.infocenterdisplay";
 	}
@@ -50,7 +50,7 @@ public class InfoCenterConsoleDisplay implements InfoCenterDisplay
 	 *
 	 * @param category
 	 */
-	public void init (String category, int context, User user)
+	public void init(String category, int context, User user)
 	{
 	}
 
@@ -58,16 +58,16 @@ public class InfoCenterConsoleDisplay implements InfoCenterDisplay
 	 * release
 	 *
 	 */
-	public void release ()
+	public void release()
 	{
 	}
 
 	/**
 	 * Log
 	 */
-	public void info (User user, int context, String category, String icon, String message, String guiPaneId,
+	public void info(User user, int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level)
 	{
-		System.out.println ("[" + level + "][" + category + "] ->" + message + "<-");
+		System.out.println("[" + level + "][" + category + "] ->" + message + "<-");
 	}
 }

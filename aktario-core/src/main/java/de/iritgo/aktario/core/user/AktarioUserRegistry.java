@@ -36,13 +36,13 @@ public class AktarioUserRegistry extends DataObject
 	/**
 	 * Create a new AktarioUserRegistry.
 	 */
-	public AktarioUserRegistry ()
+	public AktarioUserRegistry()
 	{
-		super ("AktarioUserRegistry");
+		super("AktarioUserRegistry");
 
-		addAttribute ("users", new IObjectList ("users", new FrameworkProxy (new AktarioUser ()), this));
+		addAttribute("users", new IObjectList("users", new FrameworkProxy(new AktarioUser()), this));
 
-		addAttribute ("profiles", new IObjectList ("profiles", new FrameworkProxy (new AktarioUserProfile ()), this));
+		addAttribute("profiles", new IObjectList("profiles", new FrameworkProxy(new AktarioUserProfile()), this));
 	}
 
 	/**
@@ -50,9 +50,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @param user The user to add.
 	 */
-	public void addUser (AktarioUser user)
+	public void addUser(AktarioUser user)
 	{
-		getIObjectListAttribute ("users").add (user);
+		getIObjectListAttribute("users").add(user);
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class AktarioUserRegistry extends DataObject
 	 * @param index The index of the user to retrieve.
 	 * @return The user at a specified index.
 	 */
-	public AktarioUser getUser (int index)
+	public AktarioUser getUser(int index)
 	{
-		return (AktarioUser) getIObjectListAttribute ("users").get (index);
+		return (AktarioUser) getIObjectListAttribute("users").get(index);
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @return The user list.
 	 */
-	public IObjectList getUsers ()
+	public IObjectList getUsers()
 	{
-		return getIObjectListAttribute ("users");
+		return getIObjectListAttribute("users");
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @return A user iterator.
 	 */
-	public Iterator userIterator ()
+	public Iterator userIterator()
 	{
-		return getIObjectListAttribute ("users").iterator ();
+		return getIObjectListAttribute("users").iterator();
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @return The user count.
 	 */
-	public int getUserCount ()
+	public int getUserCount()
 	{
-		return getIObjectListAttribute ("users").size ();
+		return getIObjectListAttribute("users").size();
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @param user The user to remove.
 	 */
-	public void removeUser (AktarioUser user)
+	public void removeUser(AktarioUser user)
 	{
-		getIObjectListAttribute ("users").remove (user);
+		getIObjectListAttribute("users").remove(user);
 	}
 
 	/**
@@ -111,9 +111,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @param profile The profile to add.
 	 */
-	public void addProfile (AktarioUserProfile profile)
+	public void addProfile(AktarioUserProfile profile)
 	{
-		getIObjectListAttribute ("profiles").add (profile);
+		getIObjectListAttribute("profiles").add(profile);
 	}
 
 	/**
@@ -122,9 +122,9 @@ public class AktarioUserRegistry extends DataObject
 	 * @param index The index of the user profile to retrieve.
 	 * @return The user profile at a specified index.
 	 */
-	public AktarioUserProfile getProfile (int index)
+	public AktarioUserProfile getProfile(int index)
 	{
-		AktarioUserProfile a = (AktarioUserProfile) getIObjectListAttribute ("profiles").get (index);
+		AktarioUserProfile a = (AktarioUserProfile) getIObjectListAttribute("profiles").get(index);
 
 		return a;
 	}
@@ -134,9 +134,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @return A user profile iterator.
 	 */
-	public Iterator getProfileIterator ()
+	public Iterator getProfileIterator()
 	{
-		return getIObjectListAttribute ("profiles").iterator ();
+		return getIObjectListAttribute("profiles").iterator();
 	}
 
 	/**
@@ -144,9 +144,9 @@ public class AktarioUserRegistry extends DataObject
 	 *
 	 * @return The user profile count.
 	 */
-	public int getProfileCount ()
+	public int getProfileCount()
 	{
-		return getIObjectListAttribute ("profiles").size ();
+		return getIObjectListAttribute("profiles").size();
 	}
 
 	/**
@@ -155,13 +155,13 @@ public class AktarioUserRegistry extends DataObject
 	 * @param name The name of the user to find.
 	 * @return The user or null if no user with the given name exists.
 	 */
-	public AktarioUser getUserByName (String name)
+	public AktarioUser getUserByName(String name)
 	{
-		for (int i = 0; i < getUserCount (); ++i)
+		for (int i = 0; i < getUserCount(); ++i)
 		{
-			AktarioUser user = (AktarioUser) getUser (i);
+			AktarioUser user = (AktarioUser) getUser(i);
 
-			if (user.getName ().equals (name))
+			if (user.getName().equals(name))
 			{
 				return user;
 			}
@@ -176,13 +176,13 @@ public class AktarioUserRegistry extends DataObject
 	 * @param id The id of the user to find.
 	 * @return The user or null if no user with the given id exists.
 	 */
-	public AktarioUser getUserById (long id)
+	public AktarioUser getUserById(long id)
 	{
-		for (int i = 0; i < getUserCount (); ++i)
+		for (int i = 0; i < getUserCount(); ++i)
 		{
-			AktarioUser user = (AktarioUser) getUser (i);
+			AktarioUser user = (AktarioUser) getUser(i);
 
-			if (user.getUniqueId () == id)
+			if (user.getUniqueId() == id)
 			{
 				return user;
 			}

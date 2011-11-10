@@ -34,47 +34,47 @@ public class Context
 
 	private List childs;
 
-	public Context ()
+	public Context()
 	{
-		childs = new LinkedList ();
+		childs = new LinkedList();
 	}
 
-	public Context (String id, String string)
+	public Context(String id, String string)
 	{
-		this ();
+		this();
 		this.id = id;
 		this.string = string;
 	}
 
-	public Context (String proxyLinkedListKey, String id, String string)
+	public Context(String proxyLinkedListKey, String id, String string)
 	{
-		this ();
+		this();
 		this.proxyLinkedListKey = proxyLinkedListKey;
 		this.id = id;
 		this.string = string;
 	}
 
-	public String getId ()
+	public String getId()
 	{
 		return id;
 	}
 
-	public void setProxyLinkedListKey (String proxyLinkedListKey)
+	public void setProxyLinkedListKey(String proxyLinkedListKey)
 	{
 		this.proxyLinkedListKey = proxyLinkedListKey;
 	}
 
-	public String getProxyLinkedListKey ()
+	public String getProxyLinkedListKey()
 	{
 		return proxyLinkedListKey;
 	}
 
-	public void setId (String id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public String getString ()
+	public String getString()
 	{
 		if (string == null)
 		{
@@ -84,18 +84,18 @@ public class Context
 		return string;
 	}
 
-	public void setString (String string)
+	public void setString(String string)
 	{
 		this.string = string;
 	}
 
-	public List getChilds ()
+	public List getChilds()
 	{
 		return childs;
 	}
 
-	public void addChild (Context context)
+	public void addChild(Context context)
 	{
-		childs.add (context);
+		childs.add(context);
 	}
 }

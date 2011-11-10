@@ -82,7 +82,7 @@ public class Log
 	/**
 	 * Create a new Log object.
 	 */
-	public Log ()
+	public Log()
 	{
 	}
 
@@ -92,7 +92,7 @@ public class Log
 	 * @param categories The logger categories.
 	 * @param loggers The loggers.
 	 */
-	public static void setloggerRegistries (Map categories, Map loggers)
+	public static void setloggerRegistries(Map categories, Map loggers)
 	{
 		Log.categories = categories;
 		Log.loggers = loggers;
@@ -105,7 +105,7 @@ public class Log
 	 *
 	 * @param level The new log level.
 	 */
-	public static void setLevel (int level)
+	public static void setLevel(int level)
 	{
 		logLevel = level;
 	}
@@ -118,23 +118,23 @@ public class Log
 	 * @param message The log message itself.
 	 * @param level The level of the log message.
 	 */
-	public static void log (String category, String source, String message, int level)
+	public static void log(String category, String source, String message, int level)
 	{
 		if (categories == null)
 		{
 			return;
 		}
 
-		if (! categories.containsKey (category) || level < logLevel)
+		if (! categories.containsKey(category) || level < logLevel)
 		{
 			return;
 		}
 
-		List loggerlist = (List) categories.get (category);
+		List loggerlist = (List) categories.get(category);
 
-		for (int i = 0; i < loggerlist.size (); ++i)
+		for (int i = 0; i < loggerlist.size(); ++i)
 		{
-			((Logger) loggers.get (loggerlist.get (i))).log (category, source, message, level);
+			((Logger) loggers.get(loggerlist.get(i))).log(category, source, message, level);
 		}
 	}
 
@@ -146,9 +146,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logVerbose (String category, String source, String message)
+	public static void logVerbose(String category, String source, String message)
 	{
-		log (category, source, message, VERBOSE);
+		log(category, source, message, VERBOSE);
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logVerbose (String category, String message)
+	public static void logVerbose(String category, String message)
 	{
-		log (category, null, message, VERBOSE);
+		log(category, null, message, VERBOSE);
 	}
 
 	/**
@@ -171,9 +171,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logDebug (String category, String source, String message)
+	public static void logDebug(String category, String source, String message)
 	{
-		log (category, source, message, DEBUG);
+		log(category, source, message, DEBUG);
 	}
 
 	/**
@@ -183,9 +183,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logDebug (String category, String message)
+	public static void logDebug(String category, String message)
 	{
-		log (category, null, message, DEBUG);
+		log(category, null, message, DEBUG);
 	}
 
 	/**
@@ -196,9 +196,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logInfo (String category, String source, String message)
+	public static void logInfo(String category, String source, String message)
 	{
-		log (category, source, message, INFO);
+		log(category, source, message, INFO);
 	}
 
 	/**
@@ -208,9 +208,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logInfo (String category, String message)
+	public static void logInfo(String category, String message)
 	{
-		log (category, null, message, INFO);
+		log(category, null, message, INFO);
 	}
 
 	/**
@@ -221,9 +221,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logWarn (String category, String source, String message)
+	public static void logWarn(String category, String source, String message)
 	{
-		log (category, source, message, WARN);
+		log(category, source, message, WARN);
 	}
 
 	/**
@@ -233,9 +233,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logWarn (String category, String message)
+	public static void logWarn(String category, String message)
 	{
-		log (category, null, message, WARN);
+		log(category, null, message, WARN);
 	}
 
 	/**
@@ -246,9 +246,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logError (String category, String source, String message)
+	public static void logError(String category, String source, String message)
 	{
-		log (category, source, message, ERROR);
+		log(category, source, message, ERROR);
 	}
 
 	/**
@@ -258,9 +258,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logError (String category, String message)
+	public static void logError(String category, String message)
 	{
-		log (category, null, message, ERROR);
+		log(category, null, message, ERROR);
 	}
 
 	/**
@@ -271,9 +271,9 @@ public class Log
 	 * @param source A description of the source of this log message.
 	 * @param message The log message itself.
 	 */
-	public static void logFatal (String category, String source, String message)
+	public static void logFatal(String category, String source, String message)
 	{
-		log (category, source, message, FATAL);
+		log(category, source, message, FATAL);
 	}
 
 	/**
@@ -283,9 +283,9 @@ public class Log
 	 * @param category The category of the log message.
 	 * @param message The log message itself.
 	 */
-	public static void logFatal (String category, String message)
+	public static void logFatal(String category, String message)
 	{
-		log (category, null, message, FATAL);
+		log(category, null, message, FATAL);
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class Log
 	 * @param level The log level.
 	 * @return The name of the log level.
 	 */
-	public static String logLevelName (int level)
+	public static String logLevelName(int level)
 	{
 		switch (level)
 		{

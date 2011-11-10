@@ -52,80 +52,79 @@ public class LoadAllObjects extends Command
 	/**
 	 * Create a new <code>LoadAllObjects</code> command.
 	 */
-	public LoadAllObjects ()
+	public LoadAllObjects()
 	{
-		super ("persist.LoadAllObjects");
+		super("persist.LoadAllObjects");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		if (properties.getProperty ("type") == null)
+		if (properties.getProperty("type") == null)
 		{
-			Log.logError ("persist", "LoadObjects", "The type of the objects to load wasn't specified");
+			Log.logError("persist", "LoadObjects", "The type of the objects to load wasn't specified");
 
 			return;
 		}
 
-		final String type = ((String) properties.getProperty ("type"));
+		final String type = ((String) properties.getProperty("type"));
 
-		final AbstractIObjectFactory factory = (AbstractIObjectFactory) Engine.instance ().getIObjectFactory ();
+		final AbstractIObjectFactory factory = (AbstractIObjectFactory) Engine.instance().getIObjectFactory();
 
 		IObject sample = null;
 
 		try
 		{
-			sample = factory.newInstance (type);
+			sample = factory.newInstance(type);
 		}
 		catch (NoSuchIObjectException ignored)
 		{
-			Log.logError ("persist", "LoadObjects", "Attemting to load objects of unknown type '" + type + "'");
+			Log.logError("persist", "LoadObjects", "Attemting to load objects of unknown type '" + type + "'");
 
 			return;
 		}
 
-		if (! DataObject.class.isInstance (sample))
+		if (! DataObject.class.isInstance(sample))
 		{
-			Log.logError ("persist", "LoadObjects", "Attemting to load objects that are not persitable");
+			Log.logError("persist", "LoadObjects", "Attemting to load objects that are not persitable");
 
 			return;
 		}
 
-		final BaseRegistry registry = Engine.instance ().getBaseRegistry ();
+		final BaseRegistry registry = Engine.instance().getBaseRegistry();
 
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
+			QueryRunner query = new QueryRunner(dataSource);
 
-			ResultSetHandler resultSetHandler = properties.get ("resultSetHandle") != null ? (ResultSetHandler) properties
-							.get ("resultSetHandler")
-							: new ResultSetHandler ()
+			ResultSetHandler resultSetHandler = properties.get("resultSetHandle") != null ? (ResultSetHandler) properties
+							.get("resultSetHandler")
+							: new ResultSetHandler()
 							{
-								public Object handle (ResultSet rs) throws SQLException
+								public Object handle(ResultSet rs) throws SQLException
 								{
-									ResultSetMetaData meta = rs.getMetaData ();
+									ResultSetMetaData meta = rs.getMetaData();
 
 									int numObjects = 0;
 
-									while (rs.next ())
+									while (rs.next())
 									{
 										try
 										{
-											DataObject object = (DataObject) factory.newInstance (type);
+											DataObject object = (DataObject) factory.newInstance(type);
 
-											object.setUniqueId (rs.getLong ("id"));
+											object.setUniqueId(rs.getLong("id"));
 
-											for (Iterator i = object.getAttributes ().entrySet ().iterator (); i
-															.hasNext ();)
+											for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 											{
-												Map.Entry attribute = (Map.Entry) i.next ();
+												Map.Entry attribute = (Map.Entry) i.next();
 
-												if (attribute.getValue () instanceof IObjectList)
+												if (attribute.getValue() instanceof IObjectList)
 												{
 													// 										loadList (
 													// 											dataSource, object,
@@ -134,12 +133,12 @@ public class LoadAllObjects extends Command
 												}
 												else
 												{
-													object.setAttribute ((String) attribute.getKey (), rs
-																	.getObject ((String) attribute.getKey ()));
+													object.setAttribute((String) attribute.getKey(), rs
+																	.getObject((String) attribute.getKey()));
 												}
 											}
 
-											registry.add (object);
+											registry.add(object);
 											++numObjects;
 										}
 										catch (NoSuchIObjectException ignored)
@@ -147,18 +146,18 @@ public class LoadAllObjects extends Command
 										}
 									}
 
-									return new Integer (numObjects);
+									return new Integer(numObjects);
 								}
 							};
 
-			Object numObjects = query.query ("select * from " + type, resultSetHandler);
+			Object numObjects = query.query("select * from " + type, resultSetHandler);
 
-			Log.logVerbose ("persist", "LoadObjects", "Successfully loaded " + numObjects + " objects of type '" + type
+			Log.logVerbose("persist", "LoadObjects", "Successfully loaded " + numObjects + " objects of type '" + type
 							+ "'");
 		}
 		catch (Exception x)
 		{
-			Log.logError ("persist", "LoadObjects", "Error while loading objects of type '" + type + "': " + x);
+			Log.logError("persist", "LoadObjects", "Error while loading objects of type '" + type + "': " + x);
 		}
 	}
 }

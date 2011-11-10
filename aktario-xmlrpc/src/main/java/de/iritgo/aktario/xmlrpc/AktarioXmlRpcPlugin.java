@@ -31,31 +31,31 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
  */
 public class AktarioXmlRpcPlugin extends AktarioPlugin
 {
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (FrameworkPlugin.CLIENT, new AktarioXmlRpcManager ());
+		registerManager(FrameworkPlugin.CLIENT, new AktarioXmlRpcManager());
 	}
 
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new AddXmlRpcCommand ());
-		registerCommand (new TestCommand ());
-		registerCommand (new TestKillCommand ());
+		registerCommand(new AddXmlRpcCommand());
+		registerCommand(new TestCommand());
+		registerCommand(new TestKillCommand());
 	}
 }

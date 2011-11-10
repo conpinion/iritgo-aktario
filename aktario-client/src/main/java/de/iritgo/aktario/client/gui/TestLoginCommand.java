@@ -31,9 +31,9 @@ public class TestLoginCommand extends Command
 	/**
 	 * Login command
 	 */
-	public TestLoginCommand ()
+	public TestLoginCommand()
 	{
-		super ("test.aktera-client.loginCommand");
+		super("test.aktera-client.loginCommand");
 	}
 
 	/**
@@ -42,9 +42,9 @@ public class TestLoginCommand extends Command
 	 * @see de.iritgo.aktario.core.command.Command#perform()
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		UserLoginHelper.login (null, properties.getProperty ("serverIp"), properties.getProperty ("username"),
-						properties.getProperty ("password"), false, false);
+		UserLoginHelper.login(null, properties.getProperty("serverIp"), properties.getProperty("username"), properties
+						.getProperty("password"), false, false);
 	}
 }

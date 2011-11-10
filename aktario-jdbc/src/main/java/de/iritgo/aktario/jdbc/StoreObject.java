@@ -49,18 +49,18 @@ public class StoreObject extends Command
 	/**
 	 * Create a new <code>StoreUser</code> command.
 	 */
-	public StoreObject ()
+	public StoreObject()
 	{
-		super ("persist.StoreObject");
+		super("persist.StoreObject");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		insert ((DataObject) properties.get ("dataobject"), (DataObject) properties.get ("owner"), (String) properties
-						.get ("listattribute"));
+		insert((DataObject) properties.get("dataobject"), (DataObject) properties.get("owner"), (String) properties
+						.get("listattribute"));
 	}
 
 	/**
@@ -71,71 +71,71 @@ public class StoreObject extends Command
 	 * @param listAttribute The name of the list attribute to which the new
 	 *   object belongs.
 	 */
-	private void insert (DataObject object, DataObject owner, String listAttribute)
+	private void insert(DataObject object, DataObject owner, String listAttribute)
 	{
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-			DataSource dataSource = jdbcManager.getDefaultDataSource ();
+			JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+			DataSource dataSource = jdbcManager.getDefaultDataSource();
 
-			connection = dataSource.getConnection ();
+			connection = dataSource.getConnection();
 
-			StringBuffer sqlFields = new StringBuffer ("id");
-			StringBuffer sqlValues = new StringBuffer ("?");
+			StringBuffer sqlFields = new StringBuffer("id");
+			StringBuffer sqlValues = new StringBuffer("?");
 
-			for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+			for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 			{
-				Map.Entry attribute = (Map.Entry) i.next ();
+				Map.Entry attribute = (Map.Entry) i.next();
 
-				if (attribute.getValue () instanceof IObjectList)
+				if (attribute.getValue() instanceof IObjectList)
 				{
 					continue;
 				}
 
-				sqlFields.append (", " + (String) attribute.getKey ());
-				sqlValues.append (", ?");
+				sqlFields.append(", " + (String) attribute.getKey());
+				sqlValues.append(", ?");
 			}
 
-			String sql = "insert into " + object.getTypeId () + " (" + sqlFields.toString () + ") values ("
-							+ sqlValues.toString () + ")";
+			String sql = "insert into " + object.getTypeId() + " (" + sqlFields.toString() + ") values ("
+							+ sqlValues.toString() + ")";
 
-			stmt = connection.prepareStatement (sql);
-			putAttributesToStatement (object, stmt);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			putAttributesToStatement(object, stmt);
+			stmt.execute();
 
-			Log.logVerbose ("persist", "JDBCManager", "CREATED " + object.getTypeId () + ":" + object.getUniqueId ()
+			Log.logVerbose("persist", "JDBCManager", "CREATED " + object.getTypeId() + ":" + object.getUniqueId()
 							+ " |" + sql + "|");
 
-			stmt.close ();
+			stmt.close();
 
 			if (owner != null)
 			{
 				sql = "insert into IritgoObjectList (type, id, attribute, elemType, elemId) values (?, ?, ?, ?, ?)";
 
-				stmt = connection.prepareStatement (sql);
-				stmt.setString (1, owner.getTypeId ());
-				stmt.setLong (2, owner.getUniqueId ());
-				stmt.setString (3, listAttribute);
-				stmt.setString (4, object.getTypeId ());
-				stmt.setLong (5, object.getUniqueId ());
-				stmt.execute ();
+				stmt = connection.prepareStatement(sql);
+				stmt.setString(1, owner.getTypeId());
+				stmt.setLong(2, owner.getUniqueId());
+				stmt.setString(3, listAttribute);
+				stmt.setString(4, object.getTypeId());
+				stmt.setLong(5, object.getUniqueId());
+				stmt.execute();
 
-				Log.logVerbose ("persist", "StoreObject", "CREATED REFRENCE " + owner.getTypeId () + ":"
-								+ owner.getUniqueId () + " => " + object.getTypeId () + ":" + object.getUniqueId ()
-								+ " |" + sql + "|");
+				Log.logVerbose("persist", "StoreObject", "CREATED REFRENCE " + owner.getTypeId() + ":"
+								+ owner.getUniqueId() + " => " + object.getTypeId() + ":" + object.getUniqueId() + " |"
+								+ sql + "|");
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logDebug ("persist", "StoreObject", "Error while creating new database record: " + x);
+			Log.logDebug("persist", "StoreObject", "Error while creating new database record: " + x);
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
@@ -147,22 +147,22 @@ public class StoreObject extends Command
 	 * @param stmt The prepared statement.
 	 * @throws SQLException If an attribute could not be set.
 	 */
-	private void putAttributesToStatement (DataObject object, PreparedStatement stmt) throws SQLException
+	private void putAttributesToStatement(DataObject object, PreparedStatement stmt) throws SQLException
 	{
-		stmt.setLong (1, object.getUniqueId ());
+		stmt.setLong(1, object.getUniqueId());
 
 		int pos = 2;
 
-		for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry attribute = (Map.Entry) i.next ();
+			Map.Entry attribute = (Map.Entry) i.next();
 
-			if (attribute.getValue () instanceof IObjectList)
+			if (attribute.getValue() instanceof IObjectList)
 			{
 				continue;
 			}
 
-			stmt.setObject (pos++, attribute.getValue ());
+			stmt.setObject(pos++, attribute.getValue());
 		}
 	}
 }

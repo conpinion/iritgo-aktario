@@ -40,7 +40,7 @@ public class AliveCheckAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public AliveCheckAction ()
+	public AliveCheckAction()
 	{
 	}
 
@@ -49,7 +49,7 @@ public class AliveCheckAction extends FrameworkAction
 	 *
 	 * @param source The source form this action.
 	 */
-	public AliveCheckAction (int source)
+	public AliveCheckAction(int source)
 	{
 		this.source = source;
 	}
@@ -58,42 +58,42 @@ public class AliveCheckAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		source = stream.readInt ();
+		source = stream.readInt();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (source);
+		stream.writeInt(source);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		if (source == CLIENT)
 		{
-			((ClientTransceiver) getTransceiver ()).getConnectedChannel ().setAliveCheckSent (false);
+			((ClientTransceiver) getTransceiver()).getConnectedChannel().setAliveCheckSent(false);
 
 			return;
 		}
 
-		double channelNumber = AppContext.instance ().getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = AppContext.instance().getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		AliveCheckServerAction aliveCheckServerAction = new AliveCheckServerAction (source);
+		AliveCheckServerAction aliveCheckServerAction = new AliveCheckServerAction(source);
 
-		aliveCheckServerAction.setTransceiver (clientTransceiver);
+		aliveCheckServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (aliveCheckServerAction);
+		ActionTools.sendToServer(aliveCheckServerAction);
 	}
 }

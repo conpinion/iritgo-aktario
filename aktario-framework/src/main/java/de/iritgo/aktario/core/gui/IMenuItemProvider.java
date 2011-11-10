@@ -22,5 +22,5 @@ package de.iritgo.aktario.core.gui;
 
 public abstract class IMenuItemProvider
 {
-	public abstract IMenuItem create (Object... params);
+	public abstract IMenuItem create(Object... params);
 }

@@ -37,9 +37,9 @@ public class CountingFlowRule extends FlowRule
 	 * @param id The id of the new rule.
 	 * @param counter The initial success count.
 	 */
-	public CountingFlowRule (String id, int counter)
+	public CountingFlowRule(String id, int counter)
 	{
-		super (id);
+		super(id);
 		this.counter = counter;
 	}
 
@@ -47,7 +47,7 @@ public class CountingFlowRule extends FlowRule
 	 * Tell the rule that is has succeeded.
 	 */
 	@Override
-	public void success ()
+	public void success()
 	{
 		--counter;
 	}
@@ -56,7 +56,7 @@ public class CountingFlowRule extends FlowRule
 	 * Tell the rule that is has failed.
 	 */
 	@Override
-	public void failure ()
+	public void failure()
 	{
 		++counter;
 	}
@@ -67,7 +67,7 @@ public class CountingFlowRule extends FlowRule
 	 * @return True if the rule has succeeded.
 	 */
 	@Override
-	public boolean isCompleted ()
+	public boolean isCompleted()
 	{
 		return counter <= 0;
 	}

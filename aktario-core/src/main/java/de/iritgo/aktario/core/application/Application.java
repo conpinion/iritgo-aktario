@@ -41,7 +41,7 @@ public class Application
 
 	static
 	{
-		applications = new HashMap ();
+		applications = new HashMap();
 	}
 
 	/** The application id. */
@@ -71,7 +71,7 @@ public class Application
 	 * @param iconKey The application icon (resource key).
 	 * @param guiPaneId The id of the main gui pane.
 	 */
-	public Application (String id, AktarioPlugin plugin, String nameKey, String iconKey, String guiPaneId)
+	public Application(String id, AktarioPlugin plugin, String nameKey, String iconKey, String guiPaneId)
 	{
 		this.id = id;
 		this.nameKey = nameKey;
@@ -85,7 +85,7 @@ public class Application
 	 *
 	 * @return The application id.
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return id;
 	}
@@ -95,7 +95,7 @@ public class Application
 	 *
 	 * @return The application name key.
 	 */
-	public String getNameKey ()
+	public String getNameKey()
 	{
 		return nameKey;
 	}
@@ -105,9 +105,9 @@ public class Application
 	 *
 	 * @return The application name.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return Engine.instance ().getResourceService ().getString (nameKey);
+		return Engine.instance().getResourceService().getString(nameKey);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Application
 	 *
 	 * @return The application icon key.
 	 */
-	public String getIconKey ()
+	public String getIconKey()
 	{
 		return iconKey;
 	}
@@ -125,15 +125,15 @@ public class Application
 	 *
 	 * @return The application icon.
 	 */
-	public ImageIcon getIcon ()
+	public ImageIcon getIcon()
 	{
 		if (icon == null)
 		{
-			URL resource = plugin.getClass ().getResource (iconKey);
+			URL resource = plugin.getClass().getResource(iconKey);
 
 			if (resource != null)
 			{
-				icon = new ImageIcon (resource);
+				icon = new ImageIcon(resource);
 			}
 		}
 
@@ -145,7 +145,7 @@ public class Application
 	 *
 	 * @return The plugin.
 	 */
-	public AktarioPlugin getPlugin ()
+	public AktarioPlugin getPlugin()
 	{
 		return plugin;
 	}
@@ -155,7 +155,7 @@ public class Application
 	 *
 	 * @return The gui pane id.
 	 */
-	public String getGuiPaneId ()
+	public String getGuiPaneId()
 	{
 		return guiPaneId;
 	}
@@ -166,9 +166,9 @@ public class Application
 	 * @return The string representation.
 	 */
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return getName ();
+		return getName();
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class Application
 	 *
 	 * @param application The application to add.
 	 */
-	public static void add (Application application)
+	public static void add(Application application)
 	{
-		applications.put (application.getId (), application);
+		applications.put(application.getId(), application);
 	}
 
 	/**
@@ -186,9 +186,9 @@ public class Application
 	 *
 	 * @return An application iterator.
 	 */
-	public static Iterator iterator ()
+	public static Iterator iterator()
 	{
-		return applications.values ().iterator ();
+		return applications.values().iterator();
 	}
 
 	/**
@@ -197,8 +197,8 @@ public class Application
 	 * @param id The application id.
 	 * @return The application or null if it wasn't found.
 	 */
-	public static Application get (String id)
+	public static Application get(String id)
 	{
-		return (Application) applications.get (id);
+		return (Application) applications.get(id);
 	}
 }

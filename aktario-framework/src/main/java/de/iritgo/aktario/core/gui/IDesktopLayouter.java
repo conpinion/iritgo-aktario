@@ -28,7 +28,7 @@ public class IDesktopLayouter extends DefaultDesktopManager
 	/** */
 	private static final long serialVersionUID = 1L;
 
-	public void setBounds (@SuppressWarnings("unused") int newX, @SuppressWarnings("unused") int newY,
+	public void setBounds(@SuppressWarnings("unused") int newX, @SuppressWarnings("unused") int newY,
 					@SuppressWarnings("unused") int newWidth, @SuppressWarnings("unused") int newHeight)
 	{
 	}

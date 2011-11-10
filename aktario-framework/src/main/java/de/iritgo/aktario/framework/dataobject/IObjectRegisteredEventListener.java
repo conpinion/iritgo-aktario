@@ -29,5 +29,5 @@ import de.iritgo.aktario.core.iobject.IObject;
  */
 public interface IObjectRegisteredEventListener extends EventListener
 {
-	public void iObjectRegisteredEvent (IObject iObject);
+	public void iObjectRegisteredEvent(IObject iObject);
 }

@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface IObjectCreatedListener extends EventListener
 {
-	public void iObjectCreatedEvent (IObjectCreatedEvent event);
+	public void iObjectCreatedEvent(IObjectCreatedEvent event);
 }

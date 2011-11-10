@@ -41,19 +41,19 @@ public class ChangeLanguage extends Command
 	/**
 	 * @deprecated Use the ChangeLanguage (Locale locale) constructor.
 	 */
-	public ChangeLanguage (String nativeLanguage)
+	public ChangeLanguage(String nativeLanguage)
 	{
-		if (nativeLanguage.equals ("Deutsch"))
+		if (nativeLanguage.equals("Deutsch"))
 		{
-			locale = new Locale ("de");
+			locale = new Locale("de");
 		}
-		else if (nativeLanguage.equals ("English"))
+		else if (nativeLanguage.equals("English"))
 		{
-			locale = new Locale ("en");
+			locale = new Locale("en");
 		}
 	}
 
-	public ChangeLanguage (Locale locale)
+	public ChangeLanguage(Locale locale)
 	{
 		this.locale = locale;
 	}
@@ -63,38 +63,38 @@ public class ChangeLanguage extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * ConnectToServer
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Client.instance ().getClientGUI ().getDesktopManager ().saveVisibleDisplays ();
-		Client.instance ().getClientGUI ().getDesktopManager ().closeAllDisplays ();
+		Client.instance().getClientGUI().getDesktopManager().saveVisibleDisplays();
+		Client.instance().getClientGUI().getDesktopManager().closeAllDisplays();
 
-		Engine engine = Engine.instance ();
+		Engine engine = Engine.instance();
 
-		String resourceDir = engine.getSystemDir () + engine.getFileSeparator () + "resources"
-						+ engine.getFileSeparator ();
+		String resourceDir = engine.getSystemDir() + engine.getFileSeparator() + "resources"
+						+ engine.getFileSeparator();
 
-		PluginManager pluginManager = engine.getPluginManager ();
-		ResourceService resourceService = engine.getResourceService ();
+		PluginManager pluginManager = engine.getPluginManager();
+		ResourceService resourceService = engine.getResourceService();
 
-		resourceService.loadTranslationsWithClassLoader (IritgoEngine.class, "/resources/system");
+		resourceService.loadTranslationsWithClassLoader(IritgoEngine.class, "/resources/system");
 
-		pluginManager.unloadTranslationResources ();
+		pluginManager.unloadTranslationResources();
 
-		resourceService.updateResourceBundle (locale);
+		resourceService.updateResourceBundle(locale);
 
-		resourceService.unloadTranslationsWithClassLoader (IritgoEngine.class, "/resources/system");
+		resourceService.unloadTranslationsWithClassLoader(IritgoEngine.class, "/resources/system");
 
-		pluginManager.loadTranslationResources ();
+		pluginManager.loadTranslationResources();
 
-		Client.instance ().getClientGUI ().getDesktopManager ().showSavedDisplays ();
+		Client.instance().getClientGUI().getDesktopManager().showSavedDisplays();
 
-		AppContext.instance ().setLocale (locale);
+		AppContext.instance().setLocale(locale);
 	}
 }

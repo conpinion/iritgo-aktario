@@ -44,7 +44,7 @@ public class SwingDesktopManager extends IDesktopManager
 
 		public String title;
 
-		public DesktopPaneInfo (JDesktopPane desktopPane, String title)
+		public DesktopPaneInfo(JDesktopPane desktopPane, String title)
 		{
 			this.desktopPane = desktopPane;
 			this.title = title;
@@ -63,10 +63,10 @@ public class SwingDesktopManager extends IDesktopManager
 	/**
 	 * Create a new SwingDesktopManager.
 	 */
-	public SwingDesktopManager ()
+	public SwingDesktopManager()
 	{
-		desktopPanes = new HashMap ();
-		displays = new LinkedList ();
+		desktopPanes = new HashMap();
+		displays = new LinkedList();
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @deprecated The desktop manager is initialized through it's constructor. Use the
 	 *   methods setDesktopPane() or addDxesktopPane() to set or add a DesktopPane.
 	 */
-	public void init (JDesktopPane desktopPane)
+	public void init(JDesktopPane desktopPane)
 	{
-		addDesktopPane ("default", desktopPane, "Default");
+		addDesktopPane("default", desktopPane, "Default");
 	}
 
 	/**
@@ -87,9 +87,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param desktopPane The DesktopPane which will contain the displays.
 	 */
-	public void setDesktopPane (JDesktopPane desktopPane)
+	public void setDesktopPane(JDesktopPane desktopPane)
 	{
-		addDesktopPane ("default", desktopPane, "Default");
+		addDesktopPane("default", desktopPane, "Default");
 	}
 
 	/**
@@ -99,9 +99,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param desktopPane The desktop pane to add.
 	 * @param title The title of the desktop pane.
 	 */
-	public void addDesktopPaneNoActivation (String id, JDesktopPane desktopPane, String title)
+	public void addDesktopPaneNoActivation(String id, JDesktopPane desktopPane, String title)
 	{
-		desktopPanes.put (id, new DesktopPaneInfo (desktopPane, title));
+		desktopPanes.put(id, new DesktopPaneInfo(desktopPane, title));
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane to add.
 	 * @param desktopPane The desktop pane to add.
 	 */
-	public void addDesktopPaneNoActivation (String id, JDesktopPane desktopPane)
+	public void addDesktopPaneNoActivation(String id, JDesktopPane desktopPane)
 	{
-		addDesktopPaneNoActivation (id, desktopPane, null);
+		addDesktopPaneNoActivation(id, desktopPane, null);
 	}
 
 	/**
@@ -122,9 +122,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param desktopPane The desktop pane to add.
 	 * @param title The title of the desktop pane.
 	 */
-	public void addDesktopPane (String id, JDesktopPane desktopPane, String title)
+	public void addDesktopPane(String id, JDesktopPane desktopPane, String title)
 	{
-		addDesktopPaneNoActivation (id, desktopPane, title);
+		addDesktopPaneNoActivation(id, desktopPane, title);
 		activeDesktopPane = desktopPane;
 		activeDesktopPaneId = id;
 	}
@@ -135,9 +135,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane to add.
 	 * @param desktopPane The desktop pane to add.
 	 */
-	public void addDesktopPane (String id, JDesktopPane desktopPane)
+	public void addDesktopPane(String id, JDesktopPane desktopPane)
 	{
-		addDesktopPane (id, desktopPane, null);
+		addDesktopPane(id, desktopPane, null);
 	}
 
 	/**
@@ -145,9 +145,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param desktopPane The desktop pane to add.
 	 */
-	public void addDesktopPane (JDesktopPane desktopPane)
+	public void addDesktopPane(JDesktopPane desktopPane)
 	{
-		addDesktopPane (new UID ().toString (), desktopPane, "");
+		addDesktopPane(new UID().toString(), desktopPane, "");
 	}
 
 	/**
@@ -155,15 +155,15 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param id The id of the desktop pane to remove.
 	 */
-	public void removeDesktopPane (String id)
+	public void removeDesktopPane(String id)
 	{
-		DesktopPaneInfo desktopInfo = (DesktopPaneInfo) desktopPanes.get (id);
+		DesktopPaneInfo desktopInfo = (DesktopPaneInfo) desktopPanes.get(id);
 
 		if (desktopInfo != null)
 		{
-			desktopPanes.remove (id);
+			desktopPanes.remove(id);
 
-			if (id.equals (activeDesktopPaneId))
+			if (id.equals(activeDesktopPaneId))
 			{
 				activeDesktopPane = null;
 				activeDesktopPaneId = null;
@@ -174,9 +174,9 @@ public class SwingDesktopManager extends IDesktopManager
 	/**
 	 * Remove all desktop panes from the desktop manager.
 	 */
-	public void removeAllDesktopPanes ()
+	public void removeAllDesktopPanes()
 	{
-		desktopPanes.clear ();
+		desktopPanes.clear();
 		activeDesktopPane = null;
 		activeDesktopPaneId = null;
 	}
@@ -186,7 +186,7 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @return The currently active desktop pane.
 	 */
-	public JDesktopPane getActiveDesktopPane ()
+	public JDesktopPane getActiveDesktopPane()
 	{
 		return activeDesktopPane;
 	}
@@ -196,7 +196,7 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @return The id of the currently active desktop pane.
 	 */
-	public String getActiveDesktopPaneId ()
+	public String getActiveDesktopPaneId()
 	{
 		return activeDesktopPaneId;
 	}
@@ -206,9 +206,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param id The id of the desktop pane to activate.
 	 */
-	public void activateDesktopPane (String id)
+	public void activateDesktopPane(String id)
 	{
-		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get (id);
+		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get(id);
 
 		if (desktopPaneInfo != null)
 		{
@@ -223,9 +223,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The name of the desktop pane to retrieve.
 	 * @return The desktop pane or null if no pane with the given exists.
 	 */
-	public JDesktopPane getDesktopPane (String id)
+	public JDesktopPane getDesktopPane(String id)
 	{
-		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get (id);
+		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get(id);
 
 		if (desktopPaneInfo == null)
 		{
@@ -241,9 +241,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane to check.
 	 * @return True if the desktop pane exists.
 	 */
-	public boolean existsDesktopPane (String id)
+	public boolean existsDesktopPane(String id)
 	{
-		return desktopPanes.containsKey (id);
+		return desktopPanes.containsKey(id);
 	}
 
 	/**
@@ -252,9 +252,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane.
 	 * @return The title of the specified pane.
 	 */
-	public String getTitle (String id)
+	public String getTitle(String id)
 	{
-		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get (id);
+		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get(id);
 
 		if (desktopPaneInfo == null)
 		{
@@ -270,9 +270,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane to rename.
 	 * @param title The new title.
 	 */
-	public void setTitle (String id, String title)
+	public void setTitle(String id, String title)
 	{
-		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get (id);
+		DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) desktopPanes.get(id);
 
 		if (desktopPaneInfo != null)
 		{
@@ -287,13 +287,13 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param desktopId The id of the desktop on which to open the display.
 	 */
 	@Override
-	public void addImpl (IDisplay display, String desktopId)
+	public void addImpl(IDisplay display, String desktopId)
 	{
-		display.setDesktopManager (this);
+		display.setDesktopManager(this);
 
-		if (display.getDesktopId () == null)
+		if (display.getDesktopId() == null)
 		{
-			display.setDesktopId (desktopId != null ? desktopId : activeDesktopPaneId);
+			display.setDesktopId(desktopId != null ? desktopId : activeDesktopPaneId);
 		}
 	}
 
@@ -302,9 +302,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @return The JFrame.
 	 */
-	public JFrame getJFrame ()
+	public JFrame getJFrame()
 	{
-		return ((SwingDesktopFrame) desktopFrame).getJFrame ();
+		return ((SwingDesktopFrame) desktopFrame).getJFrame();
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param drawAlways True if during a window resize the content
 	 *   should always be redrawn.
 	 */
-	public void setDrawAlways (boolean drawAlways)
+	public void setDrawAlways(boolean drawAlways)
 	{
 		int mode = JDesktopPane.OUTLINE_DRAG_MODE;
 
@@ -322,11 +322,11 @@ public class SwingDesktopManager extends IDesktopManager
 			mode = JDesktopPane.LIVE_DRAG_MODE;
 		}
 
-		for (Iterator iter = desktopPanes.values ().iterator (); iter.hasNext ();)
+		for (Iterator iter = desktopPanes.values().iterator(); iter.hasNext();)
 		{
-			DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) iter.next ();
+			DesktopPaneInfo desktopPaneInfo = (DesktopPaneInfo) iter.next();
 
-			desktopPaneInfo.desktopPane.setDragMode (mode);
+			desktopPaneInfo.desktopPane.setDragMode(mode);
 		}
 	}
 
@@ -335,9 +335,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @return A desktop pane id iterator.
 	 */
-	public Iterator desktopPaneIdIterator ()
+	public Iterator desktopPaneIdIterator()
 	{
-		return desktopPanes.keySet ().iterator ();
+		return desktopPanes.keySet().iterator();
 	}
 
 	/**
@@ -346,17 +346,17 @@ public class SwingDesktopManager extends IDesktopManager
 	 * @param id The id of the desktop pane.
 	 * @return A list of displays.
 	 */
-	public List getDisplaysOnDesktopPane (String id)
+	public List getDisplaysOnDesktopPane(String id)
 	{
-		List displaysOnDesktop = new LinkedList ();
+		List displaysOnDesktop = new LinkedList();
 
-		for (Iterator i = displays.iterator (); i.hasNext ();)
+		for (Iterator i = displays.iterator(); i.hasNext();)
 		{
-			IDisplay display = (IDisplay) i.next ();
+			IDisplay display = (IDisplay) i.next();
 
-			if (display.getDesktopId ().equals (id))
+			if (display.getDesktopId().equals(id))
 			{
-				displaysOnDesktop.add (display);
+				displaysOnDesktop.add(display);
 			}
 		}
 
@@ -368,9 +368,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @return The number of desktop panes.
 	 */
-	public int getDesktopPaneCount ()
+	public int getDesktopPaneCount()
 	{
-		return desktopPanes.size ();
+		return desktopPanes.size();
 	}
 
 	/**
@@ -378,9 +378,9 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param desktopId The id of the desktop.
 	 */
-	public void closeAllDisplays (String desktopId)
+	public void closeAllDisplays(String desktopId)
 	{
-		super.closeAllDisplays (desktopId);
+		super.closeAllDisplays(desktopId);
 	}
 
 	/**
@@ -388,7 +388,7 @@ public class SwingDesktopManager extends IDesktopManager
 	 *
 	 * @param activeDisplay The display to activate.
 	 */
-	public void activateDisplay (IDisplay activeDisplay)
+	public void activateDisplay(IDisplay activeDisplay)
 	{
 	}
 }

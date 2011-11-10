@@ -38,14 +38,14 @@ public class InstantMessageEvent implements Event
 
 	private String targetUser;
 
-	public InstantMessageEvent ()
+	public InstantMessageEvent()
 	{
 	}
 
 	/**
 	 * Default constructor
 	 */
-	public InstantMessageEvent (long timestamp, String message, String sourceUser, String targetUser, boolean incoming)
+	public InstantMessageEvent(long timestamp, String message, String sourceUser, String targetUser, boolean incoming)
 	{
 		this.timestamp = timestamp;
 		this.message = message;
@@ -59,7 +59,7 @@ public class InstantMessageEvent implements Event
 	 *
 	 * @return String The timestamp.
 	 */
-	public long getTimestamp ()
+	public long getTimestamp()
 	{
 		return timestamp;
 	}
@@ -69,7 +69,7 @@ public class InstantMessageEvent implements Event
 	 *
 	 * @return String The message.
 	 */
-	public String getMessage ()
+	public String getMessage()
 	{
 		return message;
 	}
@@ -79,7 +79,7 @@ public class InstantMessageEvent implements Event
 	 *
 	 * @return String The sending user.
 	 */
-	public String getSourceUser ()
+	public String getSourceUser()
 	{
 		return sourceUser;
 	}
@@ -89,7 +89,7 @@ public class InstantMessageEvent implements Event
 	 *
 	 * @return String The receiving user.
 	 */
-	public String getTargetUser ()
+	public String getTargetUser()
 	{
 		return targetUser;
 	}
@@ -99,7 +99,7 @@ public class InstantMessageEvent implements Event
 	 *
 	 * @return True for an incoming message.
 	 */
-	public boolean isIncoming ()
+	public boolean isIncoming()
 	{
 		return incoming;
 	}

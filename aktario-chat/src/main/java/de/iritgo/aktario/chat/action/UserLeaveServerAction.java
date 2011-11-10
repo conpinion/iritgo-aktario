@@ -34,42 +34,42 @@ public class UserLeaveServerAction extends FrameworkServerAction
 
 	private int channel;
 
-	public UserLeaveServerAction ()
+	public UserLeaveServerAction()
 	{
-		super ();
+		super();
 	}
 
-	public UserLeaveServerAction (String userName, int channel)
+	public UserLeaveServerAction(String userName, int channel)
 	{
-		super ();
+		super();
 		this.channel = channel;
 		this.userName = userName;
 	}
 
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		channel = stream.readInt ();
+		userName = stream.readUTF();
+		channel = stream.readInt();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeInt (channel);
+		stream.writeUTF(userName);
+		stream.writeInt(channel);
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ChatManager chatManager = (ChatManager) Engine.instance ().getManagerRegistry ().getManager ("chat.server");
+		ChatManager chatManager = (ChatManager) Engine.instance().getManagerRegistry().getManager("chat.server");
 
-		chatManager.leaveChannel (new Integer (channel), userUniqueId);
+		chatManager.leaveChannel(new Integer(channel), userUniqueId);
 	}
 }

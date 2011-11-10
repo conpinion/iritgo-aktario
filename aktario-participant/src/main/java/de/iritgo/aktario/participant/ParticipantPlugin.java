@@ -40,38 +40,38 @@ import de.iritgo.aktario.participant.gui.ParticipantStatePane;
  */
 public class ParticipantPlugin extends AktarioPlugin
 {
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new ParticipantStatePane ());
+		registerGUIPane(new ParticipantStatePane());
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (FrameworkPlugin.CLIENT, new ParticipantClientManager ());
-		registerManager (FrameworkPlugin.SERVER, new ParticipantServerManager ());
+		registerManager(FrameworkPlugin.CLIENT, new ParticipantClientManager());
+		registerManager(FrameworkPlugin.SERVER, new ParticipantServerManager());
 	}
 
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new AddAttributeToParticipantStateCommand ());
-		registerCommand (new AddAttributeRenderCommand ());
-		registerCommand (new AddAttributeEditorCommand ());
-		registerCommand (new AddAttributeCommand ());
-		registerCommand (new AddContentCommand ());
-		registerCommand (new GetParticipantState ());
-		registerCommand (new GetParticipantList ());
-		registerCommand (new GetParticipantStateByName ());
+		registerCommand(new AddAttributeToParticipantStateCommand());
+		registerCommand(new AddAttributeRenderCommand());
+		registerCommand(new AddAttributeEditorCommand());
+		registerCommand(new AddAttributeCommand());
+		registerCommand(new AddContentCommand());
+		registerCommand(new GetParticipantState());
+		registerCommand(new GetParticipantList());
+		registerCommand(new GetParticipantStateByName());
 	}
 }

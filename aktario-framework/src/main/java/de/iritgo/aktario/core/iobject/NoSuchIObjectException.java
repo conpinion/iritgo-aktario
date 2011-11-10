@@ -25,8 +25,8 @@ public class NoSuchIObjectException extends Exception
 	/** */
 	private static final long serialVersionUID = 1L;
 
-	public NoSuchIObjectException (String classID)
+	public NoSuchIObjectException(String classID)
 	{
-		super ("Prototype " + classID + " not found.");
+		super("Prototype " + classID + " not found.");
 	}
 }

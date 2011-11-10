@@ -53,55 +53,55 @@ import de.iritgo.aktario.framework.base.FrameworkPlugin;
 public class AktarioClientPlugin extends AktarioPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new ParticipantControlPane ());
-		registerGUIPane (new RoomControlPane ());
-		registerGUIPane (new ToolControlPane ());
-		registerGUIPane (new UserLoginPane ());
-		registerGUIPane (new UserLoginFailurePane ());
-		registerGUIPane (new PreferencesPane ());
-		registerGUIPane (new UserListPane ());
-		registerGUIPane (new EditUserPane ());
-		registerGUIPane (new AboutPane ());
-		registerGUIPane (new RoomPane ());
-		registerGUIPane (new EditRoomPane ());
-		registerGUIPane (new MessangerPane ());
+		registerGUIPane(new ParticipantControlPane());
+		registerGUIPane(new RoomControlPane());
+		registerGUIPane(new ToolControlPane());
+		registerGUIPane(new UserLoginPane());
+		registerGUIPane(new UserLoginFailurePane());
+		registerGUIPane(new PreferencesPane());
+		registerGUIPane(new UserListPane());
+		registerGUIPane(new EditUserPane());
+		registerGUIPane(new AboutPane());
+		registerGUIPane(new RoomPane());
+		registerGUIPane(new EditRoomPane());
+		registerGUIPane(new MessangerPane());
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (FrameworkPlugin.CLIENT, new AktarioClientManager ());
-		registerManager (FrameworkPlugin.CLIENT, new PreferencesManager ());
+		registerManager(FrameworkPlugin.CLIENT, new AktarioClientManager());
+		registerManager(FrameworkPlugin.CLIENT, new PreferencesManager());
 	}
 
 	@Override
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (FrameworkPlugin.CLIENT, new GetDesktopFrameBounds ());
-		registerCommand (FrameworkPlugin.CLIENT, new DefaultStartup ());
-		registerCommand (FrameworkPlugin.CLIENT, new GetUserRole ());
-		registerCommand (FrameworkPlugin.CLIENT, new DisplayUserConnectionState ());
-		registerCommand (FrameworkPlugin.CLIENT, new DisplayUserReadyState ());
-		registerCommand (FrameworkPlugin.CLIENT, new ApplyPreferences ());
-		registerCommand (FrameworkPlugin.CLIENT, new EnableAdminFunctions ());
-		registerCommand (FrameworkPlugin.CLIENT, new TestLoginCommand ());
-		registerCommand (FrameworkPlugin.CLIENT, new TestLogoffCommand ());
+		registerCommand(FrameworkPlugin.CLIENT, new GetDesktopFrameBounds());
+		registerCommand(FrameworkPlugin.CLIENT, new DefaultStartup());
+		registerCommand(FrameworkPlugin.CLIENT, new GetUserRole());
+		registerCommand(FrameworkPlugin.CLIENT, new DisplayUserConnectionState());
+		registerCommand(FrameworkPlugin.CLIENT, new DisplayUserReadyState());
+		registerCommand(FrameworkPlugin.CLIENT, new ApplyPreferences());
+		registerCommand(FrameworkPlugin.CLIENT, new EnableAdminFunctions());
+		registerCommand(FrameworkPlugin.CLIENT, new TestLoginCommand());
+		registerCommand(FrameworkPlugin.CLIENT, new TestLogoffCommand());
 	}
 }

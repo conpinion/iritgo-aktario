@@ -36,7 +36,7 @@ public class IObjectRequestEvent implements Event
 	 *
 	 * @param uniqueId Unique id of the requested object.
 	 */
-	public IObjectRequestEvent (long uniqueId)
+	public IObjectRequestEvent(long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
@@ -46,7 +46,7 @@ public class IObjectRequestEvent implements Event
 	 *
 	 * @return The unique id of the requested object.
 	 */
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}

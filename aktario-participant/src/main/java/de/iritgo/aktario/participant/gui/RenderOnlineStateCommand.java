@@ -42,38 +42,38 @@ public class RenderOnlineStateCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public RenderOnlineStateCommand ()
+	public RenderOnlineStateCommand()
 	{
-		super ("RenderOnlineStateCommand");
-		userIsFreeForCall = new ImageIcon (ParticipantPlugin.class.getResource ("/resources/user-offline.png"));
-		userHasACall = new ImageIcon (ParticipantPlugin.class.getResource ("/resources/user-online.png"));
+		super("RenderOnlineStateCommand");
+		userIsFreeForCall = new ImageIcon(ParticipantPlugin.class.getResource("/resources/user-offline.png"));
+		userHasACall = new ImageIcon(ParticipantPlugin.class.getResource("/resources/user-online.png"));
 	}
 
 	/**
 	 *
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer ()
+		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer()
 		{
-			public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected,
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column)
 			{
-				setText ("");
+				setText("");
 
-				int state = ((Integer) value).intValue ();
+				int state = ((Integer) value).intValue();
 
 				if (state == 0)
 				{
-					setIcon (userIsFreeForCall);
+					setIcon(userIsFreeForCall);
 				}
 				else
 				{
-					setIcon (userHasACall);
+					setIcon(userHasACall);
 				}
 
-				table.getColumnModel ().getColumn (column).setMinWidth (userIsFreeForCall.getIconWidth ());
-				table.getColumnModel ().getColumn (column).setMaxWidth (userIsFreeForCall.getIconWidth () + 4);
+				table.getColumnModel().getColumn(column).setMinWidth(userIsFreeForCall.getIconWidth());
+				table.getColumnModel().getColumn(column).setMaxWidth(userIsFreeForCall.getIconWidth() + 4);
 
 				return this;
 			}

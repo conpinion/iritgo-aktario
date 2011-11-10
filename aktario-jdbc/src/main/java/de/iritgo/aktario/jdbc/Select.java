@@ -43,59 +43,59 @@ public class Select extends Command
 	/**
 	 * Create a new <code>LoadAllObjects</code> command.
 	 */
-	public Select ()
+	public Select()
 	{
-		super ("persist.Select");
+		super("persist.Select");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("handler") == null)
+		if (properties.get("handler") == null)
 		{
-			Log.logError ("persist", "Select", "Missing result set handler");
+			Log.logError("persist", "Select", "Missing result set handler");
 
 			return;
 		}
 
-		ResultSetHandler resultSetHandler = (ResultSetHandler) properties.get ("handler");
+		ResultSetHandler resultSetHandler = (ResultSetHandler) properties.get("handler");
 
-		if (properties.get ("select") == null)
+		if (properties.get("select") == null)
 		{
-			Log.logError ("persist", "Select", "Missing select statement");
+			Log.logError("persist", "Select", "Missing select statement");
 
 			return;
 		}
 
-		String select = (String) properties.getProperty ("select");
+		String select = (String) properties.getProperty("select");
 
-		Object[] params = (Object[]) properties.get ("params");
+		Object[] params = (Object[]) properties.get("params");
 
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		try
 		{
-			QueryRunner query = new QueryRunner (dataSource);
+			QueryRunner query = new QueryRunner(dataSource);
 
 			Object res;
 
 			if (params != null)
 			{
-				res = query.query (select, params, resultSetHandler);
+				res = query.query(select, params, resultSetHandler);
 			}
 			else
 			{
-				res = query.query (select, resultSetHandler);
+				res = query.query(select, resultSetHandler);
 			}
 
-			Log.logVerbose ("persist", "Select", "SELECT |" + select + "|");
+			Log.logVerbose("persist", "Select", "SELECT |" + select + "|");
 		}
 		catch (Exception x)
 		{
-			Log.logError ("persist", "Select", "Error while executing sql |" + select + "|: " + x);
+			Log.logError("persist", "Select", "Error while executing sql |" + select + "|: " + x);
 		}
 	}
 }

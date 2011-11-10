@@ -42,13 +42,13 @@ public class ResourceNode extends BaseObject
 	 * @param description The description of the resource.
 	 * @param nodeName The node Name
 	 */
-	public ResourceNode (String description, String nodeName)
+	public ResourceNode(String description, String nodeName)
 	{
 		this.description = description;
 		this.name = nodeName;
 	}
 
-	public ResourceNode (String nodeName)
+	public ResourceNode(String nodeName)
 	{
 		this.name = nodeName;
 	}
@@ -58,7 +58,7 @@ public class ResourceNode extends BaseObject
 	 *
 	 * @return The description of the resource.
 	 */
-	public String getDescription ()
+	public String getDescription()
 	{
 		return description;
 	}
@@ -68,7 +68,7 @@ public class ResourceNode extends BaseObject
 	 *
 	 * @return The tree node name.
 	 */
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}
@@ -79,14 +79,14 @@ public class ResourceNode extends BaseObject
 	 * @param nodeName
 	 * @return The node.
 	 */
-	public ResourceNode getNodeByName (String nodeName)
+	public ResourceNode getNodeByName(String nodeName)
 	{
-		if (nodeName.equals (this.name))
+		if (nodeName.equals(this.name))
 		{
 			return this;
 		}
 
-		return nodeMap != null ? ((ResourceNode) nodeMap.get (nodeName)) : null;
+		return nodeMap != null ? ((ResourceNode) nodeMap.get(nodeName)) : null;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class ResourceNode extends BaseObject
 	 *
 	 * @return The node.
 	 */
-	public String getValue ()
+	public String getValue()
 	{
 		return name;
 	}
@@ -102,21 +102,21 @@ public class ResourceNode extends BaseObject
 	/**
 	 * Add children to this note.
 	 */
-	public void addNode (ResourceNode node)
+	public void addNode(ResourceNode node)
 	{
-		nodeMapOnDemand ();
-		nodeMap.put (node.getName (), node);
+		nodeMapOnDemand();
+		nodeMap.put(node.getName(), node);
 	}
 
 	/**
 	 * NodeMap on demand.
 	 *
 	 */
-	public void nodeMapOnDemand ()
+	public void nodeMapOnDemand()
 	{
 		if (nodeMap == null)
 		{
-			nodeMap = new TreeMap ();
+			nodeMap = new TreeMap();
 		}
 	}
 
@@ -125,9 +125,9 @@ public class ResourceNode extends BaseObject
 	 *
 	 * @return The a Key-Iterator
 	 */
-	public Iterator getKeyIterator ()
+	public Iterator getKeyIterator()
 	{
-		return nodeMap.keySet ().iterator ();
+		return nodeMap.keySet().iterator();
 	}
 
 	/**
@@ -135,8 +135,8 @@ public class ResourceNode extends BaseObject
 	 *
 	 * @return The a Key-Iterator
 	 */
-	public Iterator getNodeIterator ()
+	public Iterator getNodeIterator()
 	{
-		return nodeMap.values ().iterator ();
+		return nodeMap.values().iterator();
 	}
 }

@@ -62,61 +62,61 @@ public class FileBrowser extends JTree
 	/**
 	 * Our TreeWillExpandListener
 	 */
-	TreeWillExpandListener twel = new TreeWillExpandListener ()
+	TreeWillExpandListener twel = new TreeWillExpandListener()
 	{
-		public void treeWillExpand (TreeExpansionEvent event) throws ExpandVetoException
+		public void treeWillExpand(TreeExpansionEvent event) throws ExpandVetoException
 		{
-			TreeNode node = (TreeNode) event.getPath ().getLastPathComponent ();
+			TreeNode node = (TreeNode) event.getPath().getLastPathComponent();
 
-			((FileNode) node).nodeWillExpand ();
-			((DefaultTreeModel) getModel ()).reload (node);
+			((FileNode) node).nodeWillExpand();
+			((DefaultTreeModel) getModel()).reload(node);
 		}
 
-		public synchronized void treeWillCollapse (TreeExpansionEvent event) throws ExpandVetoException
+		public synchronized void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException
 		{
-			TreeNode node = (TreeNode) event.getPath ().getLastPathComponent ();
+			TreeNode node = (TreeNode) event.getPath().getLastPathComponent();
 
-			((FileNode) node).nodeWillCollapse ();
-			((DefaultTreeModel) getModel ()).reload (node);
+			((FileNode) node).nodeWillCollapse();
+			((DefaultTreeModel) getModel()).reload(node);
 		}
 	};
 
 	/**
 	 * The popup menu action listener.
 	 */
-	ActionListener pmal = new ActionListener ()
+	ActionListener pmal = new ActionListener()
 	{
-		public void actionPerformed (ActionEvent evt)
+		public void actionPerformed(ActionEvent evt)
 		{
-			setCursor (Cursor.WAIT_CURSOR);
+			setCursor(Cursor.WAIT_CURSOR);
 
-			String command = evt.getActionCommand ();
+			String command = evt.getActionCommand();
 
-			if (command.equals ("del"))
+			if (command.equals("del"))
 			{
-				deleteSelectedFiles ();
+				deleteSelectedFiles();
 			}
-			else if (command.equals ("newfolder"))
+			else if (command.equals("newfolder"))
 			{
-				createNewFolder ();
+				createNewFolder();
 			}
 
-			setCursor (Cursor.DEFAULT_CURSOR);
+			setCursor(Cursor.DEFAULT_CURSOR);
 		}
 	};
 
 	/**
 	 * Our ActionListener
 	 */
-	ActionListener al = new ActionListener ()
+	ActionListener al = new ActionListener()
 	{
-		public void actionPerformed (ActionEvent evt)
+		public void actionPerformed(ActionEvent evt)
 		{
-			String command = evt.getActionCommand ();
+			String command = evt.getActionCommand();
 
-			if (command.equals (DELETE_CMD))
+			if (command.equals(DELETE_CMD))
 			{
-				deleteSelectedFiles ();
+				deleteSelectedFiles();
 			}
 		}
 	};
@@ -124,71 +124,71 @@ public class FileBrowser extends JTree
 	/**
 	 * Our MouseListener
 	 */
-	MouseAdapter mouseAdapter = new MouseAdapter ()
+	MouseAdapter mouseAdapter = new MouseAdapter()
 	{
 		@Override
-		public void mousePressed (MouseEvent e)
+		public void mousePressed(MouseEvent e)
 		{
-			maybeShowPopup (e);
+			maybeShowPopup(e);
 		}
 
 		@Override
-		public void mouseReleased (MouseEvent e)
+		public void mouseReleased(MouseEvent e)
 		{
-			maybeShowPopup (e);
+			maybeShowPopup(e);
 		}
 
-		private void maybeShowPopup (MouseEvent e)
+		private void maybeShowPopup(MouseEvent e)
 		{
-			if (e.isPopupTrigger ())
+			if (e.isPopupTrigger())
 			{
-				FileNode node = (FileNode) getLastSelectedPathComponent ();
+				FileNode node = (FileNode) getLastSelectedPathComponent();
 
 				if (node != null)
 				{
-					getPopupMenu (node).show (e.getComponent (), e.getX (), e.getY ());
+					getPopupMenu(node).show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
 		}
 	};
 
-	public FileBrowser (FileNode root)
+	public FileBrowser(FileNode root)
 	{
-		super (root);
-		setRootVisible (false);
-		setEditable (true);
-		setLargeModel (true);
-		setScrollsOnExpand (true);
-		addTreeWillExpandListener (twel);
+		super(root);
+		setRootVisible(false);
+		setEditable(true);
+		setLargeModel(true);
+		setScrollsOnExpand(true);
+		addTreeWillExpandListener(twel);
 
-		KeyStroke delK = KeyStroke.getKeyStroke (KeyEvent.VK_DELETE, 0);
+		KeyStroke delK = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
 
-		registerKeyboardAction (al, DELETE_CMD, delK, WHEN_FOCUSED);
-		addMouseListener (mouseAdapter);
+		registerKeyboardAction(al, DELETE_CMD, delK, WHEN_FOCUSED);
+		addMouseListener(mouseAdapter);
 	}
 
-	public FileBrowser ()
+	public FileBrowser()
 	{
-		this (new FileNode ("My Computer", new FilenameFilter ()
+		this(new FileNode("My Computer", new FilenameFilter()
 		{
-			public boolean accept (File dir, String name)
+			public boolean accept(File dir, String name)
 			{
-				return name.charAt (0) != '.';
+				return name.charAt(0) != '.';
 			}
 		}));
 
-		((FileNode) getModel ().getRoot ()).initializeRootNode (this);
+		((FileNode) getModel().getRoot()).initializeRootNode(this);
 	}
 
 	/**
 	 * Get a DateFormat compliant with RFC 822 updated by RFC 1123.
 	 * @return a SimpleDateFormat instance.
 	 */
-	private SimpleDateFormat getDateFormatter ()
+	private SimpleDateFormat getDateFormatter()
 	{
 		if (formatter == null)
 		{
-			formatter = new SimpleDateFormat ("dd MMM yyyy HH:mm");
+			formatter = new SimpleDateFormat("dd MMM yyyy HH:mm");
 
 			//formatter.setTimeZone(TimeZone.getTimeZone(""));
 		}
@@ -202,14 +202,14 @@ public class FileBrowser extends JTree
 	 * @param paths the TreePath array
 	 * @return the filtered array
 	 */
-	protected TreePath[] removeDescendants (TreePath[] paths)
+	protected TreePath[] removeDescendants(TreePath[] paths)
 	{
 		if (paths == null)
 		{
 			return null;
 		}
 
-		Vector newpaths = new Vector ();
+		Vector newpaths = new Vector();
 
 		for (int i = 0; i < paths.length; i++)
 		{
@@ -218,7 +218,7 @@ public class FileBrowser extends JTree
 
 			for (int j = 0; j < paths.length; j++)
 			{
-				if ((! (j == i)) && (paths[j].isDescendant (currentp)))
+				if ((! (j == i)) && (paths[j].isDescendant(currentp)))
 				{
 					hasParent = true;
 				}
@@ -226,73 +226,73 @@ public class FileBrowser extends JTree
 
 			if (! hasParent)
 			{
-				newpaths.addElement (currentp);
+				newpaths.addElement(currentp);
 			}
 		}
 
-		TreePath[] filteredPath = new TreePath[newpaths.size ()];
+		TreePath[] filteredPath = new TreePath[newpaths.size()];
 
-		newpaths.copyInto (filteredPath);
+		newpaths.copyInto(filteredPath);
 
 		return filteredPath;
 	}
 
-	protected void createNewFolder ()
+	protected void createNewFolder()
 	{
-		TreePath path = getSelectionPath ();
-		FileNode node = (FileNode) path.getLastPathComponent ();
+		TreePath path = getSelectionPath();
+		FileNode node = (FileNode) path.getLastPathComponent();
 
-		if (node.hasFile ())
+		if (node.hasFile())
 		{
-			File dir = node.getFile ();
+			File dir = node.getFile();
 
-			if (dir.isDirectory ())
+			if (dir.isDirectory())
 			{
-				File newfolder = new File (dir, "NewFolder");
+				File newfolder = new File(dir, "NewFolder");
 				int i = 0;
 
-				while (newfolder.exists ())
+				while (newfolder.exists())
 				{
-					newfolder = new File (dir, "NewFolder" + (++i));
+					newfolder = new File(dir, "NewFolder" + (++i));
 				}
 
-				if (newfolder.mkdirs ())
+				if (newfolder.mkdirs())
 				{
-					FileNode newnode = new FileNode (this, node, newfolder);
+					FileNode newnode = new FileNode(this, node, newfolder);
 
-					addNode (node, newnode);
+					addNode(node, newnode);
 				}
 			}
 		}
 	}
 
-	protected void deleteSelectedFiles ()
+	protected void deleteSelectedFiles()
 	{
-		TreePath[] path = removeDescendants (getSelectionPaths ());
+		TreePath[] path = removeDescendants(getSelectionPaths());
 
 		if (path != null)
 		{
-			int result = JOptionPane.showConfirmDialog (this, "Delete selected resource(s)?", "Delete Resource(s)",
+			int result = JOptionPane.showConfirmDialog(this, "Delete selected resource(s)?", "Delete Resource(s)",
 							JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.YES_OPTION)
 			{
-				DefaultTreeModel model = (DefaultTreeModel) getModel ();
+				DefaultTreeModel model = (DefaultTreeModel) getModel();
 
 				for (int i = 0; i < path.length; i++)
 				{
-					FileNode fnode = (FileNode) path[i].getLastPathComponent ();
-					File file = fnode.getFile ();
+					FileNode fnode = (FileNode) path[i].getLastPathComponent();
+					File file = fnode.getFile();
 
-					if ((file != null) && (file.delete ()))
+					if ((file != null) && (file.delete()))
 					{
-						MutableTreeNode node = (MutableTreeNode) path[i].getLastPathComponent ();
+						MutableTreeNode node = (MutableTreeNode) path[i].getLastPathComponent();
 
-						model.removeNodeFromParent (node);
+						model.removeNodeFromParent(node);
 					}
 					else
 					{
-						JOptionPane.showMessageDialog (this, "Can't delete!", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(this, "Can't delete!", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -306,35 +306,35 @@ public class FileBrowser extends JTree
 	 * @param file the selected file
 	 * @return a JPopupMenu instance
 	 */
-	protected JPopupMenu getPopupMenu (FileNode node)
+	protected JPopupMenu getPopupMenu(FileNode node)
 	{
-		JPopupMenu popupMenu = new JPopupMenu ("Actions");
+		JPopupMenu popupMenu = new JPopupMenu("Actions");
 		JMenuItem menuItem = null;
 
-		String name = node.getName ();
+		String name = node.getName();
 
-		if (getSelectionCount () > 1)
+		if (getSelectionCount() > 1)
 		{
-			menuItem = new JMenuItem ("Delete files");
-			menuItem.addActionListener (pmal);
-			menuItem.setActionCommand ("del");
-			popupMenu.add (menuItem);
+			menuItem = new JMenuItem("Delete files");
+			menuItem.addActionListener(pmal);
+			menuItem.setActionCommand("del");
+			popupMenu.add(menuItem);
 		}
 		else
 		{
-			File file = node.getFile ();
+			File file = node.getFile();
 
 			if (file != null)
 			{
-				Date date = new Date (file.lastModified ());
-				StringBuffer descr = new StringBuffer (name);
+				Date date = new Date(file.lastModified());
+				StringBuffer descr = new StringBuffer(name);
 
-				descr.append (", ");
-				descr.append (getDateFormatter ().format (date));
+				descr.append(", ");
+				descr.append(getDateFormatter().format(date));
 
-				if (file.isFile ())
+				if (file.isFile())
 				{
-					long size = file.length ();
+					long size = file.length();
 					String s = null;
 
 					if (size > 1023)
@@ -346,33 +346,33 @@ public class FileBrowser extends JTree
 						s = " [" + size + " bytes]";
 					}
 
-					descr.append (s);
+					descr.append(s);
 				}
 
-				menuItem = new JMenuItem (descr.toString ());
-				menuItem.addActionListener (pmal);
-				menuItem.setActionCommand ("info");
-				popupMenu.add (menuItem);
+				menuItem = new JMenuItem(descr.toString());
+				menuItem.addActionListener(pmal);
+				menuItem.setActionCommand("info");
+				popupMenu.add(menuItem);
 
-				popupMenu.addSeparator ();
+				popupMenu.addSeparator();
 
-				if (file.isDirectory () && (getSelectionCount () == 1))
+				if (file.isDirectory() && (getSelectionCount() == 1))
 				{
-					menuItem = new JMenuItem ("New Folder");
-					menuItem.addActionListener (pmal);
-					menuItem.setActionCommand ("newfolder");
-					popupMenu.add (menuItem);
+					menuItem = new JMenuItem("New Folder");
+					menuItem.addActionListener(pmal);
+					menuItem.setActionCommand("newfolder");
+					popupMenu.add(menuItem);
 				}
 
-				menuItem = new JMenuItem ("Delete " + name);
-				menuItem.addActionListener (pmal);
-				menuItem.setActionCommand ("del");
-				popupMenu.add (menuItem);
+				menuItem = new JMenuItem("Delete " + name);
+				menuItem.addActionListener(pmal);
+				menuItem.setActionCommand("del");
+				popupMenu.add(menuItem);
 			}
 			else
 			{
-				menuItem = new JMenuItem (name);
-				popupMenu.add (menuItem);
+				menuItem = new JMenuItem(name);
+				popupMenu.add(menuItem);
 			}
 		}
 
@@ -382,75 +382,75 @@ public class FileBrowser extends JTree
 	//
 	// node operations
 	//
-	protected void removeNodeFromParent (FileNode node)
+	protected void removeNodeFromParent(FileNode node)
 	{
-		((DefaultTreeModel) getModel ()).removeNodeFromParent (node);
+		((DefaultTreeModel) getModel()).removeNodeFromParent(node);
 	}
 
-	protected void addNode (FileNode parent, FileNode child)
+	protected void addNode(FileNode parent, FileNode child)
 	{
-		((DefaultTreeModel) getModel ()).insertNodeInto (child, parent, 0);
-		child.setParent (parent);
+		((DefaultTreeModel) getModel()).insertNodeInto(child, parent, 0);
+		child.setParent(parent);
 	}
 
 	//
 	// Frame
 	//
-	protected Frame getFrame ()
+	protected Frame getFrame()
 	{
 		if (frame == null)
 		{
-			frame = (Frame) SwingUtilities.getAncestorOfClass (Frame.class, this);
+			frame = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, this);
 		}
 
 		return frame;
 	}
 
-	public void setCursor (int cursor)
+	public void setCursor(int cursor)
 	{
-		getFrame ().setCursor (Cursor.getPredefinedCursor (cursor));
+		getFrame().setCursor(Cursor.getPredefinedCursor(cursor));
 	}
 
-	public static FileBrowser getFileBrowser (@SuppressWarnings("unused") String rootname)
+	public static FileBrowser getFileBrowser(@SuppressWarnings("unused") String rootname)
 	{
-		FilenameFilter filter = new FilenameFilter ()
+		FilenameFilter filter = new FilenameFilter()
 		{
-			public boolean accept (File dir, String name)
+			public boolean accept(File dir, String name)
 			{
-				return (name.charAt (0) != '.');
+				return (name.charAt(0) != '.');
 			}
 		};
 
-		FileNode root = new FileNode ("My Computer", filter);
-		FileBrowser browser = new FileBrowser (root);
+		FileNode root = new FileNode("My Computer", filter);
+		FileBrowser browser = new FileBrowser(root);
 
-		root.initializeRootNode (browser);
+		root.initializeRootNode(browser);
 
 		return browser;
 	}
 
-	public static void main (String[] args)
+	public static void main(String[] args)
 	{
 		//         Utils.unBoldSpecificFonts();
-		JFrame frame = new JFrame ("File Browser");
-		JScrollPane scrollpane = new JScrollPane (getFileBrowser ("My Computer"));
+		JFrame frame = new JFrame("File Browser");
+		JScrollPane scrollpane = new JScrollPane(getFileBrowser("My Computer"));
 
-		frame.getContentPane ().add (scrollpane, BorderLayout.CENTER);
-		frame.setSize (300, 600);
-		frame.setVisible (true);
+		frame.getContentPane().add(scrollpane, BorderLayout.CENTER);
+		frame.setSize(300, 600);
+		frame.setVisible(true);
 	}
 
-	public void setRoot (File file)
+	public void setRoot(File file)
 	{
-		FileNode root = new FileNode (file, new FilenameFilter ()
+		FileNode root = new FileNode(file, new FilenameFilter()
 		{
-			public boolean accept (File dir, String name)
+			public boolean accept(File dir, String name)
 			{
-				return name.charAt (0) != '.';
+				return name.charAt(0) != '.';
 			}
 		});
 
-		setModel (new DefaultTreeModel (root));
-		root.initializeRootNode (this);
+		setModel(new DefaultTreeModel(root));
+		root.initializeRootNode(this);
 	}
 }

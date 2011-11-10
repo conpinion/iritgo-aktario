@@ -35,17 +35,17 @@ public class PingServerAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public PingServerAction ()
+	public PingServerAction()
 	{
-		super (- 1);
+		super(- 1);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public PingServerAction (long pingTime)
+	public PingServerAction(long pingTime)
 	{
-		super ();
+		super();
 		this.pingTime = pingTime;
 	}
 
@@ -53,26 +53,26 @@ public class PingServerAction extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		pingTime = stream.readLong ();
+		pingTime = stream.readLong();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (pingTime);
+		stream.writeLong(pingTime);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		((PingManager) Server.instance ().getPingManager ()).receivedPing (userUniqueId, pingTime);
+		((PingManager) Server.instance().getPingManager()).receivedPing(userUniqueId, pingTime);
 	}
 }

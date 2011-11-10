@@ -42,13 +42,13 @@ public class ITable extends JTable
 	 * @see Scrollable#getScrollableTracksViewportWidth
 	 */
 	@Override
-	public boolean getScrollableTracksViewportWidth ()
+	public boolean getScrollableTracksViewportWidth()
 	{
 		if (autoResizeMode != AUTO_RESIZE_OFF)
 		{
-			if (getParent () instanceof JViewport)
+			if (getParent() instanceof JViewport)
 			{
-				return (((JViewport) getParent ()).getWidth () > getPreferredSize ().width);
+				return (((JViewport) getParent()).getWidth() > getPreferredSize().width);
 			}
 		}
 

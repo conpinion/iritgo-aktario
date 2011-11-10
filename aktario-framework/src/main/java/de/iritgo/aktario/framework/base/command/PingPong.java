@@ -28,16 +28,16 @@ import de.iritgo.aktario.core.command.Command;
  */
 public class PingPong extends Command
 {
-	public PingPong ()
+	public PingPong()
 	{
-		super ("pingpong");
+		super("pingpong");
 	}
 
 	/**
 	 * Start pingpong
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 	}
 }

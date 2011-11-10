@@ -37,33 +37,33 @@ public interface Agent
 	 *
 	 * @return int Unique id of this agent.
 	 */
-	public long getUniqueId ();
+	public long getUniqueId();
 
 	/**
 	 * Initialize the agent.
 	 *
 	 * @param agentManager The agent manager.
 	 */
-	public void init (AgentManager agentManager);
+	public void init(AgentManager agentManager);
 
 	/**
 	 * If an agent comes to life, the awake method is called.
 	 *
 	 * @param container The agent container.
 	 */
-	public void awake (AgentContainer container);
+	public void awake(AgentContainer container);
 
 	/**
 	 * The heartbeat will be called at regular intervals.
 	 */
-	public void heartbeat ();
+	public void heartbeat();
 
 	/**
 	 * If a agent should sleep the sleep method will called.
 	 *
 	 * @param container The agent container.
 	 */
-	public void sleep (AgentContainer container);
+	public void sleep(AgentContainer container);
 
 	/**
 	 * This method is called if the agents environment is
@@ -71,26 +71,26 @@ public interface Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void shutdown (AgentContainer container);
+	public void shutdown(AgentContainer container);
 
 	/**
 	 * Check wether this agent has a heart beat.
 	 *
 	 * @return True if the agent is alive and has a heart beat.
 	 */
-	public boolean hasHeartBeat ();
+	public boolean hasHeartBeat();
 
 	/**
 	 * Set the heart beat.
 	 *
 	 * @param heartBeat True if the agent is alive and has a heart beat.
 	 */
-	public void setHeartBeat (boolean heartBeat);
+	public void setHeartBeat(boolean heartBeat);
 
 	/**
 	 * Get an an overview of all functions of this agent.
 	 */
-	public String getFunctions ();
+	public String getFunctions();
 
 	/**
 	 * Communication interface to other agents.
@@ -98,7 +98,7 @@ public interface Agent
 	 * @param communication A message string.
 	 * @return A message string.
 	 */
-	public String communication (String communication);
+	public String communication(String communication);
 
 	/**
 	 * The agent system will die. This is the last chance for the agent
@@ -106,5 +106,5 @@ public interface Agent
 	 *
 	 * @param container The agent container.
 	 */
-	public void die (AgentContainer container);
+	public void die(AgentContainer container);
 }

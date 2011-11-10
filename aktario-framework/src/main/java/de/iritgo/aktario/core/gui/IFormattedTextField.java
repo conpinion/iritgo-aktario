@@ -41,9 +41,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 * or setFormatterFactory to configure the JFormattedTextField to edit a particular
 	 * type of value.
 	 */
-	public IFormattedTextField ()
+	public IFormattedTextField()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -52,9 +52,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 *
 	 * @param value Initial value for the JFormattedTextField.
 	 */
-	public IFormattedTextField (Object value)
+	public IFormattedTextField(Object value)
 	{
-		super (value);
+		super(value);
 	}
 
 	/**
@@ -63,9 +63,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 *
 	 * @param format Format used to look up an AbstractFormatter.
 	 */
-	public IFormattedTextField (Format format)
+	public IFormattedTextField(Format format)
 	{
-		super (format);
+		super(format);
 	}
 
 	/**
@@ -74,9 +74,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 *
 	 * @param formatter AbstractFormatter to use for formatting.
 	 */
-	public IFormattedTextField (JFormattedTextField.AbstractFormatter formatter)
+	public IFormattedTextField(JFormattedTextField.AbstractFormatter formatter)
 	{
-		super (formatter);
+		super(formatter);
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 *
 	 * @param factory AbstractFormatterFactory used for formatting.
 	 */
-	public IFormattedTextField (JFormattedTextField.AbstractFormatterFactory factory)
+	public IFormattedTextField(JFormattedTextField.AbstractFormatterFactory factory)
 	{
-		super (factory);
+		super(factory);
 	}
 
 	/**
@@ -96,9 +96,9 @@ public class IFormattedTextField extends JFormattedTextField
 	 * @param factory AbstractFormatterFactory used for formatting.
 	 * @param currentValue Initial value to use.
 	 */
-	public IFormattedTextField (JFormattedTextField.AbstractFormatterFactory factory, Object currentValue)
+	public IFormattedTextField(JFormattedTextField.AbstractFormatterFactory factory, Object currentValue)
 	{
-		super (factory, currentValue);
+		super(factory, currentValue);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class IFormattedTextField extends JFormattedTextField
 	 * @param autoSelect If true the text is selected if the text field is
 	 *   activated.
 	 */
-	public void setAutoSelect (boolean autoSelect)
+	public void setAutoSelect(boolean autoSelect)
 	{
 		this.autoSelect = autoSelect;
 	}
@@ -117,19 +117,19 @@ public class IFormattedTextField extends JFormattedTextField
 	 * @see javax.swing.JFormattedTextField#processFocusEvent(java.awt.event.FocusEvent)
 	 */
 	@Override
-	protected void processFocusEvent (FocusEvent e)
+	protected void processFocusEvent(FocusEvent e)
 	{
-		super.processFocusEvent (e);
+		super.processFocusEvent(e);
 
 		if (autoSelect)
 		{
-			if (e.getID () == FocusEvent.FOCUS_GAINED)
+			if (e.getID() == FocusEvent.FOCUS_GAINED)
 			{
-				this.selectAll ();
+				this.selectAll();
 			}
 			else
 			{
-				this.select (0, 0);
+				this.select(0, 0);
 			}
 		}
 	}

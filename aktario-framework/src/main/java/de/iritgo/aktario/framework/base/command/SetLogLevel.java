@@ -32,14 +32,14 @@ public class SetLogLevel extends Command
 {
 	private int level;
 
-	public SetLogLevel ()
+	public SetLogLevel()
 	{
-		super ("setloglevel");
+		super("setloglevel");
 	}
 
-	public SetLogLevel (String level)
+	public SetLogLevel(String level)
 	{
-		this.level = new Integer (level).intValue ();
+		this.level = new Integer(level).intValue();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class SetLogLevel extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
@@ -56,8 +56,8 @@ public class SetLogLevel extends Command
 	 * ConnectToServer
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		Log.setLevel (level);
+		Log.setLevel(level);
 	}
 }

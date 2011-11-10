@@ -22,5 +22,5 @@ package de.iritgo.aktario.core.splash;
 
 public interface Splash
 {
-	public void setText (String text);
+	public void setText(String text);
 }

@@ -36,53 +36,53 @@ public interface ClientGUI
 	 * Get the desktop manager.
 	 *
 	 * @return The desktop manager. */
-	public IDesktopManager getDesktopManager ();
+	public IDesktopManager getDesktopManager();
 
 	/**
 	 * Get the desktop pane.
 	 *
 	 * @return The jdesktopPane. */
-	public JDesktopPane getDesktopPane ();
+	public JDesktopPane getDesktopPane();
 
 	/**
 	 * Initialize the client gui.
 	 */
-	public void init () throws InitIritgoException;
+	public void init() throws InitIritgoException;
 
 	/**
 	 * Start the client application.
 	 */
-	public void startApplication ();
+	public void startApplication();
 
 	/**
 	 * Stop the client application.
 	 */
-	public void stopApplication ();
+	public void stopApplication();
 
 	/**
 	 * Start the client gui.
 	 */
-	public void startGUI ();
+	public void startGUI();
 
 	/**
 	 * Stop the client gui.
 	 */
-	public void stopGUI ();
+	public void stopGUI();
 
 	/**
 	 * Called when the network connection was lost.
 	 */
-	public void lostNetworkConnection ();
+	public void lostNetworkConnection();
 
 	/**
 	 * Make the client gui the foreground window.
 	 */
-	public void bringToFront ();
+	public void bringToFront();
 
 	/**
 	 * Get the main application window.
 	 *
 	 * @return The application window.
 	 */
-	public Window getMainWindow ();
+	public Window getMainWindow();
 }

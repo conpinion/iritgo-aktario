@@ -50,7 +50,7 @@ public class ApplicationGlassPane extends IGlassPane
 
 		public Color color;
 
-		public Pointer (int pointerId, int x, int y)
+		public Pointer(int pointerId, int x, int y)
 		{
 			this.pointerId = pointerId;
 			this.x = x;
@@ -70,7 +70,7 @@ public class ApplicationGlassPane extends IGlassPane
 
 		public int paint;
 
-		public PaintItem (int x, int y, int paint)
+		public PaintItem(int x, int y, int paint)
 		{
 			this.x = x;
 			this.y = y;
@@ -96,35 +96,35 @@ public class ApplicationGlassPane extends IGlassPane
 	/** Default pointer colors. */
 	protected Color[] defaultPointerColors =
 	{
-					Color.RED, Color.BLUE, Color.GREEN.darker (), Color.YELLOW.darker (), Color.ORANGE, Color.MAGENTA,
-					Color.CYAN.darker (), Color.PINK, Color.DARK_GRAY
+					Color.RED, Color.BLUE, Color.GREEN.darker(), Color.YELLOW.darker(), Color.ORANGE, Color.MAGENTA,
+					Color.CYAN.darker(), Color.PINK, Color.DARK_GRAY
 	};
 
 	/**
 	 * Create a new LessonDisplayGlassPane.
 	 */
-	public ApplicationGlassPane ()
+	public ApplicationGlassPane()
 	{
-		pointers = new LinkedList ();
-		paints = new LinkedList ();
+		pointers = new LinkedList();
+		paints = new LinkedList();
 		paintIcons = new Image[WhiteBoardAction.NUM_PAINTS];
 
 		try
 		{
-			disabledIcon = new ImageIcon (getClass ().getResource ("/resources/lesson-disabled.png")).getImage ();
-			enabledIcon = new ImageIcon (getClass ().getResource ("/resources/lesson-enabled.png")).getImage ();
-			paintIcons[WhiteBoardAction.PAINT_EXCLAMATION] = new ImageIcon (getClass ().getResource (
-							"/resources/icon-exlamation.png")).getImage ();
-			paintIcons[WhiteBoardAction.PAINT_INFO] = new ImageIcon (getClass ().getResource (
-							"/resources/icon-info.png")).getImage ();
-			paintIcons[WhiteBoardAction.PAINT_OK] = new ImageIcon (getClass ().getResource ("/resources/icon-ok.png"))
-							.getImage ();
-			paintIcons[WhiteBoardAction.PAINT_QUESTION] = new ImageIcon (getClass ().getResource (
-							"/resources/icon-question.png")).getImage ();
+			disabledIcon = new ImageIcon(getClass().getResource("/resources/lesson-disabled.png")).getImage();
+			enabledIcon = new ImageIcon(getClass().getResource("/resources/lesson-enabled.png")).getImage();
+			paintIcons[WhiteBoardAction.PAINT_EXCLAMATION] = new ImageIcon(getClass().getResource(
+							"/resources/icon-exlamation.png")).getImage();
+			paintIcons[WhiteBoardAction.PAINT_INFO] = new ImageIcon(getClass().getResource("/resources/icon-info.png"))
+							.getImage();
+			paintIcons[WhiteBoardAction.PAINT_OK] = new ImageIcon(getClass().getResource("/resources/icon-ok.png"))
+							.getImage();
+			paintIcons[WhiteBoardAction.PAINT_QUESTION] = new ImageIcon(getClass().getResource(
+							"/resources/icon-question.png")).getImage();
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "LessonDisplayGlassPane", x.toString ());
+			Log.logError("client", "LessonDisplayGlassPane", x.toString());
 		}
 	}
 
@@ -134,24 +134,24 @@ public class ApplicationGlassPane extends IGlassPane
 	 * @param g The graphics context.
 	 */
 	@Override
-	public void paint (Graphics g)
+	public void paint(Graphics g)
 	{
-		for (Iterator i = paints.iterator (); i.hasNext ();)
+		for (Iterator i = paints.iterator(); i.hasNext();)
 		{
-			PaintItem item = (PaintItem) i.next ();
+			PaintItem item = (PaintItem) i.next();
 
-			g.drawImage (paintIcons[item.paint], item.x, item.y, this);
+			g.drawImage(paintIcons[item.paint], item.x, item.y, this);
 		}
 
 		// 		Image image = isEnabled () ? enabledIcon : disabledIcon;
 		// 		g.drawImage (image, bounds.width - image.getWidth (this), 0, this);
-		for (Iterator i = pointers.iterator (); i.hasNext ();)
+		for (Iterator i = pointers.iterator(); i.hasNext();)
 		{
-			Pointer p = (Pointer) i.next ();
+			Pointer p = (Pointer) i.next();
 
-			g.setColor (p.color);
-			g.fillRect (p.x - 1, p.y - 4, 3, 9);
-			g.fillRect (p.x - 4, p.y - 1, 9, 3);
+			g.setColor(p.color);
+			g.fillRect(p.x - 1, p.y - 4, 3, 9);
+			g.fillRect(p.x - 4, p.y - 1, 9, 3);
 		}
 	}
 
@@ -163,13 +163,13 @@ public class ApplicationGlassPane extends IGlassPane
 	 * @param x The x coordinate.
 	 * @param y The y coordinate.
 	 */
-	public void movePointer (int pointerId, int x, int y)
+	public void movePointer(int pointerId, int x, int y)
 	{
 		Pointer pointer = null;
 
-		for (Iterator i = pointers.iterator (); i.hasNext ();)
+		for (Iterator i = pointers.iterator(); i.hasNext();)
 		{
-			Pointer p = (Pointer) i.next ();
+			Pointer p = (Pointer) i.next();
 
 			if (p.pointerId == pointerId)
 			{
@@ -181,8 +181,8 @@ public class ApplicationGlassPane extends IGlassPane
 
 		if (pointer == null)
 		{
-			pointer = new Pointer (pointerId, x, y);
-			pointers.add (pointer);
+			pointer = new Pointer(pointerId, x, y);
+			pointers.add(pointer);
 		}
 
 		int lastX = pointer.x;
@@ -190,8 +190,8 @@ public class ApplicationGlassPane extends IGlassPane
 
 		pointer.x = x;
 		pointer.y = y;
-		repaint (lastX - 4, lastY - 4, 9, 9);
-		repaint (x - 4, y - 4, 9, 9);
+		repaint(lastX - 4, lastY - 4, 9, 9);
+		repaint(x - 4, y - 4, 9, 9);
 	}
 
 	/**
@@ -201,19 +201,19 @@ public class ApplicationGlassPane extends IGlassPane
 	 * @param y The y coordinate.
 	 * @param paint What to paint.
 	 */
-	public void paint (int x, int y, int paint)
+	public void paint(int x, int y, int paint)
 	{
 		if (paint == WhiteBoardAction.PAINT_ERASE)
 		{
-			paints.clear ();
+			paints.clear();
 		}
 		else
 		{
 			Image image = paintIcons[paint];
 
-			paints.add (new PaintItem (x - (image.getWidth (this) / 2), y - (image.getHeight (this) / 2), paint));
+			paints.add(new PaintItem(x - (image.getWidth(this) / 2), y - (image.getHeight(this) / 2), paint));
 		}
 
-		repaint ();
+		repaint();
 	}
 }

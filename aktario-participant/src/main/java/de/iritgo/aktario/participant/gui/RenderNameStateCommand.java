@@ -46,53 +46,53 @@ public class RenderNameStateCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public RenderNameStateCommand ()
+	public RenderNameStateCommand()
 	{
-		super ("RenderNameStateCommand");
+		super("RenderNameStateCommand");
 	}
 
 	/**
 	 *
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		final String participantStateName = properties.getProperty ("participantStateName");
+		final String participantStateName = properties.getProperty("participantStateName");
 
-		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer ()
+		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer()
 		{
 			Color disabledFg;
 
 			Font enabledFont;
 
-			public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected,
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 							boolean hasFocus, int row, int column)
 			{
-				super.getTableCellRendererComponent (table, value, isSelected, hasFocus, row, column);
+				super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-				Properties props = new Properties ();
+				Properties props = new Properties();
 
-				props.put ("row", new Integer (row));
-				props.put ("participantStateName", participantStateName);
+				props.put("row", new Integer(row));
+				props.put("participantStateName", participantStateName);
 
-				DynDataObject participantState = (DynDataObject) CommandTools.performSimple (
+				DynDataObject participantState = (DynDataObject) CommandTools.performSimple(
 								"aktario-participant.GetParticipantState", props);
 
-				if (participantState.getIntAttribute ("onlineUser") == 1)
+				if (participantState.getIntAttribute("onlineUser") == 1)
 				{
-					enabledFont = new Font (getFont ().getFamily (), Font.BOLD, getFont ().getSize ());
-					setFont (enabledFont);
+					enabledFont = new Font(getFont().getFamily(), Font.BOLD, getFont().getSize());
+					setFont(enabledFont);
 				}
 
 				if (disabledFg == null)
 				{
-					disabledFg = new Color ((getForeground ().getRed () + getBackground ().getRed ()) / 2,
-									(getForeground ().getGreen () + getBackground ().getGreen ()) / 2,
-									(getForeground ().getBlue () + getBackground ().getBlue ()) / 2);
+					disabledFg = new Color((getForeground().getRed() + getBackground().getRed()) / 2, (getForeground()
+									.getGreen() + getBackground().getGreen()) / 2,
+									(getForeground().getBlue() + getBackground().getBlue()) / 2);
 				}
 
 				if (! isSelected)
 				{
-					setForeground (disabledFg);
+					setForeground(disabledFg);
 				}
 
 				return this;

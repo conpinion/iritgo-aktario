@@ -35,25 +35,25 @@ public class InstantMessageCommand extends Command
 	/**
 	 * Constructor
 	 */
-	public InstantMessageCommand ()
+	public InstantMessageCommand()
 	{
-		super ("InstantMessageCommand");
-		properties = new Properties ();
+		super("InstantMessageCommand");
+		properties = new Properties();
 	}
 
 	/**
 	 * perform
 	 */
-	public void perform ()
+	public void perform()
 	{
-		AgentManager.instance ().bringAgentToLife (
-						new InstantMessageAgent (properties.getProperty ("sourceUser"), properties
-										.getProperty ("targetUser"), properties.getProperty ("message")));
+		AgentManager.instance().bringAgentToLife(
+						new InstantMessageAgent(properties.getProperty("sourceUser"), properties
+										.getProperty("targetUser"), properties.getProperty("message")));
 
-		Engine.instance ().getEventRegistry ().fire (
+		Engine.instance().getEventRegistry().fire(
 						"InstantMessage",
-						new InstantMessageEvent (System.currentTimeMillis (), properties.getProperty ("message"),
-										properties.getProperty ("sourceUser"), properties.getProperty ("targetUser"),
+						new InstantMessageEvent(System.currentTimeMillis(), properties.getProperty("message"),
+										properties.getProperty("sourceUser"), properties.getProperty("targetUser"),
 										false));
 	}
 }

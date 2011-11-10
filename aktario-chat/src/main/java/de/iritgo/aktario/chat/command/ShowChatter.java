@@ -30,38 +30,38 @@ public class ShowChatter extends Command
 {
 	private static boolean isChatterVisible = false;
 
-	public ShowChatter ()
+	public ShowChatter()
 	{
-		super ("show.chatter");
+		super("show.chatter");
 	}
 
-	public static void setChatterIsVisible ()
+	public static void setChatterIsVisible()
 	{
 		isChatterVisible = true;
 	}
 
-	public static void setChatterIsNotVisible ()
+	public static void setChatterIsNotVisible()
 	{
 		isChatterVisible = false;
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		if (isChatterVisible)
 		{
 			isChatterVisible = false;
-			CommandTools.performAsync (new CloseDisplay ("common.chatview"));
+			CommandTools.performAsync(new CloseDisplay("common.chatview"));
 		}
 		else
 		{
-			CommandTools.performAsync (new ShowWindow ("common.chatview"));
+			CommandTools.performAsync(new ShowWindow("common.chatview"));
 			isChatterVisible = true;
 		}
 	}
 
 	@Override
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}

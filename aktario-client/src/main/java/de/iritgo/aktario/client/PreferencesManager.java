@@ -44,29 +44,29 @@ public class PreferencesManager extends BaseObject implements Manager, PluginEve
 	/**
 	 * Create a new client manager.
 	 */
-	public PreferencesManager ()
+	public PreferencesManager()
 	{
-		super ("PreferencesManager");
+		super("PreferencesManager");
 	}
 
 	/**
 	 * Initialize the client manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		preferences = new LinkedList ();
-		Engine.instance ().getEventRegistry ().addListener ("Plugin", this);
+		preferences = new LinkedList();
+		Engine.instance().getEventRegistry().addListener("Plugin", this);
 	}
 
-	public void pluginEvent (PluginStateEvent event)
+	public void pluginEvent(PluginStateEvent event)
 	{
-		if (event.allPluginsInitialized ())
+		if (event.allPluginsInitialized())
 		{
-			for (Iterator i = preferences.iterator (); i.hasNext ();)
+			for (Iterator i = preferences.iterator(); i.hasNext();)
 			{
-				PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next ();
+				PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next();
 
-				ppi.init ();
+				ppi.init();
 			}
 		}
 	}
@@ -74,57 +74,57 @@ public class PreferencesManager extends BaseObject implements Manager, PluginEve
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
-		preferences.clear ();
+		preferences.clear();
 	}
 
-	public void applyAction ()
+	public void applyAction()
 	{
-		for (Iterator i = preferences.iterator (); i.hasNext ();)
+		for (Iterator i = preferences.iterator(); i.hasNext();)
 		{
-			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next ();
+			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next();
 
-			ppi.applyAction ();
+			ppi.applyAction();
 		}
 	}
 
-	public void cancleAction ()
+	public void cancleAction()
 	{
-		for (Iterator i = preferences.iterator (); i.hasNext ();)
+		for (Iterator i = preferences.iterator(); i.hasNext();)
 		{
-			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next ();
+			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next();
 
-			ppi.cancleAction ();
+			ppi.cancleAction();
 		}
 	}
 
-	public void saveAction ()
+	public void saveAction()
 	{
-		for (Iterator i = preferences.iterator (); i.hasNext ();)
+		for (Iterator i = preferences.iterator(); i.hasNext();)
 		{
-			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next ();
+			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next();
 
-			ppi.saveAction ();
+			ppi.saveAction();
 		}
 	}
 
-	public void addPreferences (PreferencesPane preferencesPane)
+	public void addPreferences(PreferencesPane preferencesPane)
 	{
 		int j = 2;
 
-		for (Iterator i = preferences.iterator (); i.hasNext ();)
+		for (Iterator i = preferences.iterator(); i.hasNext();)
 		{
-			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next ();
+			PreferencesPaneInterface ppi = (PreferencesPaneInterface) i.next();
 
 			++j;
 
-			preferencesPane.addPreferencesPane (ppi.getName (), ppi.getIcon (), ppi.getPanel (), j);
+			preferencesPane.addPreferencesPane(ppi.getName(), ppi.getIcon(), ppi.getPanel(), j);
 		}
 	}
 
-	public void registerPreferences (PreferencesPaneInterface ppi)
+	public void registerPreferences(PreferencesPaneInterface ppi)
 	{
-		preferences.add (ppi);
+		preferences.add(ppi);
 	}
 }

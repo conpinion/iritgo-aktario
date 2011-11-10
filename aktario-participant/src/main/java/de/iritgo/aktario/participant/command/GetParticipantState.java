@@ -35,19 +35,19 @@ public class GetParticipantState extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public GetParticipantState ()
+	public GetParticipantState()
 	{
-		super ("aktario-participant.GetParticipantState");
+		super("aktario-participant.GetParticipantState");
 	}
 
 	/**
 	 * perform command.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		ParticipantStatePane p = (ParticipantStatePane) AppContext.instance ().getObject (
-						properties.getProperty ("participantStateName"));
+		ParticipantStatePane p = (ParticipantStatePane) AppContext.instance().getObject(
+						properties.getProperty("participantStateName"));
 
-		return p.getParticipantState (((Integer) properties.get ("row")).intValue ());
+		return p.getParticipantState(((Integer) properties.get("row")).intValue());
 	}
 }

@@ -38,10 +38,10 @@ public class ConsoleLogger implements Logger
 	/**
 	 * Create a new console logger.
 	 */
-	public ConsoleLogger ()
+	public ConsoleLogger()
 	{
-		currentTime = new Date ();
-		timeFormat = DateFormat.getDateTimeInstance (DateFormat.SHORT, DateFormat.SHORT);
+		currentTime = new Date();
+		timeFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class ConsoleLogger implements Logger
 	 *
 	 * @return The logger id.
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "Console";
 	}
@@ -59,14 +59,14 @@ public class ConsoleLogger implements Logger
 	 *
 	 * @param category The logger category.
 	 */
-	public void init (String category)
+	public void init(String category)
 	{
 	}
 
 	/**
 	 * Free all logger resources.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
 	}
 
@@ -78,10 +78,10 @@ public class ConsoleLogger implements Logger
 	 * @param message The log message.
 	 * @param level The logging level.
 	 */
-	public void log (String category, String source, String message, int level)
+	public void log(String category, String source, String message, int level)
 	{
-		currentTime.setTime (System.currentTimeMillis ());
-		System.out.println ("" + timeFormat.format (currentTime) + " " + Log.logLevelName (level) + " [" + category
+		currentTime.setTime(System.currentTimeMillis());
+		System.out.println("" + timeFormat.format(currentTime) + " " + Log.logLevelName(level) + " [" + category
 						+ "] [" + source + "] " + message);
 	}
 }

@@ -49,42 +49,42 @@ public class ApplyPreferences extends Command
 	/**
 	 * Create a new command object.
 	 */
-	public ApplyPreferences ()
+	public ApplyPreferences()
 	{
-		super ("ApplyPreferences");
+		super("ApplyPreferences");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("preferences") == null)
+		if (properties.get("preferences") == null)
 		{
-			Log.logError ("client", "ApplyPreferences", "Missing preferences instance");
+			Log.logError("client", "ApplyPreferences", "Missing preferences instance");
 
 			return;
 		}
 
-		final AktarioUserPreferences preferences = (AktarioUserPreferences) properties.get ("preferences");
+		final AktarioUserPreferences preferences = (AktarioUserPreferences) properties.get("preferences");
 
-		final AktarioGUI gui = (AktarioGUI) Client.instance ().getClientGUI ();
+		final AktarioGUI gui = (AktarioGUI) Client.instance().getClientGUI();
 
-		Locale locale = new Locale (preferences.getLanguage ());
+		Locale locale = new Locale(preferences.getLanguage());
 
-		if (! AppContext.instance ().getLocale ().equals (locale))
+		if (! AppContext.instance().getLocale().equals(locale))
 		{
-			CommandTools.performSimple (new ChangeLanguage (locale));
+			CommandTools.performSimple(new ChangeLanguage(locale));
 
 			try
 			{
-				SwingUtilities.invokeAndWait (new Runnable ()
+				SwingUtilities.invokeAndWait(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
-						gui.reloadMenuBar ();
-						gui.reloadToolBar ();
+						gui.reloadMenuBar();
+						gui.reloadToolBar();
 					}
 				});
 			}
@@ -93,15 +93,15 @@ public class ApplyPreferences extends Command
 			}
 		}
 
-		if (! gui.getColorScheme ().equals (preferences.getColorScheme ()))
+		if (! gui.getColorScheme().equals(preferences.getColorScheme()))
 		{
 			try
 			{
-				SwingUtilities.invokeAndWait (new Runnable ()
+				SwingUtilities.invokeAndWait(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
-						gui.setColorScheme (preferences.getColorScheme ());
+						gui.setColorScheme(preferences.getColorScheme());
 					}
 				});
 			}
@@ -110,6 +110,6 @@ public class ApplyPreferences extends Command
 			}
 		}
 
-		((SwingDesktopManager) gui.getDesktopManager ()).setDrawAlways (preferences.getAlwaysDrawWindowContents ());
+		((SwingDesktopManager) gui.getDesktopManager()).setDrawAlways(preferences.getAlwaysDrawWindowContents());
 	}
 }

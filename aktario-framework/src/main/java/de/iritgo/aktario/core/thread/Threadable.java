@@ -52,7 +52,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	/**
 	 * Create a new Threadable.
 	 */
-	public Threadable ()
+	public Threadable()
 	{
 		currentState = FREE;
 	}
@@ -62,9 +62,9 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @param name The name of the new threadable.
 	 */
-	public Threadable (String name)
+	public Threadable(String name)
 	{
-		super (name);
+		super(name);
 		currentState = FREE;
 		this.name = name;
 	}
@@ -74,7 +74,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @param controller The thread controller.
 	 */
-	public void setThreadController (ThreadController controller)
+	public void setThreadController(ThreadController controller)
 	{
 		this.controller = controller;
 	}
@@ -84,7 +84,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @return The thread controller.
 	 */
-	public ThreadController getThreadController ()
+	public ThreadController getThreadController()
 	{
 		return controller;
 	}
@@ -94,7 +94,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @param currentState The new state.
 	 */
-	public void setState (int currentState)
+	public void setState(int currentState)
 	{
 		this.currentState = currentState;
 	}
@@ -104,7 +104,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @return The current state.
 	 */
-	public int getState ()
+	public int getState()
 	{
 		return currentState;
 	}
@@ -114,7 +114,7 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 *
 	 * @return The threadable name.
 	 */
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}
@@ -124,13 +124,13 @@ public abstract class Threadable extends BaseObject implements Runnable
 	 * Subclasses should override this method to provide a threading
 	 * task.
 	 */
-	public abstract void run ();
+	public abstract void run();
 
 	/**
 	 * Called from the thread controller to free all resources of
 	 * this threadable.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
 
 	}

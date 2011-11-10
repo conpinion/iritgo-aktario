@@ -157,7 +157,7 @@ public class IritgoEngine
 	 *
 	 * @param mode The framework startup mode (START_SERVER or START_CLIENT).
 	 */
-	private IritgoEngine (int mode)
+	private IritgoEngine(int mode)
 	{
 		this.mode = mode;
 		engineName = "iritgo";
@@ -177,17 +177,17 @@ public class IritgoEngine
 	 *
 	 * @param mode The framework startup mode (START_SERVER or START_CLIENT).
 	 */
-	public static void create (int mode, Options options, String[] args)
+	public static void create(int mode, Options options, String[] args)
 	{
-		framework = new IritgoEngine (mode);
+		framework = new IritgoEngine(mode);
 
-		System.getProperties ().put ("iritgo.engine", framework);
+		System.getProperties().put("iritgo.engine", framework);
 
-		CommandLine commandLine = framework.processOptions (options, args);
+		CommandLine commandLine = framework.processOptions(options, args);
 
 		if (commandLine != null)
 		{
-			framework.init (commandLine);
+			framework.init(commandLine);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class IritgoEngine
 	 *
 	 * @return The framework instance.
 	 */
-	static public IritgoEngine instance ()
+	static public IritgoEngine instance()
 	{
 		return framework;
 	}
@@ -209,40 +209,36 @@ public class IritgoEngine
 	 * @return The parsed command line or null if we should better not start
 	 *   the engine.
 	 */
-	private CommandLine processOptions (Options options, String[] args)
+	private CommandLine processOptions(Options options, String[] args)
 	{
-		options.addOption ("h", "help", false, "Print this message");
-		options.addOption ("d", "debug", true, "Set the initial debugging level");
-		options.addOption ("x", "xmlrpcport", true, "Set the xml-rpc port");
-		options.addOption ("c", "server-cli", false, "Start the interactive server shell");
-		options.addOption ("l", "log-file", true, "Print logging messages to the specified file");
-		options.addOption ("q", "quiet", false, "Ommit informational startup messages");
-		options.addOption ("w", "webstartlogin", true, "The WebStart login name eg. user@server.net");
-		options
-						.addOption ("n", "no-version-check", false,
-										"Don't check the application and framework version at logon");
-		options.addOption ("s", "system-dir", true, "Set the directory containing the system files");
-		options
-						.addOption ("e", "embedded", false,
-										"Activate the embedded mode (one single server and client instance)");
-		options.addOption ("i", "login-info", true, "Login information (user@host)");
+		options.addOption("h", "help", false, "Print this message");
+		options.addOption("d", "debug", true, "Set the initial debugging level");
+		options.addOption("x", "xmlrpcport", true, "Set the xml-rpc port");
+		options.addOption("c", "server-cli", false, "Start the interactive server shell");
+		options.addOption("l", "log-file", true, "Print logging messages to the specified file");
+		options.addOption("q", "quiet", false, "Ommit informational startup messages");
+		options.addOption("w", "webstartlogin", true, "The WebStart login name eg. user@server.net");
+		options.addOption("n", "no-version-check", false, "Don't check the application and framework version at logon");
+		options.addOption("s", "system-dir", true, "Set the directory containing the system files");
+		options.addOption("e", "embedded", false, "Activate the embedded mode (one single server and client instance)");
+		options.addOption("i", "login-info", true, "Login information (user@host)");
 
 		CommandLine line = null;
 
 		try
 		{
-			line = new PosixParser ().parse (options, args);
+			line = new PosixParser().parse(options, args);
 
-			if (line.hasOption ("h"))
+			if (line.hasOption("h"))
 			{
-				printHelp (options);
+				printHelp(options);
 
 				return null;
 			}
 		}
 		catch (ParseException exp)
 		{
-			printHelp (options);
+			printHelp(options);
 
 			return null;
 		}
@@ -255,11 +251,11 @@ public class IritgoEngine
 	 *
 	 * @param options The command line options.
 	 */
-	private void printHelp (Options options)
+	private void printHelp(Options options)
 	{
-		HelpFormatter formatter = new HelpFormatter ();
+		HelpFormatter formatter = new HelpFormatter();
 
-		formatter.printHelp (80, engineName, "Iritgo Client/Server-Framework Copyright (C) 2003-2007 BueroByte GbR",
+		formatter.printHelp(80, engineName, "Iritgo Client/Server-Framework Copyright (C) 2003-2007 BueroByte GbR",
 						options, "");
 	}
 
@@ -269,28 +265,28 @@ public class IritgoEngine
 	 * @param options The command line options.
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void init (CommandLine options)
+	private void init(CommandLine options)
 	{
 		try
 		{
 			commandLine = options;
 
-			File sysDir = new File (".");
+			File sysDir = new File(".");
 
-			if (commandLine.hasOption ("s"))
+			if (commandLine.hasOption("s"))
 			{
-				sysDir = new File (commandLine.getOptionValue ("s").trim ());
+				sysDir = new File(commandLine.getOptionValue("s").trim());
 			}
 
 			try
 			{
-				Properties sysProperties = new Properties ();
+				Properties sysProperties = new Properties();
 
-				sysProperties.load (new FileInputStream (new File (sysDir, "sys.properties")));
+				sysProperties.load(new FileInputStream(new File(sysDir, "sys.properties")));
 
-				for (Object key : sysProperties.keySet ())
+				for (Object key : sysProperties.keySet())
 				{
-					System.setProperty (key.toString (), sysProperties.get (key).toString ());
+					System.setProperty(key.toString(), sysProperties.get(key).toString());
 				}
 			}
 			catch (FileNotFoundException x1)
@@ -300,115 +296,115 @@ public class IritgoEngine
 			{
 			}
 
-			AppContext appContext = AppContext.instance ();
-			ServerAppContext serverAppContext = ServerAppContext.serverInstance ();
+			AppContext appContext = AppContext.instance();
+			ServerAppContext serverAppContext = ServerAppContext.serverInstance();
 
-			if (options.hasOption ("d"))
+			if (options.hasOption("d"))
 			{
-				Log.setLevel (NumberTools.toInt (options.getOptionValue ("d"), Log.ERROR));
+				Log.setLevel(NumberTools.toInt(options.getOptionValue("d"), Log.ERROR));
 			}
-			else if (System.getProperty ("iritgo.debug.level") != null)
+			else if (System.getProperty("iritgo.debug.level") != null)
 			{
-				Log.setLevel (NumberTools.toInt (System.getProperty ("iritgo.debug.level"), Log.ERROR));
+				Log.setLevel(NumberTools.toInt(System.getProperty("iritgo.debug.level"), Log.ERROR));
 			}
 			else
 			{
-				Log.setLevel (Log.ERROR);
+				Log.setLevel(Log.ERROR);
 			}
 
-			initEngine ();
+			initEngine();
 
 			if (mode == IritgoEngine.START_CLIENT)
 			{
 				try
 				{
 					//TODO: xml rpc port Hack!
-					String xmlRPCPort = commandLine.getOptionValue ("x");
+					String xmlRPCPort = commandLine.getOptionValue("x");
 
-					if (! StringTools.isEmpty (xmlRPCPort))
+					if (! StringTools.isEmpty(xmlRPCPort))
 					{
-						System.out.println ("****************** xmlRPCPort:" + xmlRPCPort);
-						appContext.put ("xmlrpcport", xmlRPCPort);
+						System.out.println("****************** xmlRPCPort:" + xmlRPCPort);
+						appContext.put("xmlrpcport", xmlRPCPort);
 					}
 
-					splash = (Splash) Class.forName ("de.iritgo.aktario.core.splash.CustomSplash").newInstance ();
+					splash = (Splash) Class.forName("de.iritgo.aktario.core.splash.CustomSplash").newInstance();
 				}
 				catch (Exception x)
 				{
-					splash = new Splash ();
+					splash = new Splash();
 				}
 			}
 
 			if (splash != null)
 			{
-				splash.setText ("Initializing: Engine");
+				splash.setText("Initializing: Engine");
 			}
 
-			initIdGenerator ();
-			registerDefaultActions ();
-			registerDefaultManager ();
-			registerConsoleCommands ();
-			initCommandProcessor ();
-			initConfiguration ();
+			initIdGenerator();
+			registerDefaultActions();
+			registerDefaultManager();
+			registerConsoleCommands();
+			initCommandProcessor();
+			initConfiguration();
 
 			if (mode == IritgoEngine.START_SERVER)
 			{
-				server = Server.instance ();
-				server.init ();
-				serverAppContext.setServer (true);
-				serverAppContext.setClient (false);
-				appContext.setServer (true);
-				appContext.setClient (false);
+				server = Server.instance();
+				server.init();
+				serverAppContext.setServer(true);
+				serverAppContext.setClient(false);
+				appContext.setServer(true);
+				appContext.setClient(false);
 			}
 
 			if (mode == IritgoEngine.START_CLIENT)
 			{
-				checkLoginOptions (commandLine);
-				client = Client.instance ();
-				client.init ();
-				serverAppContext.setServer (false);
-				serverAppContext.setClient (true);
-				appContext.setServer (false);
-				appContext.setClient (true);
+				checkLoginOptions(commandLine);
+				client = Client.instance();
+				client.init();
+				serverAppContext.setServer(false);
+				serverAppContext.setClient(true);
+				appContext.setServer(false);
+				appContext.setClient(true);
 			}
 
-			initPlugins ();
-			AgentManager.createAgentManager (mode);
+			initPlugins();
+			AgentManager.createAgentManager(mode);
 
-			registerDefaultDataObjects ();
+			registerDefaultDataObjects();
 
 			if (mode == IritgoEngine.START_SERVER)
 			{
-				server = Server.instance ();
-				server.start ();
+				server = Server.instance();
+				server.start();
 			}
 
 			if (mode == IritgoEngine.START_CLIENT)
 			{
-				splash.setText ("Initializing: Client");
-				client = Client.instance ();
-				client.initGUI ();
-				client.startGUI ();
-				client.startApplication ();
-				splash.startCoolDown ();
+				splash.setText("Initializing: Client");
+				client = Client.instance();
+				client.initGUI();
+				client.startGUI();
+				client.startApplication();
+				splash.startCoolDown();
 			}
 		}
 		catch (InitIritgoException x)
 		{
 			if (engine != null)
 			{
-				engine.stop ();
+				engine.stop();
 			}
 		}
 	}
 
-	private void checkLoginOptions (CommandLine options)
+	private void checkLoginOptions(CommandLine options)
 	{
-		if (options.hasOption ("w"))
+		if (options.hasOption("w"))
 		{
-			String login = options.getOptionValue ("w").trim ();
+			String login = options.getOptionValue("w").trim();
 
-			Engine.instance ().getSystemProperties ().setProperty ("lastlogin", login);
+			Engine.instance().getSystemProperties().setProperty("lastlogin", login);
 		}
 	}
 
@@ -417,22 +413,22 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void initEngine () throws InitIritgoException
+	private void initEngine() throws InitIritgoException
 	{
-		Engine.create (engineName, commandLine);
-		engine = Engine.instance ();
+		Engine.create(engineName, commandLine);
+		engine = Engine.instance();
 
-		resources = engine.getResourceService ();
+		resources = engine.getResourceService();
 
-		resources.loadResources (IritgoEngine.class.getResource ("/resources/framework.xml"));
+		resources.loadResources(IritgoEngine.class.getResource("/resources/framework.xml"));
 
-		resources.loadTranslationsWithClassLoader (IritgoEngine.class, "/resources/system");
+		resources.loadTranslationsWithClassLoader(IritgoEngine.class, "/resources/system");
 
-		Engine.instance ().setIObjectFactory (new DynIObjectFactory ());
+		Engine.instance().setIObjectFactory(new DynIObjectFactory());
 
-		engine.start ();
+		engine.start();
 
-		iObjectChangeNotifier = new IObjectChangedNotifier ();
+		iObjectChangeNotifier = new IObjectChangedNotifier();
 	}
 
 	/**
@@ -440,31 +436,31 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void initIdGenerator ()
+	private void initIdGenerator()
 	{
-		PropertiesIDGenerator idGenerator = new PropertiesIDGenerator (Engine.instance ().getSystemProperties (),
+		PropertiesIDGenerator idGenerator = new PropertiesIDGenerator(Engine.instance().getSystemProperties(),
 						"system.lastUniqueId", 1, 1);
 
-		idGenerator.load ();
+		idGenerator.load();
 
-		Engine.instance ().installPersistentIDGenerator (idGenerator);
-		Engine.instance ().installTransientIDGenerator (idGenerator);
+		Engine.instance().installPersistentIDGenerator(idGenerator);
+		Engine.instance().installTransientIDGenerator(idGenerator);
 	}
 
 	/**
 	 * Initialize the command processors.
 	 */
-	private void initCommandProcessor ()
+	private void initCommandProcessor()
 	{
-		ThreadService threadService = engine.getThreadService ();
+		ThreadService threadService = engine.getThreadService();
 
-		asyncCommandProcessor = new AsyncCommandProcessor ();
-		threadService.addThreadSlot ();
-		threadService.add (asyncCommandProcessor);
-		engine.getCommandProcessorRegistry ().add (asyncCommandProcessor);
+		asyncCommandProcessor = new AsyncCommandProcessor();
+		threadService.addThreadSlot();
+		threadService.add(asyncCommandProcessor);
+		engine.getCommandProcessorRegistry().add(asyncCommandProcessor);
 
-		simpleCommandProcessor = new SimpleCommandProcessor ();
-		engine.getCommandProcessorRegistry ().add (simpleCommandProcessor);
+		simpleCommandProcessor = new SimpleCommandProcessor();
+		engine.getCommandProcessorRegistry().add(simpleCommandProcessor);
 	}
 
 	/**
@@ -472,7 +468,7 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void initConfiguration () throws InitIritgoException
+	private void initConfiguration() throws InitIritgoException
 	{
 		String configName = "iritgo";
 
@@ -485,42 +481,42 @@ public class IritgoEngine
 			configName = "client-config";
 		}
 
-		Configuration config = new Configuration ();
+		Configuration config = new Configuration();
 
-		Log.logInfo ("system", "Framework.initConfiguration", "Try to load config file '" + engine.getSystemDir ()
-						+ engine.getFileSeparator () + configName + ".xml'");
+		Log.logInfo("system", "Framework.initConfiguration", "Try to load config file '" + engine.getSystemDir()
+						+ engine.getFileSeparator() + configName + ".xml'");
 
 		try
 		{
 			InputStream configInput = null;
-			File configFile = new File (engine.getSystemDir () + engine.getFileSeparator () + configName + ".xml");
+			File configFile = new File(engine.getSystemDir() + engine.getFileSeparator() + configName + ".xml");
 
-			if (configFile.exists ())
+			if (configFile.exists())
 			{
-				configInput = new FileInputStream (configFile);
+				configInput = new FileInputStream(configFile);
 			}
 			else
 			{
-				configInput = IritgoEngine.class.getResourceAsStream ("/" + configName + ".xml");
+				configInput = IritgoEngine.class.getResourceAsStream("/" + configName + ".xml");
 			}
 
-			DefinitionParser defParser = new DefinitionParser ();
-			NamespaceDefinitions defs = defParser.parse (IritgoEngine.class
-							.getResourceAsStream ("/configuration-tags.xml"));
-			XmlReader confReader = new XmlReader ();
+			DefinitionParser defParser = new DefinitionParser();
+			NamespaceDefinitions defs = defParser.parse(IritgoEngine.class
+							.getResourceAsStream("/configuration-tags.xml"));
+			XmlReader confReader = new XmlReader();
 
-			confReader.setTagDefinitions (defs);
-			confReader.parse (configInput);
-			config = (Configuration) confReader.getConfigValue ("iritgo");
+			confReader.setTagDefinitions(defs);
+			confReader.parse(configInput);
+			config = (Configuration) confReader.getConfigValue("iritgo");
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "Framework.initConfiguration",
+			Log.logFatal("system", "Framework.initConfiguration",
 							"Configuration error while loading the configuration file '" + configName + ".xml':" + x);
-			throw new InitIritgoException (x);
+			throw new InitIritgoException(x);
 		}
 
-		engine.setConfiguration (config);
+		engine.setConfiguration(config);
 	}
 
 	/**
@@ -528,56 +524,56 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void registerDefaultActions () throws InitIritgoException
+	private void registerDefaultActions() throws InitIritgoException
 	{
-		engine.getIObjectFactory ().register (new EditIObjectAction ());
-		engine.getIObjectFactory ().register (new EditIObjectServerAction ());
+		engine.getIObjectFactory().register(new EditIObjectAction());
+		engine.getIObjectFactory().register(new EditIObjectServerAction());
 
-		engine.getIObjectFactory ().register (new WrongVersionAction ());
+		engine.getIObjectFactory().register(new WrongVersionAction());
 
-		engine.getIObjectFactory ().register (new UserLoginAction ());
-		engine.getIObjectFactory ().register (new UserLoginFailureAction ());
-		engine.getIObjectFactory ().register (new UserLogoffAction ());
-		engine.getIObjectFactory ().register (new UserLoginServerAction ());
-		engine.getIObjectFactory ().register (new UserLogoffServerAction ());
-		engine.getIObjectFactory ().register (new UserKickAction ());
+		engine.getIObjectFactory().register(new UserLoginAction());
+		engine.getIObjectFactory().register(new UserLoginFailureAction());
+		engine.getIObjectFactory().register(new UserLogoffAction());
+		engine.getIObjectFactory().register(new UserLoginServerAction());
+		engine.getIObjectFactory().register(new UserLogoffServerAction());
+		engine.getIObjectFactory().register(new UserKickAction());
 
-		engine.getIObjectFactory ().register (new RegisterNewUserAction ());
-		engine.getIObjectFactory ().register (new RegisterNewUserServerAction ());
-		engine.getIObjectFactory ().register (new RegisterNewUserFailureAction ());
-		engine.getIObjectFactory ().register (new RegisterNewUserServerAction ());
+		engine.getIObjectFactory().register(new RegisterNewUserAction());
+		engine.getIObjectFactory().register(new RegisterNewUserServerAction());
+		engine.getIObjectFactory().register(new RegisterNewUserFailureAction());
+		engine.getIObjectFactory().register(new RegisterNewUserServerAction());
 
-		engine.getIObjectFactory ().register (new ProxyAction ());
-		engine.getIObjectFactory ().register (new ProxyServerAction ());
+		engine.getIObjectFactory().register(new ProxyAction());
+		engine.getIObjectFactory().register(new ProxyServerAction());
 
-		engine.getIObjectFactory ().register (new CommandAction ());
-		engine.getIObjectFactory ().register (new CommandServerAction ());
+		engine.getIObjectFactory().register(new CommandAction());
+		engine.getIObjectFactory().register(new CommandServerAction());
 
-		engine.getIObjectFactory ().register (new AliveCheckAction ());
-		engine.getIObjectFactory ().register (new AliveCheckServerAction ());
+		engine.getIObjectFactory().register(new AliveCheckAction());
+		engine.getIObjectFactory().register(new AliveCheckServerAction());
 
-		engine.getIObjectFactory ().register (new ProxyLinkedListAddAction ());
-		engine.getIObjectFactory ().register (new ProxyLinkedListAddServerAction ());
-		engine.getIObjectFactory ().register (new ProxyLinkedListRemoveAction ());
-		engine.getIObjectFactory ().register (new ProxyLinkedListRemoveServerAction ());
+		engine.getIObjectFactory().register(new ProxyLinkedListAddAction());
+		engine.getIObjectFactory().register(new ProxyLinkedListAddServerAction());
+		engine.getIObjectFactory().register(new ProxyLinkedListRemoveAction());
+		engine.getIObjectFactory().register(new ProxyLinkedListRemoveServerAction());
 
-		engine.getIObjectFactory ().register (new PingAction ());
-		engine.getIObjectFactory ().register (new PingServerAction ());
-		engine.getIObjectFactory ().register (new TurnAction ());
+		engine.getIObjectFactory().register(new PingAction());
+		engine.getIObjectFactory().register(new PingServerAction());
+		engine.getIObjectFactory().register(new TurnAction());
 
-		engine.getIObjectFactory ().register (new AnnounceDynDataObjectResponse ());
-		engine.getIObjectFactory ().register (new AnnounceDynDataObjectRequest ());
-		engine.getIObjectFactory ().register (new AddDataObjectResponse ());
-		engine.getIObjectFactory ().register (new AddDataObjectRequest ());
+		engine.getIObjectFactory().register(new AnnounceDynDataObjectResponse());
+		engine.getIObjectFactory().register(new AnnounceDynDataObjectRequest());
+		engine.getIObjectFactory().register(new AddDataObjectResponse());
+		engine.getIObjectFactory().register(new AddDataObjectRequest());
 
-		engine.getIObjectFactory ().register (new QueryRequest ());
-		engine.getIObjectFactory ().register (new QueryResponse ());
+		engine.getIObjectFactory().register(new QueryRequest());
+		engine.getIObjectFactory().register(new QueryResponse());
 
-		engine.getIObjectFactory ().register (new GUIControllerRequest ());
-		engine.getIObjectFactory ().register (new GUIControllerResponse ());
+		engine.getIObjectFactory().register(new GUIControllerRequest());
+		engine.getIObjectFactory().register(new GUIControllerResponse());
 
-		engine.getIObjectFactory ().register (new PropertiesRequest ());
-		engine.getIObjectFactory ().register (new PropertiesResponse ());
+		engine.getIObjectFactory().register(new PropertiesRequest());
+		engine.getIObjectFactory().register(new PropertiesResponse());
 	}
 
 	/**
@@ -585,13 +581,13 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void registerDefaultDataObjects () throws InitIritgoException
+	private void registerDefaultDataObjects() throws InitIritgoException
 	{
-		engine.getIObjectFactory ().register (new SimpleQuery ());
-		engine.getIObjectFactory ().register (new User ());
-		engine.getIObjectFactory ().register (new Controller ());
-		engine.getIObjectFactory ().register (new WidgetDescription ());
-		engine.getIObjectFactory ().register (new CommandDescription ());
+		engine.getIObjectFactory().register(new SimpleQuery());
+		engine.getIObjectFactory().register(new User());
+		engine.getIObjectFactory().register(new Controller());
+		engine.getIObjectFactory().register(new WidgetDescription());
+		engine.getIObjectFactory().register(new CommandDescription());
 	}
 
 	/**
@@ -599,11 +595,11 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void registerDefaultManager () throws InitIritgoException
+	private void registerDefaultManager() throws InitIritgoException
 	{
-		engine.getManagerRegistry ().addManager (new ConsoleManager ());
-		engine.getManagerRegistry ().addManager (new ShutdownManager ());
-		engine.getManagerRegistry ().addManager (new GUIManager ());
+		engine.getManagerRegistry().addManager(new ConsoleManager());
+		engine.getManagerRegistry().addManager(new ShutdownManager());
+		engine.getManagerRegistry().addManager(new GUIManager());
 	}
 
 	/**
@@ -611,24 +607,24 @@ public class IritgoEngine
 	 *
 	 * @throws InitIritgoException If an error occurred during initialization.
 	 */
-	private void registerConsoleCommands () throws InitIritgoException
+	private void registerConsoleCommands() throws InitIritgoException
 	{
-		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry ().getManager (
-						"console")).getConsoleCommandRegistry ();
+		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry().getManager(
+						"console")).getConsoleCommandRegistry();
 
-		consoleCommandRegistry.add (new ConsoleCommand ("loglevel", new SetLogLevel (), "system.help.logLevel", 1));
+		consoleCommandRegistry.add(new ConsoleCommand("loglevel", new SetLogLevel(), "system.help.logLevel", 1));
 	}
 
 	/**
 	 * Initialize the plugins.
 	 */
-	public void initPlugins ()
+	public void initPlugins()
 	{
-		PluginManager pluginManager = engine.getPluginManager ();
+		PluginManager pluginManager = engine.getPluginManager();
 
-		pluginManager.loadPlugins ();
+		pluginManager.loadPlugins();
 
-		pluginManager.initPlugins (splash);
+		pluginManager.initPlugins(splash);
 	}
 
 	/**
@@ -636,7 +632,7 @@ public class IritgoEngine
 	 *
 	 * @return The async command processor.
 	 */
-	public AsyncCommandProcessor getAsyncCommandProcessor ()
+	public AsyncCommandProcessor getAsyncCommandProcessor()
 	{
 		return asyncCommandProcessor;
 	}
@@ -646,7 +642,7 @@ public class IritgoEngine
 	 *
 	 * @return The simple command processor.
 	 */
-	public SimpleCommandProcessor getSimpleCommandProcessor ()
+	public SimpleCommandProcessor getSimpleCommandProcessor()
 	{
 		return simpleCommandProcessor;
 	}
@@ -656,7 +652,7 @@ public class IritgoEngine
 	 *
 	 * @return IObjectChangedNotifier
 	 */
-	public IObjectChangedNotifier getIObjectChangeNotifier ()
+	public IObjectChangedNotifier getIObjectChangeNotifier()
 	{
 		return iObjectChangeNotifier;
 	}
@@ -666,34 +662,34 @@ public class IritgoEngine
 	 *
 	 * @return True if all resources are successfully released.
 	 */
-	public boolean shutdown ()
+	public boolean shutdown()
 	{
-		((ShutdownManager) engine.getManagerRegistry ().getManager ("shutdown")).shutdown ();
+		((ShutdownManager) engine.getManagerRegistry().getManager("shutdown")).shutdown();
 
 		if (server != null)
 		{
-			server.stop ();
+			server.stop();
 		}
 
 		if (client != null)
 		{
-			client.stop ();
+			client.stop();
 		}
 
-		Engine.instance ().getPersistentIDGenerator ().save ();
-		Engine.instance ().getTransientIDGenerator ().save ();
+		Engine.instance().getPersistentIDGenerator().save();
+		Engine.instance().getTransientIDGenerator().save();
 
-		PluginManager pluginManager = engine.getPluginManager ();
+		PluginManager pluginManager = engine.getPluginManager();
 
-		pluginManager.unloadPlugins ();
+		pluginManager.unloadPlugins();
 
-		engine.stop ();
+		engine.stop();
 
-		System.out.println ("[Iritgo] Shutdown complete");
+		System.out.println("[Iritgo] Shutdown complete");
 
 		if (client != null)
 		{
-			System.exit (0);
+			System.exit(0);
 		}
 
 		return true;
@@ -704,7 +700,7 @@ public class IritgoEngine
 	 *
 	 * @return The command line paramters.
 	 */
-	public CommandLine getCommandLine ()
+	public CommandLine getCommandLine()
 	{
 		return commandLine;
 	}
@@ -714,12 +710,12 @@ public class IritgoEngine
 	 *
 	 * @return The configuration.
 	 */
-	public Configuration getConfiguration ()
+	public Configuration getConfiguration()
 	{
-		return engine.getConfiguration ();
+		return engine.getConfiguration();
 	}
 
-	public boolean isServer ()
+	public boolean isServer()
 	{
 		return server != null ? true : false;
 	}

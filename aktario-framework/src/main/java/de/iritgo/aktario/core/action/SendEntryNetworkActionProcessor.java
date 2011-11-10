@@ -28,10 +28,10 @@ import de.iritgo.aktario.core.network.Channel;
  */
 public class SendEntryNetworkActionProcessor extends NetworkActionProcessor
 {
-	public SendEntryNetworkActionProcessor (String typeId, Channel channel,
+	public SendEntryNetworkActionProcessor(String typeId, Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super (typeId, channel, parentNetworkActionProcessor);
+		super(typeId, channel, parentNetworkActionProcessor);
 	}
 
 	/**
@@ -40,12 +40,12 @@ public class SendEntryNetworkActionProcessor extends NetworkActionProcessor
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		SendEntryNetworkActionProcessor clone = new SendEntryNetworkActionProcessor (typeId, channel,
+		SendEntryNetworkActionProcessor clone = new SendEntryNetworkActionProcessor(typeId, channel,
 						parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

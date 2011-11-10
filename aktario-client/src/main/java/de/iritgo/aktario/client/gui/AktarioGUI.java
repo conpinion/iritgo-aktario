@@ -45,7 +45,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 * This method is called after a change to the language to reload
 	 * the menu labels.
 	 */
-	public void reloadMenuBar ()
+	public void reloadMenuBar()
 	{
 	}
 
@@ -54,7 +54,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 * This method is called after a change to the language to reload
 	 * the menu labels.
 	 */
-	public void reloadToolBar ()
+	public void reloadToolBar()
 	{
 	}
 
@@ -63,7 +63,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @retrurn The color scheme name.
 	 */
-	public String getColorScheme ()
+	public String getColorScheme()
 	{
 		return null;
 	}
@@ -73,7 +73,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @param colorScheme The new color scheme.
 	 */
-	public void setColorScheme (String colorScheme)
+	public void setColorScheme(String colorScheme)
 	{
 	}
 
@@ -82,7 +82,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The desktop manager.
 	 */
-	public IDesktopManager getDesktopManager ()
+	public IDesktopManager getDesktopManager()
 	{
 		return null;
 	}
@@ -92,7 +92,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @param visible If true the admin menu is visible.
 	 */
-	public void setAdminMenuVisible (boolean visible)
+	public void setAdminMenuVisible(boolean visible)
 	{
 	}
 
@@ -101,7 +101,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @param enabled If true the application menu is enabled.
 	 */
-	public void setApplicationMenuEnabled (boolean enabled)
+	public void setApplicationMenuEnabled(boolean enabled)
 	{
 	}
 
@@ -110,7 +110,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The desktop pane.
 	 */
-	public JDesktopPane getDesktopPane ()
+	public JDesktopPane getDesktopPane()
 	{
 		return null;
 	}
@@ -119,42 +119,42 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 * Called when the server connection was lost.
 	 * This method shuts down the client and redisplays the login dialog.
 	 */
-	public void lostNetworkConnection ()
+	public void lostNetworkConnection()
 	{
 	}
 
 	/**
 	 * Stop the client gui.
 	 */
-	public void stopGUI ()
+	public void stopGUI()
 	{
 	}
 
 	/**
 	 * Start the client gui.
 	 */
-	public void startGUI ()
+	public void startGUI()
 	{
 	}
 
 	/**
 	 * Start the client application.
 	 */
-	public void startApplication ()
+	public void startApplication()
 	{
 	}
 
 	/**
 	 * Stop the client application.
 	 */
-	public void stopApplication ()
+	public void stopApplication()
 	{
 	}
 
 	/**
 	 * Initialize the main gui.
 	 */
-	public void init () throws InitIritgoException
+	public void init() throws InitIritgoException
 	{
 	}
 
@@ -163,14 +163,14 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @param userName The user name text to set.
 	 */
-	public void setStatusUser (String userName)
+	public void setStatusUser(String userName)
 	{
 	}
 
 	/**
 	 * Show the client gui.
 	 */
-	public void show ()
+	public void show()
 	{
 	}
 
@@ -179,7 +179,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The background image.
 	 */
-	public ImageIcon getLoginBackground ()
+	public ImageIcon getLoginBackground()
 	{
 		return null;
 	}
@@ -189,7 +189,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The background image.
 	 */
-	public ImageIcon getAboutBackground ()
+	public ImageIcon getAboutBackground()
 	{
 		return null;
 	}
@@ -199,7 +199,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The participant indicator icon.
 	 */
-	public IOverlayIcon getParticipantIndicator ()
+	public IOverlayIcon getParticipantIndicator()
 	{
 		return null;
 	}
@@ -209,7 +209,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The system tray popup menu.
 	 */
-	public JPopupMenu getSystemTrayMenu ()
+	public JPopupMenu getSystemTrayMenu()
 	{
 		return null;
 	}
@@ -219,7 +219,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The systray icon position.
 	 */
-	public Point getSystemTrayIconPosition ()
+	public Point getSystemTrayIconPosition()
 	{
 		return null;
 	}
@@ -229,7 +229,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The systray icon size.
 	 */
-	public Dimension getSystemTrayIconSize ()
+	public Dimension getSystemTrayIconSize()
 	{
 		return null;
 	}
@@ -239,7 +239,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The application title.
 	 */
-	public String getAppTitle ()
+	public String getAppTitle()
 	{
 		return "Iritgo";
 	}
@@ -250,7 +250,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 * @param key The icon key.
 	 * @param icon The icon to set.
 	 */
-	public void setIcon (String key, ImageIcon icon)
+	public void setIcon(String key, ImageIcon icon)
 	{
 	}
 
@@ -260,7 +260,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 * @param key The icon key.
 	 * @return The icon.
 	 */
-	public ImageIcon getIcon (String key)
+	public ImageIcon getIcon(String key)
 	{
 		return null;
 	}
@@ -268,7 +268,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	/**
 	 * Make the client gui the foreground window.
 	 */
-	public void bringToFront ()
+	public void bringToFront()
 	{
 	}
 
@@ -277,7 +277,7 @@ public class AktarioGUI extends BaseObject implements ClientGUI
 	 *
 	 * @return The application window.
 	 */
-	public Window getMainWindow ()
+	public Window getMainWindow()
 	{
 		return null;
 	}

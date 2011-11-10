@@ -33,15 +33,15 @@ public class TurnAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public TurnAction ()
+	public TurnAction()
 	{
-		super (- 1);
+		super(- 1);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public TurnAction (long turn)
+	public TurnAction(long turn)
 	{
 		this.turn = turn;
 	}
@@ -50,25 +50,25 @@ public class TurnAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		turn = stream.readLong ();
+		turn = stream.readLong();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (turn);
+		stream.writeLong(turn);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 	}
 }

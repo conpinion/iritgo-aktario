@@ -34,48 +34,48 @@ public class UserJoinAction extends FrameworkAction
 
 	private String channel;
 
-	public UserJoinAction ()
+	public UserJoinAction()
 	{
 	}
 
-	public UserJoinAction (String userName, long userUniqueId, String channel)
+	public UserJoinAction(String userName, long userUniqueId, String channel)
 	{
-		super (userUniqueId);
+		super(userUniqueId);
 		this.userName = userName;
 		this.channel = channel;
 	}
 
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.userjoin";
 	}
 
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		channel = stream.readUTF ();
+		userName = stream.readUTF();
+		channel = stream.readUTF();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (channel);
+		stream.writeUTF(userName);
+		stream.writeUTF(channel);
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
-		chatManager.joinChannel (channel, userUniqueId, userName);
+		chatManager.joinChannel(channel, userUniqueId, userName);
 	}
 }

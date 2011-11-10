@@ -25,6 +25,6 @@ package de.iritgo.aktario.infocenter.guinetworkdisplay.gui;
  */
 public interface GUIDisplay
 {
-	public void addInfo (int context, String category, String icon, String message, String guiPaneId, long uniqueId,
+	public void addInfo(int context, String category, String icon, String message, String guiPaneId, long uniqueId,
 					String iObjectTypeId, int level);
 }

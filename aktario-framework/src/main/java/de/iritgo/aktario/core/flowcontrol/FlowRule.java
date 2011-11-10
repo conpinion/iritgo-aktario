@@ -34,22 +34,22 @@ public abstract class FlowRule extends BaseObject
 	 *
 	 * @param id The id of the rule.
 	 */
-	public FlowRule (String id)
+	public FlowRule(String id)
 	{
-		super (id);
+		super(id);
 	}
 
 	/**
 	 * Tell the rule that is has succeeded.
 	 */
-	public void success ()
+	public void success()
 	{
 	}
 
 	/**
 	 * Tell the rule that is has failed.
 	 */
-	public void failure ()
+	public void failure()
 	{
 	}
 
@@ -58,7 +58,7 @@ public abstract class FlowRule extends BaseObject
 	 *
 	 * @param arg Optional success argument.
 	 */
-	public void success (Object arg)
+	public void success(Object arg)
 	{
 	}
 
@@ -67,7 +67,7 @@ public abstract class FlowRule extends BaseObject
 	 *
 	 * @param arg Optional failure argument.
 	 */
-	public void failure (Object arg)
+	public void failure(Object arg)
 	{
 	}
 
@@ -76,7 +76,7 @@ public abstract class FlowRule extends BaseObject
 	 *
 	 * @return True if the rule has succeeded.
 	 */
-	public boolean isCompleted ()
+	public boolean isCompleted()
 	{
 		return true;
 	}

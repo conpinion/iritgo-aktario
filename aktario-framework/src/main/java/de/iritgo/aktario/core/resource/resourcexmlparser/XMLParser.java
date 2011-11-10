@@ -41,7 +41,7 @@ import java.util.HashMap;
  */
 public class XMLParser extends BaseObject
 {
-	HashMap classMap = new HashMap ();
+	HashMap classMap = new HashMap();
 
 	/**
 	 * Create a new XMLParser
@@ -49,24 +49,24 @@ public class XMLParser extends BaseObject
 	 * @param resourceXMLFile The XML-Description file.
 	 * @param resourceService The resource generator.
 	 */
-	public XMLParser (String resourceXMLFile, ResourceService resourceService)
+	public XMLParser(String resourceXMLFile, ResourceService resourceService)
 	{
 		try
 		{
-			SAXBuilder builder = new SAXBuilder (false);
-			Document doc = builder.build (new File (resourceXMLFile));
+			SAXBuilder builder = new SAXBuilder(false);
+			Document doc = builder.build(new File(resourceXMLFile));
 
-			transform (doc, resourceService);
+			transform(doc, resourceService);
 		}
 		catch (JDOMException x)
 		{
-			Log.logFatal ("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
-			x.printStackTrace ();
+			Log.logFatal("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
+			x.printStackTrace();
 		}
 		catch (IOException x)
 		{
-			Log.logFatal ("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
-			x.printStackTrace ();
+			Log.logFatal("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
+			x.printStackTrace();
 		}
 	}
 
@@ -76,24 +76,24 @@ public class XMLParser extends BaseObject
 	 * @param resourceXMLURL The XML-Description accessed by URL.
 	 * @param resourceService The resource generator.
 	 */
-	public XMLParser (URL resourceXMLURL, ResourceService resourceService)
+	public XMLParser(URL resourceXMLURL, ResourceService resourceService)
 	{
 		try
 		{
-			SAXBuilder builder = new SAXBuilder (false);
-			Document doc = builder.build (resourceXMLURL);
+			SAXBuilder builder = new SAXBuilder(false);
+			Document doc = builder.build(resourceXMLURL);
 
-			transform (doc, resourceService);
+			transform(doc, resourceService);
 		}
 		catch (JDOMException x)
 		{
-			Log.logFatal ("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
-			x.printStackTrace ();
+			Log.logFatal("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
+			x.printStackTrace();
 		}
 		catch (IOException x)
 		{
-			Log.logFatal ("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
-			x.printStackTrace ();
+			Log.logFatal("resource", "XMLParser.XMLParser", "ResourceDescription-File not found");
+			x.printStackTrace();
 		}
 	}
 
@@ -103,37 +103,37 @@ public class XMLParser extends BaseObject
 	 * @param doc The XML document.
 	 * @param resourceService The resource generator.
 	 */
-	private void transform (Document doc, ResourceService resourceService)
+	private void transform(Document doc, ResourceService resourceService)
 	{
-		Element element = doc.getRootElement ();
+		Element element = doc.getRootElement();
 
-		transformToNode (element, resourceService.getBaseNode ());
+		transformToNode(element, resourceService.getBaseNode());
 	}
 
 	/**
 	 * Transform the XML-Tree to a ResourceNodetree.
 	 */
-	public void transformToNode (Element element, ResourceNode node)
+	public void transformToNode(Element element, ResourceNode node)
 	{
-		ElementIterator i = new ElementIterator (element);
-		ResourceService resourceBase = new ResourceService (node);
-		NodeContainer nodeContainer = new NodeContainer ();
+		ElementIterator i = new ElementIterator(element);
+		ResourceService resourceBase = new ResourceService(node);
+		NodeContainer nodeContainer = new NodeContainer();
 
-		nodeContainer.setNode (node);
+		nodeContainer.setNode(node);
 
-		DefaultCreator defaultCreater = new DefaultCreator ();
+		DefaultCreator defaultCreater = new DefaultCreator();
 
-		for (; i.hasNext (); i.next ())
+		for (; i.hasNext(); i.next())
 		{
-			ElementContainer elementContainer = (ElementContainer) i.current ();
+			ElementContainer elementContainer = (ElementContainer) i.current();
 
 			try
 			{
 				try
 				{
-					if (resourceBase.getNode (elementContainer.getPath ()) != null)
+					if (resourceBase.getNode(elementContainer.getPath()) != null)
 					{
-						nodeContainer.setNode (resourceBase.getNode (elementContainer.getPath ()));
+						nodeContainer.setNode(resourceBase.getNode(elementContainer.getPath()));
 
 						continue;
 					}
@@ -142,7 +142,7 @@ public class XMLParser extends BaseObject
 				{
 				}
 
-				defaultCreater.work (nodeContainer, i);
+				defaultCreater.work(nodeContainer, i);
 			}
 			catch (ContinueException x)
 			{

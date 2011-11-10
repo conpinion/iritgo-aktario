@@ -48,71 +48,71 @@ public class InstantMessageSendPane extends SwingGUIPane
 	/**
 	 * Send a message to a participant.
 	 */
-	public Action send = new AbstractAction ()
+	public Action send = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.setProperty ("sourceUser", AppContext.instance ().getUser ().getName ());
-			props.setProperty ("targetUser", properties.getProperty ("targetUser"));
-			props.setProperty ("message", message.getText ());
-			CommandTools.performAsync ("InstantMessageCommand", props);
-			display.close ();
+			props.setProperty("sourceUser", AppContext.instance().getUser().getName());
+			props.setProperty("targetUser", properties.getProperty("targetUser"));
+			props.setProperty("message", message.getText());
+			CommandTools.performAsync("InstantMessageCommand", props);
+			display.close();
 		}
 	};
 
 	/**
 	 * Cancel
 	 */
-	public Action cancel = new AbstractAction ()
+	public Action cancel = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new SipPhonePane.
 	 */
-	public InstantMessageSendPane ()
+	public InstantMessageSendPane()
 	{
-		super ("InstantMessageSendPane");
+		super("InstantMessageSendPane");
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (InstantMessagePlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(InstantMessagePlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/InstantMessageSendPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/InstantMessageSendPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "InstantMessageSendPane.initGUI", x.toString ());
+			Log.logError("client", "InstantMessageSendPane.initGUI", x.toString());
 		}
 	}
 
 	/**
 	 * Load the gui values from the data object attributes.
 	 */
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 	}
 
 	/**
 	 * Store the current gui values into the data object attributes.
 	 */
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -121,8 +121,8 @@ public class InstantMessageSendPane extends SwingGUIPane
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new InstantMessageSendPane ();
+		return new InstantMessageSendPane();
 	}
 }

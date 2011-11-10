@@ -41,47 +41,47 @@ import de.iritgo.aktario.framework.console.ConsoleCommand;
 public class ChatPlugin extends FrameworkPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new UserJoinAction ());
-		registerAction (new UserJoinServerAction ());
-		registerAction (new UserLeaveAction ());
-		registerAction (new UserLeaveServerAction ());
-		registerAction (new ChatMessageAction ());
-		registerAction (new ChatMessageServerAction ());
-		registerAction (new ChatCloseAction ());
+		registerAction(new UserJoinAction());
+		registerAction(new UserJoinServerAction());
+		registerAction(new UserLeaveAction());
+		registerAction(new UserLeaveServerAction());
+		registerAction(new ChatMessageAction());
+		registerAction(new ChatMessageServerAction());
+		registerAction(new ChatCloseAction());
 	}
 
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (Plugin.CLIENT, new ChatGUIPane ());
+		registerGUIPane(Plugin.CLIENT, new ChatGUIPane());
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.CLIENT, new ChatClientManager ());
-		registerManager (Plugin.SERVER, new ChatServerManager ());
+		registerManager(Plugin.CLIENT, new ChatClientManager());
+		registerManager(Plugin.SERVER, new ChatServerManager());
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new ShowChatter ());
+		registerCommand(new ShowChatter());
 	}
 
 	@Override
-	protected void registerConsoleCommands ()
+	protected void registerConsoleCommands()
 	{
-		registerConsoleCommand (Plugin.CLIENT, new ConsoleCommand ("join", new UserJoinCommand (),
+		registerConsoleCommand(Plugin.CLIENT, new ConsoleCommand("join", new UserJoinCommand(),
 						"chat.help.joinchannel", 1));
-		registerConsoleCommand (Plugin.CLIENT, new ConsoleCommand ("leave", new UserLeaveCommand (),
+		registerConsoleCommand(Plugin.CLIENT, new ConsoleCommand("leave", new UserLeaveCommand(),
 						"chat.help.leavechannel", 0));
 	}
 }

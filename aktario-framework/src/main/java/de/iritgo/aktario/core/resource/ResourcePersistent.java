@@ -35,9 +35,9 @@ public class ResourcePersistent extends ResourceNode
 	 * @param name The description of the resource.
 	 * @param nodeName The node Name
 	 */
-	public ResourcePersistent (String name, String nodeName, Object resourcePath)
+	public ResourcePersistent(String name, String nodeName, Object resourcePath)
 	{
-		super (name, nodeName);
+		super(name, nodeName);
 		this.resourcePath = resourcePath;
 	}
 
@@ -46,7 +46,7 @@ public class ResourcePersistent extends ResourceNode
 	 *
 	 * @param resourceLoader The resource loader.
 	 */
-	public void setResourceLoader (ResourceLoader resourceLoader)
+	public void setResourceLoader(ResourceLoader resourceLoader)
 	{
 		this.resourceLoader = resourceLoader;
 	}
@@ -56,7 +56,7 @@ public class ResourcePersistent extends ResourceNode
 	 *
 	 * @return The ResourceLoader.
 	 */
-	public ResourceLoader getResourceLoader ()
+	public ResourceLoader getResourceLoader()
 	{
 		return resourceLoader;
 	}
@@ -66,7 +66,7 @@ public class ResourcePersistent extends ResourceNode
 	 *
 	 * @return The ResourcePath.
 	 */
-	public Object getResourcePath ()
+	public Object getResourcePath()
 	{
 		return resourcePath;
 	}

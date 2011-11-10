@@ -40,53 +40,53 @@ public class ChatMessageServerAction extends NetworkFrameworkServerAction
 
 	private String userName;
 
-	public ChatMessageServerAction ()
+	public ChatMessageServerAction()
 	{
 	}
 
-	public ChatMessageServerAction (String chatMessage, int channelId, String userName)
+	public ChatMessageServerAction(String chatMessage, int channelId, String userName)
 	{
-		super ();
+		super();
 		this.chatMessage = chatMessage;
 		this.channelId = channelId;
 		this.userName = userName;
 	}
 
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "server.action.chatmessage";
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		chatMessage = stream.readUTF ();
-		channelId = stream.readInt ();
+		userName = stream.readUTF();
+		chatMessage = stream.readUTF();
+		channelId = stream.readInt();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (chatMessage);
-		stream.writeInt (channelId);
+		stream.writeUTF(userName);
+		stream.writeUTF(chatMessage);
+		stream.writeInt(channelId);
 	}
 
 	@Override
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
-		Boolean chatEnabled = (Boolean) CommandTools.performSimple ("ChatEnabled", new Properties ());
+		Boolean chatEnabled = (Boolean) CommandTools.performSimple("ChatEnabled", new Properties());
 
 		if ((chatEnabled != null) && ! chatEnabled)
 		{
 			return null;
 		}
 
-		ChatManager chatManager = (ChatManager) Engine.instance ().getManagerRegistry ().getManager ("chat.server");
+		ChatManager chatManager = (ChatManager) Engine.instance().getManagerRegistry().getManager("chat.server");
 
-		chatManager.messageChannel (chatMessage, channelId, userUniqueId);
+		chatManager.messageChannel(chatMessage, channelId, userUniqueId);
 
 		return null;
 	}

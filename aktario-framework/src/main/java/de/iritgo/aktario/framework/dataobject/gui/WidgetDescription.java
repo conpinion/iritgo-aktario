@@ -35,150 +35,150 @@ public class WidgetDescription extends DataObject
 {
 	private Map controlMapping;
 
-	public WidgetDescription ()
+	public WidgetDescription()
 	{
-		super ("WidgetDescription");
-		addAttribute ("controllerUniqueId", new Long (0));
-		addAttribute ("iconId", "");
-		addAttribute ("labelId", "");
-		addAttribute ("rendererId", "");
-		addAttribute ("widgetId", "");
-		addAttribute ("description", "");
-		addAttribute ("mandatoryField", false);
-		addAttribute ("visible", true);
-		addAttribute ("enabled", true);
-		addAttribute ("widgets", new IObjectList ("widgets", new IObjectProxy (new DataObject ("dummy")), this));
-		controlMapping = new HashMap ();
+		super("WidgetDescription");
+		addAttribute("controllerUniqueId", new Long(0));
+		addAttribute("iconId", "");
+		addAttribute("labelId", "");
+		addAttribute("rendererId", "");
+		addAttribute("widgetId", "");
+		addAttribute("description", "");
+		addAttribute("mandatoryField", false);
+		addAttribute("visible", true);
+		addAttribute("enabled", true);
+		addAttribute("widgets", new IObjectList("widgets", new IObjectProxy(new DataObject("dummy")), this));
+		controlMapping = new HashMap();
 	}
 
-	public void addControl (String key, Object component)
+	public void addControl(String key, Object component)
 	{
-		controlMapping.put (key, component);
+		controlMapping.put(key, component);
 	}
 
-	public Object getControl (String key)
+	public Object getControl(String key)
 	{
-		return (Object) controlMapping.get (key);
+		return (Object) controlMapping.get(key);
 	}
 
-	public void removeControl (String key)
+	public void removeControl(String key)
 	{
-		controlMapping.remove (key);
+		controlMapping.remove(key);
 	}
 
-	public void setControllerUniqueId (long controllerUniqueId)
+	public void setControllerUniqueId(long controllerUniqueId)
 	{
-		setAttribute ("controllerUniqueId", controllerUniqueId);
+		setAttribute("controllerUniqueId", controllerUniqueId);
 	}
 
-	public long getControllerUniqueId ()
+	public long getControllerUniqueId()
 	{
-		return getLongAttribute ("controllerUniqueId");
+		return getLongAttribute("controllerUniqueId");
 	}
 
-	public IObjectList getWidgetDescriptions ()
+	public IObjectList getWidgetDescriptions()
 	{
-		return getIObjectListAttribute ("widgets");
+		return getIObjectListAttribute("widgets");
 	}
 
-	public void addWidgetDescription (WidgetDescription widgetDescription)
+	public void addWidgetDescription(WidgetDescription widgetDescription)
 	{
-		getIObjectListAttribute ("widgets").add (widgetDescription);
+		getIObjectListAttribute("widgets").add(widgetDescription);
 	}
 
-	public void removeWidgetDescription (WidgetDescription widgetDescription)
+	public void removeWidgetDescription(WidgetDescription widgetDescription)
 	{
-		getIObjectListAttribute ("widgets").remove (widgetDescription);
+		getIObjectListAttribute("widgets").remove(widgetDescription);
 	}
 
-	public void setRendererId (String rendererId)
+	public void setRendererId(String rendererId)
 	{
-		setAttribute ("rendererId", rendererId);
+		setAttribute("rendererId", rendererId);
 	}
 
-	public String getRendererId ()
+	public String getRendererId()
 	{
-		return getStringAttribute ("rendererId");
+		return getStringAttribute("rendererId");
 	}
 
-	public void setIconId (String iconId)
+	public void setIconId(String iconId)
 	{
-		setAttribute ("iconId", iconId);
+		setAttribute("iconId", iconId);
 	}
 
-	public String getIconId ()
+	public String getIconId()
 	{
-		return getStringAttribute ("iconId");
+		return getStringAttribute("iconId");
 	}
 
-	public void setLabelId (String labelId)
+	public void setLabelId(String labelId)
 	{
-		setAttribute ("labelId", labelId);
+		setAttribute("labelId", labelId);
 	}
 
-	public String getLabelId ()
+	public String getLabelId()
 	{
-		return getStringAttribute ("labelId");
+		return getStringAttribute("labelId");
 	}
 
-	public void setWidgetId (String widgetId)
+	public void setWidgetId(String widgetId)
 	{
-		setAttribute ("widgetId", widgetId);
+		setAttribute("widgetId", widgetId);
 	}
 
-	public String getWidgetId ()
+	public String getWidgetId()
 	{
-		return getStringAttribute ("widgetId");
+		return getStringAttribute("widgetId");
 	}
 
-	public void setDescription (String description)
+	public void setDescription(String description)
 	{
-		setAttribute ("description", description);
+		setAttribute("description", description);
 	}
 
-	public String getDescription ()
+	public String getDescription()
 	{
-		return getStringAttribute ("description");
+		return getStringAttribute("description");
 	}
 
-	public void setMandatoryField (boolean mandatoryField)
+	public void setMandatoryField(boolean mandatoryField)
 	{
-		setAttribute ("mandatoryField", mandatoryField);
+		setAttribute("mandatoryField", mandatoryField);
 	}
 
-	public boolean getMandatoryField ()
+	public boolean getMandatoryField()
 	{
-		return getBooleanAttribute ("mandatoryField");
+		return getBooleanAttribute("mandatoryField");
 	}
 
-	public boolean isMandatoryField ()
+	public boolean isMandatoryField()
 	{
-		return getBooleanAttribute ("mandatoryField");
+		return getBooleanAttribute("mandatoryField");
 	}
 
-	public void setVisible (boolean visible)
+	public void setVisible(boolean visible)
 	{
-		setAttribute ("visible", visible);
+		setAttribute("visible", visible);
 	}
 
-	public boolean getVisible ()
+	public boolean getVisible()
 	{
-		return getBooleanAttribute ("visible");
+		return getBooleanAttribute("visible");
 	}
 
-	public boolean isVisible ()
+	public boolean isVisible()
 	{
-		return getBooleanAttribute ("visible");
+		return getBooleanAttribute("visible");
 	}
 
-	public void setEnabled (boolean Enabled)
+	public void setEnabled(boolean Enabled)
 	{
-		setAttribute ("enabled", Enabled);
+		setAttribute("enabled", Enabled);
 	}
 
-	public boolean getEnabled ()
+	public boolean getEnabled()
 	{
-		return getBooleanAttribute ("enabled");
+		return getBooleanAttribute("enabled");
 	}
 
 	/**
@@ -186,19 +186,19 @@ public class WidgetDescription extends DataObject
 	 *
 	 * @return boolean The valid state of this object
 	 */
-	public boolean isValid ()
+	public boolean isValid()
 	{
 		boolean valid = true;
 
-		if (! super.isValid ())
+		if (! super.isValid())
 		{
-			markAsInvalid ();
+			markAsInvalid();
 			valid = false;
 		}
 
-		for (Iterator i = getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			if (! ((DataObject) i.next ()).isValid ())
+			if (! ((DataObject) i.next()).isValid())
 			{
 				valid = false;
 			}

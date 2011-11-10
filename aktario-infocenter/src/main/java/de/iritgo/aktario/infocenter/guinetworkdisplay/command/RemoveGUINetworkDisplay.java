@@ -35,21 +35,21 @@ public class RemoveGUINetworkDisplay extends CommonInfoCenterCommand
 	 * Standard constructor
 	 *
 	 */
-	public RemoveGUINetworkDisplay ()
+	public RemoveGUINetworkDisplay()
 	{
-		super ("removeguinetworkdisplay");
+		super("removeguinetworkdisplay");
 	}
 
 	/**
 	 * EditPrototype
 	 */
-	public void perform ()
+	public void perform()
 	{
-		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance ().getManagerRegistry ().getManager (
+		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance().getManagerRegistry().getManager(
 						"infocenter");
 
-		NetworkDisplay networkDisplay = new NetworkDisplay ();
+		NetworkDisplay networkDisplay = new NetworkDisplay();
 
-		infoCenterManager.getInfoCenterRegistry ().removeDisplay (networkDisplay.getId (), context);
+		infoCenterManager.getInfoCenterRegistry().removeDisplay(networkDisplay.getId(), context);
 	}
 }

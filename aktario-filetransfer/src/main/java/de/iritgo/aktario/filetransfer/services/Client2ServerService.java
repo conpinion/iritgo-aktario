@@ -49,24 +49,24 @@ public class Client2ServerService extends FileTransferService
 
 	byte[] buffer = new byte[BUFFERSIZE];
 
-	public Client2ServerService ()
+	public Client2ServerService()
 	{
 	}
 
 	@Override
-	public void startClientTransfer (FileTransferContext fileTransferContext)
+	public void startClientTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			file = new File (fileTransferContext.getPath () + fileTransferContext.getFilename ());
-			bufferedInputStream = new BufferedInputStream (new FileInputStream (file), BUFFERSIZE);
-			fileTransferContext.setFileSize (file.length ());
+			file = new File(fileTransferContext.getPath() + fileTransferContext.getFilename());
+			bufferedInputStream = new BufferedInputStream(new FileInputStream(file), BUFFERSIZE);
+			fileTransferContext.setFileSize(file.length());
 
-			ActionTools.sendToServer (new StartFileTransferRequest (fileTransferContext.getFileId (),
-							fileTransferContext.getProperties ()));
+			ActionTools.sendToServer(new StartFileTransferRequest(fileTransferContext.getFileId(), fileTransferContext
+							.getProperties()));
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.START, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.START, fileTransferContext));
 		}
 		catch (Exception x)
 		{
@@ -74,46 +74,46 @@ public class Client2ServerService extends FileTransferService
 	}
 
 	@Override
-	public void startServerTransfer (FileTransferContext fileTransferContext)
+	public void startServerTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			file = File.createTempFile ("-" + fileTransferContext.getFileId () + "-", ".tmp");
-			fileTransferContext.setFilename (file.getName ());
-			fileTransferContext.setPath (file.getPath ());
+			file = File.createTempFile("-" + fileTransferContext.getFileId() + "-", ".tmp");
+			fileTransferContext.setFilename(file.getName());
+			fileTransferContext.setPath(file.getPath());
 
-			bufferedOutputStream = new BufferedOutputStream (new FileOutputStream (file));
-			ActionTools.sendToClient (fileTransferContext.getUserUniqueId (), new StartFileTransferResponse (
-							fileTransferContext.getFileId (), fileTransferContext.getProperties ()));
+			bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file));
+			ActionTools.sendToClient(fileTransferContext.getUserUniqueId(), new StartFileTransferResponse(
+							fileTransferContext.getFileId(), fileTransferContext.getProperties()));
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.START, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.START, fileTransferContext));
 		}
 		catch (Exception x)
 		{
-			System.out.println (x);
-			x.printStackTrace ();
+			System.out.println(x);
+			x.printStackTrace();
 		}
 	}
 
 	@Override
-	public int clientTransfer (FileTransferContext fileTransferContext)
+	public int clientTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			int readed = bufferedInputStream.read (buffer, 0, BUFFERSIZE);
+			int readed = bufferedInputStream.read(buffer, 0, BUFFERSIZE);
 
 			if (readed == - 1)
 			{
 				return - 1;
 			}
 
-			fileTransferContext.calculateSendedBytes (readed);
+			fileTransferContext.calculateSendedBytes(readed);
 
-			ActionTools.sendToServer (new TransferRequest (fileTransferContext.getFileId (), buffer, readed));
+			ActionTools.sendToServer(new TransferRequest(fileTransferContext.getFileId(), buffer, readed));
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.TRANSFER, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.TRANSFER, fileTransferContext));
 
 			return readed;
 		}
@@ -125,14 +125,14 @@ public class Client2ServerService extends FileTransferService
 	}
 
 	@Override
-	public int serverTransfer (FileTransferContext fileTransferContext)
+	public int serverTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			bufferedOutputStream.write (data, 0, data.length);
+			bufferedOutputStream.write(data, 0, data.length);
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.TRANSFER, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.TRANSFER, fileTransferContext));
 		}
 		catch (Exception x)
 		{
@@ -142,42 +142,42 @@ public class Client2ServerService extends FileTransferService
 	}
 
 	@Override
-	public void endClientTransfer (FileTransferContext fileTransferContext)
+	public void endClientTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			bufferedInputStream.close ();
-			ActionTools.sendToServer (new EndFileTransferRequest (fileTransferContext.getFileId ()));
+			bufferedInputStream.close();
+			ActionTools.sendToServer(new EndFileTransferRequest(fileTransferContext.getFileId()));
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.END, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.END, fileTransferContext));
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 
 	@Override
-	public void endServerTransfer (FileTransferContext fileTransferContext)
+	public void endServerTransfer(FileTransferContext fileTransferContext)
 	{
 		try
 		{
-			bufferedOutputStream.flush ();
-			bufferedOutputStream.close ();
+			bufferedOutputStream.flush();
+			bufferedOutputStream.close();
 
-			Engine.instance ().getEventRegistry ().fire ("filetransfer",
-							new FileTransferEvent (FileTransferContext.END, fileTransferContext));
+			Engine.instance().getEventRegistry().fire("filetransfer",
+							new FileTransferEvent(FileTransferContext.END, fileTransferContext));
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 	}
 
 	@Override
-	public FileTransferService clone ()
+	public FileTransferService clone()
 	{
-		return new Client2ServerService ();
+		return new Client2ServerService();
 	}
 }

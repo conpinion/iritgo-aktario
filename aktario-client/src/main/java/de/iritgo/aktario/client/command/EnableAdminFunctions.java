@@ -40,26 +40,26 @@ public class EnableAdminFunctions extends Command
 	/**
 	 * Create a new command object.
 	 */
-	public EnableAdminFunctions ()
+	public EnableAdminFunctions()
 	{
-		super ("EnableAdminFunctions");
+		super("EnableAdminFunctions");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		AktarioGUI gui = (AktarioGUI) Client.instance ().getClientGUI ();
+		AktarioGUI gui = (AktarioGUI) Client.instance().getClientGUI();
 
 		boolean enable = false;
 
-		if (properties.get ("enabled") != null)
+		if (properties.get("enabled") != null)
 		{
-			enable = ((Boolean) properties.get ("enabled")).booleanValue ();
+			enable = ((Boolean) properties.get("enabled")).booleanValue();
 		}
 
-		gui.setAdminMenuVisible (enable);
+		gui.setAdminMenuVisible(enable);
 	}
 }

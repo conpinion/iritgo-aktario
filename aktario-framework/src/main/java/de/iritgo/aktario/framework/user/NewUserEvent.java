@@ -31,12 +31,12 @@ public class NewUserEvent extends BaseObject implements Event
 {
 	private User user;
 
-	public NewUserEvent (User user)
+	public NewUserEvent(User user)
 	{
 		this.user = user;
 	}
 
-	public User getUser ()
+	public User getUser()
 	{
 		return user;
 	}

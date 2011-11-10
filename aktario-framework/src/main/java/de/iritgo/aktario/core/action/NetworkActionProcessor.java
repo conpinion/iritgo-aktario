@@ -51,13 +51,13 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	/**
 	 * Default constructor
 	 */
-	public NetworkActionProcessor (String typeId, Channel channel,
+	public NetworkActionProcessor(String typeId, Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super (typeId);
+		super(typeId);
 
-		channelProcessorMapping = new ConcurrentHashMap ();
-		channelProcessors = new LinkedList ();
+		channelProcessorMapping = new ConcurrentHashMap();
+		channelProcessors = new LinkedList();
 		this.channel = channel;
 		this.parentNetworkActionProcessor = parentNetworkActionProcessor;
 	}
@@ -65,7 +65,7 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	/**
 	 * Init a network action processor
 	 */
-	public void init ()
+	public void init()
 	{
 	}
 
@@ -74,24 +74,24 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param channel The new channel.
 	 */
-	public void newChannelCreated (Channel channel)
+	public void newChannelCreated(Channel channel)
 	{
-		for (Iterator i = channelProcessorMapping.values ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.values().iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).newChannelCreated (channel);
+				((NetworkActionProcessorInterface) i.next()).newChannelCreated(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).newChannelCreated (channel);
+				((NetworkActionProcessorInterface) i.next()).newChannelCreated(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -104,24 +104,24 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param channel The new channel.
 	 */
-	public void channelClosed (Channel channel)
+	public void channelClosed(Channel channel)
 	{
-		for (Iterator i = channelProcessorMapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.keySet().iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) channelProcessorMapping.get (i.next ())).channelClosed (channel);
+				((NetworkActionProcessorInterface) channelProcessorMapping.get(i.next())).channelClosed(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).channelClosed (channel);
+				((NetworkActionProcessorInterface) i.next()).channelClosed(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -134,9 +134,9 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param action The action to perform.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
-		perform (action, action.getTransceiver ());
+		perform(action, action.getTransceiver());
 	}
 
 	/**
@@ -145,20 +145,20 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		Channel channel = ((ClientTransceiver) transceiver).getConnectedChannel ();
+		Channel channel = ((ClientTransceiver) transceiver).getConnectedChannel();
 
-		if (channel != null && channelProcessorMapping.get (channel) != null)
+		if (channel != null && channelProcessorMapping.get(channel) != null)
 		{
-			((ActionProcessor) channelProcessorMapping.get (channel)).perform (action, transceiver);
+			((ActionProcessor) channelProcessorMapping.get(channel)).perform(action, transceiver);
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((ActionProcessor) i.next ()).perform (action, transceiver);
+				((ActionProcessor) i.next()).perform(action, transceiver);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -172,9 +172,9 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 * @param channel The channel.
 	 * @param actionProcessor The action processor.
 	 */
-	public void addOutput (Channel channel, ActionProcessor actionProcessor)
+	public void addOutput(Channel channel, ActionProcessor actionProcessor)
 	{
-		channelProcessorMapping.put (channel, actionProcessor);
+		channelProcessorMapping.put(channel, actionProcessor);
 	}
 
 	/**
@@ -182,9 +182,9 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param channel The channel.
 	 */
-	public void removeOutput (Channel channel)
+	public void removeOutput(Channel channel)
 	{
-		channelProcessorMapping.remove (channel);
+		channelProcessorMapping.remove(channel);
 	}
 
 	/**
@@ -192,9 +192,9 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param actionProcessor The action processor
 	 */
-	public void addOutput (ActionProcessor actionProcessor)
+	public void addOutput(ActionProcessor actionProcessor)
 	{
-		channelProcessors.add (actionProcessor);
+		channelProcessors.add(actionProcessor);
 	}
 
 	/**
@@ -202,9 +202,9 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 *
 	 * @param actionProcessor The action processor.
 	 */
-	public void removeOutput (ActionProcessor actionProcessor)
+	public void removeOutput(ActionProcessor actionProcessor)
 	{
-		channelProcessors.remove (actionProcessor);
+		channelProcessors.remove(actionProcessor);
 	}
 
 	/**
@@ -213,29 +213,29 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public abstract Object clone ();
+	public abstract Object clone();
 
-	public void cloneOutputs (NetworkActionProcessorInterface clone)
+	public void cloneOutputs(NetworkActionProcessorInterface clone)
 	{
-		for (Iterator i = channelProcessorMapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.keySet().iterator(); i.hasNext();)
 		{
 			try
 			{
-				Channel channel = (Channel) i.next ();
+				Channel channel = (Channel) i.next();
 
-				clone.addOutput (channel, (ActionProcessor) ((ActionProcessor) channelProcessorMapping.get (channel))
-								.clone ());
+				clone.addOutput(channel, (ActionProcessor) ((ActionProcessor) channelProcessorMapping.get(channel))
+								.clone());
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				clone.addOutput ((ActionProcessor) ((ActionProcessor) i.next ()).clone ());
+				clone.addOutput((ActionProcessor) ((ActionProcessor) i.next()).clone());
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -246,7 +246,7 @@ public abstract class NetworkActionProcessor extends BaseObject implements Actio
 	/**
 	 * Close a network action processor
 	 */
-	public void close ()
+	public void close()
 	{
 	}
 }

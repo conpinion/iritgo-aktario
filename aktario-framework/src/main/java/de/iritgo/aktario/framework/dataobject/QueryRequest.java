@@ -49,17 +49,17 @@ public class QueryRequest extends NetworkFrameworkServerAction
 	/**
 	 * Send a query request
 	 */
-	public QueryRequest ()
+	public QueryRequest()
 	{
-		setTypeId ("QREQ");
+		setTypeId("QREQ");
 	}
 
 	/**
 	 * Create a new HistoricalDataServerAction.
 	 */
-	public QueryRequest (AbstractQuery query)
+	public QueryRequest(AbstractQuery query)
 	{
-		this ();
+		this();
 		this.abstractQuery = query;
 	}
 
@@ -68,19 +68,19 @@ public class QueryRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
 		try
 		{
-			queryTypeId = stream.readUTF ();
-			queryUniqueId = stream.readLong ();
+			queryTypeId = stream.readUTF();
+			queryUniqueId = stream.readLong();
 
-			abstractQuery = (AbstractQuery) Engine.instance ().getIObjectFactory ().newInstance (queryTypeId);
-			abstractQuery.readObject (stream);
+			abstractQuery = (AbstractQuery) Engine.instance().getIObjectFactory().newInstance(queryTypeId);
+			abstractQuery.readObject(stream);
 		}
 		catch (Exception x)
 		{
-			Log.log ("network", "QueryRequest.readObject", "Unknown query error:" + abstractQuery, Log.FATAL);
+			Log.log("network", "QueryRequest.readObject", "Unknown query error:" + abstractQuery, Log.FATAL);
 		}
 	}
 
@@ -89,46 +89,46 @@ public class QueryRequest extends NetworkFrameworkServerAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (abstractQuery.getTypeId ());
-		stream.writeLong (abstractQuery.getUniqueId ());
+		stream.writeUTF(abstractQuery.getTypeId());
+		stream.writeLong(abstractQuery.getUniqueId());
 
-		abstractQuery.writeObject (stream);
+		abstractQuery.writeObject(stream);
 	}
 
 	/**
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-		long newUniqueId = Engine.instance ().getPersistentIDGenerator ().createId ();
-		long oldUniqueId = abstractQuery.getUniqueId ();
+		long newUniqueId = Engine.instance().getPersistentIDGenerator().createId();
+		long oldUniqueId = abstractQuery.getUniqueId();
 
-		abstractQuery.setUniqueId (newUniqueId);
+		abstractQuery.setUniqueId(newUniqueId);
 
-		((User) clientTransceiver.getConnectedChannel ().getCustomerContextObject ()).putNewObjectsMapping (new Long (
-						oldUniqueId), new Long (newUniqueId));
+		((User) clientTransceiver.getConnectedChannel().getCustomerContextObject()).putNewObjectsMapping(new Long(
+						oldUniqueId), new Long(newUniqueId));
 
-		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+		IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-		proxy.setSampleRealObject ((IObject) abstractQuery);
-		Engine.instance ().getBaseRegistry ().add ((BaseObject) abstractQuery);
-		Engine.instance ().getProxyRegistry ().addProxy (proxy, abstractQuery.getTypeId ());
+		proxy.setSampleRealObject((IObject) abstractQuery);
+		Engine.instance().getBaseRegistry().add((BaseObject) abstractQuery);
+		Engine.instance().getProxyRegistry().addProxy(proxy, abstractQuery.getTypeId());
 
-		DataObjectManager dataObjectManager = (DataObjectManager) Engine.instance ().getManagerRegistry ().getManager (
+		DataObjectManager dataObjectManager = (DataObjectManager) Engine.instance().getManagerRegistry().getManager(
 						"DataObjectManager");
-		QueryRegistry queryRegistry = dataObjectManager.getQueryRegistry ();
+		QueryRegistry queryRegistry = dataObjectManager.getQueryRegistry();
 
-		queryRegistry.addQuery (abstractQuery);
-		abstractQuery.doQuery ();
+		queryRegistry.addQuery(abstractQuery);
+		abstractQuery.doQuery();
 
-		QueryResponse queryResponse = new QueryResponse (oldUniqueId, newUniqueId, abstractQuery.getTypeId ());
+		QueryResponse queryResponse = new QueryResponse(oldUniqueId, newUniqueId, abstractQuery.getTypeId());
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
-		queryResponse.setTransceiver (clientTransceiver);
-		queryResponse.setUniqueId (getUniqueId ());
-		ActionTools.sendToClient (queryResponse);
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
+		queryResponse.setTransceiver(clientTransceiver);
+		queryResponse.setUniqueId(getUniqueId());
+		ActionTools.sendToClient(queryResponse);
 	}
 }

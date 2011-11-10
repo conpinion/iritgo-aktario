@@ -39,18 +39,18 @@ public class IBufferedInputStream extends BufferedInputStream
 	/**
 	 * Creates a IBufferedInputStream and saves its argument, the input stream in, for later use.
 	 */
-	public IBufferedInputStream (InputStream in)
+	public IBufferedInputStream(InputStream in)
 	{
-		super (in);
+		super(in);
 	}
 
 	/**
 	 * Creates a BufferedInputStream with the specified buffer size, and saves
 	 * its argument, the input stream in, for later use.
 	 */
-	public IBufferedInputStream (InputStream in, int size)
+	public IBufferedInputStream(InputStream in, int size)
 	{
-		super (in, size);
+		super(in, size);
 	}
 
 	// 	/**

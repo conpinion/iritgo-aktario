@@ -35,42 +35,42 @@ public class AktarioEditorPlugin extends AktarioPlugin
 	 * Register all data objects in this method.
 	 */
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new EditorData ());
+		registerDataObject(new EditorData());
 	}
 
 	/**
 	 * Register all actions in this method.
 	 */
 	@Override
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new RemoteControlAction ());
-		registerAction (new RemoteControlServerAction ());
+		registerAction(new RemoteControlAction());
+		registerAction(new RemoteControlServerAction());
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new EditorManager ());
+		registerManager(Plugin.SERVER, new EditorManager());
 	}
 
 	/**
 	 * Register all gui panes in this method.
 	 */
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new EditorPane ());
+		registerGUIPane(new EditorPane());
 	}
 
 	/**
 	 * Register all collaboration applications in this method.
 	 */
 	@Override
-	public void registerApplications ()
+	public void registerApplications()
 	{
-		registerApplication ("aktario.editor.Editor", "aktario.softwareReview", "/resources/xp.png", "EditorPane");
+		registerApplication("aktario.editor.Editor", "aktario.softwareReview", "/resources/xp.png", "EditorPane");
 	}
 }

@@ -29,9 +29,9 @@ import de.iritgo.aktario.core.base.Transceiver;
  */
 public class SimpleActionProcessor extends BaseObject implements ActionProcessor
 {
-	public SimpleActionProcessor ()
+	public SimpleActionProcessor()
 	{
-		super ("SimpleActionProcessor");
+		super("SimpleActionProcessor");
 	}
 
 	/**
@@ -39,11 +39,11 @@ public class SimpleActionProcessor extends BaseObject implements ActionProcessor
 	 *
 	 * @param action The action to perform.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
-		if (action.canPerform ())
+		if (action.canPerform())
 		{
-			action.perform ();
+			action.perform();
 		}
 	}
 
@@ -53,9 +53,9 @@ public class SimpleActionProcessor extends BaseObject implements ActionProcessor
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		perform (action);
+		perform(action);
 	}
 
 	/**
@@ -64,15 +64,15 @@ public class SimpleActionProcessor extends BaseObject implements ActionProcessor
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		return new SimpleActionProcessor ();
+		return new SimpleActionProcessor();
 	}
 
 	/**
 	 * Close this action processor
 	 */
-	public void close ()
+	public void close()
 	{
 	}
 }

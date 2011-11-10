@@ -42,21 +42,21 @@ public class FrameworkServerAction extends AbstractAction
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkServerAction ()
+	public FrameworkServerAction()
 	{
-		super (Engine.instance ().getTransientIDGenerator ().createId ());
+		super(Engine.instance().getTransientIDGenerator().createId());
 
-		actionProcessorRegistry = Engine.instance ().getActionProcessorRegistry ();
+		actionProcessorRegistry = Engine.instance().getActionProcessorRegistry();
 
-		AppContext appContext = AppContext.instance ();
+		AppContext appContext = AppContext.instance();
 
 		if (appContext != null)
 		{
-			User user = appContext.getUser ();
+			User user = appContext.getUser();
 
 			if (user != null)
 			{
-				this.userUniqueId = user.getUniqueId ();
+				this.userUniqueId = user.getUniqueId();
 			}
 		}
 	}
@@ -64,18 +64,18 @@ public class FrameworkServerAction extends AbstractAction
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkServerAction (long userUniqueId)
+	public FrameworkServerAction(long userUniqueId)
 	{
-		super (Engine.instance ().getTransientIDGenerator ().createId ());
+		super(Engine.instance().getTransientIDGenerator().createId());
 
 		this.userUniqueId = userUniqueId;
-		actionProcessorRegistry = Engine.instance ().getActionProcessorRegistry ();
+		actionProcessorRegistry = Engine.instance().getActionProcessorRegistry();
 	}
 
 	/**
 	 * Get the UserUniqueID.
 	 */
-	public long getUserUniqueId ()
+	public long getUserUniqueId()
 	{
 		return userUniqueId;
 	}
@@ -84,28 +84,28 @@ public class FrameworkServerAction extends AbstractAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
-		userUniqueId = stream.readLong ();
-		readObject (new FrameworkInputStream (stream));
+		super.readObject(stream);
+		userUniqueId = stream.readLong();
+		readObject(new FrameworkInputStream(stream));
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
-		stream.writeLong (userUniqueId);
-		writeObject (new FrameworkOutputStream (stream));
+		super.writeObject(stream);
+		stream.writeLong(userUniqueId);
+		writeObject(new FrameworkOutputStream(stream));
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (@SuppressWarnings("unused") FrameworkInputStream stream)
+	public void readObject(@SuppressWarnings("unused") FrameworkInputStream stream)
 		throws IOException, ClassNotFoundException
 	{
 	}
@@ -113,7 +113,7 @@ public class FrameworkServerAction extends AbstractAction
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (@SuppressWarnings("unused") FrameworkOutputStream stream) throws IOException
+	public void writeObject(@SuppressWarnings("unused") FrameworkOutputStream stream) throws IOException
 	{
 	}
 }

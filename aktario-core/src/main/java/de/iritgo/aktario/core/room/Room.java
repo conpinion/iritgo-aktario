@@ -36,13 +36,13 @@ public class Room extends DataObject
 	/**
 	 * Create a new Room.
 	 */
-	public Room ()
+	public Room()
 	{
-		super ("Room");
+		super("Room");
 
-		addAttribute ("name", "");
-		addAttribute ("applications", ApplicationInstance.class);
-		addAttribute ("participants", Participant.class);
+		addAttribute("name", "");
+		addAttribute("applications", ApplicationInstance.class);
+		addAttribute("participants", Participant.class);
 	}
 
 	/**
@@ -50,9 +50,9 @@ public class Room extends DataObject
 	 *
 	 * @return The room name.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return getStringAttribute ("name");
+		return getStringAttribute("name");
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class Room extends DataObject
 	 *
 	 * @param name The new name.
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
-		setAttribute ("name", name);
+		setAttribute("name", name);
 	}
 
 	/**
@@ -70,9 +70,9 @@ public class Room extends DataObject
 	 *
 	 * @param application The application to add.
 	 */
-	public void addApplication (ApplicationInstance application)
+	public void addApplication(ApplicationInstance application)
 	{
-		getListAttribute ("applications").add (application);
+		getListAttribute("applications").add(application);
 	}
 
 	/**
@@ -81,9 +81,9 @@ public class Room extends DataObject
 	 * @param index The index of the application to retrieve.
 	 * @return The application at the specified index.
 	 */
-	public ApplicationInstance getApplication (int index)
+	public ApplicationInstance getApplication(int index)
 	{
-		return (ApplicationInstance) getListAttribute ("applications").get (index);
+		return (ApplicationInstance) getListAttribute("applications").get(index);
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class Room extends DataObject
 	 *
 	 * @param application The application to remove.
 	 */
-	public void removeApplication (ApplicationInstance application)
+	public void removeApplication(ApplicationInstance application)
 	{
-		getListAttribute ("applications").remove (application);
+		getListAttribute("applications").remove(application);
 	}
 
 	/**
@@ -101,9 +101,9 @@ public class Room extends DataObject
 	 *
 	 * @return The application count.
 	 */
-	public int getApplicationCount ()
+	public int getApplicationCount()
 	{
-		return getListAttribute ("applications").size ();
+		return getListAttribute("applications").size();
 	}
 
 	/**
@@ -111,9 +111,9 @@ public class Room extends DataObject
 	 *
 	 * @return The application list.
 	 */
-	public IObjectList getApplications ()
+	public IObjectList getApplications()
 	{
-		return getListAttribute ("applications");
+		return getListAttribute("applications");
 	}
 
 	/**
@@ -121,9 +121,9 @@ public class Room extends DataObject
 	 *
 	 * @return An application iterator.
 	 */
-	public Iterator applicationIterator ()
+	public Iterator applicationIterator()
 	{
-		return getListAttribute ("applications").iterator ();
+		return getListAttribute("applications").iterator();
 	}
 
 	/**
@@ -131,9 +131,9 @@ public class Room extends DataObject
 	 *
 	 * @param participant The participant to add.
 	 */
-	public void addParticipant (Participant participant)
+	public void addParticipant(Participant participant)
 	{
-		getListAttribute ("participants").add (participant);
+		getListAttribute("participants").add(participant);
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class Room extends DataObject
 	 * @param index The index of the participant to retrieve.
 	 * @return The participant at the specified index.
 	 */
-	public Participant getParticipant (int index)
+	public Participant getParticipant(int index)
 	{
-		return (Participant) getListAttribute ("participants").get (index);
+		return (Participant) getListAttribute("participants").get(index);
 	}
 
 	/**
@@ -152,9 +152,9 @@ public class Room extends DataObject
 	 *
 	 * @param participant The participant to remove.
 	 */
-	public void removeParticipant (Participant participant)
+	public void removeParticipant(Participant participant)
 	{
-		getListAttribute ("participants").remove (participant);
+		getListAttribute("participants").remove(participant);
 	}
 
 	/**
@@ -162,9 +162,9 @@ public class Room extends DataObject
 	 *
 	 * @return The participant count.
 	 */
-	public int getParticipantCount ()
+	public int getParticipantCount()
 	{
-		return getListAttribute ("participants").size ();
+		return getListAttribute("participants").size();
 	}
 
 	/**
@@ -172,9 +172,9 @@ public class Room extends DataObject
 	 *
 	 * @return The participant list.
 	 */
-	public IObjectList getParticipants ()
+	public IObjectList getParticipants()
 	{
-		return getListAttribute ("participants");
+		return getListAttribute("participants");
 	}
 
 	/**
@@ -182,8 +182,8 @@ public class Room extends DataObject
 	 *
 	 * @return An participant iterator.
 	 */
-	public Iterator participantIterator ()
+	public Iterator participantIterator()
 	{
-		return getListAttribute ("participants").iterator ();
+		return getListAttribute("participants").iterator();
 	}
 }

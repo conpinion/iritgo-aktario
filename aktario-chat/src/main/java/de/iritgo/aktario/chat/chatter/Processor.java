@@ -26,5 +26,5 @@ import de.iritgo.aktario.framework.user.User;
 
 public interface Processor
 {
-	public AbstractAction getAction (User user, User newUser);
+	public AbstractAction getAction(User user, User newUser);
 }

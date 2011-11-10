@@ -40,119 +40,119 @@ public class Chronometer
 
 	private long durationTime = 0;
 
-	public Chronometer (String key)
+	public Chronometer(String key)
 	{
 		this.key = key;
 	}
 
-	static synchronized private void checkChronometersMap ()
+	static synchronized private void checkChronometersMap()
 	{
 		if (chronometers == null)
 		{
-			chronometers = new HashMap ();
+			chronometers = new HashMap();
 		}
 	}
 
-	static public void startTimer (String key)
+	static public void startTimer(String key)
 	{
-		checkChronometersMap ();
+		checkChronometersMap();
 
-		Chronometer chronometer = (Chronometer) chronometers.get (key);
+		Chronometer chronometer = (Chronometer) chronometers.get(key);
 
 		if (chronometer == null)
 		{
-			chronometer = new Chronometer (key);
-			chronometers.put (key, chronometer);
+			chronometer = new Chronometer(key);
+			chronometers.put(key, chronometer);
 		}
 
-		if (chronometer.getKey ().equals (key))
+		if (chronometer.getKey().equals(key))
 		{
-			chronometer.setStartTime ();
+			chronometer.setStartTime();
 		}
 		else
 		{
-			Chronometer.startTimer (key);
+			Chronometer.startTimer(key);
 		}
 	}
 
-	static public void stopTimer (String key)
+	static public void stopTimer(String key)
 	{
-		checkChronometersMap ();
+		checkChronometersMap();
 
-		Chronometer chronometer = (Chronometer) chronometers.get (key);
+		Chronometer chronometer = (Chronometer) chronometers.get(key);
 
 		if (chronometer == null)
 		{
-			chronometer = new Chronometer (key);
-			chronometers.put (key, chronometer);
+			chronometer = new Chronometer(key);
+			chronometers.put(key, chronometer);
 		}
 
-		if (chronometer.getKey ().equals (key))
+		if (chronometer.getKey().equals(key))
 		{
-			chronometer.setStopTime ();
-			chronometer.calc ();
+			chronometer.setStopTime();
+			chronometer.calc();
 		}
 		else
 		{
-			Chronometer.startTimer (key);
+			Chronometer.startTimer(key);
 		}
 	}
 
-	static public long getResult (String key)
+	static public long getResult(String key)
 	{
-		checkChronometersMap ();
+		checkChronometersMap();
 
-		Chronometer chronometer = (Chronometer) chronometers.get (key);
+		Chronometer chronometer = (Chronometer) chronometers.get(key);
 
 		if (chronometer == null)
 		{
-			chronometer = new Chronometer (key);
-			chronometers.put (key, chronometer);
+			chronometer = new Chronometer(key);
+			chronometers.put(key, chronometer);
 		}
 
-		if (chronometer.getKey ().equals (key))
+		if (chronometer.getKey().equals(key))
 		{
-			return chronometer.getDurationResult ();
+			return chronometer.getDurationResult();
 		}
 		else
 		{
-			Chronometer.startTimer (key);
+			Chronometer.startTimer(key);
 		}
 
 		return 0;
 	}
 
-	static public void printResult (String key, int mod)
+	static public void printResult(String key, int mod)
 	{
-		checkChronometersMap ();
+		checkChronometersMap();
 
-		Chronometer chronometer = (Chronometer) chronometers.get (key);
+		Chronometer chronometer = (Chronometer) chronometers.get(key);
 
 		if (chronometer == null)
 		{
-			chronometer = new Chronometer (key);
-			chronometers.put (key, chronometer);
+			chronometer = new Chronometer(key);
+			chronometers.put(key, chronometer);
 		}
 
-		if (chronometer.getKey ().equals (key))
+		if (chronometer.getKey().equals(key))
 		{
-			chronometer.printDurationResult (mod);
+			chronometer.printDurationResult(mod);
 		}
 		else
 		{
-			Chronometer.startTimer (key);
+			Chronometer.startTimer(key);
 		}
 	}
 
-	public void printDurationResult (int mod)
+	public void printDurationResult(int mod)
 	{
 		if ((mod == 0) || loops % mod == 0)
 		{
-			System.out.println ("Key: " + key + " Time: " + getDurationResult ());
+			System.out.println("Key: " + key + " Time: " + getDurationResult());
 		}
 	}
 
-	public long getDurationResult ()
+	public long getDurationResult()
 	{
 		if (durationTime == 0 || loops == 0)
 		{
@@ -162,23 +162,23 @@ public class Chronometer
 		return durationTime / loops;
 	}
 
-	public void calc ()
+	public void calc()
 	{
 		durationTime += (stopTime - startTime);
 		++loops;
 	}
 
-	public void setStartTime ()
+	public void setStartTime()
 	{
-		startTime = System.currentTimeMillis ();
+		startTime = System.currentTimeMillis();
 	}
 
-	public void setStopTime ()
+	public void setStopTime()
 	{
-		stopTime = System.currentTimeMillis ();
+		stopTime = System.currentTimeMillis();
 	}
 
-	public String getKey ()
+	public String getKey()
 	{
 		return key;
 	}

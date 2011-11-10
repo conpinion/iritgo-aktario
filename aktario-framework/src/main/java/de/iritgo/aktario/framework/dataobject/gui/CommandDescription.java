@@ -28,107 +28,107 @@ import de.iritgo.aktario.framework.base.DataObject;
  */
 public class CommandDescription extends DataObject
 {
-	public CommandDescription ()
+	public CommandDescription()
 	{
-		super ("CommandDescription");
-		addAttribute ("controllerUniqueId", new Long (0));
-		addAttribute ("iconId", "");
-		addAttribute ("textId", "");
-		addAttribute ("commandId", "");
-		addAttribute ("description", "");
-		addAttribute ("value", "");
-		addAttribute ("instantExecute", false);
-		addAttribute ("visible", true);
-		addAttribute ("enabled", true);
+		super("CommandDescription");
+		addAttribute("controllerUniqueId", new Long(0));
+		addAttribute("iconId", "");
+		addAttribute("textId", "");
+		addAttribute("commandId", "");
+		addAttribute("description", "");
+		addAttribute("value", "");
+		addAttribute("instantExecute", false);
+		addAttribute("visible", true);
+		addAttribute("enabled", true);
 	}
 
-	public void setControllerUniqueId (long controllerUniqueId)
+	public void setControllerUniqueId(long controllerUniqueId)
 	{
-		setAttribute ("controllerUniqueId", controllerUniqueId);
+		setAttribute("controllerUniqueId", controllerUniqueId);
 	}
 
-	public long getControllerUniqueId ()
+	public long getControllerUniqueId()
 	{
-		return getLongAttribute ("controllerUniqueId");
+		return getLongAttribute("controllerUniqueId");
 	}
 
-	public void setIconId (String iconId)
+	public void setIconId(String iconId)
 	{
-		setAttribute ("iconId", iconId);
+		setAttribute("iconId", iconId);
 	}
 
-	public String getIconId ()
+	public String getIconId()
 	{
-		return getStringAttribute ("iconId");
+		return getStringAttribute("iconId");
 	}
 
-	public void setTextId (String textId)
+	public void setTextId(String textId)
 	{
-		setAttribute ("textId", textId);
+		setAttribute("textId", textId);
 	}
 
-	public String getTextId ()
+	public String getTextId()
 	{
-		return getStringAttribute ("textId");
+		return getStringAttribute("textId");
 	}
 
-	public void setCommandId (String commandId)
+	public void setCommandId(String commandId)
 	{
-		setAttribute ("commandId", commandId);
+		setAttribute("commandId", commandId);
 	}
 
-	public String getCommandId ()
+	public String getCommandId()
 	{
-		return getStringAttribute ("commandId");
+		return getStringAttribute("commandId");
 	}
 
-	public void setValue (String value)
+	public void setValue(String value)
 	{
-		setAttribute ("value", value);
+		setAttribute("value", value);
 	}
 
-	public String getValue ()
+	public String getValue()
 	{
-		return getStringAttribute ("value");
+		return getStringAttribute("value");
 	}
 
-	public void setDescription (String description)
+	public void setDescription(String description)
 	{
-		setAttribute ("description", description);
+		setAttribute("description", description);
 	}
 
-	public String getDescription ()
+	public String getDescription()
 	{
-		return getStringAttribute ("description");
+		return getStringAttribute("description");
 	}
 
-	public void setInstantExecute (boolean instantExecute)
+	public void setInstantExecute(boolean instantExecute)
 	{
-		setAttribute ("instantExecute", instantExecute);
+		setAttribute("instantExecute", instantExecute);
 	}
 
-	public boolean getInstantExecute ()
+	public boolean getInstantExecute()
 	{
-		return getBooleanAttribute ("instantExecute");
+		return getBooleanAttribute("instantExecute");
 	}
 
-	public void setVisible (boolean visible)
+	public void setVisible(boolean visible)
 	{
-		setAttribute ("visible", visible);
+		setAttribute("visible", visible);
 	}
 
-	public boolean getVisible ()
+	public boolean getVisible()
 	{
-		return getBooleanAttribute ("visible");
+		return getBooleanAttribute("visible");
 	}
 
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		setAttribute ("enabled", enabled);
+		setAttribute("enabled", enabled);
 	}
 
-	public boolean getEnabled ()
+	public boolean getEnabled()
 	{
-		return getBooleanAttribute ("enabled");
+		return getBooleanAttribute("enabled");
 	}
 }

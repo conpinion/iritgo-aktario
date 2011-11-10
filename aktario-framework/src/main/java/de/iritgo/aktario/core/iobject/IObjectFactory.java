@@ -38,9 +38,9 @@ public class IObjectFactory extends AbstractIObjectFactory
 	/**
 	 * Create a new <code>IObjectFactory</code>.
 	 */
-	public IObjectFactory ()
+	public IObjectFactory()
 	{
-		iObjectPrototypes = new TreeMap ();
+		iObjectPrototypes = new TreeMap();
 	}
 
 	/**
@@ -49,9 +49,9 @@ public class IObjectFactory extends AbstractIObjectFactory
 	 * @param object The prototype object to add.
 	 */
 	@Override
-	public void register (IObject object)
+	public void register(IObject object)
 	{
-		iObjectPrototypes.put (object.getTypeId (), object);
+		iObjectPrototypes.put(object.getTypeId(), object);
 	}
 
 	/**
@@ -60,9 +60,9 @@ public class IObjectFactory extends AbstractIObjectFactory
 	 * @param object The prototype object to remove.
 	 */
 	@Override
-	public void remove (IObject object)
+	public void remove(IObject object)
 	{
-		iObjectPrototypes.remove (object.getTypeId ());
+		iObjectPrototypes.remove(object.getTypeId());
 	}
 
 	/**
@@ -72,9 +72,9 @@ public class IObjectFactory extends AbstractIObjectFactory
 	 * @return True if the factory can generate the specified type.
 	 */
 	@Override
-	public boolean contains (String typeId)
+	public boolean contains(String typeId)
 	{
-		return iObjectPrototypes.containsKey (typeId);
+		return iObjectPrototypes.containsKey(typeId);
 	}
 
 	/**
@@ -83,23 +83,23 @@ public class IObjectFactory extends AbstractIObjectFactory
 	 * @param typeId The type id of the object to create.
 	 */
 	@Override
-	public IObject newInstance (String typeId) throws NoSuchIObjectException
+	public IObject newInstance(String typeId) throws NoSuchIObjectException
 	{
-		IObject prototype = (IObject) iObjectPrototypes.get (typeId);
+		IObject prototype = (IObject) iObjectPrototypes.get(typeId);
 
 		if (prototype == null)
 		{
-			Log.log ("system", "PrototypeFactory.newInstance", "Type is not registred: " + typeId, Log.FATAL);
-			throw new NoSuchIObjectException (typeId);
+			Log.log("system", "PrototypeFactory.newInstance", "Type is not registred: " + typeId, Log.FATAL);
+			throw new NoSuchIObjectException(typeId);
 		}
 
 		try
 		{
-			return (IObject) prototype.getClass ().newInstance ();
+			return (IObject) prototype.getClass().newInstance();
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "PrototypeFactory.newInstance", "Cannot determine classname.", Log.FATAL);
+			Log.log("system", "PrototypeFactory.newInstance", "Cannot determine classname.", Log.FATAL);
 		}
 
 		return null;

@@ -38,43 +38,43 @@ public class AsyncCommandProcessor extends Threadable implements CommandProcesso
 
 	private Object listLock;
 
-	public AsyncCommandProcessor ()
+	public AsyncCommandProcessor()
 	{
-		super ("AsyncCommandProcessor");
-		commands = new LinkedList ();
-		listLock = new Object ();
+		super("AsyncCommandProcessor");
+		commands = new LinkedList();
+		listLock = new Object();
 	}
 
 	/**
 	 * Checks the list and process the commands.
 	 */
 	@Override
-	public void run ()
+	public void run()
 	{
 		Command command = null;
 
 		synchronized (listLock)
 		{
-			if (commands.size () > 0)
+			if (commands.size() > 0)
 			{
-				command = (Command) commands.get (0);
-				Log.log ("system", "AsyncCommandProcessor", "Command: " + command, Log.DEBUG);
-				commands.remove (command);
+				command = (Command) commands.get(0);
+				Log.log("system", "AsyncCommandProcessor", "Command: " + command, Log.DEBUG);
+				commands.remove(command);
 			}
 		}
 
 		if (command != null)
 		{
-			performCommand (command);
+			performCommand(command);
 		}
 
 		synchronized (listLock)
 		{
-			if (commands.size () == 0)
+			if (commands.size() == 0)
 			{
 				try
 				{
-					listLock.wait ();
+					listLock.wait();
 				}
 				catch (InterruptedException x)
 				{
@@ -90,20 +90,20 @@ public class AsyncCommandProcessor extends Threadable implements CommandProcesso
 	 *
 	 * @deprecated Use the perform() method.
 	 */
-	public void addCommand (Command command)
+	public void addCommand(Command command)
 	{
-		perform (command);
+		perform(command);
 	}
 
 	/**
 	 * Perform a command.
 	 */
-	public Object perform (Command command)
+	public Object perform(Command command)
 	{
 		synchronized (listLock)
 		{
-			commands.add (command);
-			listLock.notify ();
+			commands.add(command);
+			listLock.notify();
 
 			return null;
 		}
@@ -112,34 +112,34 @@ public class AsyncCommandProcessor extends Threadable implements CommandProcesso
 	/**
 	 * Perform an command.
 	 */
-	private void performCommand (Command command)
+	private void performCommand(Command command)
 	{
-		Object lockObject = AppContext.instance ().getLockObject ();
+		Object lockObject = AppContext.instance().getLockObject();
 
 		synchronized (lockObject)
 		{
-			if (command.canPerform ())
+			if (command.canPerform())
 			{
-				command.performWithResult ();
+				command.performWithResult();
 			}
 		}
 	}
 
-	public boolean commandsInProcess ()
+	public boolean commandsInProcess()
 	{
-		return commands.size () > 0;
+		return commands.size() > 0;
 	}
 
 	/**
 	 * Called from the ThreadController to close this Thread.
 	 */
 	@Override
-	public void dispose ()
+	public void dispose()
 	{
 		synchronized (listLock)
 		{
-			setState (Threadable.CLOSING);
-			listLock.notify ();
+			setState(Threadable.CLOSING);
+			listLock.notify();
 		}
 	}
 }

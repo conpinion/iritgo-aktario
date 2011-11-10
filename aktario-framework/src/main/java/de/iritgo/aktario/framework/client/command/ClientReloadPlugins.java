@@ -35,71 +35,71 @@ import de.iritgo.aktario.framework.client.Client;
  */
 public class ClientReloadPlugins extends Command implements Runnable
 {
-	public ClientReloadPlugins ()
+	public ClientReloadPlugins()
 	{
 	}
 
 	/**
 	 */
-	public void perform ()
+	public void perform()
 	{
-		new Thread (this).start ();
+		new Thread(this).start();
 	}
 
 	/**
 	 * ConnectToServer
 	 */
-	public void run ()
+	public void run()
 	{
-		IDesktopManager desktopManager = Client.instance ().getClientGUI ().getDesktopManager ();
+		IDesktopManager desktopManager = Client.instance().getClientGUI().getDesktopManager();
 
-		desktopManager.saveVisibleDisplays ();
-		desktopManager.closeAllDisplays ();
+		desktopManager.saveVisibleDisplays();
+		desktopManager.closeAllDisplays();
 
-		ShutdownManager shutdownManager = (ShutdownManager) Engine.instance ().getManagerRegistry ().getManager (
+		ShutdownManager shutdownManager = (ShutdownManager) Engine.instance().getManagerRegistry().getManager(
 						"shutdown");
 
-		shutdownManager.shutdown ();
+		shutdownManager.shutdown();
 
 		try
 		{
-			Client.instance ().stopGUI ();
+			Client.instance().stopGUI();
 		}
 		catch (InitIritgoException x)
 		{
-			Log.logFatal ("ClientReloadPlugin", "preform/run", "Can not close the GUI!");
+			Log.logFatal("ClientReloadPlugin", "preform/run", "Can not close the GUI!");
 
 			// TODO: Save hold...
 		}
 
-		reloadPlugins ();
+		reloadPlugins();
 
 		try
 		{
-			Client.instance ().initGUI ();
+			Client.instance().initGUI();
 		}
 		catch (InitIritgoException x)
 		{
-			Log.logFatal ("ClientReloadPlugin", "preform/run", "Can not init and start the GUI!");
+			Log.logFatal("ClientReloadPlugin", "preform/run", "Can not init and start the GUI!");
 
 			// TODO: Save hold...
 		}
 
-		desktopManager.showSavedDisplays ();
+		desktopManager.showSavedDisplays();
 	}
 
-	private void reloadPlugins ()
+	private void reloadPlugins()
 	{
-		Engine engine = Engine.instance ();
-		PluginManager pluginManager = engine.getPluginManager ();
+		Engine engine = Engine.instance();
+		PluginManager pluginManager = engine.getPluginManager();
 
-		pluginManager.unloadPlugins ();
+		pluginManager.unloadPlugins();
 
-		Engine.instance ().getBaseRegistry ().clear ();
-		Engine.instance ().getProxyRegistry ().clear ();
+		Engine.instance().getBaseRegistry().clear();
+		Engine.instance().getProxyRegistry().clear();
 
-		pluginManager.loadPlugins ();
+		pluginManager.loadPlugins();
 
-		pluginManager.initPlugins (null);
+		pluginManager.initPlugins(null);
 	}
 }

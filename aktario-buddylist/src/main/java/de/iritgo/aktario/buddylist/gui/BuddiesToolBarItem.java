@@ -33,18 +33,18 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class BuddiesToolBarItem extends IAction
 {
-	public BuddiesToolBarItem ()
+	public BuddiesToolBarItem()
 	{
-		setSmallIcon (new ImageIcon (getClass ().getResource ("/resources/tool-buddies.png")));
-		setToolTipText ("buddyListButton");
+		setSmallIcon(new ImageIcon(getClass().getResource("/resources/tool-buddies.png")));
+		setToolTipText("buddyListButton");
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
-		AktarioGUI gui = ((AktarioGUI) Client.instance ().getClientGUI ());
+		AktarioGUI gui = ((AktarioGUI) Client.instance().getClientGUI());
 
-		gui.getDesktopManager ().getDisplay ("BuddyListPane").bringToFront ();
-		gui.getDesktopManager ().getDisplay ("BuddyListPane").show ();
+		gui.getDesktopManager().getDisplay("BuddyListPane").bringToFront();
+		gui.getDesktopManager().getDisplay("BuddyListPane").show();
 	}
 }

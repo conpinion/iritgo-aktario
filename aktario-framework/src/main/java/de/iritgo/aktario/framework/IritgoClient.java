@@ -33,15 +33,15 @@ public class IritgoClient
 	 *
 	 * @param args The program args.
 	 */
-	public static void main (String[] args)
+	public static void main(String[] args)
 	{
-		if (null == System.getProperty ("swing.aatext"))
+		if (null == System.getProperty("swing.aatext"))
 		{
-			System.setProperty ("swing.aatext", "true");
+			System.setProperty("swing.aatext", "true");
 		}
 
-		Options options = new Options ();
+		Options options = new Options();
 
-		IritgoEngine.create (IritgoEngine.START_CLIENT, options, args);
+		IritgoEngine.create(IritgoEngine.START_CLIENT, options, args);
 	}
 }

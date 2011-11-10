@@ -102,7 +102,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	/**
 	 * Standard constructor
 	 */
-	public Server ()
+	public Server()
 	{
 		shutdownFlag = false;
 	}
@@ -112,11 +112,11 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return The Server
 	 */
-	static public Server instance ()
+	static public Server instance()
 	{
 		if (server == null)
 		{
-			server = new Server ();
+			server = new Server();
 		}
 
 		return server;
@@ -127,7 +127,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return True if the server is up and running.
 	 */
-	public boolean isUpAndRunning ()
+	public boolean isUpAndRunning()
 	{
 		return isUpAndRunning;
 	}
@@ -137,7 +137,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return The ServerEngine
 	 */
-	public Engine getEngine ()
+	public Engine getEngine()
 	{
 		return engine;
 	}
@@ -147,7 +147,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return userregistry
 	 */
-	public UserRegistry getUserRegistry ()
+	public UserRegistry getUserRegistry()
 	{
 		return userRegistry;
 	}
@@ -157,7 +157,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return userregistry
 	 */
-	public IDGenerator getApplicationIdGenerator ()
+	public IDGenerator getApplicationIdGenerator()
 	{
 		return appIdGenerator;
 	}
@@ -167,7 +167,7 @@ public class Server extends BaseObject implements ShutdownObserver
 	 *
 	 * @return pingManager
 	 */
-	public PingManager getPingManager ()
+	public PingManager getPingManager()
 	{
 		return pingManager;
 	}
@@ -175,178 +175,177 @@ public class Server extends BaseObject implements ShutdownObserver
 	/**
 	 * Init all client functions.
 	 */
-	public void init () throws InitIritgoException
+	public void init() throws InitIritgoException
 	{
-		engine = Engine.instance ();
+		engine = Engine.instance();
 
-		serverAppContext = (ServerAppContext) ServerAppContext.serverInstance ();
+		serverAppContext = (ServerAppContext) ServerAppContext.serverInstance();
 
-		initBasics ();
-		registerActionProcessors ();
-		initApplication ();
-		registerConsoleCommands ();
+		initBasics();
+		registerActionProcessors();
+		initApplication();
+		registerConsoleCommands();
 
-		((ShutdownManager) engine.getManagerRegistry ().getManager ("shutdown")).addObserver (this);
+		((ShutdownManager) engine.getManagerRegistry().getManager("shutdown")).addObserver(this);
 
-		Log.logInfo ("system", "Server.init", "Server successfully initialized");
+		Log.logInfo("system", "Server.init", "Server successfully initialized");
 	}
 
-	private void initApplication ()
+	private void initApplication()
 	{
-		userRegistry = new UserRegistry ();
-		appIdGenerator = Engine.instance ().getPersistentIDGenerator ();
+		userRegistry = new UserRegistry();
+		appIdGenerator = Engine.instance().getPersistentIDGenerator();
 	}
 
-	private void initBasics () throws InitIritgoException
+	private void initBasics() throws InitIritgoException
 	{
 		IObjectProxy.initState = true;
-		engine.getManagerRegistry ().addManager (new DataObjectManager ());
+		engine.getManagerRegistry().addManager(new DataObjectManager());
 	}
 
 	/**
 	 * Init the ActionProcessors for the server.
 	 */
-	private void registerActionProcessors ()
+	private void registerActionProcessors()
 	{
-		actionProcessorRegistry = engine.getActionProcessorRegistry ();
+		actionProcessorRegistry = engine.getActionProcessorRegistry();
 
-		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = new ReceiveEntryNetworkActionProcessor (
+		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = new ReceiveEntryNetworkActionProcessor(
 						"Server.ReceiveEntryNetworkActionProcessor", null, null);
 
-		actionProcessorRegistry.put (receiveEntryNetworkActionProcessor);
+		actionProcessorRegistry.put(receiveEntryNetworkActionProcessor);
 
-		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = new SendEntryNetworkActionProcessor (
+		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = new SendEntryNetworkActionProcessor(
 						"Server.SendEntryNetworkActionProcessor", null, null);
 
-		actionProcessorRegistry.put (sendEntryNetworkActionProcessor);
+		actionProcessorRegistry.put(sendEntryNetworkActionProcessor);
 
-		networkService = new NetworkService (engine.getThreadService (), receiveEntryNetworkActionProcessor,
+		networkService = new NetworkService(engine.getThreadService(), receiveEntryNetworkActionProcessor,
 						sendEntryNetworkActionProcessor);
 	}
 
 	/**
 	 * This method create a default network action processor path.
 	 */
-	public void createDefaultNetworkProcessingSystem ()
+	public void createDefaultNetworkProcessingSystem()
 	{
-		createReceive ();
-		createSend ();
+		createReceive();
+		createSend();
 	}
 
-	private void createReceive ()
+	private void createReceive()
 	{
 		ReceiveEntryNetworkActionProcessor receiveEntryNetworkActionProcessor = (ReceiveEntryNetworkActionProcessor) actionProcessorRegistry
-						.get ("Server.ReceiveEntryNetworkActionProcessor");
+						.get("Server.ReceiveEntryNetworkActionProcessor");
 
-		ReceiveNetworkActionProcessor receiveNetworkActionProcessor = new ReceiveNetworkActionProcessor (null,
+		ReceiveNetworkActionProcessor receiveNetworkActionProcessor = new ReceiveNetworkActionProcessor(null,
 						receiveEntryNetworkActionProcessor);
 
-		receiveEntryNetworkActionProcessor.addOutput (receiveNetworkActionProcessor);
+		receiveEntryNetworkActionProcessor.addOutput(receiveNetworkActionProcessor);
 
-		ConcurrencyNetworkActionProcessor concurrencyNetworkActionProcessor = new ConcurrencyNetworkActionProcessor (
+		ConcurrencyNetworkActionProcessor concurrencyNetworkActionProcessor = new ConcurrencyNetworkActionProcessor(
 						null, receiveNetworkActionProcessor);
 
-		ThreadNetworkActionProcessor threadActionProcessor = new ThreadNetworkActionProcessor (
+		ThreadNetworkActionProcessor threadActionProcessor = new ThreadNetworkActionProcessor(
 						"ThreadNetworkActionProcessor", null, concurrencyNetworkActionProcessor);
 
-		SimpleActionProcessor simpleActionProcessor = new SimpleActionProcessor ();
+		SimpleActionProcessor simpleActionProcessor = new SimpleActionProcessor();
 
-		threadActionProcessor.addOutput (simpleActionProcessor);
+		threadActionProcessor.addOutput(simpleActionProcessor);
 
-		concurrencyNetworkActionProcessor.setThreadNetworkActionProcessor (threadActionProcessor);
+		concurrencyNetworkActionProcessor.setThreadNetworkActionProcessor(threadActionProcessor);
 
 		//Reduce the number of threads
-		receiveNetworkActionProcessor.addOutput (simpleActionProcessor);
+		receiveNetworkActionProcessor.addOutput(simpleActionProcessor);
 
 		//		receiveNetworkActionProcessor.addOutput (concurrencyNetworkActionProcessor);
 	}
 
-	private void createSend ()
+	private void createSend()
 	{
 		SendEntryNetworkActionProcessor sendEntryNetworkActionProcessor = (SendEntryNetworkActionProcessor) actionProcessorRegistry
-						.get ("Server.SendEntryNetworkActionProcessor");
+						.get("Server.SendEntryNetworkActionProcessor");
 
-		FilterActionProcessor filterActionProcessor = new FilterActionProcessor ("Server.FilterActionProcessor", null,
+		FilterActionProcessor filterActionProcessor = new FilterActionProcessor("Server.FilterActionProcessor", null,
 						sendEntryNetworkActionProcessor);
 
-		sendEntryNetworkActionProcessor.addOutput (filterActionProcessor);
+		sendEntryNetworkActionProcessor.addOutput(filterActionProcessor);
 
-		actionProcessorRegistry.put (filterActionProcessor);
+		actionProcessorRegistry.put(filterActionProcessor);
 
-		filterActionProcessor.addOutput (new SendNetworkActionProcessor (networkService, null, filterActionProcessor));
+		filterActionProcessor.addOutput(new SendNetworkActionProcessor(networkService, null, filterActionProcessor));
 	}
 
-	public NetworkService getNetworkService ()
+	public NetworkService getNetworkService()
 	{
 		return networkService;
 	}
 
-	private void registerConsoleCommands () throws InitIritgoException
+	private void registerConsoleCommands() throws InitIritgoException
 	{
-		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry ().getManager (
-						"console")).getConsoleCommandRegistry ();
+		ConsoleCommandRegistry consoleCommandRegistry = ((ConsoleManager) engine.getManagerRegistry().getManager(
+						"console")).getConsoleCommandRegistry();
 
-		consoleCommandRegistry.add (new ConsoleCommand ("help", new ConsoleHelp (), "system.help.help"));
+		consoleCommandRegistry.add(new ConsoleCommand("help", new ConsoleHelp(), "system.help.help"));
 
-		consoleCommandRegistry.add (new ConsoleCommand ("reloadplugins", new ReloadPlugins (),
+		consoleCommandRegistry.add(new ConsoleCommand("reloadplugins", new ReloadPlugins(),
 						"system.help.reloadPlugins", 0));
 
-		consoleCommandRegistry
-						.add (new ConsoleCommand ("showthreads", new ShowThreads (), "system.help.showThreads", 0));
+		consoleCommandRegistry.add(new ConsoleCommand("showthreads", new ShowThreads(), "system.help.showThreads", 0));
 
-		consoleCommandRegistry.add (new ConsoleCommand ("showusers", new ShowUsers (), "system.help.showUsers", 0));
+		consoleCommandRegistry.add(new ConsoleCommand("showusers", new ShowUsers(), "system.help.showUsers", 0));
 	}
 
 	/**
 	 * Init the NetworkSystem from the Server.
 	 */
-	private void initNetwork ()
+	private void initNetwork()
 	{
-		Configuration config = IritgoEngine.instance ().getConfiguration ();
-		SocketConfig socketConfig = config.getNetwork ().getSocket ();
-		ThreadPoolConfig threadPoolConfig = config.getThreadPool ();
+		Configuration config = IritgoEngine.instance().getConfiguration();
+		SocketConfig socketConfig = config.getNetwork().getSocket();
+		ThreadPoolConfig threadPoolConfig = config.getThreadPool();
 
-		int port = socketConfig.getPort ();
-		int acceptTimeout = socketConfig.getAcceptTimeout ();
+		int port = socketConfig.getPort();
+		int acceptTimeout = socketConfig.getAcceptTimeout();
 
-		int minThreads = threadPoolConfig.getMinThreads ();
+		int minThreads = threadPoolConfig.getMinThreads();
 
 		for (int i = 0; i < minThreads; ++i)
 		{
-			engine.getThreadService ().addThreadSlot ();
+			engine.getThreadService().addThreadSlot();
 		}
 
-		networkService.listen (serverAppContext.getServerIP (), port, acceptTimeout);
+		networkService.listen(serverAppContext.getServerIP(), port, acceptTimeout);
 
-		actionProcessorRegistry = engine.getActionProcessorRegistry ();
+		actionProcessorRegistry = engine.getActionProcessorRegistry();
 
-		networkService.addNetworkSystemListener (new NetworkSystemListenerImpl ());
+		networkService.addNetworkSystemListener(new NetworkSystemListenerImpl());
 	}
 
-	public void start ()
+	public void start()
 	{
-		initNetwork ();
+		initNetwork();
 
-		if (! IritgoEngine.instance ().getCommandLine ().hasOption ("q"))
+		if (! IritgoEngine.instance().getCommandLine().hasOption("q"))
 		{
-			System.out.println ("Iritgo Client/Server-Framework. Copyright (C) 2003-2007 BueroByte GbR");
+			System.out.println("Iritgo Client/Server-Framework. Copyright (C) 2003-2007 BueroByte GbR");
 		}
 
-		Runtime.getRuntime ().addShutdownHook (new Thread (new Runnable ()
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
 		{
-			public void run ()
+			public void run()
 			{
-				shutdown ();
+				shutdown();
 			}
 		}));
 
 		isUpAndRunning = true;
 
-		Thread.currentThread ().setName ("IritgoServer");
+		Thread.currentThread().setName("IritgoServer");
 
-		if (IritgoEngine.instance ().getCommandLine ().hasOption ("c"))
+		if (IritgoEngine.instance().getCommandLine().hasOption("c"))
 		{
-			commandLoop ();
+			commandLoop();
 		}
 		else
 		{
@@ -354,7 +353,7 @@ public class Server extends BaseObject implements ShutdownObserver
 			{
 				synchronized (this)
 				{
-					wait ();
+					wait();
 				}
 			}
 			catch (InterruptedException x)
@@ -362,87 +361,87 @@ public class Server extends BaseObject implements ShutdownObserver
 			}
 		}
 
-		networkService.closeAllChannels ();
-		networkService.dispose ();
+		networkService.closeAllChannels();
+		networkService.dispose();
 	}
 
-	public void stop ()
+	public void stop()
 	{
 		synchronized (this)
 		{
-			notifyAll ();
+			notifyAll();
 		}
 	}
 
 	/**
 	 * Runs the ServerConsole you can send some commands
 	 */
-	private void commandLoop ()
+	private void commandLoop()
 	{
-		ResourceService resourceService = engine.getResourceService ();
-		BufferedReader in = new BufferedReader (new InputStreamReader (System.in));
+		ResourceService resourceService = engine.getResourceService();
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		try
 		{
 			while (true)
 			{
-				System.out.print ("> ");
-				System.out.flush ();
+				System.out.print("> ");
+				System.out.flush();
 
-				String line = in.readLine ();
+				String line = in.readLine();
 
-				if (line.equals ("quit"))
+				if (line.equals("quit"))
 				{
 					break;
 				}
 
-				if (line.equals (""))
+				if (line.equals(""))
 				{
 					continue;
 				}
 
-				if (line.equals ("beanshell"))
+				if (line.equals("beanshell"))
 				{
-					JFrame frame = new JFrame ("Console");
+					JFrame frame = new JFrame("Console");
 
-					JConsole console = new JConsole ();
+					JConsole console = new JConsole();
 
-					frame.setContentPane (console);
-					frame.setVisible (true);
+					frame.setContentPane(console);
+					frame.setVisible(true);
 
-					Interpreter i = new Interpreter (console);
+					Interpreter i = new Interpreter(console);
 
-					new Thread (i).start ();
+					new Thread(i).start();
 
 					continue;
 				}
 
-				ConsoleManager consoleManager = (ConsoleManager) Engine.instance ().getManagerRegistry ().getManager (
+				ConsoleManager consoleManager = (ConsoleManager) Engine.instance().getManagerRegistry().getManager(
 								"console");
 
 				try
 				{
-					consoleManager.doConsoleCommand (line);
+					consoleManager.doConsoleCommand(line);
 				}
 				catch (CommandNotFoundException x)
 				{
-					System.out.println (resourceService.getStringWithoutException ("system.unknownCommand"));
+					System.out.println(resourceService.getStringWithoutException("system.unknownCommand"));
 				}
 				catch (WrongParameterException x)
 				{
-					System.out.println ("Wrong parameter(s) for the command.\n");
+					System.out.println("Wrong parameter(s) for the command.\n");
 				}
 				catch (UnknownClassException x)
 				{
-					System.out.println ("Unknown class for this command. (Plugin failure?)\n");
+					System.out.println("Unknown class for this command. (Plugin failure?)\n");
 				}
 				catch (UnknownConstructorException x)
 				{
-					System.out.println ("Unknown constructor for this command.\n");
+					System.out.println("Unknown constructor for this command.\n");
 				}
 				catch (UnknownErrorException x)
 				{
-					System.out.println ("Unknown error for this command.\n");
+					System.out.println("Unknown error for this command.\n");
 				}
 			}
 		}
@@ -451,30 +450,30 @@ public class Server extends BaseObject implements ShutdownObserver
 		}
 	}
 
-	public void shutdown ()
+	public void shutdown()
 	{
 		shutdownFlag = true;
-		Log.logInfo ("system", "Server", "Shutting down the server");
+		Log.logInfo("system", "Server", "Shutting down the server");
 
-		if (IritgoEngine.instance () != null)
+		if (IritgoEngine.instance() != null)
 		{
-			if (! IritgoEngine.instance ().shutdown ())
+			if (! IritgoEngine.instance().shutdown())
 			{
-				Log.logError ("system", "Server", "Unable to shutdown gracefully. Committing suicide...");
-				System.exit (0);
+				Log.logError("system", "Server", "Unable to shutdown gracefully. Committing suicide...");
+				System.exit(0);
 			}
 		}
 	}
 
-	public void onUserLogoff (User user)
+	public void onUserLogoff(User user)
 	{
-		if (IritgoEngine.instance ().getCommandLine ().hasOption ("e"))
+		if (IritgoEngine.instance().getCommandLine().hasOption("e"))
 		{
-			shutdown ();
+			shutdown();
 		}
 	}
 
-	public void onShutdown ()
+	public void onShutdown()
 	{
 	}
 }

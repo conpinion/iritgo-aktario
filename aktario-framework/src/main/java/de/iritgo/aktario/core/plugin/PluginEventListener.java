@@ -27,5 +27,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface PluginEventListener extends EventListener
 {
-	public void pluginEvent (PluginStateEvent event);
+	public void pluginEvent(PluginStateEvent event);
 }

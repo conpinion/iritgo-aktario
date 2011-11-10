@@ -27,70 +27,70 @@ import javax.swing.plaf.ColorUIResource;
 public class BueroByte extends AbstractSkyTheme
 {
 	@SuppressWarnings("unused")
-	private static final ColorUIResource secondary1 = new ColorUIResource (128, 128, 128);
+	private static final ColorUIResource secondary1 = new ColorUIResource(128, 128, 128);
 
-	private static final ColorUIResource secondary2 = new ColorUIResource (162, 176, 154);
+	private static final ColorUIResource secondary2 = new ColorUIResource(162, 176, 154);
 
-	private static final ColorUIResource secondary3 = new ColorUIResource (231, 235, 216);
+	private static final ColorUIResource secondary3 = new ColorUIResource(231, 235, 216);
 
-	private static final ColorUIResource kdeMenuSelectedBackground = new ColorUIResource (247, 250, 231);
+	private static final ColorUIResource kdeMenuSelectedBackground = new ColorUIResource(247, 250, 231);
 
 	@Override
-	public String getName ()
+	public String getName()
 	{
 		return "BueroByte";
 	}
 
 	@Override
-	protected ColorUIResource getPrimary1 ()
+	protected ColorUIResource getPrimary1()
 	{
-		return new ColorUIResource (135, 147, 129);
+		return new ColorUIResource(135, 147, 129);
 	}
 
 	@Override
-	protected ColorUIResource getPrimary2 ()
+	protected ColorUIResource getPrimary2()
 	{
-		return new ColorUIResource (247, 250, 231);
+		return new ColorUIResource(247, 250, 231);
 	}
 
 	@Override
-	protected ColorUIResource getPrimary3 ()
+	protected ColorUIResource getPrimary3()
 	{
-		return new ColorUIResource (186, 202, 177);
+		return new ColorUIResource(186, 202, 177);
 	}
 
 	@Override
-	public ColorUIResource getMenuItemSelectedBackground ()
-	{
-		return kdeMenuSelectedBackground;
-	}
-
-	@Override
-	public ColorUIResource getMenuItemSelectedForeground ()
-	{
-		return getBlack ();
-	}
-
-	@Override
-	public ColorUIResource getMenuSelectedBackground ()
+	public ColorUIResource getMenuItemSelectedBackground()
 	{
 		return kdeMenuSelectedBackground;
 	}
 
 	@Override
-	public ColorUIResource getFocusColor ()
+	public ColorUIResource getMenuItemSelectedForeground()
 	{
-		return PlasticLookAndFeel.getHighContrastFocusColorsEnabled () ? Colors.ORANGE_FOCUS : Colors.GRAY_DARK;
+		return getBlack();
 	}
 
 	@Override
-	protected ColorUIResource getSecondary3 ()
+	public ColorUIResource getMenuSelectedBackground()
+	{
+		return kdeMenuSelectedBackground;
+	}
+
+	@Override
+	public ColorUIResource getFocusColor()
+	{
+		return PlasticLookAndFeel.getHighContrastFocusColorsEnabled() ? Colors.ORANGE_FOCUS : Colors.GRAY_DARK;
+	}
+
+	@Override
+	protected ColorUIResource getSecondary3()
 	{
 		return secondary3;
 	}
 
 	@Override
-	protected ColorUIResource getSecondary2 ()
+	protected ColorUIResource getSecondary2()
 	{
 		return secondary2;
 	}

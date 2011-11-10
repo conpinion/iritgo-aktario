@@ -29,16 +29,16 @@ import de.iritgo.aktario.core.command.Command;
  */
 public class GetDefaultDataSource extends Command
 {
-	public GetDefaultDataSource ()
+	public GetDefaultDataSource()
 	{
-		super ("persist.GetDefaultDataSource");
+		super("persist.GetDefaultDataSource");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		return ((JDBCManager) Engine.instance ().getManager ("persist.JDBCManager")).getDefaultDataSource ();
+		return ((JDBCManager) Engine.instance().getManager("persist.JDBCManager")).getDefaultDataSource();
 	}
 }

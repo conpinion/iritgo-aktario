@@ -43,14 +43,14 @@ public class StartFileTransferRequest extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public StartFileTransferRequest ()
+	public StartFileTransferRequest()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public StartFileTransferRequest (String fileId, Properties properties)
+	public StartFileTransferRequest(String fileId, Properties properties)
 	{
 		this.properties = properties;
 		this.fileId = fileId;
@@ -60,39 +60,39 @@ public class StartFileTransferRequest extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		fileId = stream.readUTF ();
+		fileId = stream.readUTF();
 
-		ObjectInputStream s = new ObjectInputStream (stream);
+		ObjectInputStream s = new ObjectInputStream(stream);
 
-		properties = (Properties) s.readObject ();
+		properties = (Properties) s.readObject();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (fileId);
+		stream.writeUTF(fileId);
 
-		ObjectOutputStream s = new ObjectOutputStream (stream);
+		ObjectOutputStream s = new ObjectOutputStream(stream);
 
-		s.writeObject (properties);
+		s.writeObject(properties);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		properties.put ("userUniqueId", new Long (getUserUniqueId ()));
+		properties.put("userUniqueId", new Long(getUserUniqueId()));
 
-		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance ().getManager (
+		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance().getManager(
 						"FileTransferManager");
 
-		fileTransferManager.startFileTransfer (fileId, properties);
+		fileTransferManager.startFileTransfer(fileId, properties);
 	}
 }

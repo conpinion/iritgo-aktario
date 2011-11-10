@@ -33,8 +33,8 @@ public class SoftwareReviewData extends ApplicationData
 	/**
 	 * Create a new SoftwareReviewData.
 	 */
-	public SoftwareReviewData ()
+	public SoftwareReviewData()
 	{
-		super ("SoftwareReviewData");
+		super("SoftwareReviewData");
 	}
 }

@@ -25,8 +25,8 @@ package de.iritgo.aktario.framework.console;
  */
 public class WrongParameterException extends Exception
 {
-	public WrongParameterException (String message)
+	public WrongParameterException(String message)
 	{
-		super (message);
+		super(message);
 	}
 }

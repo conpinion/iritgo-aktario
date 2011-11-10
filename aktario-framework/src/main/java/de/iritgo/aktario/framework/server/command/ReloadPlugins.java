@@ -44,7 +44,7 @@ public class ReloadPlugins extends Command implements Runnable
 
 		public IObjectProxy businessProxy;
 
-		public DisplayItem (String displayId, String guiPaneId, IObjectProxy businessProxy)
+		public DisplayItem(String displayId, String guiPaneId, IObjectProxy businessProxy)
 		{
 			this.displayId = displayId;
 			this.guiPaneId = guiPaneId;
@@ -54,9 +54,9 @@ public class ReloadPlugins extends Command implements Runnable
 
 	private List visibleWindows;
 
-	public ReloadPlugins ()
+	public ReloadPlugins()
 	{
-		visibleWindows = new LinkedList ();
+		visibleWindows = new LinkedList();
 	}
 
 	/**
@@ -64,46 +64,46 @@ public class ReloadPlugins extends Command implements Runnable
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * A dirty hack, but commands a in sync.!
 	 */
-	public void perform ()
+	public void perform()
 	{
-		new Thread (this).start ();
+		new Thread(this).start();
 	}
 
 	/**
 	 * reloadplugins
 	 */
-	public void run ()
+	public void run()
 	{
-		reloadPlugins ();
+		reloadPlugins();
 	}
 
-	private void reloadPlugins ()
+	private void reloadPlugins()
 	{
-		Engine engine = Engine.instance ();
+		Engine engine = Engine.instance();
 
-		ShutdownManager shutdownManager = (ShutdownManager) Engine.instance ().getManagerRegistry ().getManager (
+		ShutdownManager shutdownManager = (ShutdownManager) Engine.instance().getManagerRegistry().getManager(
 						"shutdown");
 
-		shutdownManager.shutdown ();
+		shutdownManager.shutdown();
 
-		PluginManager pluginManager = engine.getPluginManager ();
+		PluginManager pluginManager = engine.getPluginManager();
 
-		pluginManager.unloadPlugins ();
+		pluginManager.unloadPlugins();
 
-		Engine.instance ().getBaseRegistry ().clear ();
-		Engine.instance ().getProxyRegistry ().clear ();
-		Engine.instance ().getEventRegistry ().clear ();
-		Engine.instance ().getProxyEventRegistry ().clear ();
+		Engine.instance().getBaseRegistry().clear();
+		Engine.instance().getProxyRegistry().clear();
+		Engine.instance().getEventRegistry().clear();
+		Engine.instance().getProxyEventRegistry().clear();
 
-		pluginManager.loadPlugins ();
+		pluginManager.loadPlugins();
 
-		pluginManager.initPlugins (null);
+		pluginManager.initPlugins(null);
 	}
 }

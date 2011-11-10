@@ -32,21 +32,21 @@ public class I18NString
 	/** The string resource key */
 	private String key;
 
-	public I18NString ()
+	public I18NString()
 	{
 	}
 
-	public I18NString (String key)
+	public I18NString(String key)
 	{
 		this.key = key;
 	}
 
-	public String getKey ()
+	public String getKey()
 	{
 		return key;
 	}
 
-	public void setKey (String key)
+	public void setKey(String key)
 	{
 		this.key = key;
 	}
@@ -57,9 +57,9 @@ public class I18NString
 	 *
 	 * @return The translated key or the key itself
 	 */
-	public String get ()
+	public String get()
 	{
-		return Engine.instance ().getResourceService ().getStringWithoutException (key);
+		return Engine.instance().getResourceService().getStringWithoutException(key);
 	}
 
 	/**
@@ -70,9 +70,9 @@ public class I18NString
 	 * @param params The string parameters
 	 * @return The translated key or the key itself
 	 */
-	public String get (Object... params)
+	public String get(Object... params)
 	{
-		return Engine.instance ().getResourceService ().getStringWithParams (key, params);
+		return Engine.instance().getResourceService().getStringWithParams(key, params);
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class I18NString
 	 * @return The translated string resource
 	 */
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return get ();
+		return get();
 	}
 }

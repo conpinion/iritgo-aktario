@@ -27,42 +27,42 @@ import javax.swing.plaf.ColorUIResource;
 public class Aktario extends AbstractSkyTheme
 {
 	@SuppressWarnings("unused")
-	private static final ColorUIResource secondary1 = new ColorUIResource (128, 128, 128);
+	private static final ColorUIResource secondary1 = new ColorUIResource(128, 128, 128);
 
 	private static final ColorUIResource secondary2 =
 	//         new ColorUIResource (183, 183, 177);
-	new ColorUIResource (225, 222, 214);
+	new ColorUIResource(225, 222, 214);
 
-	private static final ColorUIResource secondary3 = new ColorUIResource (238, 238, 230);
+	private static final ColorUIResource secondary3 = new ColorUIResource(238, 238, 230);
 
-	private static final ColorUIResource kdeMenuSelectedBackground = new ColorUIResource (255, 221, 118);
+	private static final ColorUIResource kdeMenuSelectedBackground = new ColorUIResource(255, 221, 118);
 
 	@Override
-	public String getName ()
+	public String getName()
 	{
 		return "Aktario";
 	}
 
 	@Override
-	protected ColorUIResource getPrimary1 ()
+	protected ColorUIResource getPrimary1()
 	{
-		return new ColorUIResource (135, 147, 129);
+		return new ColorUIResource(135, 147, 129);
 	}
 
 	@Override
-	protected ColorUIResource getPrimary2 ()
+	protected ColorUIResource getPrimary2()
 	{
-		return new ColorUIResource (210, 210, 203);
+		return new ColorUIResource(210, 210, 203);
 	}
 
 	@Override
-	protected ColorUIResource getPrimary3 ()
+	protected ColorUIResource getPrimary3()
 	{
-		return new ColorUIResource (162, 173, 186);
+		return new ColorUIResource(162, 173, 186);
 	}
 
 	@Override
-	public ColorUIResource getMenuItemSelectedBackground ()
+	public ColorUIResource getMenuItemSelectedBackground()
 	{
 		return kdeMenuSelectedBackground;
 
@@ -70,13 +70,13 @@ public class Aktario extends AbstractSkyTheme
 	}
 
 	@Override
-	public ColorUIResource getMenuItemSelectedForeground ()
+	public ColorUIResource getMenuItemSelectedForeground()
 	{
-		return getBlack ();
+		return getBlack();
 	}
 
 	@Override
-	public ColorUIResource getMenuSelectedBackground ()
+	public ColorUIResource getMenuSelectedBackground()
 	{
 		return kdeMenuSelectedBackground;
 
@@ -84,19 +84,19 @@ public class Aktario extends AbstractSkyTheme
 	}
 
 	@Override
-	public ColorUIResource getFocusColor ()
+	public ColorUIResource getFocusColor()
 	{
-		return PlasticLookAndFeel.getHighContrastFocusColorsEnabled () ? Colors.ORANGE_FOCUS : Colors.GRAY_DARK;
+		return PlasticLookAndFeel.getHighContrastFocusColorsEnabled() ? Colors.ORANGE_FOCUS : Colors.GRAY_DARK;
 	}
 
 	@Override
-	protected ColorUIResource getSecondary3 ()
+	protected ColorUIResource getSecondary3()
 	{
 		return secondary3;
 	}
 
 	@Override
-	protected ColorUIResource getSecondary2 ()
+	protected ColorUIResource getSecondary2()
 	{
 		return secondary2;
 	}

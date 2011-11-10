@@ -30,15 +30,15 @@ public interface Manager
 	 *
 	 * @return The manager id.
 	 */
-	public String getTypeId ();
+	public String getTypeId();
 
 	/**
 	 * Initialize the manager.
 	 */
-	public void init ();
+	public void init();
 
 	/**
 	 * Called when a manager is unloaded from the system.
 	 */
-	public void unload ();
+	public void unload();
 }

@@ -32,63 +32,63 @@ import java.util.HashMap;
  */
 public class BaseCreator implements NodeCreator
 {
-	protected static HashMap classMap = new HashMap ();
+	protected static HashMap classMap = new HashMap();
 
-	public BaseCreator ()
+	public BaseCreator()
 	{
 	}
 
-	public void work (NodeContainer node, ElementIterator i) throws ContinueException
+	public void work(NodeContainer node, ElementIterator i) throws ContinueException
 	{
-		Element element = ((ElementContainer) i.current ()).getElement ();
+		Element element = ((ElementContainer) i.current()).getElement();
 
-		String tagName = element.getName ();
-		String body = element.getTextTrim ();
+		String tagName = element.getName();
+		String body = element.getTextTrim();
 
-		if (tagName.equals ("classdef"))
+		if (tagName.equals("classdef"))
 		{
-			classMap.put (element.getAttribute ("class").getValue (), body);
-			Log.logDebug ("resource", "[XMLParser] BaseCreater.work", "adding classdef '"
-							+ element.getAttribute ("class").getValue () + "'.");
-			throw new ContinueException ();
+			classMap.put(element.getAttribute("class").getValue(), body);
+			Log.logDebug("resource", "[XMLParser] BaseCreater.work", "adding classdef '"
+							+ element.getAttribute("class").getValue() + "'.");
+			throw new ContinueException();
 		}
 	}
 
 	/**
 	 * Return a IntegerObject from a XML-Attribute
 	 */
-	public Object getObject (String classType, Attribute attribute)
+	public Object getObject(String classType, Attribute attribute)
 	{
 		try
 		{
-			if (classType.equals ("java.lang.Boolean"))
+			if (classType.equals("java.lang.Boolean"))
 			{
-				return new Boolean (attribute.getBooleanValue ());
+				return new Boolean(attribute.getBooleanValue());
 			}
 
-			if (classType.equals ("java.lang.Integer"))
+			if (classType.equals("java.lang.Integer"))
 			{
-				return new Integer (attribute.getIntValue ());
+				return new Integer(attribute.getIntValue());
 			}
 
-			if (classType.equals ("java.lang.Float"))
+			if (classType.equals("java.lang.Float"))
 			{
-				return new Float (attribute.getFloatValue ());
+				return new Float(attribute.getFloatValue());
 			}
 
-			if (classType.equals ("java.lang.Double"))
+			if (classType.equals("java.lang.Double"))
 			{
-				return new Double (attribute.getDoubleValue ());
+				return new Double(attribute.getDoubleValue());
 			}
 
-			if (classType.equals ("java.lang.String"))
+			if (classType.equals("java.lang.String"))
 			{
-				return new String (attribute.getValue ());
+				return new String(attribute.getValue());
 			}
 
-			if (classType.equals ("java.lang.Object"))
+			if (classType.equals("java.lang.Object"))
 			{
-				return new String (attribute.getValue ());
+				return new String(attribute.getValue());
 			}
 		}
 		catch (DataConversionException e)

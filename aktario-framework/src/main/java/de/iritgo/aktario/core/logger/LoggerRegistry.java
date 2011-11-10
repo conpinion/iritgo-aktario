@@ -32,25 +32,25 @@ import java.util.Iterator;
 public class LoggerRegistry
 {
 	/** Logger catgeories. */
-	static Hashtable categories = new Hashtable ();
+	static Hashtable categories = new Hashtable();
 
 	/** Loggers of one category. */
-	static Hashtable loggers = new Hashtable ();
+	static Hashtable loggers = new Hashtable();
 
 	/**
 	 * Create a new LoggerRegistry.
 	 */
-	public LoggerRegistry ()
+	public LoggerRegistry()
 	{
-		Log.setloggerRegistries (categories, loggers);
+		Log.setloggerRegistries(categories, loggers);
 	}
 
 	/**
 	 * Initialize the base loggers.
 	 */
-	public void initBaseLogger ()
+	public void initBaseLogger()
 	{
-		addLogger (new ConsoleLogger ());
+		addLogger(new ConsoleLogger());
 	}
 
 	/**
@@ -59,23 +59,23 @@ public class LoggerRegistry
 	 * @param category The logger category.
 	 * @param loggerId The id
 	 */
-	public void addLogger (String category, String loggerId)
+	public void addLogger(String category, String loggerId)
 	{
-		if (! categories.containsKey (category))
+		if (! categories.containsKey(category))
 		{
-			categories.put (category, new ArrayList ());
+			categories.put(category, new ArrayList());
 		}
 
-		ArrayList loggerList = (ArrayList) categories.get (category);
+		ArrayList loggerList = (ArrayList) categories.get(category);
 
-		if (loggerList.contains (loggerId))
+		if (loggerList.contains(loggerId))
 		{
 			return;
 		}
 
-		loggerList.add (loggerId);
+		loggerList.add(loggerId);
 
-		((Logger) loggers.get (loggerId)).init (category);
+		((Logger) loggers.get(loggerId)).init(category);
 	}
 
 	/**
@@ -83,11 +83,11 @@ public class LoggerRegistry
 	 *
 	 * @param logger The logger to add.
 	 */
-	public void addLogger (Logger logger)
+	public void addLogger(Logger logger)
 	{
-		if (! loggers.contains (logger.getId ()))
+		if (! loggers.contains(logger.getId()))
 		{
-			loggers.put (logger.getId (), logger);
+			loggers.put(logger.getId(), logger);
 		}
 	}
 
@@ -97,20 +97,20 @@ public class LoggerRegistry
 	 * @param category The category from which to remove the logger.
 	 * @param loggerId The id of the logger to remove.
 	 */
-	public void removeLogger (String category, String loggerId)
+	public void removeLogger(String category, String loggerId)
 	{
-		if (! categories.containsKey (category))
+		if (! categories.containsKey(category))
 		{
 			return;
 		}
 
-		ArrayList loggerList = (ArrayList) categories.get (category);
+		ArrayList loggerList = (ArrayList) categories.get(category);
 
-		for (int i = 0; i < loggerList.size (); ++i)
+		for (int i = 0; i < loggerList.size(); ++i)
 		{
-			if (loggerList.get (i).equals (loggerId))
+			if (loggerList.get(i).equals(loggerId))
 			{
-				loggerList.remove (i);
+				loggerList.remove(i);
 			}
 		}
 	}
@@ -120,39 +120,39 @@ public class LoggerRegistry
 	 *
 	 * @param loggerId The id of the logger to remove.
 	 */
-	public void removeLogger (String loggerId)
+	public void removeLogger(String loggerId)
 	{
-		Enumeration e = categories.elements ();
+		Enumeration e = categories.elements();
 
-		while (e.hasMoreElements ())
+		while (e.hasMoreElements())
 		{
-			ArrayList loggerList = (ArrayList) e.nextElement ();
+			ArrayList loggerList = (ArrayList) e.nextElement();
 
-			for (int i = 0; i < loggerList.size (); ++i)
+			for (int i = 0; i < loggerList.size(); ++i)
 			{
-				if (loggerList.get (i).equals (loggerId))
+				if (loggerList.get(i).equals(loggerId))
 				{
-					loggerList.remove (i);
+					loggerList.remove(i);
 				}
 			}
 		}
 
-		loggers.remove (loggerId);
+		loggers.remove(loggerId);
 	}
 
 	/**
 	 * Remove all loggers.
 	 */
-	public void dispose ()
+	public void dispose()
 	{
-		for (Iterator i = loggers.values ().iterator (); i.hasNext ();)
+		for (Iterator i = loggers.values().iterator(); i.hasNext();)
 		{
-			Logger logger = (Logger) i.next ();
+			Logger logger = (Logger) i.next();
 
-			logger.dispose ();
+			logger.dispose();
 		}
 
-		loggers.clear ();
-		categories.clear ();
+		loggers.clear();
+		categories.clear();
 	}
 }

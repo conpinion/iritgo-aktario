@@ -41,75 +41,74 @@ import java.util.List;
  */
 public class CallMethod extends BaseCreator
 {
-	public CallMethod ()
+	public CallMethod()
 	{
 	}
 
 	@Override
-	public void work (NodeContainer nodeContainer, ElementIterator i) throws ContinueException
+	public void work(NodeContainer nodeContainer, ElementIterator i) throws ContinueException
 	{
-		Object node = (ResourceNode) nodeContainer.getNode ();
+		Object node = (ResourceNode) nodeContainer.getNode();
 
-		Element element = ((ElementContainer) i.current ()).getElement ();
+		Element element = ((ElementContainer) i.current()).getElement();
 
-		List attributeList = element.getAttributes ();
-		String tagName = element.getName ();
+		List attributeList = element.getAttributes();
+		String tagName = element.getName();
 
-		if (! tagName.equals ("node"))
+		if (! tagName.equals("node"))
 		{
 			Object[] params;
 
-			if (generateMethodParams (node, tagName, "add", attributeList) != null)
+			if (generateMethodParams(node, tagName, "add", attributeList) != null)
 			{
-				params = generateMethodParams (node, tagName, "add", attributeList);
-				invokeMethod (node, tagName, "add", params);
-				Log.log ("resource", "[XMLParser] CallMethode.run", "call add '" + tagName + "' method", Log.INFO);
+				params = generateMethodParams(node, tagName, "add", attributeList);
+				invokeMethod(node, tagName, "add", params);
+				Log.log("resource", "[XMLParser] CallMethode.run", "call add '" + tagName + "' method", Log.INFO);
 			}
 			else
 			{
-				params = generateMethodParams (node, tagName, "set", attributeList);
-				invokeMethod (node, tagName, "set", params);
-				Log.log ("resource", "[XMLParser] CallMethode.run", "call add '" + tagName + "' method", Log.INFO);
+				params = generateMethodParams(node, tagName, "set", attributeList);
+				invokeMethod(node, tagName, "set", params);
+				Log.log("resource", "[XMLParser] CallMethode.run", "call add '" + tagName + "' method", Log.INFO);
 			}
 
-			throw new ContinueException ();
+			throw new ContinueException();
 		}
 
-		if (getObjectFromResourceNode (node, tagName) != null)
+		if (getObjectFromResourceNode(node, tagName) != null)
 		{
-			node = getObjectFromResourceNode (node, tagName);
-			throw new ContinueException ();
+			node = getObjectFromResourceNode(node, tagName);
+			throw new ContinueException();
 		}
 	}
 
 	/**
 	 * Generate the params object array
 	 */
-	public Object[] generateMethodParams (Object node, String methodName, String prefix, List attributeList)
+	public Object[] generateMethodParams(Object node, String methodName, String prefix, List attributeList)
 	{
-		ArrayList objectParams = new ArrayList ();
-		MethodIterator mi = new MethodIterator (node.getClass ().getMethods ());
+		ArrayList objectParams = new ArrayList();
+		MethodIterator mi = new MethodIterator(node.getClass().getMethods());
 
-		while (mi.hasNext ())
+		while (mi.hasNext())
 		{
-			Method method = (Method) mi.next ();
+			Method method = (Method) mi.next();
 
-			Class[] params = method.getParameterTypes ();
+			Class[] params = method.getParameterTypes();
 
-			if ((params.length != attributeList.size ())
-							&& (! method.getName ().equalsIgnoreCase (prefix + methodName)))
+			if ((params.length != attributeList.size()) && (! method.getName().equalsIgnoreCase(prefix + methodName)))
 			{
 				continue;
 			}
 
 			for (int i = 0; i < params.length; ++i)
 			{
-				Object o = getObject (params[i].getName (), (Attribute) attributeList.get (i));
+				Object o = getObject(params[i].getName(), (Attribute) attributeList.get(i));
 
-				objectParams.add (o);
+				objectParams.add(o);
 			}
 
-			return objectParams.toArray ();
+			return objectParams.toArray();
 		}
 
 		return null;
@@ -118,67 +117,67 @@ public class CallMethod extends BaseCreator
 	/**
 	 * Call the speziefed methode
 	 */
-	public void invokeMethod (Object object, String methodName, String prefix, Object[] methodParams)
+	public void invokeMethod(Object object, String methodName, String prefix, Object[] methodParams)
 	{
 		try
 		{
-			MethodIterator mi = new MethodIterator (object.getClass ().getMethods ());
+			MethodIterator mi = new MethodIterator(object.getClass().getMethods());
 
-			while (mi.hasNext ())
+			while (mi.hasNext())
 			{
-				Method method = (Method) mi.next ();
+				Method method = (Method) mi.next();
 
-				Class[] params = method.getParameterTypes ();
+				Class[] params = method.getParameterTypes();
 
 				if ((params.length != methodParams.length)
-								&& (! method.getName ().equalsIgnoreCase (prefix + methodName)))
+								&& (! method.getName().equalsIgnoreCase(prefix + methodName)))
 				{
 					continue;
 				}
 
-				method.invoke (object.getClass (), methodParams);
+				method.invoke(object.getClass(), methodParams);
 			}
 		}
 
 		catch (IllegalAccessException e)
 		{
-			Log.log ("resource", "[XMLParser] CallMethode.invokeMethod", "IllegalAccessException", Log.FATAL);
+			Log.log("resource", "[XMLParser] CallMethode.invokeMethod", "IllegalAccessException", Log.FATAL);
 		}
 		catch (InvocationTargetException e)
 		{
-			Log.log ("resource", "[XMLParser] CallMethode.invokeMethod", "InvocationTargetException", Log.FATAL);
+			Log.log("resource", "[XMLParser] CallMethode.invokeMethod", "InvocationTargetException", Log.FATAL);
 		}
 	}
 
 	/**
 	 * Call the speziefed methode and get the new object
 	 */
-	public Object getObjectFromResourceNode (Object object, String methodName)
+	public Object getObjectFromResourceNode(Object object, String methodName)
 	{
-		Class objectClass = object.getClass ();
-		Method[] methList = objectClass.getMethods ();
+		Class objectClass = object.getClass();
+		Method[] methList = objectClass.getMethods();
 		Object returnObject = null;
 
 		for (int i = 0; i < methList.length; i++)
 		{
 			Method m = methList[i];
 
-			if (m.getName ().equalsIgnoreCase ("get" + methodName))
+			if (m.getName().equalsIgnoreCase("get" + methodName))
 			{
 				try
 				{
-					returnObject = m.invoke (objectClass, (Object[]) null);
+					returnObject = m.invoke(objectClass, (Object[]) null);
 
 					break;
 				}
 				catch (IllegalAccessException e)
 				{
-					Log.log ("resource", "[XMLParser] CallMethode.getObjectFromResourceNode", "IllegalAccessException",
+					Log.log("resource", "[XMLParser] CallMethode.getObjectFromResourceNode", "IllegalAccessException",
 									Log.FATAL);
 				}
 				catch (InvocationTargetException e)
 				{
-					Log.log ("resource", "[XMLParser] CallMethode.getObjectFromResourceNode",
+					Log.log("resource", "[XMLParser] CallMethode.getObjectFromResourceNode",
 									"InvocationTargetException", Log.FATAL);
 				}
 			}

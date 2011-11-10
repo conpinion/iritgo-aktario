@@ -40,10 +40,10 @@ public class ConnectionFailure extends Command
 	/**
 	 * Standard constructor
 	 */
-	public ConnectionFailure ()
+	public ConnectionFailure()
 	{
-		super ("connectionfailure");
-		appContext = AppContext.instance ();
+		super("connectionfailure");
+		appContext = AppContext.instance();
 		textId = "common.connectionfailure";
 	}
 
@@ -52,26 +52,26 @@ public class ConnectionFailure extends Command
 	 *
 	 * @param properties The properties.
 	 */
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		IDesktopManager iDesktopManager = Client.instance ().getClientGUI ().getDesktopManager ();
+		IDesktopManager iDesktopManager = Client.instance().getClientGUI().getDesktopManager();
 
-		iDesktopManager.closeAllDisplays ();
+		iDesktopManager.closeAllDisplays();
 
-		ShowDialog showDialog = new ShowDialog ("common.connectionfailure");
+		ShowDialog showDialog = new ShowDialog("common.connectionfailure");
 
-		IritgoEngine.instance ().getAsyncCommandProcessor ().perform (showDialog);
+		IritgoEngine.instance().getAsyncCommandProcessor().perform(showDialog);
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
-		return ! appContext.isConnectedWithServer ();
+		return ! appContext.isConnectedWithServer();
 	}
 }

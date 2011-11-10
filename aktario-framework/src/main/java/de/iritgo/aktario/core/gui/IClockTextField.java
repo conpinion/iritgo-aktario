@@ -57,31 +57,31 @@ public class IClockTextField extends JTextField implements ActionListener
 	/**
 	 * Create a new IClockTextField.
 	 */
-	public IClockTextField ()
+	public IClockTextField()
 	{
-		setHorizontalAlignment (JTextField.CENTER);
-		currentTime = new Date ();
+		setHorizontalAlignment(JTextField.CENTER);
+		currentTime = new Date();
 		format = DateFormat.MEDIUM;
 		showTime = true;
 		showDate = false;
-		actionPerformed (null);
-		timer = new Timer (1000, this);
+		actionPerformed(null);
+		timer = new Timer(1000, this);
 	}
 
 	/**
 	 * Start the clock.
 	 */
-	public void start ()
+	public void start()
 	{
-		timer.start ();
+		timer.start();
 	}
 
 	/**
 	 * Stop the clock.
 	 */
-	public void stop ()
+	public void stop()
 	{
-		timer.stop ();
+		timer.stop();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class IClockTextField extends JTextField implements ActionListener
 	 *
 	 * @param format See <code>DateFormat</code> for details.
 	 */
-	public void setFormat (int format)
+	public void setFormat(int format)
 	{
 		this.format = format;
 	}
@@ -99,7 +99,7 @@ public class IClockTextField extends JTextField implements ActionListener
 	 *
 	 * @param showTime If true the time is displayed.
 	 */
-	public void setShowTime (boolean showTime)
+	public void setShowTime(boolean showTime)
 	{
 		this.showTime = showTime;
 	}
@@ -109,7 +109,7 @@ public class IClockTextField extends JTextField implements ActionListener
 	 *
 	 * @param showDate If true the date is displayed.
 	 */
-	public void setShowDate (boolean showDate)
+	public void setShowDate(boolean showDate)
 	{
 		this.showDate = showDate;
 	}
@@ -119,10 +119,10 @@ public class IClockTextField extends JTextField implements ActionListener
 	 *
 	 * @param e The action event.
 	 */
-	public void actionPerformed (ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
-		currentTime.setTime (System.currentTimeMillis ());
-		setText (getFormatter ().format (currentTime));
+		currentTime.setTime(System.currentTimeMillis());
+		setText(getFormatter().format(currentTime));
 	}
 
 	/**
@@ -130,21 +130,21 @@ public class IClockTextField extends JTextField implements ActionListener
 	 *
 	 * @return The formatter.
 	 */
-	private DateFormat getFormatter ()
+	private DateFormat getFormatter()
 	{
 		if (dateFormat == null)
 		{
 			if (showTime && showDate)
 			{
-				dateFormat = DateFormat.getDateTimeInstance (format, format);
+				dateFormat = DateFormat.getDateTimeInstance(format, format);
 			}
 			else if (showDate)
 			{
-				dateFormat = DateFormat.getDateInstance (format);
+				dateFormat = DateFormat.getDateInstance(format);
 			}
 			else
 			{
-				dateFormat = DateFormat.getTimeInstance (format);
+				dateFormat = DateFormat.getTimeInstance(format);
 			}
 		}
 

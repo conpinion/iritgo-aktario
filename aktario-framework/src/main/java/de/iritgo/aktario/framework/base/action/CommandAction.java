@@ -39,14 +39,14 @@ public class CommandAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public CommandAction ()
+	public CommandAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public CommandAction (String command, Properties properties)
+	public CommandAction(String command, Properties properties)
 	{
 		this.properties = properties;
 		this.command = command;
@@ -56,34 +56,34 @@ public class CommandAction extends FrameworkAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		command = stream.readUTF ();
+		command = stream.readUTF();
 
-		ObjectInputStream s = new ObjectInputStream (stream);
+		ObjectInputStream s = new ObjectInputStream(stream);
 
-		properties = (Properties) s.readObject ();
+		properties = (Properties) s.readObject();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (command);
+		stream.writeUTF(command);
 
-		ObjectOutputStream s = new ObjectOutputStream (stream);
+		ObjectOutputStream s = new ObjectOutputStream(stream);
 
-		s.writeObject (properties);
+		s.writeObject(properties);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		CommandTools.performSimple (command, properties);
+		CommandTools.performSimple(command, properties);
 	}
 }

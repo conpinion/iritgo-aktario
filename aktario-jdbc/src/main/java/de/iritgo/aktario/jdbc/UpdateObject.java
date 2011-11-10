@@ -49,17 +49,17 @@ public class UpdateObject extends Command
 	/**
 	 * Create a new <code>UpdateObject</code> command.
 	 */
-	public UpdateObject ()
+	public UpdateObject()
 	{
-		super ("persist.UpdateObject");
+		super("persist.UpdateObject");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		update ((DataObject) properties.get ("dataobject"));
+		update((DataObject) properties.get("dataobject"));
 	}
 
 	/**
@@ -67,41 +67,41 @@ public class UpdateObject extends Command
 	 *
 	 * @param object The data object to create.
 	 */
-	private void update (DataObject object)
+	private void update(DataObject object)
 	{
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-			DataSource dataSource = jdbcManager.getDefaultDataSource ();
+			JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+			DataSource dataSource = jdbcManager.getDefaultDataSource();
 
-			connection = dataSource.getConnection ();
+			connection = dataSource.getConnection();
 
-			StringBuffer sqlAssigns = new StringBuffer ("id=?");
+			StringBuffer sqlAssigns = new StringBuffer("id=?");
 
-			for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+			for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 			{
-				Map.Entry attribute = (Map.Entry) i.next ();
+				Map.Entry attribute = (Map.Entry) i.next();
 
-				if (attribute.getValue () instanceof IObjectList)
+				if (attribute.getValue() instanceof IObjectList)
 				{
 					continue;
 				}
 
-				sqlAssigns.append (", " + (String) attribute.getKey () + "=?");
+				sqlAssigns.append(", " + (String) attribute.getKey() + "=?");
 			}
 
-			String sql = "update " + object.getTypeId () + " set " + sqlAssigns.toString () + " where id="
-							+ object.getUniqueId ();
+			String sql = "update " + object.getTypeId() + " set " + sqlAssigns.toString() + " where id="
+							+ object.getUniqueId();
 
-			stmt = connection.prepareStatement (sql);
-			putAttributesToStatement (object, stmt);
-			stmt.execute ();
+			stmt = connection.prepareStatement(sql);
+			putAttributesToStatement(object, stmt);
+			stmt.execute();
 
-			Log.logVerbose ("persist", "JDBCManager", "UPDATE " + object.getTypeId () + ":" + object.getUniqueId ()
-							+ " |" + sql + "|");
+			Log.logVerbose("persist", "JDBCManager", "UPDATE " + object.getTypeId() + ":" + object.getUniqueId() + " |"
+							+ sql + "|");
 		}
 		catch (Exception x)
 		{
@@ -110,8 +110,8 @@ public class UpdateObject extends Command
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 
@@ -123,22 +123,22 @@ public class UpdateObject extends Command
 	 * @param stmt The prepared statement.
 	 * @throws SQLException If an attribute could not be set.
 	 */
-	private void putAttributesToStatement (DataObject object, PreparedStatement stmt) throws SQLException
+	private void putAttributesToStatement(DataObject object, PreparedStatement stmt) throws SQLException
 	{
-		stmt.setLong (1, object.getUniqueId ());
+		stmt.setLong(1, object.getUniqueId());
 
 		int pos = 2;
 
-		for (Iterator i = object.getAttributes ().entrySet ().iterator (); i.hasNext ();)
+		for (Iterator i = object.getAttributes().entrySet().iterator(); i.hasNext();)
 		{
-			Map.Entry attribute = (Map.Entry) i.next ();
+			Map.Entry attribute = (Map.Entry) i.next();
 
-			if (attribute.getValue () instanceof IObjectList)
+			if (attribute.getValue() instanceof IObjectList)
 			{
 				continue;
 			}
 
-			stmt.setObject (pos++, attribute.getValue ());
+			stmt.setObject(pos++, attribute.getValue());
 		}
 	}
 }

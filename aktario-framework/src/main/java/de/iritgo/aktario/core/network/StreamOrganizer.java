@@ -49,37 +49,37 @@ public abstract class StreamOrganizer
 	 *
 	 * @param socket The communication socket.
 	 */
-	public StreamOrganizer (Socket socket) throws IOException
+	public StreamOrganizer(Socket socket) throws IOException
 	{
-		Configuration config = Engine.instance ().getConfiguration ();
-		SocketConfig socketConfig = config.getNetwork ().getSocket ();
+		Configuration config = Engine.instance().getConfiguration();
+		SocketConfig socketConfig = config.getNetwork().getSocket();
 
-		int bufSize = socketConfig.getPort ();
-		int timeout = socketConfig.getReadTimeout ();
+		int bufSize = socketConfig.getPort();
+		int timeout = socketConfig.getReadTimeout();
 
 		this.socket = socket;
-		this.socket.setSoTimeout (timeout);
-		this.socket.setKeepAlive (true);
+		this.socket.setSoTimeout(timeout);
+		this.socket.setKeepAlive(true);
 
-		if (checkOrder (socket))
+		if (checkOrder(socket))
 		{
-			streamIn = new IBufferedInputStream (socket.getInputStream (), bufSize);
-			streamOut = new IBufferedOutputStream (socket.getOutputStream (), bufSize);
+			streamIn = new IBufferedInputStream(socket.getInputStream(), bufSize);
+			streamOut = new IBufferedOutputStream(socket.getOutputStream(), bufSize);
 		}
 		else
 		{
-			streamOut = new IBufferedOutputStream (socket.getOutputStream (), bufSize);
-			streamIn = new IBufferedInputStream (socket.getInputStream (), bufSize);
+			streamOut = new IBufferedOutputStream(socket.getOutputStream(), bufSize);
+			streamIn = new IBufferedInputStream(socket.getInputStream(), bufSize);
 		}
 	}
 
 	/**
 	 * @param socket The Com. socket.
 	 */
-	protected boolean checkOrder (Socket socket) throws IOException
+	protected boolean checkOrder(Socket socket) throws IOException
 	{
-		int port1 = socket.getLocalPort ();
-		int port2 = socket.getPort ();
+		int port1 = socket.getLocalPort();
+		int port2 = socket.getPort();
 
 		if (port1 < port2)
 		{
@@ -90,8 +90,8 @@ public abstract class StreamOrganizer
 			return false;
 		}
 
-		int address1 = socket.getLocalAddress ().hashCode ();
-		int address2 = socket.getInetAddress ().hashCode ();
+		int address1 = socket.getLocalAddress().hashCode();
+		int address2 = socket.getInetAddress().hashCode();
 
 		if (address1 < address2)
 		{
@@ -102,7 +102,7 @@ public abstract class StreamOrganizer
 			return false;
 		}
 
-		throw new IOException ();
+		throw new IOException();
 	}
 
 	/**
@@ -110,24 +110,24 @@ public abstract class StreamOrganizer
 	 *
 	 * @param object The object to send.
 	 */
-	public abstract void send (Object object) throws IOException;
+	public abstract void send(Object object) throws IOException;
 
 	/**
 	 * Receive an object from the socket.
 	 *
 	 * @return the received object.
 	 */
-	public abstract Object receive () throws IOException, ClassNotFoundException, NoSuchIObjectException;
+	public abstract Object receive() throws IOException, ClassNotFoundException, NoSuchIObjectException;
 
 	/**
 	 * Close the connection.
 	 */
-	public abstract void close () throws IOException;
+	public abstract void close() throws IOException;
 
 	/**
 	 * Flush all data.
 	 */
-	public abstract void flush () throws IOException;
+	public abstract void flush() throws IOException;
 
 	/**
 	 * Create a new StreamOrganizer.
@@ -135,5 +135,5 @@ public abstract class StreamOrganizer
 	 * @param socket The communication socket.
 	 * @return The new StreamOrganizer.
 	 */
-	public abstract StreamOrganizer create (Socket socket) throws IOException;
+	public abstract StreamOrganizer create(Socket socket) throws IOException;
 }

@@ -29,7 +29,7 @@ public class IObjectTableModelItem
 
 	public int row;
 
-	public IObjectTableModelItem (int row, long uniqueId)
+	public IObjectTableModelItem(int row, long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 		this.row = row;

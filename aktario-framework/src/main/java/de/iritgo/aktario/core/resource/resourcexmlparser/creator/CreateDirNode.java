@@ -36,29 +36,29 @@ import org.jdom.Element;
  */
 public class CreateDirNode extends BaseCreator
 {
-	public CreateDirNode ()
+	public CreateDirNode()
 	{
 	}
 
 	@Override
-	public void work (NodeContainer nodeContainer, ElementIterator i) throws ContinueException
+	public void work(NodeContainer nodeContainer, ElementIterator i) throws ContinueException
 	{
-		ResourceNode node = (ResourceNode) nodeContainer.getNode ();
+		ResourceNode node = (ResourceNode) nodeContainer.getNode();
 
-		Element element = ((ElementContainer) i.current ()).getElement ();
-		String tagName = element.getName ();
+		Element element = ((ElementContainer) i.current()).getElement();
+		String tagName = element.getName();
 
-		if (tagName.equals ("node"))
+		if (tagName.equals("node"))
 		{
-			ResourceService resourceService = new ResourceService ((ResourceNode) node);
+			ResourceService resourceService = new ResourceService((ResourceNode) node);
 
-			node = new ResourceNode ("directory", element.getAttribute ("treename").getValue ());
-			resourceService.addNode ("", (ResourceNode) node);
-			Log.logDebug ("resource", "[XMLParser] CreateDirNode.work", "create directory node '"
-							+ element.getAttribute ("treename").getValue () + "'.");
-			nodeContainer.setNode (node);
+			node = new ResourceNode("directory", element.getAttribute("treename").getValue());
+			resourceService.addNode("", (ResourceNode) node);
+			Log.logDebug("resource", "[XMLParser] CreateDirNode.work", "create directory node '"
+							+ element.getAttribute("treename").getValue() + "'.");
+			nodeContainer.setNode(node);
 
-			throw new ContinueException ();
+			throw new ContinueException();
 		}
 	}
 }

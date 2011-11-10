@@ -51,15 +51,15 @@ public class IObjectListEvent implements Event
 	 * @param listAttribute The name of the list attribute.
 	 * @param type The type of this event (Add, Remove)
 	 */
-	public IObjectListEvent (IObject iObject, IObject ownerIObject, String listAttribute, int type)
+	public IObjectListEvent(IObject iObject, IObject ownerIObject, String listAttribute, int type)
 	{
-		this (iObject, ownerIObject, listAttribute, null, type);
+		this(iObject, ownerIObject, listAttribute, null, type);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public IObjectListEvent (IObject iObject, IObject ownerIObject, String id, ClientTransceiver clientTransceiver,
+	public IObjectListEvent(IObject iObject, IObject ownerIObject, String id, ClientTransceiver clientTransceiver,
 					int type)
 	{
 		this.iObject = iObject;
@@ -69,27 +69,27 @@ public class IObjectListEvent implements Event
 		this.clientTransceiver = clientTransceiver;
 	}
 
-	public IObject getObject ()
+	public IObject getObject()
 	{
 		return iObject;
 	}
 
-	public IObject getOwnerObject ()
+	public IObject getOwnerObject()
 	{
 		return ownerIObject;
 	}
 
-	public int getType ()
+	public int getType()
 	{
 		return type;
 	}
 
-	public String getListAttribute ()
+	public String getListAttribute()
 	{
 		return listAttribute;
 	}
 
-	public ClientTransceiver getClientTransceiver ()
+	public ClientTransceiver getClientTransceiver()
 	{
 		return clientTransceiver;
 	}

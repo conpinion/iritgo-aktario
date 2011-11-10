@@ -37,15 +37,15 @@ public interface ExtensionTile
 	/** Predefined extension tile type */
 	public static final String LIST_COMMAND = "listcommands";
 
-	public JComponent getTile (GUIPane guiPane, IObject iObject, Properties properties);
+	public JComponent getTile(GUIPane guiPane, IObject iObject, Properties properties);
 
-	public void command (GUIPane guiPane, IObject iObject, Properties properties);
+	public void command(GUIPane guiPane, IObject iObject, Properties properties);
 
-	public boolean isDoubleClickCommand ();
+	public boolean isDoubleClickCommand();
 
-	public String getTileId ();
+	public String getTileId();
 
-	public String getLabel ();
+	public String getLabel();
 
-	public Object getConstraints ();
+	public Object getConstraints();
 }

@@ -36,11 +36,11 @@ public class BuddyListRegistry extends DataObject
 	/**
 	 * Create a new BuddyListRegistry.
 	 */
-	public BuddyListRegistry ()
+	public BuddyListRegistry()
 	{
-		super ("BuddyListRegistry");
+		super("BuddyListRegistry");
 
-		addAttribute ("buddyLists", new IObjectList ("buddyList", new FrameworkProxy (new BuddyList ()), this));
+		addAttribute("buddyLists", new IObjectList("buddyList", new FrameworkProxy(new BuddyList()), this));
 	}
 
 	/**
@@ -48,9 +48,9 @@ public class BuddyListRegistry extends DataObject
 	 *
 	 * @param user The buddy list to add.
 	 */
-	public void addBuddyList (BuddyList buddyList)
+	public void addBuddyList(BuddyList buddyList)
 	{
-		getIObjectListAttribute ("buddyLists").add (buddyList);
+		getIObjectListAttribute("buddyLists").add(buddyList);
 	}
 
 	/**
@@ -59,9 +59,9 @@ public class BuddyListRegistry extends DataObject
 	 * @param index The index of the buddy list to retrieve.
 	 * @return The buddy list at a specified index.
 	 */
-	public BuddyList getBuddyList (int index)
+	public BuddyList getBuddyList(int index)
 	{
-		return (BuddyList) getIObjectListAttribute ("buddyLists").get (index);
+		return (BuddyList) getIObjectListAttribute("buddyLists").get(index);
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class BuddyListRegistry extends DataObject
 	 *
 	 * @return The buddy list list.
 	 */
-	public IObjectList getBuddyLists ()
+	public IObjectList getBuddyLists()
 	{
-		return getIObjectListAttribute ("buddyLists");
+		return getIObjectListAttribute("buddyLists");
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class BuddyListRegistry extends DataObject
 	 *
 	 * @return A buddy list iterator.
 	 */
-	public Iterator buddyListIterator ()
+	public Iterator buddyListIterator()
 	{
-		return getIObjectListAttribute ("buddyLists").iterator ();
+		return getIObjectListAttribute("buddyLists").iterator();
 	}
 
 	/**
@@ -89,9 +89,9 @@ public class BuddyListRegistry extends DataObject
 	 *
 	 * @return The buddy list count.
 	 */
-	public int getBuddyListCount ()
+	public int getBuddyListCount()
 	{
-		return getIObjectListAttribute ("buddyLists").size ();
+		return getIObjectListAttribute("buddyLists").size();
 	}
 
 	/**
@@ -99,9 +99,9 @@ public class BuddyListRegistry extends DataObject
 	 *
 	 * @param user The buddy list to remove.
 	 */
-	public void removeBuddyList (BuddyList buddyList)
+	public void removeBuddyList(BuddyList buddyList)
 	{
-		getIObjectListAttribute ("buddyLists").remove (buddyList);
+		getIObjectListAttribute("buddyLists").remove(buddyList);
 	}
 
 	/**
@@ -110,13 +110,13 @@ public class BuddyListRegistry extends DataObject
 	 * @param name The name of the buddy list to find.
 	 * @return The buddy list or null if no user with the given name exists.
 	 */
-	public BuddyList getBuddyListByName (String name)
+	public BuddyList getBuddyListByName(String name)
 	{
-		for (int i = 0; i < getBuddyListCount (); ++i)
+		for (int i = 0; i < getBuddyListCount(); ++i)
 		{
-			BuddyList buddyList = (BuddyList) getBuddyList (i);
+			BuddyList buddyList = (BuddyList) getBuddyList(i);
 
-			if (buddyList.getIritgoUserName ().equals (name))
+			if (buddyList.getIritgoUserName().equals(name))
 			{
 				return buddyList;
 			}
@@ -131,13 +131,13 @@ public class BuddyListRegistry extends DataObject
 	 * @param id The id of the buddy list to find.
 	 * @return The buddy list or null if no user with the given id exists.
 	 */
-	public BuddyList getBuddyListById (long id)
+	public BuddyList getBuddyListById(long id)
 	{
-		for (int i = 0; i < getBuddyListCount (); ++i)
+		for (int i = 0; i < getBuddyListCount(); ++i)
 		{
-			BuddyList buddyList = (BuddyList) getBuddyList (i);
+			BuddyList buddyList = (BuddyList) getBuddyList(i);
 
-			if (buddyList.getUniqueId () == id)
+			if (buddyList.getUniqueId() == id)
 			{
 				return buddyList;
 			}

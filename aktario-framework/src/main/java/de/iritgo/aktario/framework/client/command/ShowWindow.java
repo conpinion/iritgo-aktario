@@ -51,147 +51,147 @@ public class ShowWindow extends Command
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId)
+	public ShowWindow(String guiPaneId)
 	{
-		init (guiPaneId, guiPaneId, null, null, null);
+		init(guiPaneId, guiPaneId, null, null, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String desktopId)
+	public ShowWindow(String guiPaneId, String desktopId)
 	{
-		init (guiPaneId, guiPaneId, desktopId, null, null);
+		init(guiPaneId, guiPaneId, desktopId, null, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String onScreenUniqueId, String desktopId)
+	public ShowWindow(String guiPaneId, String onScreenUniqueId, String desktopId)
 	{
-		init (guiPaneId, onScreenUniqueId, desktopId, null, null);
+		init(guiPaneId, onScreenUniqueId, desktopId, null, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String desktopId, IObject iObject)
+	public ShowWindow(String guiPaneId, String desktopId, IObject iObject)
 	{
-		init (guiPaneId, guiPaneId, desktopId, iObject, null);
+		init(guiPaneId, guiPaneId, desktopId, iObject, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject)
+	public ShowWindow(String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject)
 	{
-		init (guiPaneId, onScreenUniqueId, desktopId, iObject, null);
+		init(guiPaneId, onScreenUniqueId, desktopId, iObject, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, long unqiueId)
+	public ShowWindow(String guiPaneId, long unqiueId)
 	{
-		this (guiPaneId, unqiueId, null);
+		this(guiPaneId, unqiueId, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, IObject iObject)
+	public ShowWindow(String guiPaneId, IObject iObject)
 	{
-		init (guiPaneId, guiPaneId, null, iObject, null);
+		init(guiPaneId, guiPaneId, null, iObject, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, long unqiueId, String typeId)
+	public ShowWindow(String guiPaneId, long unqiueId, String typeId)
 	{
-		this (guiPaneId, guiPaneId, unqiueId, typeId, null);
+		this(guiPaneId, guiPaneId, unqiueId, typeId, null);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, SessionContext sessionContext)
+	public ShowWindow(String guiPaneId, SessionContext sessionContext)
 	{
-		init (guiPaneId, guiPaneId, null, null, sessionContext);
+		init(guiPaneId, guiPaneId, null, null, sessionContext);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String onScreenUniqueId, IObject iObject, SessionContext sessionContext,
+	public ShowWindow(String guiPaneId, String onScreenUniqueId, IObject iObject, SessionContext sessionContext,
 					String desktopId)
 	{
-		init (guiPaneId, onScreenUniqueId, desktopId, iObject, sessionContext);
+		init(guiPaneId, onScreenUniqueId, desktopId, iObject, sessionContext);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowWindow (String guiPaneId, String onScreenUniqueId, long unqiueId, String typeId, String desktopId)
+	public ShowWindow(String guiPaneId, String onScreenUniqueId, long unqiueId, String typeId, String desktopId)
 	{
-		GUIPane guiPane = GUIPaneRegistry.instance ().create (guiPaneId);
+		GUIPane guiPane = GUIPaneRegistry.instance().create(guiPaneId);
 
-		IObject iObject = (IObject) Engine.instance ().getBaseRegistry ().get (unqiueId, typeId);
+		IObject iObject = (IObject) Engine.instance().getBaseRegistry().get(unqiueId, typeId);
 
 		if (iObject == null)
 		{
 			try
 			{
-				iObject = Engine.instance ().getIObjectFactory ().newInstance (typeId);
+				iObject = Engine.instance().getIObjectFactory().newInstance(typeId);
 			}
 			catch (NoSuchIObjectException e)
 			{
 				return;
 			}
 
-			iObject.setUniqueId (unqiueId);
-			Engine.instance ().getBaseRegistry ().add ((BaseObject) iObject);
+			iObject.setUniqueId(unqiueId);
+			Engine.instance().getBaseRegistry().add((BaseObject) iObject);
 
-			FrameworkProxy proxy = new FrameworkProxy (iObject);
+			FrameworkProxy proxy = new FrameworkProxy(iObject);
 
-			proxy.setSampleRealObject ((IObject) iObject);
-			Engine.instance ().getProxyRegistry ().addProxy (proxy, iObject.getTypeId ());
+			proxy.setSampleRealObject((IObject) iObject);
+			Engine.instance().getProxyRegistry().addProxy(proxy, iObject.getTypeId());
 		}
 
-		init (guiPaneId, onScreenUniqueId, desktopId, iObject, null);
+		init(guiPaneId, onScreenUniqueId, desktopId, iObject, null);
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		final IWindow window = new IWindow (guiPaneId, onScreenUniqueId);
+		final IWindow window = new IWindow(guiPaneId, onScreenUniqueId);
 
-		window.setProperties (properties);
-		window.setDesktopManager (Client.instance ().getClientGUI ().getDesktopManager ());
-		window.setDesktopId (desktopId);
+		window.setProperties(properties);
+		window.setDesktopManager(Client.instance().getClientGUI().getDesktopManager());
+		window.setDesktopId(desktopId);
 
 		if (iObject == null)
 		{
-			window.initGUI (guiPaneId, onScreenUniqueId, sessionContext);
+			window.initGUI(guiPaneId, onScreenUniqueId, sessionContext);
 		}
 		else
 		{
-			window.initGUI (guiPaneId, onScreenUniqueId, iObject, sessionContext);
+			window.initGUI(guiPaneId, onScreenUniqueId, iObject, sessionContext);
 		}
 
-		Client.instance ().getClientGUI ().getDesktopManager ().addDisplay (window, desktopId);
+		Client.instance().getClientGUI().getDesktopManager().addDisplay(window, desktopId);
 
-		window.show ();
+		window.show();
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}
 
-	private void init (String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject,
+	private void init(String guiPaneId, String onScreenUniqueId, String desktopId, IObject iObject,
 					SessionContext sessionContext)
 	{
 		this.onScreenUniqueId = onScreenUniqueId;

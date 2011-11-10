@@ -105,19 +105,19 @@ public abstract class Plugin extends BaseObject
 	/**
 	 * Create a new Plugin.
 	 */
-	public Plugin ()
+	public Plugin()
 	{
-		engine = Engine.instance ();
-		resourceService = engine.getResourceService ();
-		iObjectFactory = (AbstractIObjectFactory) engine.getIObjectFactory ();
-		managerRegistry = engine.getManagerRegistry ();
-		guiPaneRegistry = GUIPaneRegistry.instance ();
-		commandRegistry = engine.getCommandRegistry ();
+		engine = Engine.instance();
+		resourceService = engine.getResourceService();
+		iObjectFactory = (AbstractIObjectFactory) engine.getIObjectFactory();
+		managerRegistry = engine.getManagerRegistry();
+		guiPaneRegistry = GUIPaneRegistry.instance();
+		commandRegistry = engine.getCommandRegistry();
 
-		actions = new LinkedList ();
-		managerList = new LinkedList ();
-		guiPanes = new LinkedList ();
-		commands = new LinkedList ();
+		actions = new LinkedList();
+		managerList = new LinkedList();
+		guiPanes = new LinkedList();
+		commands = new LinkedList();
 	}
 
 	/**
@@ -125,7 +125,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param mode CLIENT or SERVER.
 	 */
-	public void setMode (int mode)
+	public void setMode(int mode)
 	{
 		this.mode = mode;
 	}
@@ -135,7 +135,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return CLIENT or SERVER.
 	 */
-	public int getMode ()
+	public int getMode()
 	{
 		return mode;
 	}
@@ -145,7 +145,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param pluginClassName The class name of the plugin.
 	 */
-	public void setClassName (String pluginClassName)
+	public void setClassName(String pluginClassName)
 	{
 		this.pluginClassName = pluginClassName;
 	}
@@ -155,7 +155,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return The class name of the plugin.
 	 */
-	public String getClassName ()
+	public String getClassName()
 	{
 		return pluginClassName;
 	}
@@ -165,7 +165,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param dependency A comma sperated list of other plugins.
 	 */
-	public void setDependency (String dependency)
+	public void setDependency(String dependency)
 	{
 		this.dependency = dependency;
 	}
@@ -175,7 +175,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return A comma seperated list of other plugins.
 	 */
-	public String getDependency ()
+	public String getDependency()
 	{
 		return dependency;
 	}
@@ -185,7 +185,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param name The name of the plugin.
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
 		this.name = name;
 	}
@@ -195,7 +195,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return The name of the plugin.
 	 */
-	public String getName ()
+	public String getName()
 	{
 		return name;
 	}
@@ -205,7 +205,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param displayName The display name of the plugin.
 	 */
-	public void setDisplayName (String displayName)
+	public void setDisplayName(String displayName)
 	{
 		this.displayName = displayName;
 	}
@@ -215,7 +215,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return The display name of the plugin.
 	 */
-	public String getDisplayName ()
+	public String getDisplayName()
 	{
 		return displayName;
 	}
@@ -225,9 +225,9 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @return The jar file from which the plugin was loaded.
 	 */
-	protected String getJarName ()
+	protected String getJarName()
 	{
-		return getName ();
+		return getName();
 	}
 
 	/**
@@ -235,65 +235,65 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param engine The system engine.
 	 */
-	public void init (Engine engine)
+	public void init(Engine engine)
 	{
-		loadTranslationResources ();
+		loadTranslationResources();
 
-		registerActions ();
+		registerActions();
 
-		if ("client".equals (Engine.instance ().getName ()))
+		if ("client".equals(Engine.instance().getName()))
 		{
-			registerGUIPanes ();
+			registerGUIPanes();
 		}
 
-		registerCommands ();
+		registerCommands();
 
 		if (mode == CLIENT)
 		{
-			registerClientCommands ();
+			registerClientCommands();
 		}
 		else if (mode == SERVER)
 		{
-			registerServerCommands ();
+			registerServerCommands();
 		}
 
-		registerManagers ();
+		registerManagers();
 
 		if (mode == CLIENT)
 		{
-			registerClientManagers ();
+			registerClientManagers();
 		}
 		else if (mode == SERVER)
 		{
-			registerServerManagers ();
+			registerServerManagers();
 		}
 	}
 
 	/**
 	 *
 	 */
-	protected void registerServerManagers ()
+	protected void registerServerManagers()
 	{
 	}
 
 	/**
 	 *
 	 */
-	protected void registerClientManagers ()
+	protected void registerClientManagers()
 	{
 	}
 
 	/**
 	 *
 	 */
-	protected void registerServerCommands ()
+	protected void registerServerCommands()
 	{
 	}
 
 	/**
 	 *
 	 */
-	protected void registerClientCommands ()
+	protected void registerClientCommands()
 	{
 	}
 
@@ -302,31 +302,31 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param engine The system engine.
 	 */
-	public void unloadPlugin (Engine engine)
+	public void unloadPlugin(Engine engine)
 	{
-		unloadTranslationResources ();
+		unloadTranslationResources();
 
-		for (Iterator i = guiPanes.iterator (); i.hasNext ();)
+		for (Iterator i = guiPanes.iterator(); i.hasNext();)
 		{
-			guiPaneRegistry.remove ((GUIPane) i.next ());
+			guiPaneRegistry.remove((GUIPane) i.next());
 		}
 
-		for (Iterator i = managerList.iterator (); i.hasNext ();)
+		for (Iterator i = managerList.iterator(); i.hasNext();)
 		{
-			Manager manager = (Manager) i.next ();
+			Manager manager = (Manager) i.next();
 
-			manager.unload ();
-			managerRegistry.remove (manager);
+			manager.unload();
+			managerRegistry.remove(manager);
 		}
 
-		for (Iterator i = actions.iterator (); i.hasNext ();)
+		for (Iterator i = actions.iterator(); i.hasNext();)
 		{
-			iObjectFactory.remove ((Action) i.next ());
+			iObjectFactory.remove((Action) i.next());
 		}
 
-		for (Iterator i = commands.iterator (); i.hasNext ();)
+		for (Iterator i = commands.iterator(); i.hasNext();)
 		{
-			commandRegistry.remove ((Command) i.next ());
+			commandRegistry.remove((Command) i.next());
 		}
 	}
 
@@ -335,10 +335,10 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param action The action to register.
 	 */
-	protected void registerAction (Action action)
+	protected void registerAction(Action action)
 	{
-		iObjectFactory.register (action);
-		actions.add (action);
+		iObjectFactory.register(action);
+		actions.add(action);
 	}
 
 	/**
@@ -347,11 +347,11 @@ public abstract class Plugin extends BaseObject
 	 * @param mode Specifies wether this is a client or server action.
 	 * @param action The action to register.
 	 */
-	protected void registerAction (int mode, Action action)
+	protected void registerAction(int mode, Action action)
 	{
 		if (this.mode == mode)
 		{
-			registerAction (action);
+			registerAction(action);
 		}
 	}
 
@@ -360,10 +360,10 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param guiPane The gui pane to register.
 	 */
-	protected void registerGUIPane (GUIPane guiPane)
+	protected void registerGUIPane(GUIPane guiPane)
 	{
-		guiPaneRegistry.add (guiPane);
-		guiPanes.add (guiPane);
+		guiPaneRegistry.add(guiPane);
+		guiPanes.add(guiPane);
 	}
 
 	/**
@@ -372,11 +372,11 @@ public abstract class Plugin extends BaseObject
 	 * @param mode Specifies wether this is a client or server gui pane.
 	 * @param guiPane The gui pane to register.
 	 */
-	protected void registerGUIPane (int mode, GUIPane guiPane)
+	protected void registerGUIPane(int mode, GUIPane guiPane)
 	{
 		if (this.mode == mode)
 		{
-			registerGUIPane (guiPane);
+			registerGUIPane(guiPane);
 		}
 	}
 
@@ -385,12 +385,12 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param manager The manager to register.
 	 */
-	protected void registerManager (Manager manager)
+	protected void registerManager(Manager manager)
 	{
-		Log.logDebug ("system", "Plugin.registerManager", "Register manager: " + manager.getTypeId ());
-		managerRegistry.addManager (manager);
-		managerList.add (manager);
-		manager.init ();
+		Log.logDebug("system", "Plugin.registerManager", "Register manager: " + manager.getTypeId());
+		managerRegistry.addManager(manager);
+		managerList.add(manager);
+		manager.init();
 	}
 
 	/**
@@ -399,11 +399,11 @@ public abstract class Plugin extends BaseObject
 	 * @param mode Specifies wether this is a client or server manager.
 	 * @param manager The manager to register.
 	 */
-	protected void registerManager (int mode, Manager manager)
+	protected void registerManager(int mode, Manager manager)
 	{
 		if (this.mode == mode)
 		{
-			registerManager (manager);
+			registerManager(manager);
 		}
 	}
 
@@ -413,19 +413,19 @@ public abstract class Plugin extends BaseObject
 	 * @param mode Specifies wether this is a client or server manager.
 	 * @param className The manager Classname
 	 */
-	protected void registerManager (int mode, String className)
+	protected void registerManager(int mode, String className)
 	{
 		if (this.mode == mode)
 		{
 			try
 			{
-				Manager manager = (Manager) classLoader.loadClass (className).newInstance ();
+				Manager manager = (Manager) classLoader.loadClass(className).newInstance();
 
-				registerManager (manager);
+				registerManager(manager);
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace ();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -435,10 +435,10 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param command The command to register.
 	 */
-	protected void registerCommand (Command command)
+	protected void registerCommand(Command command)
 	{
-		commands.add (command);
-		commandRegistry.add (command);
+		commands.add(command);
+		commandRegistry.add(command);
 	}
 
 	/**
@@ -447,28 +447,28 @@ public abstract class Plugin extends BaseObject
 	 * @param mode Specifies wether this is a client or server manager.
 	 * @param command The command to register.
 	 */
-	protected void registerCommand (int mode, Command command)
+	protected void registerCommand(int mode, Command command)
 	{
 		if (this.mode == mode)
 		{
-			registerCommand (command);
+			registerCommand(command);
 		}
 	}
 
 	/**
 	 * Load the localization resources from the plugin's jar file.
 	 */
-	protected void loadTranslationResources ()
+	protected void loadTranslationResources()
 	{
-		engine.getResourceService ().loadTranslationsWithClassLoader (getClass (), "/resources/" + getName ());
+		engine.getResourceService().loadTranslationsWithClassLoader(getClass(), "/resources/" + getName());
 	}
 
 	/**
 	 * Free all localization resources.
 	 */
-	public void unloadTranslationResources ()
+	public void unloadTranslationResources()
 	{
-		engine.getResourceService ().unloadTranslationsWithClassLoader (getClass (), "/resources/" + getName ());
+		engine.getResourceService().unloadTranslationsWithClassLoader(getClass(), "/resources/" + getName());
 	}
 
 	/**
@@ -476,7 +476,7 @@ public abstract class Plugin extends BaseObject
 	 *
 	 * @param classloader The class loader
 	 */
-	public void setClassLoader (ClassLoader classLoader)
+	public void setClassLoader(ClassLoader classLoader)
 	{
 		this.classLoader = classLoader;
 	}
@@ -484,28 +484,28 @@ public abstract class Plugin extends BaseObject
 	/**
 	 * Register all actions in this method.
 	 */
-	protected void registerActions ()
+	protected void registerActions()
 	{
 	}
 
 	/**
 	 * Register all gui panes in this method.
 	 */
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
 	/**
 	 * Register all managers in this method.
 	 */
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
 	}
 
 	/**
 	 * Register all commands in this method.
 	 */
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
 	}
 }

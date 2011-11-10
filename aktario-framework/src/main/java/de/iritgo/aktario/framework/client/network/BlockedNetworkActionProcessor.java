@@ -51,13 +51,13 @@ public class BlockedNetworkActionProcessor extends BaseObject implements ActionP
 	/**
 	 * Constructs and initializes a NetworkActionProcessor.
 	 */
-	public BlockedNetworkActionProcessor (ActionProcessorRegistry actionProcessorRegistry, NetworkService networkBase)
+	public BlockedNetworkActionProcessor(ActionProcessorRegistry actionProcessorRegistry, NetworkService networkBase)
 	{
 		this.actionProcessorRegistry = actionProcessorRegistry;
 		this.networkBase = networkBase;
 	}
 
-	public String getId ()
+	public String getId()
 	{
 		return "syncproc";
 	}
@@ -65,41 +65,41 @@ public class BlockedNetworkActionProcessor extends BaseObject implements ActionP
 	/**
 	 * Perform an action.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
 		blocked = true;
-		blockedId = action.getUniqueId ();
+		blockedId = action.getUniqueId();
 
 		try
 		{
 			AbstractAction networkAction = (AbstractAction) action;
-			Transceiver transceiver = action.getTransceiver ();
+			Transceiver transceiver = action.getTransceiver();
 
 			ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
 
-			networkAction.setNumObjects (((Channel) networkBase.getConnectedChannel (clientTransceiver.getSender ()))
-							.getNumAllObjects ());
+			networkAction.setNumObjects(((Channel) networkBase.getConnectedChannel(clientTransceiver.getSender()))
+							.getNumAllObjects());
 
-			Iterator i = clientTransceiver.getReceiverIterator ();
+			Iterator i = clientTransceiver.getReceiverIterator();
 
-			while (i.hasNext ())
+			while (i.hasNext())
 			{
-				double channel = ((Double) i.next ()).doubleValue ();
+				double channel = ((Double) i.next()).doubleValue();
 
-				networkBase.send (networkAction, channel);
-				networkBase.flush (channel);
+				networkBase.send(networkAction, channel);
+				networkBase.flush(channel);
 			}
 		}
 		catch (ClassCastException x)
 		{
-			Log.log ("network", "NetworkActionProcessor.perform", "ClassCastException: " + x.getMessage (), Log.WARN);
+			Log.log("network", "NetworkActionProcessor.perform", "ClassCastException: " + x.getMessage(), Log.WARN);
 		}
 
 		try
 		{
 			while (blocked)
 			{
-				Thread.sleep (1);
+				Thread.sleep(1);
 			}
 		}
 		catch (InterruptedException x)
@@ -113,33 +113,33 @@ public class BlockedNetworkActionProcessor extends BaseObject implements ActionP
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		perform (action);
+		perform(action);
 	}
 
-	public long getBlockedId ()
+	public long getBlockedId()
 	{
 		return blockedId;
 	}
 
-	public void onShutdown ()
+	public void onShutdown()
 	{
 		blocked = false;
 		blockedId = 0;
 	}
 
-	public void onUserLogoff (User user)
+	public void onUserLogoff(User user)
 	{
 	}
 
-	public void resume ()
+	public void resume()
 	{
 		blocked = false;
 		blockedId = 0;
 	}
 
-	public void close ()
+	public void close()
 	{
 	}
 
@@ -148,7 +148,7 @@ public class BlockedNetworkActionProcessor extends BaseObject implements ActionP
 	 *
 	 * @return NetworkActionProcessor
 	 */
-	public Object clone ()
+	public Object clone()
 	{
 		return null;
 	}

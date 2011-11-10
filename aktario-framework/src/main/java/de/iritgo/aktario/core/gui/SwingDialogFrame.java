@@ -51,11 +51,11 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 * @param dialog The IDialog to which this frame belongs.
 	 * @param titleKey The dialog title specified as a resource key.
 	 */
-	public SwingDialogFrame (IDialog dialog, String titleKey, IDialogFrame owner)
+	public SwingDialogFrame(IDialog dialog, String titleKey, IDialogFrame owner)
 	{
-		super ((JDialog) owner, Engine.instance ().getResourceService ().getStringWithoutException (titleKey), true);
+		super((JDialog) owner, Engine.instance().getResourceService().getStringWithoutException(titleKey), true);
 
-		init (dialog);
+		init(dialog);
 	}
 
 	/**
@@ -64,26 +64,26 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 * @param dialog The IDialog to which this frame belongs.
 	 * @param titleKey The dialog title specified as a resource key.
 	 */
-	public SwingDialogFrame (IDialog dialog, String titleKey)
+	public SwingDialogFrame(IDialog dialog, String titleKey)
 	{
-		super (((SwingDesktopManager) Client.instance ().getClientGUI ().getDesktopManager ()).getJFrame (), Engine
-						.instance ().getResourceService ().getStringWithoutException (titleKey), false);
+		super(((SwingDesktopManager) Client.instance().getClientGUI().getDesktopManager()).getJFrame(), Engine
+						.instance().getResourceService().getStringWithoutException(titleKey), false);
 
-		init (dialog);
+		init(dialog);
 	}
 
 	/**
 	 * Initialize the dialog frame.
 	 */
-	protected void init (IDialog dialog)
+	protected void init(IDialog dialog)
 	{
 		this.dialog = dialog;
 
-		glassPane = new IGlassPane ();
+		glassPane = new IGlassPane();
 
-		addWindowListener (this);
+		addWindowListener(this);
 
-		getContentPanel ().setLayout (new GridBagLayout ());
+		getContentPanel().setLayout(new GridBagLayout());
 	}
 
 	/**
@@ -91,9 +91,9 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @return The content panel.
 	 */
-	public JPanel getContentPanel ()
+	public JPanel getContentPanel()
 	{
-		return (JPanel) getContentPane ();
+		return (JPanel) getContentPane();
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowActivated (WindowEvent event)
+	public void windowActivated(WindowEvent event)
 	{
 	}
 
@@ -110,7 +110,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowClosed (WindowEvent event)
+	public void windowClosed(WindowEvent event)
 	{
 	}
 
@@ -119,9 +119,9 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowClosing (WindowEvent event)
+	public void windowClosing(WindowEvent event)
 	{
-		dialog.close ();
+		dialog.close();
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowDeactivated (WindowEvent event)
+	public void windowDeactivated(WindowEvent event)
 	{
 	}
 
@@ -138,7 +138,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowDeiconified (WindowEvent event)
+	public void windowDeiconified(WindowEvent event)
 	{
 	}
 
@@ -147,7 +147,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowIconified (WindowEvent event)
+	public void windowIconified(WindowEvent event)
 	{
 	}
 
@@ -156,57 +156,56 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param event The window event.
 	 */
-	public void windowOpened (WindowEvent event)
+	public void windowOpened(WindowEvent event)
 	{
 	}
 
 	/**
 	 * Close the dialog frame.
 	 */
-	public void close ()
+	public void close()
 	{
-		Client.instance ().getClientGUI ().getDesktopManager ().getDesktopFrame ().setEnabled (true);
-		setVisible (false);
-		dispose ();
+		Client.instance().getClientGUI().getDesktopManager().getDesktopFrame().setEnabled(true);
+		setVisible(false);
+		dispose();
 	}
 
 	/**
 	 * Close the dialog frame.
 	 */
-	public void systemClose ()
+	public void systemClose()
 	{
-		setVisible (false);
-		dispose ();
+		setVisible(false);
+		dispose();
 	}
 
 	/**
 	 * Show the dialog frame.
 	 */
-	public void showDialog ()
+	public void showDialog()
 	{
-		pack ();
+		pack();
 
-		if (dialog.getProperty ("weightx") != null)
+		if (dialog.getProperty("weightx") != null)
 		{
-			Rectangle bounds = getBounds ();
+			Rectangle bounds = getBounds();
 
-			bounds.width *= ((Double) dialog.getProperty ("weightx")).doubleValue ();
-			setBounds (bounds);
+			bounds.width *= ((Double) dialog.getProperty("weightx")).doubleValue();
+			setBounds(bounds);
 		}
 
-		if (dialog.getProperty ("weighty") != null)
+		if (dialog.getProperty("weighty") != null)
 		{
-			Rectangle bounds = getBounds ();
+			Rectangle bounds = getBounds();
 
-			bounds.height *= ((Double) dialog.getProperty ("weighty")).doubleValue ();
-			setBounds (bounds);
+			bounds.height *= ((Double) dialog.getProperty("weighty")).doubleValue();
+			setBounds(bounds);
 		}
 
-		setLocationRelativeTo (((SwingDesktopManager) Client.instance ().getClientGUI ().getDesktopManager ())
-						.getJFrame ());
+		setLocationRelativeTo(((SwingDesktopManager) Client.instance().getClientGUI().getDesktopManager()).getJFrame());
 
-		Client.instance ().getClientGUI ().getDesktopManager ().getDesktopFrame ().setEnabled (false);
-		setVisible (true);
+		Client.instance().getClientGUI().getDesktopManager().getDesktopFrame().setEnabled(false);
+		setVisible(true);
 
 		//		setGlassPane (glassPane);
 		//		glassPane.setVisible (true);
@@ -219,9 +218,9 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 * @param title The new title.
 	 */
 	@Override
-	public void setTitle (String title)
+	public void setTitle(String title)
 	{
-		super.setTitle (title);
+		super.setTitle(title);
 	}
 
 	/**
@@ -230,7 +229,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @param icon The new icon.
 	 */
-	public void setIcon (Icon icon)
+	public void setIcon(Icon icon)
 	{
 	}
 
@@ -239,7 +238,7 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 *
 	 * @return The dialog's icon.
 	 */
-	public Icon getIcon ()
+	public Icon getIcon()
 	{
 		return null;
 	}
@@ -250,9 +249,9 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 * @param enabled If true the dialog frame is enabled.
 	 */
 	@Override
-	public void setEnabled (boolean enabled)
+	public void setEnabled(boolean enabled)
 	{
-		glassPane.setEnabled (enabled);
+		glassPane.setEnabled(enabled);
 	}
 
 	/**
@@ -261,8 +260,8 @@ public class SwingDialogFrame extends JDialog implements WindowListener, IDialog
 	 * @return True if the display is enabled.
 	 */
 	@Override
-	public boolean isEnabled ()
+	public boolean isEnabled()
 	{
-		return glassPane.isEnabled ();
+		return glassPane.isEnabled();
 	}
 }

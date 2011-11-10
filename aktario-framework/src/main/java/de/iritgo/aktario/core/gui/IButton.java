@@ -44,9 +44,9 @@ public class IButton extends JButton
 	/**
 	 * Create a button with no text or icon.
 	 */
-	public IButton ()
+	public IButton()
 	{
-		super ();
+		super();
 	}
 
 	/**
@@ -54,9 +54,9 @@ public class IButton extends JButton
 	 *
 	 * @param action The Action used to specify the new button.
 	 */
-	public IButton (Action action)
+	public IButton(Action action)
 	{
-		super (action);
+		super(action);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class IButton extends JButton
 	 *
 	 * @param icon The Icon image to display on the button.
 	 */
-	public IButton (Icon icon)
+	public IButton(Icon icon)
 	{
-		super (icon);
+		super(icon);
 	}
 
 	/**
@@ -74,9 +74,9 @@ public class IButton extends JButton
 	 *
 	 * @param text The text of the button.
 	 */
-	public IButton (String text)
+	public IButton(String text)
 	{
-		super (text);
+		super(text);
 	}
 
 	/**
@@ -85,9 +85,9 @@ public class IButton extends JButton
 	 * @param text The text of the button.
 	 * @param icon The Icon image to display on the button.
 	 */
-	public IButton (String text, Icon icon)
+	public IButton(String text, Icon icon)
 	{
-		super (text, icon);
+		super(text, icon);
 	}
 
 	/**
@@ -96,12 +96,12 @@ public class IButton extends JButton
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setText (String textKey)
+	public void setText(String textKey)
 	{
 		if (textKey != null)
 		{
 			this.textKey = textKey;
-			super.setText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+			super.setText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 		}
 	}
 
@@ -111,21 +111,21 @@ public class IButton extends JButton
 	 * @param textKey The text specified by a resource key.
 	 */
 	@Override
-	public void setToolTipText (String textKey)
+	public void setToolTipText(String textKey)
 	{
 		if (textKey != null)
 		{
 			this.toolTipTextKey = textKey;
-			super.setToolTipText (Engine.instance ().getResourceService ().getStringWithoutException (textKey));
+			super.setToolTipText(Engine.instance().getResourceService().getStringWithoutException(textKey));
 		}
 	}
 
 	/**
 	 * Reload the labels of all menu items in this menu bar.
 	 */
-	public void reloadText ()
+	public void reloadText()
 	{
-		setText (textKey);
-		setToolTipText (toolTipTextKey);
+		setText(textKey);
+		setToolTipText(toolTipTextKey);
 	}
 }

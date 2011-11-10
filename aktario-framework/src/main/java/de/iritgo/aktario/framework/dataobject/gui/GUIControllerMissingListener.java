@@ -28,5 +28,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface GUIControllerMissingListener extends EventListener
 {
-	public void guiControllerMissingEvent (GUIControllerMissingEvent event);
+	public void guiControllerMissingEvent(GUIControllerMissingEvent event);
 }

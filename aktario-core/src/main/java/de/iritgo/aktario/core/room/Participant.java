@@ -33,8 +33,8 @@ public class Participant extends DataObject
 	/**
 	 * Create a new Participant.
 	 */
-	public Participant ()
+	public Participant()
 	{
-		super ("Participant");
+		super("Participant");
 	}
 }

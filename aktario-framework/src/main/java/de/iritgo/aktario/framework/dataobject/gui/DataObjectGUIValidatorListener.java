@@ -30,5 +30,5 @@ import de.iritgo.aktario.core.event.EventListener;
  */
 public interface DataObjectGUIValidatorListener extends EventListener
 {
-	public void validation (DataObjectGUIValidatorEvent e);
+	public void validation(DataObjectGUIValidatorEvent e);
 }

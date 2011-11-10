@@ -32,84 +32,84 @@ import java.util.Hashtable;
 public class InfoCenterRegistry
 {
 	//	Attribute
-	static Hashtable CategoryRegistry = new Hashtable ();
+	static Hashtable CategoryRegistry = new Hashtable();
 
-	static Hashtable displayRegistry = new Hashtable ();
+	static Hashtable displayRegistry = new Hashtable();
 
 	/**
 	 * Constructor
 	 *
 	 */
-	public InfoCenterRegistry ()
+	public InfoCenterRegistry()
 	{
-		InfoCenter.setDisplayRegistrys (CategoryRegistry, displayRegistry);
+		InfoCenter.setDisplayRegistrys(CategoryRegistry, displayRegistry);
 	}
 
 	/**
 	 * Init all Base Display
 	 *
 	 */
-	public void initBaseDisplay ()
+	public void initBaseDisplay()
 	{
 	}
 
 	/**
 	 * Add the InfoCenterDisplay for a Category
 	 */
-	public void addDisplay (String category, String displayId, int context, User user)
+	public void addDisplay(String category, String displayId, int context, User user)
 	{
 		displayId = displayId + context;
 
-		if (! CategoryRegistry.containsKey (category + context))
+		if (! CategoryRegistry.containsKey(category + context))
 		{
-			CategoryRegistry.put (category + context, new ArrayList ());
+			CategoryRegistry.put(category + context, new ArrayList());
 		}
 
-		ArrayList displayList = (ArrayList) CategoryRegistry.get (category + context);
+		ArrayList displayList = (ArrayList) CategoryRegistry.get(category + context);
 
-		if (displayList.contains (displayId))
+		if (displayList.contains(displayId))
 		{
 			return;
 		}
 
-		displayList.add (displayId);
+		displayList.add(displayId);
 
-		((InfoCenterDisplay) displayRegistry.get (displayId)).init (category, context, user);
+		((InfoCenterDisplay) displayRegistry.get(displayId)).init(category, context, user);
 	}
 
 	/**
 	 * Add a new Display
 	 */
-	public void addDisplay (InfoCenterDisplay display, int context)
+	public void addDisplay(InfoCenterDisplay display, int context)
 	{
-		String displayId = display.getId () + context;
+		String displayId = display.getId() + context;
 
-		if (! displayRegistry.contains (displayId))
+		if (! displayRegistry.contains(displayId))
 		{
-			displayRegistry.put (displayId, display);
+			displayRegistry.put(displayId, display);
 		}
 	}
 
 	/**
 	 * Remove the Display for Category
 	 */
-	public void removeDisplay (String category, String displayId, int context)
+	public void removeDisplay(String category, String displayId, int context)
 	{
 		displayId = displayId + context;
 		category = category + context;
 
-		if (! CategoryRegistry.containsKey (category))
+		if (! CategoryRegistry.containsKey(category))
 		{
 			return;
 		}
 
-		ArrayList displayList = (ArrayList) CategoryRegistry.get (category);
+		ArrayList displayList = (ArrayList) CategoryRegistry.get(category);
 
-		for (int i = 0; i < displayList.size (); ++i)
+		for (int i = 0; i < displayList.size(); ++i)
 		{
-			if (displayList.get (i).equals (displayId))
+			if (displayList.get(i).equals(displayId))
 			{
-				displayList.remove (i);
+				displayList.remove(i);
 			}
 		}
 	}
@@ -117,46 +117,46 @@ public class InfoCenterRegistry
 	/**
 	 * Remove the Display in all Categorys and the Instance
 	 */
-	public void removeDisplay (String displayId, int context)
+	public void removeDisplay(String displayId, int context)
 	{
 		displayId = displayId + context;
 
-		Enumeration e = CategoryRegistry.elements ();
+		Enumeration e = CategoryRegistry.elements();
 
-		while (e.hasMoreElements ())
+		while (e.hasMoreElements())
 		{
-			ArrayList displayList = (ArrayList) e.nextElement ();
+			ArrayList displayList = (ArrayList) e.nextElement();
 
-			for (int i = 0; i < displayList.size (); ++i)
+			for (int i = 0; i < displayList.size(); ++i)
 			{
-				if (displayList.get (i).equals (displayId))
+				if (displayList.get(i).equals(displayId))
 				{
-					displayList.remove (i);
+					displayList.remove(i);
 				}
 			}
 		}
 
-		displayRegistry.remove (displayId);
+		displayRegistry.remove(displayId);
 	}
 
 	/**
 	 * close
 	 */
-	public void close ()
+	public void close()
 	{
-		Enumeration e = CategoryRegistry.elements ();
+		Enumeration e = CategoryRegistry.elements();
 
-		while (e.hasMoreElements ())
+		while (e.hasMoreElements())
 		{
-			ArrayList displayList = (ArrayList) e.nextElement ();
+			ArrayList displayList = (ArrayList) e.nextElement();
 
-			for (int i = 0; i < displayList.size (); ++i)
+			for (int i = 0; i < displayList.size(); ++i)
 			{
-				InfoCenterDisplay display = (InfoCenterDisplay) displayRegistry.get ((String) displayList.get (i));
+				InfoCenterDisplay display = (InfoCenterDisplay) displayRegistry.get((String) displayList.get(i));
 
-				display.release ();
-				displayList.remove (i);
-				displayRegistry.remove (display);
+				display.release();
+				displayList.remove(i);
+				displayRegistry.remove(display);
 			}
 		}
 	}

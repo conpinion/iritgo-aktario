@@ -28,5 +28,5 @@ import de.iritgo.aktario.core.event.*;
  */
 public interface InstantMessageListener extends EventListener
 {
-	public void instantMessageEvent (InstantMessageEvent event);
+	public void instantMessageEvent(InstantMessageEvent event);
 }

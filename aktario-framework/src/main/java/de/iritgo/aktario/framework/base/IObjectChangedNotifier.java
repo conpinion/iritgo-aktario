@@ -46,11 +46,11 @@ public class IObjectChangedNotifier implements IObjectModifiedListener
 	/**
 	 * Standard constructor
 	 */
-	public IObjectChangedNotifier ()
+	public IObjectChangedNotifier()
 	{
-		typeObservers = new HashMap ();
-		customObservers = new LinkedList ();
-		Engine.instance ().getEventRegistry ().addListener ("objectmodified", this);
+		typeObservers = new HashMap();
+		customObservers = new LinkedList();
+		Engine.instance().getEventRegistry().addListener("objectmodified", this);
 	}
 
 	/**
@@ -58,53 +58,52 @@ public class IObjectChangedNotifier implements IObjectModifiedListener
 	 *
 	 * @param event The modification event.
 	 */
-	public void iObjectModifiedEvent (IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(IObjectModifiedEvent event)
 	{
-		IObject iObject = event.getModifiedObject ();
+		IObject iObject = event.getModifiedObject();
 
-		List observers = (List) typeObservers.get (iObject.getTypeId ());
+		List observers = (List) typeObservers.get(iObject.getTypeId());
 
 		if (observers != null)
 		{
-			for (Iterator i = observers.iterator (); i.hasNext ();)
+			for (Iterator i = observers.iterator(); i.hasNext();)
 			{
-				callFirstMethodFromObserver ((IObjectChangedObserver) i.next (), iObject);
+				callFirstMethodFromObserver((IObjectChangedObserver) i.next(), iObject);
 			}
 		}
 
-		for (Iterator i = customObservers.iterator (); i.hasNext ();)
+		for (Iterator i = customObservers.iterator(); i.hasNext();)
 		{
-			IObjectChangedCustomObserver iObjectChangedCustomObserver = (IObjectChangedCustomObserver) i.next ();
+			IObjectChangedCustomObserver iObjectChangedCustomObserver = (IObjectChangedCustomObserver) i.next();
 
-			checkAndCallFirstMethod (iObjectChangedCustomObserver, iObject);
+			checkAndCallFirstMethod(iObjectChangedCustomObserver, iObject);
 		}
 	}
 
-	private void checkAndCallFirstMethod (IObjectChangedCustomObserver iObjectChangedCustomObserver, IObject iObject)
+	private void checkAndCallFirstMethod(IObjectChangedCustomObserver iObjectChangedCustomObserver, IObject iObject)
 	{
-		Class klass = iObjectChangedCustomObserver.getClass ();
+		Class klass = iObjectChangedCustomObserver.getClass();
 		boolean fired = false;
 
 		while (klass != null && ! fired)
 		{
-			Class[] interfaces = klass.getInterfaces ();
+			Class[] interfaces = klass.getInterfaces();
 
 			for (int j = 0; j < interfaces.length; ++j)
 			{
-				if (de.iritgo.aktario.framework.base.IObjectChangedCustomObserver.class
-								.isAssignableFrom (interfaces[j]))
+				if (de.iritgo.aktario.framework.base.IObjectChangedCustomObserver.class.isAssignableFrom(interfaces[j]))
 				{
 					try
 					{
-						Object object = interfaces[j].getDeclaredMethods ()[1].invoke (iObjectChangedCustomObserver,
+						Object object = interfaces[j].getDeclaredMethods()[1].invoke(iObjectChangedCustomObserver,
 										new Object[]
 										{
 											iObject
 										});
 
-						if (((Boolean) object).booleanValue ())
+						if (((Boolean) object).booleanValue())
 						{
-							interfaces[j].getDeclaredMethods ()[0].invoke (iObjectChangedCustomObserver, new Object[]
+							interfaces[j].getDeclaredMethods()[0].invoke(iObjectChangedCustomObserver, new Object[]
 							{
 								iObject
 							});
@@ -125,44 +124,44 @@ public class IObjectChangedNotifier implements IObjectModifiedListener
 					}
 					catch (InvocationTargetException x)
 					{
-						Log.logError ("system", "IObjectChangedNotifier.fire",
+						Log.logError("system", "IObjectChangedNotifier.fire",
 										"Called listener method has a InvocationTargetException in Class: " + klass
 														+ ": " + interfaces[j]);
 
-						ByteArrayOutputStream trace = new ByteArrayOutputStream ();
-						PrintWriter traceOut = new PrintWriter (trace);
+						ByteArrayOutputStream trace = new ByteArrayOutputStream();
+						PrintWriter traceOut = new PrintWriter(trace);
 
-						x.getCause ().printStackTrace (traceOut);
-						traceOut.close ();
+						x.getCause().printStackTrace(traceOut);
+						traceOut.close();
 
-						Log.logError ("system", "IObjectChangedNotifier.fire", "Root cause was: " + x.getCause ());
+						Log.logError("system", "IObjectChangedNotifier.fire", "Root cause was: " + x.getCause());
 
-						Log.logError ("system", "IObjectChangedNotifier.fire", "Root cause stack trace: "
-										+ trace.toString ());
+						Log.logError("system", "IObjectChangedNotifier.fire", "Root cause stack trace: "
+										+ trace.toString());
 					}
 				}
 			}
 
-			klass = klass.getSuperclass ();
+			klass = klass.getSuperclass();
 		}
 	}
 
-	private void callFirstMethodFromObserver (IObjectChangedObserver iObjectChangedObserver, IObject iObject)
+	private void callFirstMethodFromObserver(IObjectChangedObserver iObjectChangedObserver, IObject iObject)
 	{
-		Class klass = iObjectChangedObserver.getClass ();
+		Class klass = iObjectChangedObserver.getClass();
 		boolean fired = false;
 
 		while (klass != null && ! fired)
 		{
-			Class[] interfaces = klass.getInterfaces ();
+			Class[] interfaces = klass.getInterfaces();
 
 			for (int j = 0; j < interfaces.length; ++j)
 			{
-				if (de.iritgo.aktario.framework.base.IObjectChangedObserver.class.isAssignableFrom (interfaces[j]))
+				if (de.iritgo.aktario.framework.base.IObjectChangedObserver.class.isAssignableFrom(interfaces[j]))
 				{
 					try
 					{
-						interfaces[j].getDeclaredMethods ()[0].invoke (iObjectChangedObserver, new Object[]
+						interfaces[j].getDeclaredMethods()[0].invoke(iObjectChangedObserver, new Object[]
 						{
 							iObject
 						});
@@ -181,72 +180,72 @@ public class IObjectChangedNotifier implements IObjectModifiedListener
 					}
 					catch (InvocationTargetException x)
 					{
-						Log.logError ("system", "IObjectChangedNotifier.fire",
+						Log.logError("system", "IObjectChangedNotifier.fire",
 										"Called listener method has a InvocationTargetException in Class: " + klass
 														+ ": " + interfaces[j]);
 
-						ByteArrayOutputStream trace = new ByteArrayOutputStream ();
-						PrintWriter traceOut = new PrintWriter (trace);
+						ByteArrayOutputStream trace = new ByteArrayOutputStream();
+						PrintWriter traceOut = new PrintWriter(trace);
 
-						x.getCause ().printStackTrace (traceOut);
-						traceOut.close ();
+						x.getCause().printStackTrace(traceOut);
+						traceOut.close();
 
-						Log.logError ("system", "IObjectChangedNotifier.fire", "Root cause was: " + x.getCause ());
+						Log.logError("system", "IObjectChangedNotifier.fire", "Root cause was: " + x.getCause());
 
-						Log.logError ("system", "IObjectChangedNotifier.fire", "Root cause stack trace: "
-										+ trace.toString ());
+						Log.logError("system", "IObjectChangedNotifier.fire", "Root cause stack trace: "
+										+ trace.toString());
 					}
 				}
 			}
 
-			klass = klass.getSuperclass ();
+			klass = klass.getSuperclass();
 		}
 	}
 
 	/**
 	 * Add a type observer
 	 */
-	public void registerTypeObserver (String iObjectType, IObjectChangedObserver iObjectChangeObserver)
+	public void registerTypeObserver(String iObjectType, IObjectChangedObserver iObjectChangeObserver)
 	{
-		if (! typeObservers.containsKey (iObjectType))
+		if (! typeObservers.containsKey(iObjectType))
 		{
-			typeObservers.put (iObjectType, new LinkedList ());
+			typeObservers.put(iObjectType, new LinkedList());
 		}
 
-		List observers = (List) typeObservers.get (iObjectType);
+		List observers = (List) typeObservers.get(iObjectType);
 
-		if (! observers.contains (iObjectChangeObserver)) //Dobble registration make no sense.
+		if (! observers.contains(iObjectChangeObserver)) //Dobble registration make no sense.
 		{
-			observers.add (iObjectChangeObserver);
+			observers.add(iObjectChangeObserver);
 		}
 	}
 
 	/**
 	 * Remove a type observer
 	 */
-	public void removeTypeObserver (String iObjectType, IObjectChangedObserver iObjectChangeObserver)
+	public void removeTypeObserver(String iObjectType, IObjectChangedObserver iObjectChangeObserver)
 	{
-		List listeners = (List) typeObservers.get (iObjectType);
+		List listeners = (List) typeObservers.get(iObjectType);
 
 		if (listeners != null)
 		{
-			listeners.remove (iObjectChangeObserver);
+			listeners.remove(iObjectChangeObserver);
 		}
 	}
 
 	/**
 	 * Add a custom observer
 	 */
-	public void registerCustomObserver (IObjectChangedCustomObserver iObjectChangedCustomObserver)
+	public void registerCustomObserver(IObjectChangedCustomObserver iObjectChangedCustomObserver)
 	{
-		customObservers.add (iObjectChangedCustomObserver);
+		customObservers.add(iObjectChangedCustomObserver);
 	}
 
 	/**
 	 * Remove a custom observer
 	 */
-	public void removeCustomObserver (IObjectChangedCustomObserver iObjectChangedCustomObserver)
+	public void removeCustomObserver(IObjectChangedCustomObserver iObjectChangedCustomObserver)
 	{
-		customObservers.remove (iObjectChangedCustomObserver);
+		customObservers.remove(iObjectChangedCustomObserver);
 	}
 }

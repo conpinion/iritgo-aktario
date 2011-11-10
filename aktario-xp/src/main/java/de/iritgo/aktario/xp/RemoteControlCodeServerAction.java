@@ -80,13 +80,13 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	/**
 	 * Create a new action.
 	 */
-	public RemoteControlCodeServerAction ()
+	public RemoteControlCodeServerAction()
 	{
-		setTypeId ("RCCS");
+		setTypeId("RCCS");
 
-		if (AppContext.instance ().getUser () != null)
+		if (AppContext.instance().getUser() != null)
 		{
-			this.userId = AppContext.instance ().getUser ().getUniqueId ();
+			this.userId = AppContext.instance().getUser().getUniqueId();
 		}
 
 		fileName = "";
@@ -97,7 +97,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The id of the user who is sending this action.
 	 */
-	public long getUserId ()
+	public long getUserId()
 	{
 		return userId;
 	}
@@ -107,7 +107,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The control code.
 	 */
-	public int getControl ()
+	public int getControl()
 	{
 		return control;
 	}
@@ -117,7 +117,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The working state.
 	 */
-	public int getWorking ()
+	public int getWorking()
 	{
 		return working;
 	}
@@ -127,7 +127,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The working state.
 	 */
-	public void setWorking (int working)
+	public void setWorking(int working)
 	{
 		control = RemoteControlCodeAction.CONTROL_WORKING;
 		this.working = working;
@@ -138,7 +138,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The caret position.
 	 */
-	public int getDot ()
+	public int getDot()
 	{
 		return dot;
 	}
@@ -148,7 +148,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The mark position.
 	 */
-	public int getMark ()
+	public int getMark()
 	{
 		return mark;
 	}
@@ -158,7 +158,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The file name.
 	 */
-	public String getFileName ()
+	public String getFileName()
 	{
 		return fileName;
 	}
@@ -168,7 +168,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The first visible line.
 	 */
-	public int getFirstLine ()
+	public int getFirstLine()
 	{
 		return firstLine;
 	}
@@ -178,7 +178,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The first visible column.
 	 */
-	public int getFirstColumn ()
+	public int getFirstColumn()
 	{
 		return firstColumn;
 	}
@@ -188,7 +188,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The view type.
 	 */
-	public int getView ()
+	public int getView()
 	{
 		return view;
 	}
@@ -198,7 +198,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The key code.
 	 */
-	public int getKeyCode ()
+	public int getKeyCode()
 	{
 		return keyCode;
 	}
@@ -208,7 +208,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The key char.
 	 */
-	public char getKeyChar ()
+	public char getKeyChar()
 	{
 		return keyChar;
 	}
@@ -218,7 +218,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @return The key modifiers.
 	 */
-	public int getKeyModifiers ()
+	public int getKeyModifiers()
 	{
 		return keyModifiers;
 	}
@@ -229,7 +229,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param dot Caret position.
 	 * @param mark Caret mark position.
 	 */
-	public void controlCaret (int dot, int mark)
+	public void controlCaret(int dot, int mark)
 	{
 		control = RemoteControlCodeAction.CONTROL_CARET;
 		this.dot = dot;
@@ -241,7 +241,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @param the working state
 	 */
-	public void controlFile (int working)
+	public void controlFile(int working)
 	{
 		control = RemoteControlCodeAction.CONTROL_WORKING;
 		this.working = working;
@@ -252,7 +252,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @param fileName The name of the file to display.
 	 */
-	public void controlFile (String fileName)
+	public void controlFile(String fileName)
 	{
 		control = RemoteControlCodeAction.CONTROL_FILE;
 		this.fileName = fileName;
@@ -264,7 +264,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param firstLine The first visible line.
 	 * @param firstColumn The first visible line.
 	 */
-	public void controlScroll (int firstLine, int firstColumn)
+	public void controlScroll(int firstLine, int firstColumn)
 	{
 		control = RemoteControlCodeAction.CONTROL_SCROLL;
 		this.firstLine = firstLine;
@@ -276,7 +276,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @param url The new url.
 	 */
-	public void controlUrl (String url)
+	public void controlUrl(String url)
 	{
 		control = RemoteControlCodeAction.CONTROL_URL;
 		this.fileName = url;
@@ -287,7 +287,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @param view The view type.
 	 */
-	public void controlView (int view)
+	public void controlView(int view)
 	{
 		control = RemoteControlCodeAction.CONTROL_VIEW;
 		this.view = view;
@@ -300,7 +300,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param keyChar The key char.
 	 * @param keyModifiers The modifiers.
 	 */
-	public void controlKeyPress (int keyCode, char keyChar, int keyModifiers)
+	public void controlKeyPress(int keyCode, char keyChar, int keyModifiers)
 	{
 		control = RemoteControlCodeAction.CONTROL_KEY_PRESS;
 		this.keyCode = keyCode;
@@ -315,7 +315,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param keyChar The key char.
 	 * @param keyModifiers The modifiers.
 	 */
-	public void controlKeyRelease (int keyCode, char keyChar, int keyModifiers)
+	public void controlKeyRelease(int keyCode, char keyChar, int keyModifiers)
 	{
 		control = RemoteControlCodeAction.CONTROL_KEY_RELEASE;
 		this.keyCode = keyCode;
@@ -330,7 +330,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param keyChar The key char.
 	 * @param keyModifiers The modifiers.
 	 */
-	public void controlKeyType (int keyCode, char keyChar, int keyModifiers)
+	public void controlKeyType(int keyCode, char keyChar, int keyModifiers)
 	{
 		control = RemoteControlCodeAction.CONTROL_KEY_TYPE;
 		this.keyCode = keyCode;
@@ -344,7 +344,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 * @param fileName The relative path name.
 	 * @param expanded True for an expanded, false for a collapsed path.
 	 */
-	public void controlFileTreeExpansion (String fileName, boolean expanded)
+	public void controlFileTreeExpansion(String fileName, boolean expanded)
 	{
 		control = expanded ? RemoteControlCodeAction.CONTROL_FILE_TREE_EXPAND
 						: RemoteControlCodeAction.CONTROL_FILE_TREE_COLLAPSE;
@@ -356,7 +356,7 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	 *
 	 * @param fileName The relative path name.
 	 */
-	public void controlFileTreeSelection (String fileName)
+	public void controlFileTreeSelection(String fileName)
 	{
 		control = RemoteControlCodeAction.CONTROL_FILE_TREE_SELECTION;
 		this.fileName = (fileName != null ? fileName : "");
@@ -365,54 +365,54 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	/**
 	 * Read the attributes from a stream.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		control = stream.readInt ();
+		userId = stream.readLong();
+		control = stream.readInt();
 
 		switch (control)
 		{
 			case RemoteControlCodeAction.CONTROL_CARET:
-				dot = stream.readInt ();
-				mark = stream.readInt ();
+				dot = stream.readInt();
+				mark = stream.readInt();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_FILE:
 			case RemoteControlCodeAction.CONTROL_URL:
-				fileName = stream.readUTF ();
+				fileName = stream.readUTF();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_SCROLL:
-				firstLine = stream.readInt ();
-				firstColumn = stream.readInt ();
+				firstLine = stream.readInt();
+				firstColumn = stream.readInt();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_VIEW:
-				view = stream.readInt ();
+				view = stream.readInt();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_KEY_PRESS:
 			case RemoteControlCodeAction.CONTROL_KEY_RELEASE:
 			case RemoteControlCodeAction.CONTROL_KEY_TYPE:
-				keyCode = stream.readInt ();
-				keyChar = stream.readChar ();
-				keyModifiers = stream.readInt ();
+				keyCode = stream.readInt();
+				keyChar = stream.readChar();
+				keyModifiers = stream.readInt();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_EXPAND:
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_COLLAPSE:
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_SELECTION:
-				fileName = stream.readUTF ();
+				fileName = stream.readUTF();
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_WORKING:
-				working = stream.readInt ();
+				working = stream.readInt();
 
 				break;
 		}
@@ -421,54 +421,54 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	/**
 	 * Write the attributes to a stream.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeInt (control);
+		stream.writeLong(userId);
+		stream.writeInt(control);
 
 		switch (control)
 		{
 			case RemoteControlCodeAction.CONTROL_CARET:
-				stream.writeInt (dot);
-				stream.writeInt (mark);
+				stream.writeInt(dot);
+				stream.writeInt(mark);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_FILE:
 			case RemoteControlCodeAction.CONTROL_URL:
-				stream.writeUTF (fileName);
+				stream.writeUTF(fileName);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_SCROLL:
-				stream.writeInt (firstLine);
-				stream.writeInt (firstColumn);
+				stream.writeInt(firstLine);
+				stream.writeInt(firstColumn);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_VIEW:
-				stream.writeInt (view);
+				stream.writeInt(view);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_KEY_PRESS:
 			case RemoteControlCodeAction.CONTROL_KEY_RELEASE:
 			case RemoteControlCodeAction.CONTROL_KEY_TYPE:
-				stream.writeInt (keyCode);
-				stream.writeChar (keyChar);
-				stream.writeInt (keyModifiers);
+				stream.writeInt(keyCode);
+				stream.writeChar(keyChar);
+				stream.writeInt(keyModifiers);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_EXPAND:
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_COLLAPSE:
 			case RemoteControlCodeAction.CONTROL_FILE_TREE_SELECTION:
-				stream.writeUTF (fileName);
+				stream.writeUTF(fileName);
 
 				break;
 
 			case RemoteControlCodeAction.CONTROL_WORKING:
-				stream.writeInt (working);
+				stream.writeInt(working);
 
 				break;
 		}
@@ -477,10 +477,10 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver ct = (ClientTransceiver) transceiver;
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
 		// 		if (control == RemoteControlCodeAction.CONTROL_WORKING)
 		// 		{
@@ -492,19 +492,19 @@ public class RemoteControlCodeServerAction extends FrameworkServerAction
 		// 				working = -1000000;
 		// 			}
 		// 		}
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User user = (User) i.next ();
+			User user = (User) i.next();
 
-			if (user.isOnline () && user.getUniqueId () != userId)
+			if (user.isOnline() && user.getUniqueId() != userId)
 			{
-				ct.addReceiver (user.getNetworkChannel ());
+				ct.addReceiver(user.getNetworkChannel());
 			}
 		}
 
-		RemoteControlCodeAction action = new RemoteControlCodeAction (this);
+		RemoteControlCodeAction action = new RemoteControlCodeAction(this);
 
-		action.setTransceiver (transceiver);
-		ActionTools.sendToClient (action);
+		action.setTransceiver(transceiver);
+		ActionTools.sendToClient(action);
 	}
 }

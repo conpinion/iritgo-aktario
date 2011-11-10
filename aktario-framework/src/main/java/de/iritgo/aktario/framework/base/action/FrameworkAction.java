@@ -37,17 +37,17 @@ public class FrameworkAction extends AbstractAction
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkAction ()
+	public FrameworkAction()
 	{
-		super ();
+		super();
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkAction (long userUniqueId)
+	public FrameworkAction(long userUniqueId)
 	{
-		super (Engine.instance ().getTransientIDGenerator ().createId ());
+		super(Engine.instance().getTransientIDGenerator().createId());
 
 		this.userUniqueId = userUniqueId;
 	}
@@ -55,7 +55,7 @@ public class FrameworkAction extends AbstractAction
 	/**
 	 * Get the UsreUniqueID.
 	 */
-	public long getUserUniqueId ()
+	public long getUserUniqueId()
 	{
 		return userUniqueId;
 	}
@@ -64,28 +64,28 @@ public class FrameworkAction extends AbstractAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
-		userUniqueId = stream.readLong ();
-		readObject (new FrameworkInputStream (stream));
+		super.readObject(stream);
+		userUniqueId = stream.readLong();
+		readObject(new FrameworkInputStream(stream));
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
-		stream.writeLong (userUniqueId);
-		writeObject (new FrameworkOutputStream (stream));
+		super.writeObject(stream);
+		stream.writeLong(userUniqueId);
+		writeObject(new FrameworkOutputStream(stream));
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (@SuppressWarnings("unused") FrameworkInputStream stream)
+	public void readObject(@SuppressWarnings("unused") FrameworkInputStream stream)
 		throws IOException, ClassNotFoundException
 	{
 	}
@@ -93,7 +93,7 @@ public class FrameworkAction extends AbstractAction
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (@SuppressWarnings("unused") FrameworkOutputStream stream) throws IOException
+	public void writeObject(@SuppressWarnings("unused") FrameworkOutputStream stream) throws IOException
 	{
 	}
 }

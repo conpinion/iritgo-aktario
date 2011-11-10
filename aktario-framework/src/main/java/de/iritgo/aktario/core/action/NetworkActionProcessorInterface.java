@@ -36,28 +36,28 @@ public interface NetworkActionProcessorInterface
 	/**
 	 * Init a network action processor
 	 */
-	public abstract void init ();
+	public abstract void init();
 
 	/**
 	 * If a new channel is created this method will called.
 	 *
 	 * @param channel The new channel.
 	 */
-	public abstract void newChannelCreated (Channel channel);
+	public abstract void newChannelCreated(Channel channel);
 
 	/**
 	 * If a new channel is closed this method will called.
 	 *
 	 * @param channel The new channel.
 	 */
-	public abstract void channelClosed (Channel channel);
+	public abstract void channelClosed(Channel channel);
 
 	/**
 	 * Perform an action.
 	 *
 	 * @param action The action to perform.
 	 */
-	public abstract void perform (Action action);
+	public abstract void perform(Action action);
 
 	/**
 	 * Perform an action with a transceiver.
@@ -65,7 +65,7 @@ public interface NetworkActionProcessorInterface
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public abstract void perform (Action action, Transceiver transceiver);
+	public abstract void perform(Action action, Transceiver transceiver);
 
 	/**
 	 * Add a output action processor to this network action processor and the specified channel.
@@ -73,38 +73,38 @@ public interface NetworkActionProcessorInterface
 	 * @param channel The channel.
 	 * @param actionProcessor The action processor.
 	 */
-	public abstract void addOutput (Channel channel, ActionProcessor actionProcessor);
+	public abstract void addOutput(Channel channel, ActionProcessor actionProcessor);
 
 	/**
 	 * Remove a action processor from the output and the specified channel
 	 *
 	 * @param channel The channel.
 	 */
-	public abstract void removeOutput (Channel channel);
+	public abstract void removeOutput(Channel channel);
 
 	/**
 	 * Add a output action processor to this network action processor. This processor will calls for all channels
 	 *
 	 * @param actionProcessor The action processor
 	 */
-	public abstract void addOutput (ActionProcessor actionProcessor);
+	public abstract void addOutput(ActionProcessor actionProcessor);
 
 	/**
 	 * Remove a action processor from the output.
 	 *
 	 * @param actionProcessor The action processor.
 	 */
-	public abstract void removeOutput (ActionProcessor actionProcessor);
+	public abstract void removeOutput(ActionProcessor actionProcessor);
 
 	/**
 	 * Close a network action processor
 	 */
-	public abstract void close ();
+	public abstract void close();
 
 	/**
 	 * Clone all outputs
 	 *
 	 * @param clone The NetworkActionProcessorInterface to clone.
 	 */
-	public void cloneOutputs (NetworkActionProcessorInterface clone);
+	public void cloneOutputs(NetworkActionProcessorInterface clone);
 }

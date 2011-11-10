@@ -91,155 +91,155 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 	/** ScrollPane containing the participant state table. */
 	public JScrollPane participantStateScrollPane;
 
-	public Border border = BorderFactory.createLineBorder (Color.black);
+	public Border border = BorderFactory.createLineBorder(Color.black);
 
 	private ITableSorter tableSorter;
 
 	/**
 	 * Close the display
 	 */
-	public Action okAction = new AbstractAction ()
+	public Action okAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new UserListGUIPane.
 	 */
-	public ParticipantStatePane ()
+	public ParticipantStatePane()
 	{
-		super ("ParticipantStatePane");
-		childGUIPanes = new LinkedList ();
+		super("ParticipantStatePane");
+		childGUIPanes = new LinkedList();
 	}
 
 	/**
 	 * Initialize the gui. Subclasses should override this method to create a
 	 * custom gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+			participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 							"ParticipantClientManager");
 
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			AppContext.instance ().put (onScreenUniqueId, this);
+			AppContext.instance().put(onScreenUniqueId, this);
 
-			swingEngine.setClassLoader (ParticipantPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(ParticipantPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/ParticipantStatePane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/ParticipantStatePane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.put ("content", content);
+			props.put("content", content);
 
 			// 			for (Iterator i = participantManager.contentCommandIterator (); i.hasNext ();)
 			// 			{
 			// 				childGUIPanes.add (CommandTools.performSimple ((Command) i.next (), props));
 			// 			}
-			participantStateModel = new IObjectTableModelSorted ()
+			participantStateModel = new IObjectTableModelSorted()
 			{
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
 					DynDataObject pts = null;
 
 					try
 					{
-						pts = (DynDataObject) Engine.instance ().getIObjectFactory ().newInstance ("ParticipantState");
+						pts = (DynDataObject) Engine.instance().getIObjectFactory().newInstance("ParticipantState");
 					}
 					catch (NoSuchIObjectException x)
 					{
-						x.printStackTrace ();
+						x.printStackTrace();
 					}
 
-					return pts.getNumAttributes ();
+					return pts.getNumAttributes();
 				}
 
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
 					DynDataObject pts = null;
 
 					try
 					{
-						pts = (DynDataObject) Engine.instance ().getIObjectFactory ().newInstance ("ParticipantState");
+						pts = (DynDataObject) Engine.instance().getIObjectFactory().newInstance("ParticipantState");
 					}
 					catch (NoSuchIObjectException x)
 					{
-						x.printStackTrace ();
+						x.printStackTrace();
 					}
 
-					return Engine.instance ().getResourceService ().getStringWithoutException (
-									(String) new LinkedList (pts.getAttributes ().keySet ()).get (col));
+					return Engine.instance().getResourceService().getStringWithoutException(
+									(String) new LinkedList(pts.getAttributes().keySet()).get(col));
 				}
 
-				public boolean isCellEditable (int row, int col)
+				public boolean isCellEditable(int row, int col)
 				{
 					return false;
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
-					IObjectList query = ((DataObject) getIObject ()).getIObjectListAttribute ("participants");
+					IObjectList query = ((DataObject) getIObject()).getIObjectListAttribute("participants");
 
-					DynDataObject participantState = (DynDataObject) query.get (row);
+					DynDataObject participantState = (DynDataObject) query.get(row);
 
-					Object object = new LinkedList (participantState.getAttributes ().values ()).get (col);
+					Object object = new LinkedList(participantState.getAttributes().values()).get(col);
 
 					return object;
 				}
 			};
 
-			participantStateTable.setShowGrid (false);
+			participantStateTable.setShowGrid(false);
 
-			participantStateTable.setCellSelectionEnabled (false);
+			participantStateTable.setCellSelectionEnabled(false);
 
-			participantStateTable.setRowSelectionAllowed (true);
+			participantStateTable.setRowSelectionAllowed(true);
 
-			participantStateTable.setSelectionMode (0);
+			participantStateTable.setSelectionMode(0);
 
-			participantStateTable.setRowHeight (Math.max (participantStateTable.getRowHeight () + 4, 24 + 4));
+			participantStateTable.setRowHeight(Math.max(participantStateTable.getRowHeight() + 4, 24 + 4));
 
 			DynDataObject pts = null;
 
 			try
 			{
-				pts = (DynDataObject) Engine.instance ().getIObjectFactory ().newInstance ("ParticipantState");
+				pts = (DynDataObject) Engine.instance().getIObjectFactory().newInstance("ParticipantState");
 
-				tableSorter = participantStateModel.getTableSorter ();
-				participantStateTable.setModel (tableSorter);
-				participantStateModel.addTableModelListener (this);
+				tableSorter = participantStateModel.getTableSorter();
+				participantStateTable.setModel(tableSorter);
+				participantStateModel.addTableModelListener(this);
 
 				int j = 0;
 
-				Properties properties = new Properties ();
+				Properties properties = new Properties();
 
-				properties.setProperty ("participantStateName", onScreenUniqueId);
+				properties.setProperty("participantStateName", onScreenUniqueId);
 
-				for (Iterator i = new LinkedList (pts.getAttributes ().keySet ()).iterator (); i.hasNext ();)
+				for (Iterator i = new LinkedList(pts.getAttributes().keySet()).iterator(); i.hasNext();)
 				{
-					String attributeName = (String) i.next ();
+					String attributeName = (String) i.next();
 
-					Command command = participantManager.getAttributeRenderCommand (attributeName);
+					Command command = participantManager.getAttributeRenderCommand(attributeName);
 
 					if (command != null)
 					{
-						participantStateTable.getColumnModel ().getColumn (j).setCellRenderer (
-										(DefaultTableCellRenderer) CommandTools.performSimple (command, properties));
+						participantStateTable.getColumnModel().getColumn(j).setCellRenderer(
+										(DefaultTableCellRenderer) CommandTools.performSimple(command, properties));
 					}
 
-					command = participantManager.getAttributeEditorCommand (attributeName);
+					command = participantManager.getAttributeEditorCommand(attributeName);
 
 					if (command != null)
 					{
-						participantStateTable.getColumnModel ().getColumn (j).setCellEditor (
-										(TableCellEditor) CommandTools.performSimple (command, properties));
+						participantStateTable.getColumnModel().getColumn(j).setCellEditor(
+										(TableCellEditor) CommandTools.performSimple(command, properties));
 					}
 
 					++j;
@@ -247,58 +247,57 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 			}
 			catch (NoSuchIObjectException x)
 			{
-				x.printStackTrace ();
+				x.printStackTrace();
 			}
 
-			participantStateTable.addMouseListener (new MouseAdapter ()
+			participantStateTable.addMouseListener(new MouseAdapter()
 			{
-				public void mouseClicked (MouseEvent e)
+				public void mouseClicked(MouseEvent e)
 				{
-					int col = participantStateTable.columnAtPoint (e.getPoint ());
-					int row = tableSorter.getRealRow (participantStateTable.getSelectedRow ());
+					int col = participantStateTable.columnAtPoint(e.getPoint());
+					int row = tableSorter.getRealRow(participantStateTable.getSelectedRow());
 
 					if ((col < 0) || (row < 0))
 					{
 						return;
 					}
 
-					IObjectList list = ((DataObject) getIObject ()).getIObjectListAttribute ("participants");
+					IObjectList list = ((DataObject) getIObject()).getIObjectListAttribute("participants");
 
-					DynDataObject participantState = (DynDataObject) list.get (row);
+					DynDataObject participantState = (DynDataObject) list.get(row);
 
-					String attributeName = (String) new LinkedList (participantState.getAttributes ().keySet ())
-									.get (col);
+					String attributeName = (String) new LinkedList(participantState.getAttributes().keySet()).get(col);
 
-					if (e.getClickCount () == 2)
+					if (e.getClickCount() == 2)
 					{
-						Properties props = new Properties ();
+						Properties props = new Properties();
 
-						props.put ("bounds", new Rectangle (0, 0, 300, 100));
-						props.setProperty ("targetUser", participantState.getStringAttribute ("iritgoUserName"));
-						props.put ("weightx", new Double (3.0));
-						props.put ("weighty", new Double (1.5));
-						CommandTools.performAsync (new ShowDialog ("InstantMessageSendPane"), props);
+						props.put("bounds", new Rectangle(0, 0, 300, 100));
+						props.setProperty("targetUser", participantState.getStringAttribute("iritgoUserName"));
+						props.put("weightx", new Double(3.0));
+						props.put("weighty", new Double(1.5));
+						CommandTools.performAsync(new ShowDialog("InstantMessageSendPane"), props);
 
 						return;
 					}
 
-					Command command = participantManager.getAttributeCommand (attributeName);
+					Command command = participantManager.getAttributeCommand(attributeName);
 
 					if (command != null)
 					{
-						Properties props = command.getProperties ();
+						Properties props = command.getProperties();
 
-						props.put ("participantState", participantState);
-						props.put ("mousePosition", e.getPoint ());
-						props.put ("table", participantStateTable);
-						CommandTools.performSimple (command);
+						props.put("participantState", participantState);
+						props.put("mousePosition", e.getPoint());
+						props.put("table", participantStateTable);
+						CommandTools.performSimple(command);
 					}
 				}
 			});
 
-			participantStateTable.getSelectionModel ().addListSelectionListener (new ListSelectionListener ()
+			participantStateTable.getSelectionModel().addListSelectionListener(new ListSelectionListener()
 			{
-				public void valueChanged (ListSelectionEvent e)
+				public void valueChanged(ListSelectionEvent e)
 				{
 				}
 			});
@@ -307,21 +306,21 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "ParticipantStatePane.initGUI", x.toString ());
-			x.printStackTrace ();
+			Log.logError("client", "ParticipantStatePane.initGUI", x.toString());
+			x.printStackTrace();
 		}
 	}
 
 	/**
 	 * Load the data object into the gui.
 	 */
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		try
 		{
 			DataObject buddyListGroup = (DataObject) iobject;
 
-			participantStateModel.update (buddyListGroup.getIObjectListAttribute ("participants"));
+			participantStateModel.update(buddyListGroup.getIObjectListAttribute("participants"));
 
 			// 			for (Iterator i = childGUIPanes.iterator (); i.hasNext ();)
 			// 			{
@@ -330,7 +329,7 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
+			x.printStackTrace();
 		}
 
 		// 		SimpleQuery simpleQuery = (SimpleQuery) iobject;
@@ -346,7 +345,7 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 		// 		}
 	}
 
-	public void tableChanged (TableModelEvent e)
+	public void tableChanged(TableModelEvent e)
 	{
 		// 		IObject iObject = getIObject ();
 
@@ -354,14 +353,14 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 		// 		{
 		// 			((GUIPane) i.next ()).loadFromObject (iObject);
 		// 		}
-		tableSorter.reallocateIndexesUpdate ();
-		tableSorter.sortByColumn (2);
+		tableSorter.reallocateIndexesUpdate();
+		tableSorter.sortByColumn(2);
 	}
 
 	/**
 	 * Store the gui values to the data object.
 	 */
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -370,16 +369,16 @@ public class ParticipantStatePane extends SwingGUIPane implements TableModelList
 	 *
 	 * @return The gui pane clone.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new ParticipantStatePane ();
+		return new ParticipantStatePane();
 	}
 
-	public DynDataObject getParticipantState (int row)
+	public DynDataObject getParticipantState(int row)
 	{
-		IObjectList list = ((DataObject) getIObject ()).getIObjectListAttribute ("participants");
+		IObjectList list = ((DataObject) getIObject()).getIObjectListAttribute("participants");
 
-		DynDataObject participantState = (DynDataObject) list.get (tableSorter.getRealRow (row));
+		DynDataObject participantState = (DynDataObject) list.get(tableSorter.getRealRow(row));
 
 		return participantState;
 	}

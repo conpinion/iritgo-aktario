@@ -39,7 +39,7 @@ public abstract class AbstractAction extends Action
 	/**
 	 * Create a new AbstractAction.
 	 */
-	public AbstractAction ()
+	public AbstractAction()
 	{
 	}
 
@@ -48,15 +48,15 @@ public abstract class AbstractAction extends Action
 	 *
 	 * @param uniqueId The unique id of the action.
 	 */
-	public AbstractAction (long uniqueId)
+	public AbstractAction(long uniqueId)
 	{
-		super (uniqueId);
+		super(uniqueId);
 	}
 
 	/**
 	 * Set the action time stamp.
 	 */
-	public void setTimeStamp (double timeStamp)
+	public void setTimeStamp(double timeStamp)
 	{
 		this.timeStamp = timeStamp;
 	}
@@ -64,7 +64,7 @@ public abstract class AbstractAction extends Action
 	/**
 	 * Get the action time stamp.
 	 */
-	public double getTimeStamp ()
+	public double getTimeStamp()
 	{
 		return timeStamp;
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractAction extends Action
 	 *
 	 * @param numObjects The new number of transferred objects.
 	 */
-	public void setNumObjects (int numObjects)
+	public void setNumObjects(int numObjects)
 	{
 		this.numObjects = numObjects;
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractAction extends Action
 	 *
 	 * @return The number of transferred objects.
 	 */
-	public int getNumObjects ()
+	public int getNumObjects()
 	{
 		return numObjects;
 	}
@@ -95,11 +95,11 @@ public abstract class AbstractAction extends Action
 	 * @param stream The data input stream.
 	 */
 	@Override
-	public void readObject (DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
 	{
-		super.readObject (stream);
-		timeStamp = stream.readDouble ();
-		numObjects = stream.readInt ();
+		super.readObject(stream);
+		timeStamp = stream.readDouble();
+		numObjects = stream.readInt();
 	}
 
 	/**
@@ -108,10 +108,10 @@ public abstract class AbstractAction extends Action
 	 * @param stream The data output stream.
 	 */
 	@Override
-	public void writeObject (DataOutputStream stream) throws IOException
+	public void writeObject(DataOutputStream stream) throws IOException
 	{
-		super.writeObject (stream);
-		stream.writeDouble (timeStamp);
-		stream.writeInt (numObjects);
+		super.writeObject(stream);
+		stream.writeDouble(timeStamp);
+		stream.writeInt(numObjects);
 	}
 }

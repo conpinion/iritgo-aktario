@@ -45,9 +45,9 @@ public class AktarioUserReadyAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public AktarioUserReadyAction ()
+	public AktarioUserReadyAction()
 	{
-		setTypeId ("AktarioUserReadyAction");
+		setTypeId("AktarioUserReadyAction");
 	}
 
 	/**
@@ -56,10 +56,10 @@ public class AktarioUserReadyAction extends FrameworkAction
 	 * @param user The user.
 	 * @param ready The ready state.
 	 */
-	public AktarioUserReadyAction (AktarioUser user, boolean ready)
+	public AktarioUserReadyAction(AktarioUser user, boolean ready)
 	{
-		this ();
-		this.userId = user.getUniqueId ();
+		this();
+		this.userId = user.getUniqueId();
 		this.ready = ready;
 	}
 
@@ -67,32 +67,32 @@ public class AktarioUserReadyAction extends FrameworkAction
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeBoolean (ready);
+		stream.writeLong(userId);
+		stream.writeBoolean(ready);
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		ready = stream.readBoolean ();
+		userId = stream.readLong();
+		ready = stream.readBoolean();
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		Properties props = new Properties ();
+		Properties props = new Properties();
 
-		props.put ("userId", new Long (userId));
-		props.put ("ready", new Boolean (ready));
-		CommandTools.performSimple ("DisplayUserReadyState", props);
+		props.put("userId", new Long(userId));
+		props.put("ready", new Boolean(ready));
+		CommandTools.performSimple("DisplayUserReadyState", props);
 	}
 }

@@ -45,73 +45,73 @@ public class ShutdownManager extends BaseObject implements Manager
 
 	private boolean userLogoffActionPerformed;
 
-	public ShutdownManager ()
+	public ShutdownManager()
 	{
-		super ("shutdown");
-		observers = new LinkedList ();
+		super("shutdown");
+		observers = new LinkedList();
 		userLogoffActionPerformed = false;
 	}
 
-	public void addObserver (ShutdownObserver shutdownObserver)
+	public void addObserver(ShutdownObserver shutdownObserver)
 	{
-		observers.add (shutdownObserver);
+		observers.add(shutdownObserver);
 	}
 
-	public void removeObserver (ShutdownObserver shutdownObserver)
+	public void removeObserver(ShutdownObserver shutdownObserver)
 	{
-		observers.remove (shutdownObserver);
+		observers.remove(shutdownObserver);
 	}
 
 	/**
 	 * This methode is basically used by the client. Its calls all classes they registered here.
 	 */
-	public void shutdown ()
+	public void shutdown()
 	{
-		LinkedList tmpObservers = new LinkedList (observers);
+		LinkedList tmpObservers = new LinkedList(observers);
 
-		for (Iterator i = tmpObservers.iterator (); i.hasNext ();)
+		for (Iterator i = tmpObservers.iterator(); i.hasNext();)
 		{
-			((ShutdownObserver) i.next ()).onShutdown ();
+			((ShutdownObserver) i.next()).onShutdown();
 		}
 
-		if (AppContext.instance ().isUserLoggedIn ())
+		if (AppContext.instance().isUserLoggedIn())
 		{
-			ActionTools.sendToServer (new UserLogoffServerAction ());
-			waitForUserLogoffAction ();
+			ActionTools.sendToServer(new UserLogoffServerAction());
+			waitForUserLogoffAction();
 		}
 
 		for (int i = numOfChecks; i >= 0; --i)
 		{
-			waitForCommands ();
-			waitForActions ();
+			waitForCommands();
+			waitForActions();
 		}
 	}
 
 	/**
 	 * This methode is basically used by the server. Its calls all classes they registered here and distribute the user object.
 	 */
-	public void shutdown (User user)
+	public void shutdown(User user)
 	{
-		LinkedList tmpObservers = new LinkedList (observers);
+		LinkedList tmpObservers = new LinkedList(observers);
 
-		for (Iterator i = tmpObservers.iterator (); i.hasNext ();)
+		for (Iterator i = tmpObservers.iterator(); i.hasNext();)
 		{
-			((ShutdownObserver) i.next ()).onUserLogoff (user);
+			((ShutdownObserver) i.next()).onUserLogoff(user);
 		}
 
 		for (int i = numOfChecks; i >= 0; --i)
 		{
-			waitForCommands ();
-			waitForActions ();
+			waitForCommands();
+			waitForActions();
 		}
 	}
 
-	public void userLogoffActionPerformend ()
+	public void userLogoffActionPerformend()
 	{
 		userLogoffActionPerformed = true;
 	}
 
-	private void waitForUserLogoffAction ()
+	private void waitForUserLogoffAction()
 	{
 		int i = 0;
 
@@ -120,7 +120,7 @@ public class ShutdownManager extends BaseObject implements Manager
 			try
 			{
 				++i;
-				Thread.sleep (1000);
+				Thread.sleep(1000);
 			}
 			catch (Exception x)
 			{
@@ -128,15 +128,15 @@ public class ShutdownManager extends BaseObject implements Manager
 		}
 	}
 
-	private void waitForCommands ()
+	private void waitForCommands()
 	{
-		AsyncCommandProcessor async = IritgoEngine.instance ().getAsyncCommandProcessor ();
+		AsyncCommandProcessor async = IritgoEngine.instance().getAsyncCommandProcessor();
 
-		while (async.commandsInProcess ())
+		while (async.commandsInProcess())
 		{
 			try
 			{
-				Thread.sleep (1000);
+				Thread.sleep(1000);
 			}
 			catch (Exception x)
 			{
@@ -144,18 +144,18 @@ public class ShutdownManager extends BaseObject implements Manager
 		}
 	}
 
-	private void waitForActions ()
+	private void waitForActions()
 	{
-		for (Iterator i = observers.iterator (); i.hasNext ();)
+		for (Iterator i = observers.iterator(); i.hasNext();)
 		{
-			ShutdownObserver shutdownObserver = (ShutdownObserver) i.next ();
+			ShutdownObserver shutdownObserver = (ShutdownObserver) i.next();
 
-			while (Engine.instance ().getFlowControl ().ruleExists (
-							"shutdown.in.progress." + shutdownObserver.getTypeId ()))
+			while (Engine.instance().getFlowControl()
+							.ruleExists("shutdown.in.progress." + shutdownObserver.getTypeId()))
 			{
 				try
 				{
-					Thread.sleep (500);
+					Thread.sleep(500);
 				}
 				catch (Exception x)
 				{
@@ -164,11 +164,11 @@ public class ShutdownManager extends BaseObject implements Manager
 		}
 	}
 
-	public void init ()
+	public void init()
 	{
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }

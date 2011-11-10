@@ -62,9 +62,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 *
 	 * @param name The action name.
 	 */
-	public GenericBroadcastAction (String name)
+	public GenericBroadcastAction(String name)
 	{
-		this (name, SEND_TO_SERVER, new EasyHashMap ());
+		this(name, SEND_TO_SERVER, new EasyHashMap());
 	}
 
 	/**
@@ -74,16 +74,16 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param direction Action direction.
 	 * @param data Action data.
 	 */
-	public GenericBroadcastAction (String name, int direction, EasyHashMap data)
+	public GenericBroadcastAction(String name, int direction, EasyHashMap data)
 	{
-		setTypeId (name);
+		setTypeId(name);
 		this.direction = direction;
 		this.data = data;
 		resendToOriginator = false;
 
-		if (AppContext.instance ().getUser () != null)
+		if (AppContext.instance().getUser() != null)
 		{
-			this.originatorId = AppContext.instance ().getUser ().getUniqueId ();
+			this.originatorId = AppContext.instance().getUser().getUniqueId();
 		}
 	}
 
@@ -92,7 +92,7 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 *
 	 * @param resendToOriginator If true the action is send to the originator.
 	 */
-	public void setResendToOriginator (boolean resendToOriginator)
+	public void setResendToOriginator(boolean resendToOriginator)
 	{
 		this.resendToOriginator = resendToOriginator;
 	}
@@ -103,9 +103,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, int value)
+	public void put(String key, int value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -114,9 +114,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, long value)
+	public void put(String key, long value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, float value)
+	public void put(String key, float value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -136,9 +136,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, double value)
+	public void put(String key, double value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -147,9 +147,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, boolean value)
+	public void put(String key, boolean value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -158,9 +158,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void put (String key, String value)
+	public void put(String key, String value)
 	{
-		data.put (key, value);
+		data.put(key, value);
 	}
 
 	/**
@@ -169,9 +169,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public int getInt (String key)
+	public int getInt(String key)
 	{
-		return data.getInt (key);
+		return data.getInt(key);
 	}
 
 	/**
@@ -180,9 +180,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public long getLong (String key)
+	public long getLong(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -191,9 +191,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public float getFloat (String key)
+	public float getFloat(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -202,9 +202,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public double getDouble (String key)
+	public double getDouble(String key)
 	{
-		return data.getLong (key);
+		return data.getLong(key);
 	}
 
 	/**
@@ -213,9 +213,9 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public boolean getBoolean (String key)
+	public boolean getBoolean(String key)
 	{
-		return data.getBoolean (key);
+		return data.getBoolean(key);
 	}
 
 	/**
@@ -224,40 +224,40 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * @param key The attribute key.
 	 * @return The attribute value.
 	 */
-	public String getString (String key)
+	public String getString(String key)
 	{
-		return data.getString (key);
+		return data.getString(key);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		if (direction == SEND_TO_SERVER)
 		{
 			ClientTransceiver ct = (ClientTransceiver) transceiver;
-			UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+			UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-			for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+			for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 			{
-				User user = (User) i.next ();
+				User user = (User) i.next();
 
-				if (user.isOnline () && (resendToOriginator || (user.getUniqueId () != originatorId)))
+				if (user.isOnline() && (resendToOriginator || (user.getUniqueId() != originatorId)))
 				{
-					ct.addReceiver (user.getNetworkChannel ());
+					ct.addReceiver(user.getNetworkChannel());
 				}
 			}
 
-			GenericBroadcastAction action = new GenericBroadcastAction (getTypeId (), SEND_TO_CLIENT, data);
+			GenericBroadcastAction action = new GenericBroadcastAction(getTypeId(), SEND_TO_CLIENT, data);
 
-			action.setTransceiver (transceiver);
-			ActionTools.sendToClient (action);
+			action.setTransceiver(transceiver);
+			ActionTools.sendToClient(action);
 		}
 		else
 		{
-			execute ();
+			execute();
 		}
 	}
 
@@ -265,43 +265,43 @@ public class GenericBroadcastAction extends FrameworkServerAction
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (direction);
-		stream.writeBoolean (resendToOriginator);
-		stream.writeLong (originatorId);
-		data.writeObject (stream);
+		stream.writeInt(direction);
+		stream.writeBoolean(resendToOriginator);
+		stream.writeLong(originatorId);
+		data.writeObject(stream);
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		direction = stream.readInt ();
-		resendToOriginator = stream.readBoolean ();
-		originatorId = stream.readLong ();
-		data.readObject (stream);
+		direction = stream.readInt();
+		resendToOriginator = stream.readBoolean();
+		originatorId = stream.readLong();
+		data.readObject(stream);
 	}
 
 	/**
 	 * Send the action.
 	 */
-	public void send ()
+	public void send()
 	{
-		ClientTransceiver transceiver = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+		ClientTransceiver transceiver = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-		transceiver.addReceiver (AppContext.instance ().getChannelNumber ());
-		setTransceiver (transceiver);
-		ActionTools.sendToServer (this);
+		transceiver.addReceiver(AppContext.instance().getChannelNumber());
+		setTransceiver(transceiver);
+		ActionTools.sendToServer(this);
 	}
 
 	/**
 	 * Subclasses should override this method to implement
 	 * the action code to be executed on the clients.
 	 */
-	protected void execute ()
+	protected void execute()
 	{
 	}
 }

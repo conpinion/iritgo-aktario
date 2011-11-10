@@ -35,21 +35,21 @@ public class SystemMonitorManager extends BaseObject implements Manager
 {
 	class SystemMonitorWorker extends Threadable
 	{
-		public SystemMonitorWorker ()
+		public SystemMonitorWorker()
 		{
-			super ("SystemMonitorWorker");
+			super("SystemMonitorWorker");
 		}
 
-		public void run ()
+		public void run()
 		{
-			systemMonitor.setRegisteredUsers (Server.instance ().getUserRegistry ().getUserSize ());
-			systemMonitor.setWorkingThreads (Engine.instance ().getThreadService ().getWorkingSlots ());
-			systemMonitor.setFreeThreads (Engine.instance ().getThreadService ().getFreeSlots ());
-			systemMonitor.setFreeRam (Runtime.getRuntime ().freeMemory ());
+			systemMonitor.setRegisteredUsers(Server.instance().getUserRegistry().getUserSize());
+			systemMonitor.setWorkingThreads(Engine.instance().getThreadService().getWorkingSlots());
+			systemMonitor.setFreeThreads(Engine.instance().getThreadService().getFreeSlots());
+			systemMonitor.setFreeRam(Runtime.getRuntime().freeMemory());
 
 			try
 			{
-				Thread.sleep (1000);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException x)
 			{
@@ -57,24 +57,23 @@ public class SystemMonitorManager extends BaseObject implements Manager
 		}
 	}
 
-	private final SystemMonitor systemMonitor = new SystemMonitor ();
+	private final SystemMonitor systemMonitor = new SystemMonitor();
 
-	public SystemMonitorManager ()
+	public SystemMonitorManager()
 	{
-		super ("system-monitor");
+		super("system-monitor");
 	}
 
-	public void init ()
+	public void init()
 	{
-		systemMonitor.setUniqueId (SystemMonitor.SYSTEM_MONITOR_ID);
-		Engine.instance ().getBaseRegistry ().add (systemMonitor);
-		Engine.instance ().getProxyRegistry ()
-						.addProxy (new FrameworkProxy (systemMonitor), systemMonitor.getTypeId ());
+		systemMonitor.setUniqueId(SystemMonitor.SYSTEM_MONITOR_ID);
+		Engine.instance().getBaseRegistry().add(systemMonitor);
+		Engine.instance().getProxyRegistry().addProxy(new FrameworkProxy(systemMonitor), systemMonitor.getTypeId());
 
-		Engine.instance ().getThreadService ().add (new SystemMonitorWorker ());
+		Engine.instance().getThreadService().add(new SystemMonitorWorker());
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }

@@ -33,9 +33,9 @@ public class ThreadService extends BaseObject
 	/**
 	 * Standard constructor
 	 */
-	public ThreadService (int corePoolSize)
+	public ThreadService(int corePoolSize)
 	{
-		controller = new ThreadController (corePoolSize);
+		controller = new ThreadController(corePoolSize);
 	}
 
 	/**
@@ -43,17 +43,17 @@ public class ThreadService extends BaseObject
 	 *
 	 * @param threadObject The Threadable Object
 	 */
-	public void add (Threadable threadObject)
+	public void add(Threadable threadObject)
 	{
-		controller.add (threadObject);
+		controller.add(threadObject);
 	}
 
 	/**
 	 * Add a ThreadSlot
 	 */
-	public void addThreadSlot ()
+	public void addThreadSlot()
 	{
-		controller.addSlot ();
+		controller.addSlot();
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class ThreadService extends BaseObject
 	 *
 	 * @return True if all threads are successfully killed.
 	 */
-	public boolean stopThreadEngine ()
+	public boolean stopThreadEngine()
 	{
-		return controller.release ();
+		return controller.release();
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class ThreadService extends BaseObject
 	 *
 	 * @return The thread controller.
 	 */
-	public ThreadController getThreadController ()
+	public ThreadController getThreadController()
 	{
 		return controller;
 	}
@@ -81,9 +81,9 @@ public class ThreadService extends BaseObject
 	 *
 	 * @return the number of working slots
 	 */
-	public int getWorkingSlots ()
+	public int getWorkingSlots()
 	{
-		return controller.getActiveCount ();
+		return controller.getActiveCount();
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class ThreadService extends BaseObject
 	 *
 	 * @return the number of free slots
 	 */
-	public int getFreeSlots ()
+	public int getFreeSlots()
 	{
-		return controller.getAvailableSlots ();
+		return controller.getAvailableSlots();
 	}
 }

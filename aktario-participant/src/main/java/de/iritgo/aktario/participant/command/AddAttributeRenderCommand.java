@@ -36,19 +36,19 @@ public class AddAttributeRenderCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public AddAttributeRenderCommand ()
+	public AddAttributeRenderCommand()
 	{
-		super ("AddAttributeRenderCommand");
+		super("AddAttributeRenderCommand");
 	}
 
 	/**
 	 *
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ParticipantManager participantManager = null;
 
-		participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+		participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 						"ParticipantClientManager");
 
 		if (participantManager == null)
@@ -58,14 +58,14 @@ public class AddAttributeRenderCommand extends Command
 
 		try
 		{
-			participantManager.addAttributeRenderCommand (properties.getProperty ("attribute"), (Command) properties
-							.get ("command"));
+			participantManager.addAttributeRenderCommand(properties.getProperty("attribute"), (Command) properties
+							.get("command"));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "AddAttributeRenderCommand:perform",
+			Log.logFatal("system", "AddAttributeRenderCommand:perform",
 							"Class not found Exception, Attribute type unknown: "
-											+ properties.getProperty ("attributeType"));
+											+ properties.getProperty("attributeType"));
 		}
 	}
 }

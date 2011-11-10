@@ -34,8 +34,8 @@ public class AktarioChatPlugin extends AktarioPlugin
 	 * Register all collaboration applications in this method.
 	 */
 	@Override
-	public void registerApplications ()
+	public void registerApplications()
 	{
-		registerApplication ("aktario.Chat", "aktario.chat", "/resources/chat.png", "common.chatview");
+		registerApplication("aktario.Chat", "aktario.chat", "/resources/chat.png", "common.chatview");
 	}
 }

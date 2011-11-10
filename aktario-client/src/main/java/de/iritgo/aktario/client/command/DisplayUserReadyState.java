@@ -39,16 +39,16 @@ public class DisplayUserReadyState extends Command
 	/**
 	 * Create a new command.
 	 */
-	public DisplayUserReadyState ()
+	public DisplayUserReadyState()
 	{
-		super ("DisplayUserReadyState");
+		super("DisplayUserReadyState");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		// 		if (properties.get ("userId") == null)
 		// 		{

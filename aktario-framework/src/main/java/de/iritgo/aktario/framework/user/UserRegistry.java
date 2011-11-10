@@ -38,9 +38,9 @@ public class UserRegistry
 	/**
 	 * Create a new empty user registry.
 	 */
-	public UserRegistry ()
+	public UserRegistry()
 	{
-		users = new TreeMap<Long, User> ();
+		users = new TreeMap<Long, User>();
 	}
 
 	/**
@@ -49,13 +49,13 @@ public class UserRegistry
 	 * @param id The id under which the user should be stored.
 	 * @param user The user to add.
 	 */
-	synchronized public void addUser (Long id, User user)
+	synchronized public void addUser(Long id, User user)
 	{
-		if (users.get (id) == null)
+		if (users.get(id) == null)
 		{
-			users.put (id, user);
+			users.put(id, user);
 
-			Log.logDebug ("system", "UserRegistry", "Added a new user: " + user.getName () + ":" + id);
+			Log.logDebug("system", "UserRegistry", "Added a new user: " + user.getName() + ":" + id);
 		}
 	}
 
@@ -64,13 +64,13 @@ public class UserRegistry
 	 *
 	 * @param user The user to add.
 	 */
-	synchronized public void addUser (User user)
+	synchronized public void addUser(User user)
 	{
-		if (users.get (new Long (user.getUniqueId ())) == null)
+		if (users.get(new Long(user.getUniqueId())) == null)
 		{
-			users.put (new Long (user.getUniqueId ()), user);
+			users.put(new Long(user.getUniqueId()), user);
 
-			Log.logDebug ("system", "UserRegistry", "Added a new user " + user.getName () + ":" + user.getUniqueId ());
+			Log.logDebug("system", "UserRegistry", "Added a new user " + user.getName() + ":" + user.getUniqueId());
 		}
 	}
 
@@ -79,11 +79,11 @@ public class UserRegistry
 	 *
 	 * @param user The user to remove.
 	 */
-	synchronized public void removeUser (User user)
+	synchronized public void removeUser(User user)
 	{
-		Log.logDebug ("system", ".UserRegistry", "Removed user " + user.getName () + ":" + user.getUniqueId ());
+		Log.logDebug("system", ".UserRegistry", "Removed user " + user.getName() + ":" + user.getUniqueId());
 
-		users.remove (new Long (user.getUniqueId ()));
+		users.remove(new Long(user.getUniqueId()));
 	}
 
 	/**
@@ -92,9 +92,9 @@ public class UserRegistry
 	 * @param id The id of the user to retrieve.
 	 * @return The user or null if none was found.
 	 */
-	synchronized public User getUser (long id)
+	synchronized public User getUser(long id)
 	{
-		return (User) users.get (new Long (id));
+		return (User) users.get(new Long(id));
 	}
 
 	/**
@@ -103,9 +103,9 @@ public class UserRegistry
 	 * @param id The id of the user to retrieve.
 	 * @return The user or null if none was found.
 	 */
-	synchronized public User getUser (Long id)
+	synchronized public User getUser(Long id)
 	{
-		return (User) users.get (id);
+		return (User) users.get(id);
 	}
 
 	/**
@@ -114,11 +114,11 @@ public class UserRegistry
 	 * @param name The name of the user to retrieve.
 	 * @return The user or null if none was found.
 	 */
-	synchronized public User getUser (String name)
+	synchronized public User getUser(String name)
 	{
-		for (User user : users.values ())
+		for (User user : users.values())
 		{
-			if (user.getName ().equals (name))
+			if (user.getName().equals(name))
 			{
 				return user;
 			}
@@ -133,11 +133,11 @@ public class UserRegistry
 	 * @param email The email of the user to retrieve.
 	 * @return The user or null if none was found.
 	 */
-	synchronized public User getUserByEMail (String email)
+	synchronized public User getUserByEMail(String email)
 	{
-		for (User user : users.values ())
+		for (User user : users.values())
 		{
-			if (user.getEmail ().equals (email))
+			if (user.getEmail().equals(email))
 			{
 				return user;
 			}
@@ -152,11 +152,11 @@ public class UserRegistry
 	 * @param networkchannel The network channel of the user to retrieve.
 	 * @return The user or null if none was found.
 	 */
-	synchronized public User getUserByNetworkChannel (double networkchannel)
+	synchronized public User getUserByNetworkChannel(double networkchannel)
 	{
-		for (User user : users.values ())
+		for (User user : users.values())
 		{
-			if (user.getNetworkChannel () == networkchannel)
+			if (user.getNetworkChannel() == networkchannel)
 			{
 				return user;
 			}
@@ -170,11 +170,11 @@ public class UserRegistry
 	 *
 	 * @return An user iterator.
 	 */
-	synchronized public Iterator<User> userIterator ()
+	synchronized public Iterator<User> userIterator()
 	{
-		LinkedList<User> tmpList = new LinkedList<User> (users.values ());
+		LinkedList<User> tmpList = new LinkedList<User>(users.values());
 
-		return tmpList.iterator ();
+		return tmpList.iterator();
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class UserRegistry
 	 *
 	 * @return An online user iterator.
 	 */
-	synchronized public Iterator<User> onlineUserIterator ()
+	synchronized public Iterator<User> onlineUserIterator()
 	{
-		LinkedList<User> tmpList = new LinkedList<User> (users.values ());
+		LinkedList<User> tmpList = new LinkedList<User>(users.values());
 
-		return new OnlineUserIterator (tmpList.iterator ());
+		return new OnlineUserIterator(tmpList.iterator());
 	}
 
 	/**
@@ -194,24 +194,24 @@ public class UserRegistry
 	 *
 	 * @return True if the registry contains users.
 	 */
-	synchronized public boolean isEmpty ()
+	synchronized public boolean isEmpty()
 	{
-		return users.isEmpty ();
+		return users.isEmpty();
 	}
 
 	/**
 	 * Return the number of user
 	 */
-	synchronized public int getUserSize ()
+	synchronized public int getUserSize()
 	{
-		return users.size ();
+		return users.size();
 	}
 
 	/**
 	 * Remove all user from the registry.
 	 */
-	synchronized public void clear ()
+	synchronized public void clear()
 	{
-		users.clear ();
+		users.clear();
 	}
 }

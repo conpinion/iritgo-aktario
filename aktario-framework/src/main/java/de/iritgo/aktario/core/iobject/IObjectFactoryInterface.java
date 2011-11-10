@@ -32,14 +32,14 @@ public interface IObjectFactoryInterface
 	 *
 	 * @param object The prototype object to add.
 	 */
-	public void register (IObject object);
+	public void register(IObject object);
 
 	/**
 	 * Remove a <code>IObject</code> from the factory.
 	 *
 	 * @param object The prototype object to remove.
 	 */
-	public void remove (IObject object);
+	public void remove(IObject object);
 
 	/**
 	 * Check wether the factory can create objects of a specific type.
@@ -47,12 +47,12 @@ public interface IObjectFactoryInterface
 	 * @param typeId The type to check.
 	 * @return True if the factory can generate the specified type.
 	 */
-	public boolean contains (String typeId);
+	public boolean contains(String typeId);
 
 	/**
 	 * Create a new object instance by specyfing the type id.
 	 *
 	 * @param typeId The type id of the object to create.
 	 */
-	public IObject newInstance (String typeId) throws NoSuchIObjectException;
+	public IObject newInstance(String typeId) throws NoSuchIObjectException;
 }

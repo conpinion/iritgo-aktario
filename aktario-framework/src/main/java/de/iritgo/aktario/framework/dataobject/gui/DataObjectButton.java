@@ -45,20 +45,20 @@ public class DataObjectButton extends IButton
 
 	private DataObjectButton button;
 
-	public ActionListener action = new ActionListener ()
+	public ActionListener action = new ActionListener()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			String commandId = commandDescription.getCommandId ();
+			String commandId = commandDescription.getCommandId();
 
-			DataObjectCommand dataObjectCommand = (DataObjectCommand) Engine.instance ().getCommandRegistry ().get (
+			DataObjectCommand dataObjectCommand = (DataObjectCommand) Engine.instance().getCommandRegistry().get(
 							commandId);
 
-			dataObjectCommand.setDataObject (dataObject);
-			dataObjectCommand.setDataObjectButton (button);
-			dataObjectCommand.setSwingGUIPane (swingGUIPane);
-			dataObjectCommand.setValue (commandDescription.getValue ());
-			CommandTools.performAsync (dataObjectCommand, swingGUIPane.getProperties ());
+			dataObjectCommand.setDataObject(dataObject);
+			dataObjectCommand.setDataObjectButton(button);
+			dataObjectCommand.setSwingGUIPane(swingGUIPane);
+			dataObjectCommand.setValue(commandDescription.getValue());
+			CommandTools.performAsync(dataObjectCommand, swingGUIPane.getProperties());
 		}
 	};
 
@@ -67,10 +67,10 @@ public class DataObjectButton extends IButton
 	 *
 	 * @param text The text of the button.
 	 */
-	public DataObjectButton (String text)
+	public DataObjectButton(String text)
 	{
-		super (text);
-		registerActionListener ();
+		super(text);
+		registerActionListener();
 	}
 
 	/**
@@ -79,40 +79,40 @@ public class DataObjectButton extends IButton
 	 * @param text The text of the button.
 	 * @param icon The Icon image to display on the button.
 	 */
-	public DataObjectButton (String text, Icon icon)
+	public DataObjectButton(String text, Icon icon)
 	{
-		super (text, icon);
-		registerActionListener ();
+		super(text, icon);
+		registerActionListener();
 	}
 
-	public void release ()
+	public void release()
 	{
-		removeActionListener (action);
+		removeActionListener(action);
 	}
 
-	private void registerActionListener ()
+	private void registerActionListener()
 	{
 		button = this;
 
-		addActionListener (action);
+		addActionListener(action);
 	}
 
-	public void setDataObject (DataObject dataObject)
+	public void setDataObject(DataObject dataObject)
 	{
 		this.dataObject = dataObject;
 	}
 
-	public void setSwingGUIPane (SwingGUIPane swingGUIPane)
+	public void setSwingGUIPane(SwingGUIPane swingGUIPane)
 	{
 		this.swingGUIPane = swingGUIPane;
 	}
 
-	public void setCommandDescription (CommandDescription commandDescription)
+	public void setCommandDescription(CommandDescription commandDescription)
 	{
 		this.commandDescription = commandDescription;
 	}
 
-	public CommandDescription getCommandDescription ()
+	public CommandDescription getCommandDescription()
 	{
 		return commandDescription;
 	}

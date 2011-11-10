@@ -52,129 +52,130 @@ public class NetworkDisplayGUIPane extends SwingGUIPane implements GUIDisplay
 
 	private JScrollPane scrollpane;
 
-	private final java.util.LinkedList infos = new LinkedList ();
+	private final java.util.LinkedList infos = new LinkedList();
 
 	private TableModel data;
 
 	/**
 	 * Standard constructor
 	 */
-	public NetworkDisplayGUIPane ()
+	public NetworkDisplayGUIPane()
 	{
-		super ("infocenter.networkdisplay");
+		super("infocenter.networkdisplay");
 	}
 
 	/**
 	 * Init GUI
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
-		InfoCenterClientManager infoCenterClientManager = (InfoCenterClientManager) Engine.instance ()
-						.getManagerRegistry ().getManager ("infocenterclient");
+		InfoCenterClientManager infoCenterClientManager = (InfoCenterClientManager) Engine.instance()
+						.getManagerRegistry().getManager("infocenterclient");
 
-		infoCenterClientManager.setGUIDisplay (this);
+		infoCenterClientManager.setGUIDisplay(this);
 
-		JPanel allPanel = new JPanel ();
+		JPanel allPanel = new JPanel();
 
-		allPanel.setLayout (new GridBagLayout ());
+		allPanel.setLayout(new GridBagLayout());
 
 		int row = 0;
 
-		ILabel infosLabel = new ILabel ("infocenter.infos");
+		ILabel infosLabel = new ILabel("infocenter.infos");
 
-		allPanel.add (infosLabel, createConstraints (0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets (
-						5, 15, 5, 15)));
+		allPanel.add(infosLabel, createConstraints(0, row++, 1, 1, GridBagConstraints.HORIZONTAL, 0, 0, new Insets(5,
+						15, 5, 15)));
 
-		data = new AbstractTableModel ()
+		data = new AbstractTableModel()
 		{
-			public int getColumnCount ()
+			public int getColumnCount()
 			{
 				return 1;
 			}
 
-			public int getRowCount ()
+			public int getRowCount()
 			{
-				return infos.size ();
+				return infos.size();
 			}
 
-			public boolean isCellEditable (int row, int col)
+			public boolean isCellEditable(int row, int col)
 			{
 				return false;
 			}
 
-			public Class getColumnClass (int c)
+			public Class getColumnClass(int c)
 			{
-				return new InfoItem ("unknown").getPanel ().getClass ();
+				return new InfoItem("unknown").getPanel().getClass();
 			}
 
-			public Object getValueAt (int row, int col)
+			public Object getValueAt(int row, int col)
 			{
-				InfoItem item = (InfoItem) infos.get (row);
+				InfoItem item = (InfoItem) infos.get(row);
 
 				return item;
 			}
 		};
 
-		infosList = new JTable (data);
+		infosList = new JTable(data);
 
-		MouseListener mouseListener = new MouseAdapter ()
+		MouseListener mouseListener = new MouseAdapter()
 		{
-			public void mouseClicked (MouseEvent e)
+			public void mouseClicked(MouseEvent e)
 			{
-				if (e.getClickCount () == 2)
+				if (e.getClickCount() == 2)
 				{
-					int row = infosList.rowAtPoint (e.getPoint ());
-					InfoItem item = (InfoItem) infosList.getValueAt (row, 0);
+					int row = infosList.rowAtPoint(e.getPoint());
+					InfoItem item = (InfoItem) infosList.getValueAt(row, 0);
 
-					CommandTools.performAsync (new ShowWindow (item.getGuiPaneId (), item.getUniqueId (), item
-									.getTypeId ()));
+					CommandTools
+									.performAsync(new ShowWindow(item.getGuiPaneId(), item.getUniqueId(), item
+													.getTypeId()));
 				}
 			}
 		};
 
-		infosList.addMouseListener (mouseListener);
-		infosList.setAutoResizeMode (JTable.AUTO_RESIZE_ALL_COLUMNS);
+		infosList.addMouseListener(mouseListener);
+		infosList.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		infosList.setDefaultRenderer (infosList.getColumnClass (0), new InfoCellRenderer ());
+		infosList.setDefaultRenderer(infosList.getColumnClass(0), new InfoCellRenderer());
 
-		infosList.setRowHeight (70);
+		infosList.setRowHeight(70);
 
-		scrollpane = new JScrollPane (infosList);
-		allPanel.add (scrollpane, createConstraints (0, row, 1, 1, GridBagConstraints.BOTH, 100, 100, new Insets (5,
-						15, 5, 15)));
+		scrollpane = new JScrollPane(infosList);
+		allPanel.add(scrollpane, createConstraints(0, row, 1, 1, GridBagConstraints.BOTH, 100, 100, new Insets(5, 15,
+						5, 15)));
 
-		content.add (allPanel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		content.add(allPanel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 	}
 
 	/**
 	 * LoadFormObject, load the Data form Object.
 	 */
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 	}
 
 	/**
 	 * StoreFormObject, load the Data form Object.
 	 */
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 	}
 
-	public void addInfo (final int context, final String category, final String icon, final String message,
+	public void addInfo(final int context, final String category, final String icon, final String message,
 					final String guiPaneId, final long uniqueId, final String iObjectTypeId, final int level)
 	{
 		try
 		{
 			// Its called form other thread we must sync it with the gui thread
-			SwingUtilities.invokeAndWait (new Runnable ()
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				public void run ()
+				public void run()
 				{
-					InfoItem item = new InfoItem (category, icon, "M: " + message, guiPaneId, uniqueId, iObjectTypeId,
+					InfoItem item = new InfoItem(category, icon, "M: " + message, guiPaneId, uniqueId, iObjectTypeId,
 									level);
 
-					infos.addFirst (item);
-					infosList.revalidate ();
+					infos.addFirst(item);
+					infosList.revalidate();
 				}
 			});
 		}
@@ -186,9 +187,9 @@ public class NetworkDisplayGUIPane extends SwingGUIPane implements GUIDisplay
 	/**
 	 * Close it.
 	 */
-	public void close ()
+	public void close()
 	{
-		super.close ();
+		super.close();
 	}
 
 	/**
@@ -196,7 +197,7 @@ public class NetworkDisplayGUIPane extends SwingGUIPane implements GUIDisplay
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
 		return null;
 	}
@@ -204,8 +205,8 @@ public class NetworkDisplayGUIPane extends SwingGUIPane implements GUIDisplay
 	/**
 	 * Return a new instance.
 	 */
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new NetworkDisplayGUIPane ();
+		return new NetworkDisplayGUIPane();
 	}
 }

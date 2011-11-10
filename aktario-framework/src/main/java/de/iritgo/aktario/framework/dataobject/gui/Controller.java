@@ -31,40 +31,40 @@ import java.util.Iterator;
  */
 public class Controller extends DataObject
 {
-	public Controller ()
+	public Controller()
 	{
-		super ("Controller");
-		addAttribute ("controllerTypeId", "default");
+		super("Controller");
+		addAttribute("controllerTypeId", "default");
 
-		addAttribute ("widgets", new IObjectList ("widgets", new IObjectProxy (new WidgetDescription ()), this));
+		addAttribute("widgets", new IObjectList("widgets", new IObjectProxy(new WidgetDescription()), this));
 
-		addAttribute ("commands", new IObjectList ("commands", new IObjectProxy (new CommandDescription ()), this));
+		addAttribute("commands", new IObjectList("commands", new IObjectProxy(new CommandDescription()), this));
 	}
 
-	public String getControllerTypeId ()
+	public String getControllerTypeId()
 	{
-		return getStringAttribute ("controllerTypeId");
+		return getStringAttribute("controllerTypeId");
 	}
 
-	public void setControllerTypeId (String controllerTypeId)
+	public void setControllerTypeId(String controllerTypeId)
 	{
-		setAttribute ("controllerTypeId", controllerTypeId);
+		setAttribute("controllerTypeId", controllerTypeId);
 	}
 
-	public IObjectList getCommandDescriptions ()
+	public IObjectList getCommandDescriptions()
 	{
-		return getIObjectListAttribute ("commands");
+		return getIObjectListAttribute("commands");
 	}
 
-	public CommandDescription getCommandDescription (String id)
+	public CommandDescription getCommandDescription(String id)
 	{
 		CommandDescription commandDescription = null;
 
-		for (Iterator i = getCommandDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = getCommandDescriptions().iterator(); i.hasNext();)
 		{
-			commandDescription = (CommandDescription) i.next ();
+			commandDescription = (CommandDescription) i.next();
 
-			if (commandDescription.getCommandId ().equals (id))
+			if (commandDescription.getCommandId().equals(id))
 			{
 				return commandDescription;
 			}
@@ -73,15 +73,15 @@ public class Controller extends DataObject
 		return null;
 	}
 
-	public WidgetDescription getWidgetDescription (String id)
+	public WidgetDescription getWidgetDescription(String id)
 	{
 		WidgetDescription widgetDescription = null;
 
-		for (Iterator i = getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			widgetDescription = (WidgetDescription) i.next ();
+			widgetDescription = (WidgetDescription) i.next();
 
-			if (widgetDescription.getWidgetId ().equals (id))
+			if (widgetDescription.getWidgetId().equals(id))
 			{
 				return widgetDescription;
 			}
@@ -90,29 +90,29 @@ public class Controller extends DataObject
 		return null;
 	}
 
-	public void addCommandDescription (CommandDescription commandDescription)
+	public void addCommandDescription(CommandDescription commandDescription)
 	{
-		getIObjectListAttribute ("commands").add (commandDescription);
+		getIObjectListAttribute("commands").add(commandDescription);
 	}
 
-	public void removeCommandDescription (CommandDescription commandDescription)
+	public void removeCommandDescription(CommandDescription commandDescription)
 	{
-		getIObjectListAttribute ("commands").remove (commandDescription);
+		getIObjectListAttribute("commands").remove(commandDescription);
 	}
 
-	public IObjectList getWidgetDescriptions ()
+	public IObjectList getWidgetDescriptions()
 	{
-		return getIObjectListAttribute ("widgets");
+		return getIObjectListAttribute("widgets");
 	}
 
-	public void addWidgetDescription (WidgetDescription widgetDescription)
+	public void addWidgetDescription(WidgetDescription widgetDescription)
 	{
-		getIObjectListAttribute ("widgets").add (widgetDescription);
+		getIObjectListAttribute("widgets").add(widgetDescription);
 	}
 
-	public void removeWidgetDescription (WidgetDescription widgetDescription)
+	public void removeWidgetDescription(WidgetDescription widgetDescription)
 	{
-		getIObjectListAttribute ("widgets").remove (widgetDescription);
+		getIObjectListAttribute("widgets").remove(widgetDescription);
 	}
 
 	/**
@@ -120,34 +120,34 @@ public class Controller extends DataObject
 	 *
 	 * @return boolean The valid state of this object
 	 */
-	public boolean isValid ()
+	public boolean isValid()
 	{
 		boolean valid = true;
 
-		if (! super.isValid ())
+		if (! super.isValid())
 		{
-			markAsInvalid ();
+			markAsInvalid();
 			valid = false;
 		}
 
-		for (Iterator i = getCommandDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = getCommandDescriptions().iterator(); i.hasNext();)
 		{
-			DataObject dataObject = (DataObject) i.next ();
+			DataObject dataObject = (DataObject) i.next();
 
-			if (! dataObject.isValid ())
+			if (! dataObject.isValid())
 			{
-				dataObject.markAsInvalid ();
+				dataObject.markAsInvalid();
 				valid = false;
 			}
 		}
 
-		for (Iterator i = getWidgetDescriptions ().iterator (); i.hasNext ();)
+		for (Iterator i = getWidgetDescriptions().iterator(); i.hasNext();)
 		{
-			DataObject dataObject = (DataObject) i.next ();
+			DataObject dataObject = (DataObject) i.next();
 
-			if (! dataObject.isValid ())
+			if (! dataObject.isValid())
 			{
-				dataObject.markAsInvalid ();
+				dataObject.markAsInvalid();
 				valid = false;
 			}
 		}

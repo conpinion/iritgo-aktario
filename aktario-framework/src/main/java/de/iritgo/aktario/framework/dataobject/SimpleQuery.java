@@ -34,67 +34,67 @@ import java.util.Iterator;
  */
 public class SimpleQuery extends AbstractQuery
 {
-	public SimpleQuery ()
+	public SimpleQuery()
 	{
-		super ("SimpleQuery");
+		super("SimpleQuery");
 
-		User user = AppContext.instance ().getUser ();
+		User user = AppContext.instance().getUser();
 
 		if (user != null)
 		{
-			setUserUniqueId (user.getUniqueId ());
+			setUserUniqueId(user.getUniqueId());
 		}
 	}
 
-	public SimpleQuery (String dataObjectTypeId)
+	public SimpleQuery(String dataObjectTypeId)
 	{
-		this ();
-		setDataObjectTypeId (dataObjectTypeId);
+		this();
+		setDataObjectTypeId(dataObjectTypeId);
 	}
 
-	public void refresh ()
+	public void refresh()
 	{
-		IObjectList results = (IObjectList) getIObjectListResults ();
+		IObjectList results = (IObjectList) getIObjectListResults();
 
-		results.clearIObjectList ();
-		doQuery ();
+		results.clearIObjectList();
+		doQuery();
 	}
 
-	public void doQuery ()
+	public void doQuery()
 	{
-		String dataObjectTypeId = getDataObjectTypeId ();
-		IObjectList results = (IObjectList) getIObjectListResults ();
+		String dataObjectTypeId = getDataObjectTypeId();
+		IObjectList results = (IObjectList) getIObjectListResults();
 
-		for (Iterator i = Engine.instance ().getBaseRegistry ().iterator (dataObjectTypeId); i.hasNext ();)
+		for (Iterator i = Engine.instance().getBaseRegistry().iterator(dataObjectTypeId); i.hasNext();)
 		{
-			results.add ((IObject) i.next ());
+			results.add((IObject) i.next());
 		}
 	}
 
-	public void doCreatedDataObjectQuery (DataObject dataObject)
+	public void doCreatedDataObjectQuery(DataObject dataObject)
 	{
-		IObjectList results = (IObjectList) getIObjectListResults ();
+		IObjectList results = (IObjectList) getIObjectListResults();
 
-		if (! results.contains (dataObject))
+		if (! results.contains(dataObject))
 		{
-			results.add ((IObject) dataObject);
-			createdUpdateOwner ();
+			results.add((IObject) dataObject);
+			createdUpdateOwner();
 		}
 	}
 
-	public void doDeletedDataObjectQuery (DataObject dataObject)
+	public void doDeletedDataObjectQuery(DataObject dataObject)
 	{
-		IObjectList results = (IObjectList) getIObjectListResults ();
+		IObjectList results = (IObjectList) getIObjectListResults();
 
-		if (results.contains (dataObject))
+		if (results.contains(dataObject))
 		{
-			results.removeIObject ((IObject) dataObject);
-			removedUpdateOwner (dataObject);
+			results.removeIObject((IObject) dataObject);
+			removedUpdateOwner(dataObject);
 		}
 	}
 
-	public boolean workingWithThisDataObjectTypeId (String dataObjectTypeId)
+	public boolean workingWithThisDataObjectTypeId(String dataObjectTypeId)
 	{
-		return getDataObjectTypeId ().equals (dataObjectTypeId);
+		return getDataObjectTypeId().equals(dataObjectTypeId);
 	}
 }

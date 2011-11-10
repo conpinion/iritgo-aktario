@@ -40,18 +40,18 @@ public class ClientTransceiver implements Transceiver
 	/**
 	 * Standard-Constructor
 	 */
-	public ClientTransceiver (double sender)
+	public ClientTransceiver(double sender)
 	{
-		receivers = new LinkedList ();
+		receivers = new LinkedList();
 		this.sender = sender;
 	}
 
 	/**
 	 * Standard-Constructor
 	 */
-	public ClientTransceiver (double sender, Channel connectedChannel)
+	public ClientTransceiver(double sender, Channel connectedChannel)
 	{
-		this (sender);
+		this(sender);
 		this.connectedChannel = connectedChannel;
 	}
 
@@ -60,7 +60,7 @@ public class ClientTransceiver implements Transceiver
 	 *
 	 * @return The SenderChannelID
 	 */
-	public double getSender ()
+	public double getSender()
 	{
 		return sender;
 	}
@@ -70,7 +70,7 @@ public class ClientTransceiver implements Transceiver
 	 *
 	 * @param sender The SenderChannelID
 	 */
-	public void setSender (double sender)
+	public void setSender(double sender)
 	{
 		this.sender = sender;
 	}
@@ -80,7 +80,7 @@ public class ClientTransceiver implements Transceiver
 	 *
 	 * @return connectedChannel
 	 **/
-	public Channel getConnectedChannel ()
+	public Channel getConnectedChannel()
 	{
 		return connectedChannel;
 	}
@@ -90,25 +90,25 @@ public class ClientTransceiver implements Transceiver
 	 *
 	 * @return Iterator
 	 */
-	public Iterator getReceiverIterator ()
+	public Iterator getReceiverIterator()
 	{
-		return receivers.iterator ();
+		return receivers.iterator();
 	}
 
 	/**
 	 * Add a receiverchannelid to the list.
 	 */
-	public void addReceiver (double receiver)
+	public void addReceiver(double receiver)
 	{
-		receivers.add (new Double (receiver));
+		receivers.add(new Double(receiver));
 	}
 
 	/**
 	 * Remove all Receivers
 	 */
-	public void removeAllReceivers ()
+	public void removeAllReceivers()
 	{
-		receivers.clear ();
+		receivers.clear();
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class ClientTransceiver implements Transceiver
 	 *
 	 * @return The number of recievers.
 	 */
-	public int getReceiverCount ()
+	public int getReceiverCount()
 	{
-		return receivers.size ();
+		return receivers.size();
 	}
 }

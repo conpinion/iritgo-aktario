@@ -37,41 +37,41 @@ import java.net.SocketTimeoutException;
  */
 public class NetworkSystemListenerImpl extends NetworkSystemAdapter
 {
-	public void error (NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
 	{
-		if (connectedChannel.isAliveCheckSent ())
+		if (connectedChannel.isAliveCheckSent())
 		{
-			connectionTerminated (networkBase, connectedChannel);
+			connectionTerminated(networkBase, connectedChannel);
 
 			return;
 		}
 
-		connectedChannel.setAliveCheckSent (true);
-		connectedChannel.send (new AliveCheckServerAction (AliveCheckServerAction.CLIENT));
-		connectedChannel.flush ();
+		connectedChannel.setAliveCheckSent(true);
+		connectedChannel.send(new AliveCheckServerAction(AliveCheckServerAction.CLIENT));
+		connectedChannel.flush();
 	}
 
-	public void connectionTerminated (NetworkService networkBase, Channel connectedChannel)
+	public void connectionTerminated(NetworkService networkBase, Channel connectedChannel)
 	{
-		if (connectedChannel.getConnectionState () == (Channel.NETWORK_ERROR_CLOSING))
+		if (connectedChannel.getConnectionState() == (Channel.NETWORK_ERROR_CLOSING))
 		{
-			Log.logError ("network", "NetworkSystemListenerImpl.work", "Unable to close connection: "
-							+ connectedChannel.getConnectionState ());
+			Log.logError("network", "NetworkSystemListenerImpl.work", "Unable to close connection: "
+							+ connectedChannel.getConnectionState());
 		}
 
-		double channelNumber = connectedChannel.getChannelNumber ();
+		double channelNumber = connectedChannel.getChannelNumber();
 
-		if (connectedChannel.getConnectionState () != Channel.NETWORK_ERROR_CLOSING)
+		if (connectedChannel.getConnectionState() != Channel.NETWORK_ERROR_CLOSING)
 		{
-			networkBase.closeChannel (connectedChannel.getChannelNumber ());
+			networkBase.closeChannel(connectedChannel.getChannelNumber());
 		}
 
-		Engine.instance ().getEventRegistry ().fire ("User",
-						new UserEvent (AppContext.instance ().getUser (), UserEvent.USER_LOGGED_OUT));
-		Client.instance ().lostNetworkConnection ();
+		Engine.instance().getEventRegistry().fire("User",
+						new UserEvent(AppContext.instance().getUser(), UserEvent.USER_LOGGED_OUT));
+		Client.instance().lostNetworkConnection();
 
-		Log.log ("network", "NetworkSystemListenerImpl.work", "Lost connection to server: "
-						+ connectedChannel.getConnectionState (), Log.INFO);
+		Log.log("network", "NetworkSystemListenerImpl.work", "Lost connection to server: "
+						+ connectedChannel.getConnectionState(), Log.INFO);
 
 		return;
 	}

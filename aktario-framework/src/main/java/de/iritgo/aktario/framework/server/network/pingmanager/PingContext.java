@@ -47,44 +47,44 @@ public class PingContext extends BaseObject
 	 *
 	 * @param user The user for this pingcontext.
 	 */
-	public PingContext (User user)
+	public PingContext(User user)
 	{
-		super ("" + user.getUniqueId ());
+		super("" + user.getUniqueId());
 		this.user = user;
 
 		failurePings = 0;
 	}
 
-	public void ping ()
+	public void ping()
 	{
 		if (serverPingActive)
 		{
 			++failurePings;
 		}
 
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
+		clientTransceiver.addReceiver(user.getNetworkChannel());
 
-		pingStartTime = System.currentTimeMillis ();
+		pingStartTime = System.currentTimeMillis();
 
-		FrameworkAction action = new PingAction (pingStartTime);
+		FrameworkAction action = new PingAction(pingStartTime);
 
-		action.setTransceiver (clientTransceiver);
+		action.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (action);
+		ActionTools.sendToServer(action);
 	}
 
-	public int getFailurePings ()
+	public int getFailurePings()
 	{
 		return failurePings;
 	}
 
-	public void receivedPing (long pingReceivedTime)
+	public void receivedPing(long pingReceivedTime)
 	{
-		long c = System.currentTimeMillis ();
+		long c = System.currentTimeMillis();
 
-		user.addPingTime (c - pingStartTime);
+		user.addPingTime(c - pingStartTime);
 
 		failurePings = 0;
 	}

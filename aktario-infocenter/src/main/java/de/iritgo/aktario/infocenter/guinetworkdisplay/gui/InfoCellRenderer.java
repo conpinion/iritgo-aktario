@@ -33,27 +33,27 @@ public class InfoCellRenderer implements TableCellRenderer
 {
 	private JPanel panel;
 
-	public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, boolean hasFocus,
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 					int row, int column)
 	{
 		InfoItem infoItem = (InfoItem) value;
 
-		panel = infoItem.getPanel ();
+		panel = infoItem.getPanel();
 
 		if (isSelected)
 		{
-			panel.setBackground (table.getSelectionBackground ());
-			panel.setForeground (table.getSelectionForeground ());
+			panel.setBackground(table.getSelectionBackground());
+			panel.setForeground(table.getSelectionForeground());
 		}
 		else
 		{
-			panel.setBackground (table.getBackground ());
-			panel.setForeground (table.getForeground ());
+			panel.setBackground(table.getBackground());
+			panel.setForeground(table.getForeground());
 		}
 
-		panel.setEnabled (table.isEnabled ());
-		panel.setFont (table.getFont ());
-		panel.setOpaque (true);
+		panel.setEnabled(table.isEnabled());
+		panel.setFont(table.getFont());
+		panel.setOpaque(true);
 
 		return panel;
 	}

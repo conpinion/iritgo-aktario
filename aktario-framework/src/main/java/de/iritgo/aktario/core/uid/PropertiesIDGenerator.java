@@ -39,9 +39,9 @@ public class PropertiesIDGenerator extends DefaultIDGenerator
 	/**
 	 * Create a new id generator.
 	 */
-	public PropertiesIDGenerator ()
+	public PropertiesIDGenerator()
 	{
-		super ("PropertiesIDGenerator", 1, 1);
+		super("PropertiesIDGenerator", 1, 1);
 	}
 
 	/**
@@ -52,9 +52,9 @@ public class PropertiesIDGenerator extends DefaultIDGenerator
 	 * @param start The initial id value.
 	 * @param step The step increment.
 	 */
-	public PropertiesIDGenerator (SystemProperties properties, String propertyKey, long start, long step)
+	public PropertiesIDGenerator(SystemProperties properties, String propertyKey, long start, long step)
 	{
-		super ("PropertiesIDGenerator", start, step);
+		super("PropertiesIDGenerator", start, step);
 		this.properties = properties;
 		this.propertyKey = propertyKey;
 	}
@@ -63,22 +63,22 @@ public class PropertiesIDGenerator extends DefaultIDGenerator
 	 * Load the last generator state.
 	 */
 	@Override
-	public void load ()
+	public void load()
 	{
-		id = properties.getLong (propertyKey, id);
+		id = properties.getLong(propertyKey, id);
 
-		Log.logDebug ("persist", "PropertiesIDGenerator", "Successfully loaded the generator state (id=" + id + ")");
+		Log.logDebug("persist", "PropertiesIDGenerator", "Successfully loaded the generator state (id=" + id + ")");
 	}
 
 	/**
 	 * Store the generator state.
 	 */
 	@Override
-	public void save ()
+	public void save()
 	{
-		properties.put (propertyKey, Long.toString (id));
+		properties.put(propertyKey, Long.toString(id));
 
-		Log.logDebug ("persist", "PropertiesIDGenerator", "Successfully saved the generator state (id=" + id + ")");
+		Log.logDebug("persist", "PropertiesIDGenerator", "Successfully saved the generator state (id=" + id + ")");
 	}
 
 	/**
@@ -87,8 +87,8 @@ public class PropertiesIDGenerator extends DefaultIDGenerator
 	 * @return The fresh instance.
 	 */
 	@Override
-	public IObject create ()
+	public IObject create()
 	{
-		return new PropertiesIDGenerator ();
+		return new PropertiesIDGenerator();
 	}
 }

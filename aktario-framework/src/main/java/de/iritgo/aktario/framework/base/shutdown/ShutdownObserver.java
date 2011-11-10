@@ -28,9 +28,9 @@ import de.iritgo.aktario.framework.user.User;
  */
 public interface ShutdownObserver
 {
-	public String getTypeId ();
+	public String getTypeId();
 
-	public void onUserLogoff (User user);
+	public void onUserLogoff(User user);
 
-	public void onShutdown ();
+	public void onShutdown();
 }

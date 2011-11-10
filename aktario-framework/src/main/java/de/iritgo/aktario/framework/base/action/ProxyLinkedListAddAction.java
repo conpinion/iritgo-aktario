@@ -45,14 +45,14 @@ public class ProxyLinkedListAddAction extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListAddAction ()
+	public ProxyLinkedListAddAction()
 	{
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ProxyLinkedListAddAction (long oldUniqueId, long newUniqueId, String iObjectTypeId, long parentUniqueId,
+	public ProxyLinkedListAddAction(long oldUniqueId, long newUniqueId, String iObjectTypeId, long parentUniqueId,
 					String ownerTypeId)
 	{
 		this.oldUniqueId = oldUniqueId;
@@ -66,68 +66,68 @@ public class ProxyLinkedListAddAction extends FrameworkServerAction
 	 * Read the attributes from the given stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		oldUniqueId = stream.readLong ();
-		newUniqueId = stream.readLong ();
-		ownerUniqueId = stream.readLong ();
-		iObjectTypeId = stream.readUTF ();
-		ownerTypeId = stream.readUTF ();
+		oldUniqueId = stream.readLong();
+		newUniqueId = stream.readLong();
+		ownerUniqueId = stream.readLong();
+		iObjectTypeId = stream.readUTF();
+		ownerTypeId = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (oldUniqueId);
-		stream.writeLong (newUniqueId);
-		stream.writeLong (ownerUniqueId);
-		stream.writeUTF (iObjectTypeId);
-		stream.writeUTF (ownerTypeId);
+		stream.writeLong(oldUniqueId);
+		stream.writeLong(newUniqueId);
+		stream.writeLong(ownerUniqueId);
+		stream.writeUTF(iObjectTypeId);
+		stream.writeUTF(ownerTypeId);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		@SuppressWarnings("unused")
-		IObject parentObject = (DataObject) Engine.instance ().getBaseRegistry ().get (ownerUniqueId, ownerTypeId);
+		IObject parentObject = (DataObject) Engine.instance().getBaseRegistry().get(ownerUniqueId, ownerTypeId);
 
-		DataObject dataObject = (DataObject) Engine.instance ().getBaseRegistry ().get (oldUniqueId, iObjectTypeId);
+		DataObject dataObject = (DataObject) Engine.instance().getBaseRegistry().get(oldUniqueId, iObjectTypeId);
 
-		DataObject exists = (DataObject) Engine.instance ().getBaseRegistry ().get (newUniqueId, iObjectTypeId);
+		DataObject exists = (DataObject) Engine.instance().getBaseRegistry().get(newUniqueId, iObjectTypeId);
 
 		if (exists != null)
 		{
 			// TODO: Delete me if this part is not called any more.
-			System.out.println ("ProxyLinkedListAddAction.perform. Object exists, mail me!");
+			System.out.println("ProxyLinkedListAddAction.perform. Object exists, mail me!");
 
-			Engine.instance ().getBaseRegistry ().remove (dataObject);
+			Engine.instance().getBaseRegistry().remove(dataObject);
 
-			IObjectProxy oldProxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (oldUniqueId,
-							dataObject.getTypeId ());
+			IObjectProxy oldProxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(oldUniqueId,
+							dataObject.getTypeId());
 
-			Engine.instance ().getProxyRegistry ().removeProxy (oldProxy, dataObject.getTypeId ());
+			Engine.instance().getProxyRegistry().removeProxy(oldProxy, dataObject.getTypeId());
 
 			return;
 		}
 
-		Engine.instance ().getBaseRegistry ().remove (dataObject);
+		Engine.instance().getBaseRegistry().remove(dataObject);
 
-		dataObject.setUniqueId (newUniqueId);
-		Engine.instance ().getBaseRegistry ().add (dataObject);
+		dataObject.setUniqueId(newUniqueId);
+		Engine.instance().getBaseRegistry().add(dataObject);
 
-		IObjectProxy oldProxy = (IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (oldUniqueId,
-						dataObject.getTypeId ());
+		IObjectProxy oldProxy = (IObjectProxy) Engine.instance().getProxyRegistry().getProxy(oldUniqueId,
+						dataObject.getTypeId());
 
-		Engine.instance ().getProxyRegistry ().removeProxy (oldProxy, dataObject.getTypeId ());
+		Engine.instance().getProxyRegistry().removeProxy(oldProxy, dataObject.getTypeId());
 
-		oldProxy.setRealObject (dataObject);
-		Engine.instance ().getProxyRegistry ().addProxy (oldProxy, dataObject.getTypeId ());
+		oldProxy.setRealObject(dataObject);
+		Engine.instance().getProxyRegistry().addProxy(oldProxy, dataObject.getTypeId());
 
 		return;
 	}

@@ -37,45 +37,45 @@ public class ITableColumn
 	private ImageIcon cellIcon;
 
 	/** The header title */
-	private I18NString title = new I18NString ();
+	private I18NString title = new I18NString();
 
-	public ImageIcon getCellIcon ()
+	public ImageIcon getCellIcon()
 	{
 		return cellIcon;
 	}
 
-	public void setCellIcon (ImageIcon cellIcon)
+	public void setCellIcon(ImageIcon cellIcon)
 	{
 		this.cellIcon = cellIcon;
 	}
 
-	public ITableColumn withCellIcon (ImageIcon cellIcon)
+	public ITableColumn withCellIcon(ImageIcon cellIcon)
 	{
-		setCellIcon (cellIcon);
+		setCellIcon(cellIcon);
 
 		return this;
 	}
 
-	public I18NString getTitle ()
+	public I18NString getTitle()
 	{
 		return title;
 	}
 
-	public void setTitle (I18NString title)
+	public void setTitle(I18NString title)
 	{
 		this.title = title;
 	}
 
-	public ITableColumn withTitle (I18NString title)
+	public ITableColumn withTitle(I18NString title)
 	{
-		setTitle (title);
+		setTitle(title);
 
 		return this;
 	}
 
-	public ITableColumn withTitle (String title)
+	public ITableColumn withTitle(String title)
 	{
-		setTitle (new I18NString (title));
+		setTitle(new I18NString(title));
 
 		return this;
 	}
@@ -88,7 +88,7 @@ public class ITableColumn
 	 * @param addressTable The table in which the click event occurred
 	 * @param e The mouse event that triggered this handler
 	 */
-	public void onCellClicked (Object item, JTable addressTable, MouseEvent e)
+	public void onCellClicked(Object item, JTable addressTable, MouseEvent e)
 	{
 	}
 }

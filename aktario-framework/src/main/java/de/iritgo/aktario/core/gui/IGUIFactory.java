@@ -42,7 +42,7 @@ public interface IGUIFactory
 	 * @param initVisible True if the window should be displayed.
 	 * @param properties Creation properties.
 	 */
-	public IWindowFrame createWindowFrame (IWindow window, String titleKey, boolean resizable, boolean closable,
+	public IWindowFrame createWindowFrame(IWindow window, String titleKey, boolean resizable, boolean closable,
 					boolean maximizable, boolean iconifiable, boolean titlebar, boolean initVisible,
 					Properties properties);
 
@@ -54,5 +54,5 @@ public interface IGUIFactory
 	 * @param properties Creation properties.
 	 * @return The new dialog frame.
 	 */
-	public IDialogFrame createDialogFrame (IDialog dialog, String titleKey, Properties properties);
+	public IDialogFrame createDialogFrame(IDialog dialog, String titleKey, Properties properties);
 }

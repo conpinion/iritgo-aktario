@@ -76,14 +76,14 @@ public class PreferencesPane extends SwingGUIPane
 
 		public ImageIcon icon;
 
-		public CategoryItem (String name, ImageIcon icon)
+		public CategoryItem(String name, ImageIcon icon)
 		{
 			this.name = name;
 			this.icon = icon;
 		}
 
 		@Override
-		public String toString ()
+		public String toString()
 		{
 			return name;
 		}
@@ -98,14 +98,14 @@ public class PreferencesPane extends SwingGUIPane
 
 		public String localeId;
 
-		public LanguageItem (String label, String localeId)
+		public LanguageItem(String label, String localeId)
 		{
 			this.label = label;
 			this.localeId = localeId;
 		}
 
 		@Override
-		public String toString ()
+		public String toString()
 		{
 			return label;
 		}
@@ -120,14 +120,14 @@ public class PreferencesPane extends SwingGUIPane
 
 		public String className;
 
-		public ColorSchemeItem (String name, String className)
+		public ColorSchemeItem(String name, String className)
 		{
 			this.name = name;
 			this.className = className;
 		}
 
 		@Override
-		public String toString ()
+		public String toString()
 		{
 			return name;
 		}
@@ -178,58 +178,58 @@ public class PreferencesPane extends SwingGUIPane
 	/**
 	 * Store the preferences and close the dialog.
 	 */
-	public Action saveAction = new AbstractAction ()
+	public Action saveAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
-			storeToObject ();
+			display.close();
+			storeToObject();
 
-			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance ().getManager (
+			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance().getManager(
 							"PreferencesManager");
 
-			preferencesManager.saveAction ();
+			preferencesManager.saveAction();
 		}
 	};
 
 	/**
 	 * Store the preferences.
 	 */
-	public Action applyAction = new AbstractAction ()
+	public Action applyAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			storeToObject ();
+			storeToObject();
 
-			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance ().getManager (
+			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance().getManager(
 							"PreferencesManager");
 
-			preferencesManager.applyAction ();
+			preferencesManager.applyAction();
 		}
 	};
 
 	/**
 	 * Close the dialog.
 	 */
-	public Action cancelAction = new AbstractAction ()
+	public Action cancelAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 
-			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance ().getManager (
+			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance().getManager(
 							"PreferencesManager");
 
-			preferencesManager.cancleAction ();
+			preferencesManager.cancleAction();
 		}
 	};
 
 	/**
 	 * Create a new PreferencesGUIPane.
 	 */
-	public PreferencesPane ()
+	public PreferencesPane()
 	{
-		super ("PreferencesGUIPane");
+		super("PreferencesGUIPane");
 	}
 
 	/**
@@ -237,109 +237,109 @@ public class PreferencesPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (AktarioClientPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(AktarioClientPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/PreferencesPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/PreferencesPane.xml"));
 
-			final Font categoryFont = new Font (categoryList.getFont ().getFamily (), Font.BOLD, categoryList
-							.getFont ().getSize ());
+			final Font categoryFont = new Font(categoryList.getFont().getFamily(), Font.BOLD, categoryList.getFont()
+							.getSize());
 
-			categoryTitle.setFont (categoryFont);
+			categoryTitle.setFont(categoryFont);
 
-			categoryList.setCellRenderer (new DefaultListCellRenderer ()
+			categoryList.setCellRenderer(new DefaultListCellRenderer()
 			{
-				EmptyBorder border = new EmptyBorder (4, 4, 4, 4);
+				EmptyBorder border = new EmptyBorder(4, 4, 4, 4);
 
 				@Override
-				public Component getListCellRendererComponent (JList list, Object value, int index, boolean isSelected,
+				public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 								boolean cellHasFocus)
 				{
-					super.getListCellRendererComponent (list, value, index, isSelected, cellHasFocus);
+					super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
 					CategoryItem item = (CategoryItem) value;
 
-					setIcon (item.icon);
-					setFont (categoryFont);
-					setHorizontalAlignment (JLabel.CENTER);
-					setHorizontalTextPosition (JLabel.CENTER);
-					setVerticalTextPosition (JLabel.BOTTOM);
-					setBorder (border);
+					setIcon(item.icon);
+					setFont(categoryFont);
+					setHorizontalAlignment(JLabel.CENTER);
+					setHorizontalTextPosition(JLabel.CENTER);
+					setVerticalTextPosition(JLabel.BOTTOM);
+					setBorder(border);
 
 					return this;
 				}
 			});
 
-			categoryModel = new DefaultListModel ();
-			categoryList.setModel (categoryModel);
+			categoryModel = new DefaultListModel();
+			categoryList.setModel(categoryModel);
 
-			categoryList.addListSelectionListener (new ListSelectionListener ()
+			categoryList.addListSelectionListener(new ListSelectionListener()
 			{
-				public void valueChanged (ListSelectionEvent e)
+				public void valueChanged(ListSelectionEvent e)
 				{
 					if (! ignoreEvents)
 					{
-						selectCategory (categoryList.getSelectedIndex ());
+						selectCategory(categoryList.getSelectedIndex());
 					}
 				}
 			});
 
-			ResourceService resources = Engine.instance ().getResourceService ();
+			ResourceService resources = Engine.instance().getResourceService();
 
-			categoryModel.addElement (new CategoryItem (resources.getString ("aktario.start"), new ImageIcon (
-							PreferencesPane.class.getResource ("/resources/settings-start.png"))));
+			categoryModel.addElement(new CategoryItem(resources.getString("aktario.start"), new ImageIcon(
+							PreferencesPane.class.getResource("/resources/settings-start.png"))));
 
-			categoryModel.addElement (new CategoryItem (resources.getString ("aktario.appearance"), new ImageIcon (
-							PreferencesPane.class.getResource ("/resources/settings-appearance.png"))));
+			categoryModel.addElement(new CategoryItem(resources.getString("aktario.appearance"), new ImageIcon(
+							PreferencesPane.class.getResource("/resources/settings-appearance.png"))));
 
-			categoryModel.addElement (new CategoryItem (resources.getString ("aktario.localeSettings"), new ImageIcon (
-							PreferencesPane.class.getResource ("/resources/settings-locale.png"))));
+			categoryModel.addElement(new CategoryItem(resources.getString("aktario.localeSettings"), new ImageIcon(
+							PreferencesPane.class.getResource("/resources/settings-locale.png"))));
 
-			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance ().getManager (
+			PreferencesManager preferencesManager = (PreferencesManager) Engine.instance().getManager(
 							"PreferencesManager");
 
-			preferencesManager.addPreferences (this);
+			preferencesManager.addPreferences(this);
 
-			autoLogin.addActionListener (new ActionListener ()
+			autoLogin.addActionListener(new ActionListener()
 			{
-				public void actionPerformed (ActionEvent e)
+				public void actionPerformed(ActionEvent e)
 				{
-					boolean enable = autoLogin.isSelected ();
+					boolean enable = autoLogin.isSelected();
 
-					autoLoginUser.setEnabled (enable);
-					autoLoginServer.setEnabled (enable);
-					autoLoginPassword.setEnabled (enable);
-					autoLoginPasswordRepeat.setEnabled (enable);
+					autoLoginUser.setEnabled(enable);
+					autoLoginServer.setEnabled(enable);
+					autoLoginPassword.setEnabled(enable);
+					autoLoginPasswordRepeat.setEnabled(enable);
 				}
 			});
 
-			List themes = com.jgoodies.looks.plastic.PlasticLookAndFeel.getInstalledThemes ();
+			List themes = com.jgoodies.looks.plastic.PlasticLookAndFeel.getInstalledThemes();
 
-			for (Iterator i = themes.iterator (); i.hasNext ();)
+			for (Iterator i = themes.iterator(); i.hasNext();)
 			{
-				MetalTheme theme = (MetalTheme) i.next ();
+				MetalTheme theme = (MetalTheme) i.next();
 
-				colorScheme.addItem (new ColorSchemeItem (theme.getName (), theme.getClass ().getName ()));
+				colorScheme.addItem(new ColorSchemeItem(theme.getName(), theme.getClass().getName()));
 			}
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			language.addItem (new LanguageItem ("Deutsch", "de"));
-			language.addItem (new LanguageItem ("English", "en"));
+			language.addItem(new LanguageItem("Deutsch", "de"));
+			language.addItem(new LanguageItem("English", "en"));
 
-			getDisplay ().putProperty ("weightx", new Double (1.5));
+			getDisplay().putProperty("weightx", new Double(1.5));
 
-			selectCategory (NumberTools.toInt (getDisplay ().getProperties ().get ("category"), 0));
+			selectCategory(NumberTools.toInt(getDisplay().getProperties().get("category"), 0));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "PreferencesPane.initGUI", x.toString ());
-			x.printStackTrace ();
+			Log.logError("client", "PreferencesPane.initGUI", x.toString());
+			x.printStackTrace();
 		}
 	}
 
@@ -349,9 +349,9 @@ public class PreferencesPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new PreferencesPane ();
+		return new PreferencesPane();
 	}
 
 	/**
@@ -359,77 +359,77 @@ public class PreferencesPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new AktarioUserPreferences ();
+		return new AktarioUserPreferences();
 	}
 
 	/**
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		AktarioUserPreferences preferences = (AktarioUserPreferences) iobject;
 
-		for (int i = 0; i < colorScheme.getItemCount (); ++i)
+		for (int i = 0; i < colorScheme.getItemCount(); ++i)
 		{
-			if ((((ColorSchemeItem) colorScheme.getItemAt (i))).className.equals (preferences.getColorScheme ()))
+			if ((((ColorSchemeItem) colorScheme.getItemAt(i))).className.equals(preferences.getColorScheme()))
 			{
-				colorScheme.setSelectedIndex (i);
+				colorScheme.setSelectedIndex(i);
 
 				break;
 			}
 		}
 
-		alwaysDrawWindowContents.setSelected (preferences.getAlwaysDrawWindowContents ());
+		alwaysDrawWindowContents.setSelected(preferences.getAlwaysDrawWindowContents());
 
-		for (int i = 0; i < language.getItemCount (); ++i)
+		for (int i = 0; i < language.getItemCount(); ++i)
 		{
-			if (((LanguageItem) language.getItemAt (i)).localeId.equals (preferences.getLanguage ()))
+			if (((LanguageItem) language.getItemAt(i)).localeId.equals(preferences.getLanguage()))
 			{
-				language.setSelectedIndex (i);
+				language.setSelectedIndex(i);
 
 				break;
 			}
 		}
 
-		Properties props = Engine.instance ().getSystemProperties ();
+		Properties props = Engine.instance().getSystemProperties();
 
-		startMinimized.setSelected (NumberTools.toBool (props.getProperty ("startMinimized"), false));
-		autoLogin.setSelected (NumberTools.toBool (props.getProperty ("autoLogin"), false));
-		autoLoginUser.setText (props.getProperty ("autoLoginUser"));
-		autoLoginServer.setText (props.getProperty ("autoLoginServer"));
-		autoLoginPassword.setText (StringTools.decode (props.getProperty ("autoLoginPassword")));
-		autoLoginPasswordRepeat.setText (StringTools.decode (props.getProperty ("autoLoginPassword")));
+		startMinimized.setSelected(NumberTools.toBool(props.getProperty("startMinimized"), false));
+		autoLogin.setSelected(NumberTools.toBool(props.getProperty("autoLogin"), false));
+		autoLoginUser.setText(props.getProperty("autoLoginUser"));
+		autoLoginServer.setText(props.getProperty("autoLoginServer"));
+		autoLoginPassword.setText(StringTools.decode(props.getProperty("autoLoginPassword")));
+		autoLoginPasswordRepeat.setText(StringTools.decode(props.getProperty("autoLoginPassword")));
 	}
 
 	/**
 	 * StoreFormObject, load the Data form Object.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		AktarioUserPreferences preferences = (AktarioUserPreferences) iobject;
 
-		preferences.setColorScheme (((ColorSchemeItem) colorScheme.getSelectedItem ()).className);
-		preferences.setAlwaysDrawWindowContents (alwaysDrawWindowContents.isSelected ());
-		preferences.setLanguage (((LanguageItem) language.getSelectedItem ()).localeId);
-		preferences.update ();
+		preferences.setColorScheme(((ColorSchemeItem) colorScheme.getSelectedItem()).className);
+		preferences.setAlwaysDrawWindowContents(alwaysDrawWindowContents.isSelected());
+		preferences.setLanguage(((LanguageItem) language.getSelectedItem()).localeId);
+		preferences.update();
 
-		Properties props = Engine.instance ().getSystemProperties ();
+		Properties props = Engine.instance().getSystemProperties();
 
-		props.put ("startMinimized", startMinimized.isSelected () ? "true" : "false");
-		props.put ("autoLogin", autoLogin.isSelected () ? "true" : "false");
+		props.put("startMinimized", startMinimized.isSelected() ? "true" : "false");
+		props.put("autoLogin", autoLogin.isSelected() ? "true" : "false");
 
-		if (autoLogin.isSelected ())
+		if (autoLogin.isSelected())
 		{
-			props.put ("autoLoginUser", autoLoginUser.getText ());
-			props.put ("autoLoginServer", autoLoginServer.getText ());
-			props.put ("autoLoginPassword", StringTools.encode (new String (autoLoginPassword.getPassword ())));
+			props.put("autoLoginUser", autoLoginUser.getText());
+			props.put("autoLoginServer", autoLoginServer.getText());
+			props.put("autoLoginPassword", StringTools.encode(new String(autoLoginPassword.getPassword())));
 		}
 
-		Engine.instance ().storeSystemProperties ();
+		Engine.instance().storeSystemProperties();
 	}
 
 	/**
@@ -437,18 +437,18 @@ public class PreferencesPane extends SwingGUIPane
 	 *
 	 * @param index The category index.
 	 */
-	public void selectCategory (int index)
+	public void selectCategory(int index)
 	{
 		ignoreEvents = true;
-		((CardLayout) (category.getLayout ())).show (category, String.valueOf (index));
-		categoryList.setSelectedIndex (index);
-		categoryTitle.setText (categoryList.getSelectedValue ().toString ());
+		((CardLayout) (category.getLayout())).show(category, String.valueOf(index));
+		categoryList.setSelectedIndex(index);
+		categoryTitle.setText(categoryList.getSelectedValue().toString());
 		ignoreEvents = false;
 	}
 
-	public void addPreferencesPane (String name, ImageIcon image, JPanel panel, int count)
+	public void addPreferencesPane(String name, ImageIcon image, JPanel panel, int count)
 	{
-		categoryModel.addElement (new CategoryItem (name, image));
-		category.add (panel, "" + count);
+		categoryModel.addElement(new CategoryItem(name, image));
+		category.add(panel, "" + count);
 	}
 }

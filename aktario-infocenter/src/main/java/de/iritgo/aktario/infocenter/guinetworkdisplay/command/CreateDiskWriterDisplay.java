@@ -35,24 +35,24 @@ public class CreateDiskWriterDisplay extends CommonInfoCenterCommand
 	 * Standard constructor
 	 *
 	 */
-	public CreateDiskWriterDisplay ()
+	public CreateDiskWriterDisplay()
 	{
-		super ("creatediskwriterdisplay");
+		super("creatediskwriterdisplay");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance ().getManagerRegistry ().getManager (
+		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance().getManagerRegistry().getManager(
 						"infocenter");
 
-		DiskWriterDisplay diskWriterDisplay = new DiskWriterDisplay ();
+		DiskWriterDisplay diskWriterDisplay = new DiskWriterDisplay();
 
-		diskWriterDisplay.setInfoStoreFile ("FILE");
+		diskWriterDisplay.setInfoStoreFile("FILE");
 
-		infoCenterManager.getInfoCenterRegistry ().addDisplay (diskWriterDisplay, context);
-		infoCenterManager.getInfoCenterRegistry ().addDisplay (category, diskWriterDisplay.getId (), context, null);
+		infoCenterManager.getInfoCenterRegistry().addDisplay(diskWriterDisplay, context);
+		infoCenterManager.getInfoCenterRegistry().addDisplay(category, diskWriterDisplay.getId(), context, null);
 	}
 }

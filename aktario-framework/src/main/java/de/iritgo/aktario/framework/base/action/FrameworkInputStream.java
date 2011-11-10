@@ -32,8 +32,8 @@ public class FrameworkInputStream extends DataInputStream
 	/**
 	 * Standard constructor
 	 */
-	public FrameworkInputStream (InputStream stream)
+	public FrameworkInputStream(InputStream stream)
 	{
-		super (stream);
+		super(stream);
 	}
 }

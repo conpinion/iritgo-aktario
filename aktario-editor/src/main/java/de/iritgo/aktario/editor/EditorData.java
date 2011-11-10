@@ -33,8 +33,8 @@ public class EditorData extends ApplicationData
 	/**
 	 * Create a new EditorData.
 	 */
-	public EditorData ()
+	public EditorData()
 	{
-		super ("EditorData");
+		super("EditorData");
 	}
 }

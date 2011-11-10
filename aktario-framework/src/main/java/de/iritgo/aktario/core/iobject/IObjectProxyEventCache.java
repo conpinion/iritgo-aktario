@@ -27,16 +27,16 @@ public class IObjectProxyEventCache
 {
 	private int unfired;
 
-	public IObjectProxyEventCache ()
+	public IObjectProxyEventCache()
 	{
 	}
 
-	public void add ()
+	public void add()
 	{
 		++unfired;
 	}
 
-	public int get ()
+	public int get()
 	{
 		return unfired;
 	}

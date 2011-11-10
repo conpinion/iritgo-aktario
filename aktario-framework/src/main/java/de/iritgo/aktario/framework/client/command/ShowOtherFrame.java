@@ -42,7 +42,7 @@ public class ShowOtherFrame extends Command
 	/**
 	 * Standard constructor
 	 */
-	public ShowOtherFrame (OtherFrameCloseListener closeListener, String frameLabel, String frameId)
+	public ShowOtherFrame(OtherFrameCloseListener closeListener, String frameLabel, String frameId)
 	{
 		this.closeListener = closeListener;
 		this.frameLabel = frameLabel;
@@ -52,31 +52,31 @@ public class ShowOtherFrame extends Command
 	/**
 	 * Standard constructor
 	 */
-	public ShowOtherFrame (OtherFrameCloseListener closeListener, String frameLabel, String frameId, Rectangle bounds)
+	public ShowOtherFrame(OtherFrameCloseListener closeListener, String frameLabel, String frameId, Rectangle bounds)
 	{
-		this (closeListener, frameLabel, frameId);
+		this(closeListener, frameLabel, frameId);
 		this.bounds = bounds;
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public ShowOtherFrame (OtherFrameCloseListener closeListener, String frameLabel)
+	public ShowOtherFrame(OtherFrameCloseListener closeListener, String frameLabel)
 	{
-		this (closeListener, frameLabel, frameLabel);
+		this(closeListener, frameLabel, frameLabel);
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		OtherFrame otherFrame = new OtherFrame (closeListener, frameLabel, frameId, bounds);
+		OtherFrame otherFrame = new OtherFrame(closeListener, frameLabel, frameId, bounds);
 
-		otherFrame.initOtherFrame ();
+		otherFrame.initOtherFrame();
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}

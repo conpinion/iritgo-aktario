@@ -52,33 +52,33 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 
 	private QueryRegistry queryRegistry;
 
-	public DataObjectManager ()
+	public DataObjectManager()
 	{
-		super ("DataObjectManager");
-		dynDataObjectRegistry = new DynDataObjectRegistry ();
-		queryRegistry = new QueryRegistry ();
-		init ();
+		super("DataObjectManager");
+		dynDataObjectRegistry = new DynDataObjectRegistry();
+		queryRegistry = new QueryRegistry();
+		init();
 	}
 
-	public void init ()
+	public void init()
 	{
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectcreated", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectmodified", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectrequested", this);
-		Engine.instance ().getEventRegistry ().addListener ("objectremoved", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
+		Engine.instance().getEventRegistry().addListener("objectcreated", this);
+		Engine.instance().getEventRegistry().addListener("objectmodified", this);
+		Engine.instance().getEventRegistry().addListener("objectrequested", this);
+		Engine.instance().getEventRegistry().addListener("objectremoved", this);
 	}
 
-	public void unload ()
+	public void unload()
 	{
-		Engine.instance ().getEventRegistry ().removeListener ("User", this);
-		Engine.instance ().getEventRegistry ().removeListener ("objectcreated", this);
-		Engine.instance ().getEventRegistry ().removeListener ("objectmodified", this);
-		Engine.instance ().getEventRegistry ().removeListener ("objectrequested", this);
-		Engine.instance ().getEventRegistry ().removeListener ("objectremoved", this);
+		Engine.instance().getEventRegistry().removeListener("User", this);
+		Engine.instance().getEventRegistry().removeListener("objectcreated", this);
+		Engine.instance().getEventRegistry().removeListener("objectmodified", this);
+		Engine.instance().getEventRegistry().removeListener("objectrequested", this);
+		Engine.instance().getEventRegistry().removeListener("objectremoved", this);
 	}
 
-	public DynDataObjectRegistry getDynDataObjectRegistry ()
+	public DynDataObjectRegistry getDynDataObjectRegistry()
 	{
 		return dynDataObjectRegistry;
 	}
@@ -88,7 +88,7 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @return queryregistry
 	 */
-	public QueryRegistry getQueryRegistry ()
+	public QueryRegistry getQueryRegistry()
 	{
 		return queryRegistry;
 	}
@@ -98,27 +98,27 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The user event.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if ((event != null) && (event.isLoggedIn ()))
+		if ((event != null) && (event.isLoggedIn()))
 		{
-			User user = event.getUser ();
+			User user = event.getUser();
 		}
 
-		if ((event != null) && (event.isLoggedOut ()))
+		if ((event != null) && (event.isLoggedOut()))
 		{
-			User user = event.getUser ();
+			User user = event.getUser();
 
-			for (Iterator i = queryRegistry.queryIterator (); i.hasNext ();)
+			for (Iterator i = queryRegistry.queryIterator(); i.hasNext();)
 			{
-				Query query = (Query) i.next ();
+				Query query = (Query) i.next();
 
-				if (query.getUserUniqueId () == user.getUniqueId ())
+				if (query.getUserUniqueId() == user.getUniqueId())
 				{
-					queryRegistry.removeQuery (query);
-					Engine.instance ().getBaseRegistry ().remove ((BaseObject) query);
+					queryRegistry.removeQuery(query);
+					Engine.instance().getBaseRegistry().remove((BaseObject) query);
 
-					Log.logInfo ("system", "DataObjectManager:UserLoggedOut", "Query from user removed:" + user);
+					Log.logInfo("system", "DataObjectManager:UserLoggedOut", "Query from user removed:" + user);
 				}
 			}
 		}
@@ -130,16 +130,16 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The object list event.
 	 */
-	public void iObjectListEvent (IObjectListEvent event)
+	public void iObjectListEvent(IObjectListEvent event)
 	{
-		if (event.getType () == IObjectListEvent.ADD)
+		if (event.getType() == IObjectListEvent.ADD)
 		{
-			checkCreatedDataObjectQueries ((DataObject) event.getObject ());
+			checkCreatedDataObjectQueries((DataObject) event.getObject());
 		}
 
-		if (event.getType () == IObjectListEvent.REMOVE)
+		if (event.getType() == IObjectListEvent.REMOVE)
 		{
-			checkDeletedDataObjectQueries ((DataObject) event.getObject ());
+			checkDeletedDataObjectQueries((DataObject) event.getObject());
 		}
 	}
 
@@ -148,9 +148,9 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The creation event.
 	 */
-	public void iObjectCreatedEvent (IObjectCreatedEvent event)
+	public void iObjectCreatedEvent(IObjectCreatedEvent event)
 	{
-		checkCreatedDataObjectQueries ((DataObject) event.getCreatedObject ());
+		checkCreatedDataObjectQueries((DataObject) event.getCreatedObject());
 	}
 
 	/**
@@ -158,13 +158,13 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The modification event.
 	 */
-	public void iObjectModifiedEvent (IObjectModifiedEvent event)
+	public void iObjectModifiedEvent(IObjectModifiedEvent event)
 	{
-		IObject iObject = (IObject) event.getModifiedObject ();
+		IObject iObject = (IObject) event.getModifiedObject();
 
 		if (iObject instanceof AbstractQuery)
 		{
-			((AbstractQuery) iObject).refresh ();
+			((AbstractQuery) iObject).refresh();
 		}
 	}
 
@@ -173,9 +173,9 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The delete event.
 	 */
-	public void iObjectDeletedEvent (IObjectDeletedEvent event)
+	public void iObjectDeletedEvent(IObjectDeletedEvent event)
 	{
-		checkDeletedDataObjectQueries ((DataObject) event.getDeletedObject ());
+		checkDeletedDataObjectQueries((DataObject) event.getDeletedObject());
 	}
 
 	/**
@@ -183,27 +183,27 @@ public class DataObjectManager extends BaseObject implements Manager, UserListen
 	 *
 	 * @param event The reuqest event.
 	 */
-	public void iObjectRequestEvent (IObjectRequestEvent event)
+	public void iObjectRequestEvent(IObjectRequestEvent event)
 	{
 	}
 
-	private void checkCreatedDataObjectQueries (DataObject dataObject)
+	private void checkCreatedDataObjectQueries(DataObject dataObject)
 	{
-		for (Iterator i = queryRegistry.queryIterator (dataObject.getTypeId ()); i.hasNext ();)
+		for (Iterator i = queryRegistry.queryIterator(dataObject.getTypeId()); i.hasNext();)
 		{
-			Query query = (Query) i.next ();
+			Query query = (Query) i.next();
 
-			query.doCreatedDataObjectQuery (dataObject);
+			query.doCreatedDataObjectQuery(dataObject);
 		}
 	}
 
-	private void checkDeletedDataObjectQueries (DataObject dataObject)
+	private void checkDeletedDataObjectQueries(DataObject dataObject)
 	{
-		for (Iterator i = queryRegistry.queryIterator (dataObject.getTypeId ()); i.hasNext ();)
+		for (Iterator i = queryRegistry.queryIterator(dataObject.getTypeId()); i.hasNext();)
 		{
-			Query query = (Query) i.next ();
+			Query query = (Query) i.next();
 
-			query.doDeletedDataObjectQuery (dataObject);
+			query.doDeletedDataObjectQuery(dataObject);
 		}
 	}
 }

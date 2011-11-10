@@ -32,44 +32,44 @@ public class FileTransferSessionManager extends Threadable implements Manager
 
 	private boolean stopFileTransfer;
 
-	public FileTransferSessionManager ()
+	public FileTransferSessionManager()
 	{
-		super ("FileTransferSessionManager");
+		super("FileTransferSessionManager");
 	}
 
-	public void init ()
+	public void init()
 	{
-		fileTransferSessions = new LinkedList ();
+		fileTransferSessions = new LinkedList();
 
-		Engine.instance ().getThreadService ().add (this);
+		Engine.instance().getThreadService().add(this);
 		stopFileTransfer = false;
 	}
 
 	@Override
-	public void run ()
+	public void run()
 	{
 		int readed = 0;
 
 		if (stopFileTransfer)
 		{
-			setState (Threadable.CLOSING);
+			setState(Threadable.CLOSING);
 
 			return;
 		}
 
-		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance ().getManager (
+		FileTransferManager fileTransferManager = (FileTransferManager) Engine.instance().getManager(
 						"FileTransferManager");
 
-		if ((fileTransferSessions != null) && (fileTransferSessions.size () > 0))
+		if ((fileTransferSessions != null) && (fileTransferSessions.size() > 0))
 		{
 			synchronized (fileTransferSessions)
 			{
-				readed = fileTransferManager.fileTransfer ((String) fileTransferSessions.getFirst (), null);
+				readed = fileTransferManager.fileTransfer((String) fileTransferSessions.getFirst(), null);
 
 				if (readed == - 1)
 				{
-					fileTransferManager.endFileTransfer ((String) fileTransferSessions.getFirst ());
-					fileTransferSessions.remove (fileTransferSessions.getFirst ());
+					fileTransferManager.endFileTransfer((String) fileTransferSessions.getFirst());
+					fileTransferSessions.remove(fileTransferSessions.getFirst());
 				}
 			}
 		}
@@ -78,11 +78,11 @@ public class FileTransferSessionManager extends Threadable implements Manager
 		{
 			if (readed <= 0)
 			{
-				Thread.sleep (1000);
+				Thread.sleep(1000);
 			}
-			else if (fileTransferManager.getWaitForNextSend () != 0)
+			else if (fileTransferManager.getWaitForNextSend() != 0)
 			{
-				Thread.sleep (fileTransferManager.getWaitForNextSend ());
+				Thread.sleep(fileTransferManager.getWaitForNextSend());
 			}
 		}
 		catch (Exception x)
@@ -90,19 +90,19 @@ public class FileTransferSessionManager extends Threadable implements Manager
 		}
 	}
 
-	public void addFileTransfer (String fileId)
+	public void addFileTransfer(String fileId)
 	{
 		synchronized (fileTransferSessions)
 		{
-			fileTransferSessions.add (fileId);
+			fileTransferSessions.add(fileId);
 		}
 	}
 
-	public void endFileTransfer (@SuppressWarnings("unused") String fileId)
+	public void endFileTransfer(@SuppressWarnings("unused") String fileId)
 	{
 	}
 
-	public void unload ()
+	public void unload()
 	{
 		stopFileTransfer = true;
 		fileTransferSessions = null;

@@ -37,17 +37,17 @@ public class AnnounceDynDataObjectResponse extends FrameworkAction
 	/**
 	 *
 	 */
-	public AnnounceDynDataObjectResponse ()
+	public AnnounceDynDataObjectResponse()
 	{
-		setTypeId ("ADDORES");
+		setTypeId("ADDORES");
 	}
 
 	/**
 	 *
 	 */
-	public AnnounceDynDataObjectResponse (DynDataObject dynDataObject)
+	public AnnounceDynDataObjectResponse(DynDataObject dynDataObject)
 	{
-		this ();
+		this();
 		this.dynDataObject = dynDataObject;
 	}
 
@@ -56,13 +56,13 @@ public class AnnounceDynDataObjectResponse extends FrameworkAction
 	 *
 	 * @param stream The stream to read from.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		String dynDataObjectTypeId = stream.readUTF ();
+		String dynDataObjectTypeId = stream.readUTF();
 
-		dynDataObject = new DynDataObject (dynDataObjectTypeId);
+		dynDataObject = new DynDataObject(dynDataObjectTypeId);
 
-		dynDataObject.readTypeInformations (stream, dynDataObject);
+		dynDataObject.readTypeInformations(stream, dynDataObject);
 	}
 
 	/**
@@ -70,18 +70,18 @@ public class AnnounceDynDataObjectResponse extends FrameworkAction
 	 *
 	 * @param stream The stream to write to.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (dynDataObject.getTypeId ());
+		stream.writeUTF(dynDataObject.getTypeId());
 
-		dynDataObject.writeTypeInformations (stream, dynDataObject);
+		dynDataObject.writeTypeInformations(stream, dynDataObject);
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Engine.instance ().getIObjectFactory ().register (dynDataObject);
+		Engine.instance().getIObjectFactory().register(dynDataObject);
 	}
 }

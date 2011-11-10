@@ -60,20 +60,20 @@ public class AboutPane extends SwingGUIPane
 	/**
 	 * Close the dialog.
 	 */
-	public Action closeAction = new AbstractAction ()
+	public Action closeAction = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new AboutGUIPane.
 	 */
-	public AboutPane ()
+	public AboutPane()
 	{
-		super ("AboutGUIPane");
+		super("AboutGUIPane");
 	}
 
 	/**
@@ -81,42 +81,42 @@ public class AboutPane extends SwingGUIPane
 	 * custom gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (AktarioClientPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(AktarioClientPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/AboutPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/AboutPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
-			AktarioGUI gui = (AktarioGUI) Client.instance ().getClientGUI ();
+			AktarioGUI gui = (AktarioGUI) Client.instance().getClientGUI();
 
-			background.setIcon (gui.getAboutBackground ());
+			background.setIcon(gui.getAboutBackground());
 
-			setTitle (Engine.instance ().getResourceService ().getString ("app.about"));
+			setTitle(Engine.instance().getResourceService().getString("app.about"));
 
-			if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.title")))
+			if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.title")))
 			{
-				title.setText (System.getProperty ("iritgo.app.title"));
+				title.setText(System.getProperty("iritgo.app.title"));
 			}
 
-			if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.version.long")))
+			if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.version.long")))
 			{
-				version.setText (System.getProperty ("iritgo.app.version.long"));
+				version.setText(System.getProperty("iritgo.app.version.long"));
 			}
 
-			if (! StringTools.isTrimEmpty (System.getProperty ("iritgo.app.copyright")))
+			if (! StringTools.isTrimEmpty(System.getProperty("iritgo.app.copyright")))
 			{
-				copyright.setText (System.getProperty ("iritgo.app.copyright"));
+				copyright.setText(System.getProperty("iritgo.app.copyright"));
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "AboutGUIPane.initGUI", x.toString ());
+			Log.logError("client", "AboutGUIPane.initGUI", x.toString());
 		}
 	}
 
@@ -126,19 +126,19 @@ public class AboutPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new AboutPane ();
+		return new AboutPane();
 	}
 
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 		/* empty */
 	}
 
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 		/* empty */
 	}

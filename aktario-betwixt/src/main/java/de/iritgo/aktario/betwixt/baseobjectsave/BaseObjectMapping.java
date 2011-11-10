@@ -42,93 +42,93 @@ public class BaseObjectMapping
 
 	private List proxyLinkedLists;
 
-	public BaseObjectMapping ()
+	public BaseObjectMapping()
 	{
-		integers = new LinkedList ();
-		longs = new LinkedList ();
-		doubles = new LinkedList ();
-		strings = new LinkedList ();
-		dataObjects = new LinkedList ();
-		proxyLinkedLists = new LinkedList ();
+		integers = new LinkedList();
+		longs = new LinkedList();
+		doubles = new LinkedList();
+		strings = new LinkedList();
+		dataObjects = new LinkedList();
+		proxyLinkedLists = new LinkedList();
 	}
 
-	public void setId (String id)
+	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public String getId ()
+	public String getId()
 	{
 		return id;
 	}
 
-	public void setUniqueId (long uniqueId)
+	public void setUniqueId(long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
 
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}
 
-	public List getIntegers ()
+	public List getIntegers()
 	{
 		return integers;
 	}
 
-	public void addInteger (Context context)
+	public void addInteger(Context context)
 	{
-		integers.add (context);
+		integers.add(context);
 	}
 
-	public List getLongs ()
+	public List getLongs()
 	{
 		return longs;
 	}
 
-	public void addLong (Context context)
+	public void addLong(Context context)
 	{
-		longs.add (context);
+		longs.add(context);
 	}
 
-	public List getDoubles ()
+	public List getDoubles()
 	{
 		return doubles;
 	}
 
-	public void addDouble (Context context)
+	public void addDouble(Context context)
 	{
-		doubles.add (context);
+		doubles.add(context);
 	}
 
-	public List getStrings ()
+	public List getStrings()
 	{
 		return strings;
 	}
 
-	public void addString (Context context)
+	public void addString(Context context)
 	{
-		strings.add (context);
+		strings.add(context);
 	}
 
-	public List getDataObjects ()
+	public List getDataObjects()
 	{
 		return dataObjects;
 	}
 
-	public void addDataObject (Context context)
+	public void addDataObject(Context context)
 	{
-		dataObjects.add (context);
+		dataObjects.add(context);
 	}
 
-	public List getProxyLinkedLists ()
+	public List getProxyLinkedLists()
 	{
 		return proxyLinkedLists;
 	}
 
-	public void addProxyLinkedList (Context context)
+	public void addProxyLinkedList(Context context)
 	{
-		proxyLinkedLists.add (context);
+		proxyLinkedLists.add(context);
 	}
 }

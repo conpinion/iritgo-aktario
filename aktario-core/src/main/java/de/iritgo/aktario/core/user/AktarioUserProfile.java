@@ -32,27 +32,27 @@ import de.iritgo.aktario.framework.base.FrameworkProxy;
  */
 public class AktarioUserProfile extends DataObject
 {
-	public AktarioUserProfile ()
+	public AktarioUserProfile()
 	{
-		super ("AktarioUserProfile");
+		super("AktarioUserProfile");
 
-		addAttribute ("preferences", new IObjectList ("preferences",
-						new FrameworkProxy (new AktarioUserPreferences ()), this));
+		addAttribute("preferences", new IObjectList("preferences", new FrameworkProxy(new AktarioUserPreferences()),
+						this));
 	}
 
-	public AktarioUserProfile (long uniqueId)
+	public AktarioUserProfile(long uniqueId)
 	{
-		this ();
-		setUniqueId (uniqueId);
+		this();
+		setUniqueId(uniqueId);
 	}
 
-	public void addPreferences (AktarioUserPreferences preferences)
+	public void addPreferences(AktarioUserPreferences preferences)
 	{
-		getIObjectListAttribute ("preferences").add (preferences);
+		getIObjectListAttribute("preferences").add(preferences);
 	}
 
-	public AktarioUserPreferences getPreferences ()
+	public AktarioUserPreferences getPreferences()
 	{
-		return (AktarioUserPreferences) getIObjectListAttribute ("preferences").get (0);
+		return (AktarioUserPreferences) getIObjectListAttribute("preferences").get(0);
 	}
 }

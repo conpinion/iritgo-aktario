@@ -38,7 +38,7 @@ public class AktarioUserDeletedResponse extends FrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public AktarioUserDeletedResponse ()
+	public AktarioUserDeletedResponse()
 	{
 	}
 
@@ -46,13 +46,12 @@ public class AktarioUserDeletedResponse extends FrameworkServerAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		JOptionPane.showMessageDialog ((JFrame) Client.instance ().getClientGUI ().getDesktopManager ()
-						.getDesktopFrame (),
-						Engine.instance ().getResourceService ().getString ("aktario.userDeleted"), Engine.instance ()
-										.getResourceService ().getString ("app.title"), JOptionPane.OK_OPTION);
+		JOptionPane.showMessageDialog((JFrame) Client.instance().getClientGUI().getDesktopManager().getDesktopFrame(),
+						Engine.instance().getResourceService().getString("aktario.userDeleted"), Engine.instance()
+										.getResourceService().getString("app.title"), JOptionPane.OK_OPTION);
 
-		IritgoEngine.instance ().shutdown ();
+		IritgoEngine.instance().shutdown();
 	}
 }

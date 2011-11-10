@@ -36,19 +36,19 @@ public class AddAttributeEditorCommand extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public AddAttributeEditorCommand ()
+	public AddAttributeEditorCommand()
 	{
-		super ("AddAttributeEditorCommand");
+		super("AddAttributeEditorCommand");
 	}
 
 	/**
 	 *
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ParticipantManager participantManager = null;
 
-		participantManager = (ParticipantManager) Engine.instance ().getManagerRegistry ().getManager (
+		participantManager = (ParticipantManager) Engine.instance().getManagerRegistry().getManager(
 						"ParticipantClientManager");
 
 		if (participantManager == null)
@@ -58,14 +58,14 @@ public class AddAttributeEditorCommand extends Command
 
 		try
 		{
-			participantManager.addAttributeEditorCommand (properties.getProperty ("attribute"), (Command) properties
-							.get ("command"));
+			participantManager.addAttributeEditorCommand(properties.getProperty("attribute"), (Command) properties
+							.get("command"));
 		}
 		catch (Exception x)
 		{
-			Log.logFatal ("system", "AddAttributeEditorCommand:perform",
+			Log.logFatal("system", "AddAttributeEditorCommand:perform",
 							"Class not found Exception, Attribute type unknown: "
-											+ properties.getProperty ("attributeType"));
+											+ properties.getProperty("attributeType"));
 		}
 	}
 }

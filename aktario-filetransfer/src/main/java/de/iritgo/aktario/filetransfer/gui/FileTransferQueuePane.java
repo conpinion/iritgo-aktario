@@ -45,9 +45,9 @@ public class FileTransferQueuePane extends SwingGUIPane
 	/**
 	 * Send a message to a participant.
 	 */
-	public Action send = new AbstractAction ()
+	public Action send = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
 			// 				Properties props = new Properties();
 			// 				props.setProperty ("sourceUser", AppContext.instance ().getUser ().getName ());
@@ -61,41 +61,41 @@ public class FileTransferQueuePane extends SwingGUIPane
 	/**
 	 * Cancel
 	 */
-	public Action cancel = new AbstractAction ()
+	public Action cancel = new AbstractAction()
 	{
-		public void actionPerformed (ActionEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			display.close ();
+			display.close();
 		}
 	};
 
 	/**
 	 * Create a new SipPhonePane.
 	 */
-	public FileTransferQueuePane ()
+	public FileTransferQueuePane()
 	{
-		super ("FileTransferQueuePane");
+		super("FileTransferQueuePane");
 	}
 
 	/**
 	 * Initialize the gui.
 	 */
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (FileTransferPlugin.class.getClassLoader ());
+			swingEngine.setClassLoader(FileTransferPlugin.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/FileTransferQueuePane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/FileTransferQueuePane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "FileTransferQueuePane.initGUI", x.toString ());
+			Log.logError("client", "FileTransferQueuePane.initGUI", x.toString());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class FileTransferQueuePane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
 	}
 
@@ -111,7 +111,7 @@ public class FileTransferQueuePane extends SwingGUIPane
 	 * Store the current gui values into the data object attributes.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -121,8 +121,8 @@ public class FileTransferQueuePane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new FileTransferQueuePane ();
+		return new FileTransferQueuePane();
 	}
 }

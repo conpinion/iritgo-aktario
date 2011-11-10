@@ -25,5 +25,5 @@ package de.iritgo.aktario.core.event;
  */
 public interface SimpleListener extends EventListener
 {
-	public void simpleEvent (SimpleEvent event);
+	public void simpleEvent(SimpleEvent event);
 }

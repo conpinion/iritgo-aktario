@@ -23,13 +23,13 @@ package de.iritgo.aktario.chat.chatter;
 @SuppressWarnings("serial")
 public class UserAllreadyJoindException extends Exception
 {
-	public UserAllreadyJoindException ()
+	public UserAllreadyJoindException()
 	{
-		super ();
+		super();
 	}
 
-	public UserAllreadyJoindException (String message)
+	public UserAllreadyJoindException(String message)
 	{
-		super (message);
+		super(message);
 	}
 }

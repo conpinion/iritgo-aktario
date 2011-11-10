@@ -54,21 +54,21 @@ public class GUIManager extends BaseObject implements Manager, IObjectProxyListe
 
 	private DefaultQueryRenderer defaultQueryRenderer;
 
-	public GUIManager ()
+	public GUIManager()
 	{
-		super ("GUIManager");
-		init ();
+		super("GUIManager");
+		init();
 	}
 
-	public void init ()
+	public void init()
 	{
-		controllers = new HashMap ();
-		renderers = new HashMap ();
-		guiPanes = new HashMap ();
-		defaultRenderer = new DefaultRenderer ();
-		defaultQueryRenderer = new DefaultQueryRenderer ();
-		Engine.instance ().getEventRegistry ().addListener ("proxyisuptodate", this);
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		controllers = new HashMap();
+		renderers = new HashMap();
+		guiPanes = new HashMap();
+		defaultRenderer = new DefaultRenderer();
+		defaultQueryRenderer = new DefaultQueryRenderer();
+		Engine.instance().getEventRegistry().addListener("proxyisuptodate", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 	}
 
 	/**
@@ -76,20 +76,20 @@ public class GUIManager extends BaseObject implements Manager, IObjectProxyListe
 	 *
 	 * @param event The user event.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
-		if ((event != null) && (event.isLoggedIn ()))
+		if ((event != null) && (event.isLoggedIn()))
 		{
-			User user = event.getUser ();
+			User user = event.getUser();
 		}
 
-		if ((event != null) && (event.isLoggedOut ()))
+		if ((event != null) && (event.isLoggedOut()))
 		{
-			controllers = new HashMap ();
-			renderers = new HashMap ();
-			guiPanes = new HashMap ();
-			defaultRenderer = new DefaultRenderer ();
-			defaultQueryRenderer = new DefaultQueryRenderer ();
+			controllers = new HashMap();
+			renderers = new HashMap();
+			guiPanes = new HashMap();
+			defaultRenderer = new DefaultRenderer();
+			defaultQueryRenderer = new DefaultQueryRenderer();
 		}
 	}
 
@@ -98,26 +98,26 @@ public class GUIManager extends BaseObject implements Manager, IObjectProxyListe
 	 *
 	 * @param event The proxy event.
 	 */
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
-		if (event.isWaitingForNewObject ())
+		if (event.isWaitingForNewObject())
 		{
 			return;
 		}
 
-		controllerChanged (event.getObject ());
+		controllerChanged(event.getObject());
 	}
 
-	public void controllerChanged (IObject iobject)
+	public void controllerChanged(IObject iobject)
 	{
-		String objectTypeId = iobject.getTypeId ();
+		String objectTypeId = iobject.getTypeId();
 		Controller controller = null;
 
 		if ((iobject instanceof WidgetDescription) || (iobject instanceof CommandDescription))
 		{
-			long controllerUniqueId = ((DataObject) iobject).getLongAttribute ("controllerUniqueId");
+			long controllerUniqueId = ((DataObject) iobject).getLongAttribute("controllerUniqueId");
 
-			controller = (Controller) Engine.instance ().getBaseRegistry ().get (controllerUniqueId, "Controller");
+			controller = (Controller) Engine.instance().getBaseRegistry().get(controllerUniqueId, "Controller");
 		}
 		else
 		{
@@ -131,154 +131,154 @@ public class GUIManager extends BaseObject implements Manager, IObjectProxyListe
 			}
 		}
 
-		if ((controller != null) && (controller.isValid ()))
+		if ((controller != null) && (controller.isValid()))
 		{
-			for (Iterator i = getGUIPanes (controller.getControllerTypeId ()).iterator (); i.hasNext ();)
+			for (Iterator i = getGUIPanes(controller.getControllerTypeId()).iterator(); i.hasNext();)
 			{
-				((DynPane) i.next ()).updateGUI ();
+				((DynPane) i.next()).updateGUI();
 			}
 		}
 	}
 
-	public void registerGUIPane (SwingGUIPane dataObjectGUIPane)
+	public void registerGUIPane(SwingGUIPane dataObjectGUIPane)
 	{
-		LinkedList list = (LinkedList) guiPanes.get (((DynPane) dataObjectGUIPane).getControllerTypeId ());
+		LinkedList list = (LinkedList) guiPanes.get(((DynPane) dataObjectGUIPane).getControllerTypeId());
 
 		if (list == null)
 		{
-			list = new LinkedList ();
-			guiPanes.put (((DynPane) dataObjectGUIPane).getControllerTypeId (), list);
+			list = new LinkedList();
+			guiPanes.put(((DynPane) dataObjectGUIPane).getControllerTypeId(), list);
 		}
 
-		list.add (dataObjectGUIPane);
+		list.add(dataObjectGUIPane);
 	}
 
-	public LinkedList getGUIPanes (String typeId)
+	public LinkedList getGUIPanes(String typeId)
 	{
-		return (LinkedList) guiPanes.get (typeId);
+		return (LinkedList) guiPanes.get(typeId);
 	}
 
-	public void unregisterGUIPane (SwingGUIPane dataObjectGUIPane)
+	public void unregisterGUIPane(SwingGUIPane dataObjectGUIPane)
 	{
-		LinkedList list = (LinkedList) guiPanes.get (((DynPane) dataObjectGUIPane).getControllerTypeId ());
+		LinkedList list = (LinkedList) guiPanes.get(((DynPane) dataObjectGUIPane).getControllerTypeId());
 
 		if (list == null)
 		{
 			return;
 		}
 
-		list.remove (dataObjectGUIPane);
+		list.remove(dataObjectGUIPane);
 	}
 
-	public void addController (String typeId, Controller controller)
+	public void addController(String typeId, Controller controller)
 	{
-		controllers.put (typeId, controller);
+		controllers.put(typeId, controller);
 	}
 
-	public Controller getController (String typeId)
+	public Controller getController(String typeId)
 	{
-		return (Controller) controllers.get (typeId);
+		return (Controller) controllers.get(typeId);
 	}
 
-	public void removeController (Controller controller)
+	public void removeController(Controller controller)
 	{
-		controllers.remove (controller);
+		controllers.remove(controller);
 	}
 
-	public void addRenderer (Renderer renderer)
+	public void addRenderer(Renderer renderer)
 	{
-		renderers.put (renderer.getTypeId (), renderer);
+		renderers.put(renderer.getTypeId(), renderer);
 	}
 
-	public Renderer getRenderer (String typeId)
+	public Renderer getRenderer(String typeId)
 	{
-		Renderer renderer = (Renderer) renderers.get (typeId);
+		Renderer renderer = (Renderer) renderers.get(typeId);
 
 		if (renderer == null)
 		{
-			return new DefaultRenderer ();
+			return new DefaultRenderer();
 		}
 
 		return renderer;
 	}
 
-	public Renderer getQueryRenderer (String typeId)
+	public Renderer getQueryRenderer(String typeId)
 	{
-		Renderer renderer = (Renderer) renderers.get (typeId);
+		Renderer renderer = (Renderer) renderers.get(typeId);
 
 		if (renderer == null)
 		{
-			return new DefaultQueryRenderer ();
+			return new DefaultQueryRenderer();
 		}
 
 		return renderer;
 	}
 
-	public void removeRenderer (Renderer renderer)
+	public void removeRenderer(Renderer renderer)
 	{
-		renderers.remove (renderer);
+		renderers.remove(renderer);
 	}
 
-	public Controller createDefaultController (String controllerTypeId)
+	public Controller createDefaultController(String controllerTypeId)
 	{
-		Controller controller = new Controller ();
-		long controllerUniqueId = Engine.instance ().getPersistentIDGenerator ().createId ();
+		Controller controller = new Controller();
+		long controllerUniqueId = Engine.instance().getPersistentIDGenerator().createId();
 
-		controller.setControllerTypeId (controllerTypeId);
-		controller.setUniqueId (controllerUniqueId);
+		controller.setControllerTypeId(controllerTypeId);
+		controller.setUniqueId(controllerUniqueId);
 
 		try
 		{
-			DataObject sample = (DataObject) Engine.instance ().getIObjectFactory ().newInstance (controllerTypeId);
+			DataObject sample = (DataObject) Engine.instance().getIObjectFactory().newInstance(controllerTypeId);
 
-			WidgetDescription wdGroup = new WidgetDescription ();
+			WidgetDescription wdGroup = new WidgetDescription();
 
-			wdGroup.setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
-			wdGroup.setControllerUniqueId (controllerUniqueId);
-			wdGroup.setLabelId (sample.getTypeId ());
-			wdGroup.setWidgetId ("group");
-			wdGroup.setRendererId ("group");
+			wdGroup.setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
+			wdGroup.setControllerUniqueId(controllerUniqueId);
+			wdGroup.setLabelId(sample.getTypeId());
+			wdGroup.setWidgetId("group");
+			wdGroup.setRendererId("group");
 
-			IObjectProxy groupProxy = (IObjectProxy) new FrameworkProxy ();
+			IObjectProxy groupProxy = (IObjectProxy) new FrameworkProxy();
 
-			groupProxy.setSampleRealObject ((IObject) wdGroup);
-			Engine.instance ().getBaseRegistry ().add ((BaseObject) wdGroup);
-			Engine.instance ().getProxyRegistry ().addProxy (groupProxy, wdGroup.getTypeId ());
-			controller.addWidgetDescription (wdGroup);
+			groupProxy.setSampleRealObject((IObject) wdGroup);
+			Engine.instance().getBaseRegistry().add((BaseObject) wdGroup);
+			Engine.instance().getProxyRegistry().addProxy(groupProxy, wdGroup.getTypeId());
+			controller.addWidgetDescription(wdGroup);
 
-			for (Iterator i = sample.getAttributes ().keySet ().iterator (); i.hasNext ();)
+			for (Iterator i = sample.getAttributes().keySet().iterator(); i.hasNext();)
 			{
-				String key = (String) i.next ();
-				String objectType = sample.getAttribute (key).getClass ().getName ();
+				String key = (String) i.next();
+				String objectType = sample.getAttribute(key).getClass().getName();
 
-				WidgetDescription wd = new WidgetDescription ();
+				WidgetDescription wd = new WidgetDescription();
 
-				wd.setUniqueId (Engine.instance ().getPersistentIDGenerator ().createId ());
-				wd.setControllerUniqueId (controllerUniqueId);
-				wd.setLabelId (key);
-				wd.setWidgetId (key);
-				wd.setRendererId (objectType);
+				wd.setUniqueId(Engine.instance().getPersistentIDGenerator().createId());
+				wd.setControllerUniqueId(controllerUniqueId);
+				wd.setLabelId(key);
+				wd.setWidgetId(key);
+				wd.setRendererId(objectType);
 
-				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy ();
+				IObjectProxy proxy = (IObjectProxy) new FrameworkProxy();
 
-				proxy.setSampleRealObject ((IObject) wd);
-				Engine.instance ().getBaseRegistry ().add ((BaseObject) wd);
-				Engine.instance ().getProxyRegistry ().addProxy (proxy, wd.getTypeId ());
-				wdGroup.addWidgetDescription (wd);
+				proxy.setSampleRealObject((IObject) wd);
+				Engine.instance().getBaseRegistry().add((BaseObject) wd);
+				Engine.instance().getProxyRegistry().addProxy(proxy, wd.getTypeId());
+				wdGroup.addWidgetDescription(wd);
 			}
 		}
 		catch (NoSuchIObjectException x)
 		{
-			System.out.println ("GUIMANAGER - CreateDefaultController error");
-			x.printStackTrace ();
+			System.out.println("GUIMANAGER - CreateDefaultController error");
+			x.printStackTrace();
 		}
 
 		return controller;
 	}
 
-	public void unload ()
+	public void unload()
 	{
-		Engine.instance ().getEventRegistry ().removeListener ("proxyisuptodate", this);
-		Engine.instance ().getEventRegistry ().removeListener ("User", this);
+		Engine.instance().getEventRegistry().removeListener("proxyisuptodate", this);
+		Engine.instance().getEventRegistry().removeListener("User", this);
 	}
 }

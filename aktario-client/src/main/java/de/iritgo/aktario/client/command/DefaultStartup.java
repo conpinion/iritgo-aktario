@@ -47,9 +47,9 @@ public class DefaultStartup extends Command
 	/**
 	 * Create a new startup command.
 	 */
-	public DefaultStartup ()
+	public DefaultStartup()
 	{
-		super ("DefaultStartup");
+		super("DefaultStartup");
 	}
 
 	/**
@@ -57,27 +57,27 @@ public class DefaultStartup extends Command
 	 * It opens all initial client windows.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("user") == null)
+		if (properties.get("user") == null)
 		{
-			Log.logError ("client", "DefaultStartup", "Missing user");
+			Log.logError("client", "DefaultStartup", "Missing user");
 
 			return;
 		}
 
-		AktarioUser user = (AktarioUser) properties.get ("user");
+		AktarioUser user = (AktarioUser) properties.get("user");
 
 		try
 		{
-			JDesktopPane frame = ((AktarioGUI) Client.instance ().getClientGUI ()).getDesktopPane ();
-			Rectangle bounds = frame.getBounds ();
+			JDesktopPane frame = ((AktarioGUI) Client.instance().getClientGUI()).getDesktopPane();
+			Rectangle bounds = frame.getBounds();
 
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.put ("closable", new Boolean (false));
-			props.put ("iconifiable", new Boolean (false));
-			props.put ("bounds", new Rectangle (bounds.width - bounds.width / 6, 0, bounds.width / 6,
+			props.put("closable", new Boolean(false));
+			props.put("iconifiable", new Boolean(false));
+			props.put("bounds", new Rectangle(bounds.width - bounds.width / 6, 0, bounds.width / 6,
 							(int) (bounds.height * 0.4)));
 
 			// 			CommandTools.performAsync (
@@ -85,17 +85,17 @@ public class DefaultStartup extends Command
 			// 					"ParticipantControlPane",
 			// 					AppContext.instance ().getUser ().getNamedIritgoObject ("AktarioUserRegistry")),
 			// 				props);
-			props = new Properties ();
-			props.put ("closable", new Boolean (false));
-			props.put ("iconifiable", new Boolean (false));
-			props.put ("bounds", new Rectangle (bounds.width - bounds.width / 6, (int) (bounds.height * 0.4),
+			props = new Properties();
+			props.put("closable", new Boolean(false));
+			props.put("iconifiable", new Boolean(false));
+			props.put("bounds", new Rectangle(bounds.width - bounds.width / 6, (int) (bounds.height * 0.4),
 							bounds.width / 6, (int) (bounds.height * 0.4)));
-			CommandTools.performAsync (new ShowWindow ("RoomControlPane", user), props);
+			CommandTools.performAsync(new ShowWindow("RoomControlPane", user), props);
 
-			props = new Properties ();
-			props.put ("closable", new Boolean (false));
-			props.put ("iconifiable", new Boolean (false));
-			props.put ("bounds", new Rectangle (bounds.width - bounds.width / 6, (int) (bounds.height * 0.8),
+			props = new Properties();
+			props.put("closable", new Boolean(false));
+			props.put("iconifiable", new Boolean(false));
+			props.put("bounds", new Rectangle(bounds.width - bounds.width / 6, (int) (bounds.height * 0.8),
 							bounds.width / 6, (int) (bounds.height * 0.2)));
 
 			// 			CommandTools.performAsync (
@@ -106,7 +106,7 @@ public class DefaultStartup extends Command
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "DefaultStartup", x.toString ());
+			Log.logError("client", "DefaultStartup", x.toString());
 		}
 	}
 }

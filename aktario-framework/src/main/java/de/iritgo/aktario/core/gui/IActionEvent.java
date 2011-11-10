@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-
 package de.iritgo.aktario.core.gui;
 
 
@@ -32,19 +31,19 @@ public class IActionEvent
 {
 	protected ActionEvent event;
 
-	protected Properties properties = new Properties ();
+	protected Properties properties = new Properties();
 
-	public IActionEvent (ActionEvent event)
+	public IActionEvent(ActionEvent event)
 	{
 		this.event = event;
 	}
 
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}
 
-	public ActionEvent getEvent ()
+	public ActionEvent getEvent()
 	{
 		return event;
 	}

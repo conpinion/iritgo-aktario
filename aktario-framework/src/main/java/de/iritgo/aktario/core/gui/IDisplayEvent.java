@@ -35,7 +35,7 @@ public class IDisplayEvent implements Event
 	 *
 	 * @param display The display.
 	 */
-	public IDisplayEvent (IDisplay display)
+	public IDisplayEvent(IDisplay display)
 	{
 		this.display = display;
 	}
@@ -45,7 +45,7 @@ public class IDisplayEvent implements Event
 	 *
 	 * @return The event display.
 	 */
-	public IDisplay getIDisplay ()
+	public IDisplay getIDisplay()
 	{
 		return display;
 	}

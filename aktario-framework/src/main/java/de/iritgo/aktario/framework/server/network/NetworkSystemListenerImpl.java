@@ -43,67 +43,67 @@ public class NetworkSystemListenerImpl extends NetworkSystemAdapter
 {
 	private NetworkService networkService;
 
-	public void error (NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
+	public void error(NetworkService networkBase, Channel connectedChannel, SocketTimeoutException x)
 	{
-		if (connectedChannel.isAliveCheckSent ())
+		if (connectedChannel.isAliveCheckSent())
 		{
-			Server.instance ().getNetworkService ().fireConnectionTerminated (connectedChannel);
+			Server.instance().getNetworkService().fireConnectionTerminated(connectedChannel);
 			return;
 		}
 
-		connectedChannel.setAliveCheckSent (true);
-		connectedChannel.send (new AliveCheckAction (AliveCheckAction.SERVER));
-		connectedChannel.flush ();
+		connectedChannel.setAliveCheckSent(true);
+		connectedChannel.send(new AliveCheckAction(AliveCheckAction.SERVER));
+		connectedChannel.flush();
 	}
 
-	public void connectionTerminated (NetworkService networkBase, Channel connectedChannel)
+	public void connectionTerminated(NetworkService networkBase, Channel connectedChannel)
 	{
-		connectedChannel.setState (Threadable.CLOSING);
+		connectedChannel.setState(Threadable.CLOSING);
 
-		if (connectedChannel.getConnectionState () == Channel.NETWORK_ERROR_CLOSING)
+		if (connectedChannel.getConnectionState() == Channel.NETWORK_ERROR_CLOSING)
 		{
-			Log.logError ("network", "NetworkSystemListenerImpl", "Unable to close connection for channel "
-							+ connectedChannel.getChannelNumber () + " (connection state: "
-							+ connectedChannel.getConnectionState () + ")");
+			Log.logError("network", "NetworkSystemListenerImpl", "Unable to close connection for channel "
+							+ connectedChannel.getChannelNumber() + " (connection state: "
+							+ connectedChannel.getConnectionState() + ")");
 		}
 
-		Server server = Server.instance ();
-		UserRegistry userRegistry = server.getUserRegistry ();
+		Server server = Server.instance();
+		UserRegistry userRegistry = server.getUserRegistry();
 
 		User user = null;
 
-		user = (User) connectedChannel.getCustomerContextObject ();
+		user = (User) connectedChannel.getCustomerContextObject();
 
 		if (user == null)
 		{
-			user = new User ();
-			user.setNetworkChannel (connectedChannel.getChannelNumber ());
-			user.setName ("");
+			user = new User();
+			user.setNetworkChannel(connectedChannel.getChannelNumber());
+			user.setName("");
 		}
 
-		Log.log ("network", "NetworkSystemListenerImpl", "Lost connection to user '" + user + "' (channel number: "
-						+ connectedChannel.getChannelNumber () + ")", Log.INFO);
+		Log.log("network", "NetworkSystemListenerImpl", "Lost connection to user '" + user + "' (channel number: "
+						+ connectedChannel.getChannelNumber() + ")", Log.INFO);
 
-		user.setOnline (false);
-		user.setLoggedOutDate (new Date ());
-		user.clearNewObjectsMapping ();
+		user.setOnline(false);
+		user.setLoggedOutDate(new Date());
+		user.clearNewObjectsMapping();
 
-		Engine.instance ().getEventRegistry ().fire ("User", new UserEvent (user, UserEvent.USER_LOGGED_OUT));
+		Engine.instance().getEventRegistry().fire("User", new UserEvent(user, UserEvent.USER_LOGGED_OUT));
 
-		((ShutdownManager) Engine.instance ().getManagerRegistry ().getManager ("shutdown")).shutdown (user);
+		((ShutdownManager) Engine.instance().getManagerRegistry().getManager("shutdown")).shutdown(user);
 
 		try
 		{
-			if (connectedChannel.getConnectionState () != Channel.NETWORK_ERROR_CLOSING)
+			if (connectedChannel.getConnectionState() != Channel.NETWORK_ERROR_CLOSING)
 			{
-				networkBase.closeChannel (connectedChannel.getChannelNumber ());
+				networkBase.closeChannel(connectedChannel.getChannelNumber());
 			}
 		}
 		catch (Exception x)
 		{
 		}
 
-		Log.log ("network", "NetworkSystemListenerImpl", "Cleaned up connection to user '" + user
-						+ "' (channel number: " + connectedChannel.getChannelNumber () + ")", Log.INFO);
+		Log.log("network", "NetworkSystemListenerImpl", "Cleaned up connection to user '" + user
+						+ "' (channel number: " + connectedChannel.getChannelNumber() + ")", Log.INFO);
 	}
 }

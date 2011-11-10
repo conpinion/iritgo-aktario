@@ -60,9 +60,9 @@ public class ToolControlPane extends SwingGUIPane
 	/**
 	 * Create a new ToolControlPane.
 	 */
-	public ToolControlPane ()
+	public ToolControlPane()
 	{
-		super ("ToolControlPane");
+		super("ToolControlPane");
 	}
 
 	/**
@@ -70,29 +70,29 @@ public class ToolControlPane extends SwingGUIPane
 	 */
 	@SuppressWarnings("serial")
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
 		try
 		{
-			final ResourceService resources = Engine.instance ().getResourceService ();
+			final ResourceService resources = Engine.instance().getResourceService();
 
-			SwingEngine swingEngine = new SwingEngine (this);
+			SwingEngine swingEngine = new SwingEngine(this);
 
-			swingEngine.setClassLoader (ToolControlPane.class.getClassLoader ());
+			swingEngine.setClassLoader(ToolControlPane.class.getClassLoader());
 
-			JPanel panel = (JPanel) swingEngine.render (getClass ().getResource ("/swixml/ToolControlPane.xml"));
+			JPanel panel = (JPanel) swingEngine.render(getClass().getResource("/swixml/ToolControlPane.xml"));
 
-			content.add (panel, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+			content.add(panel, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 
 			toolIcons = new ImageIcon[1];
 
-			toolIcons[0] = new ImageIcon (RoomControlPane.class.getResource ("/resources/tool-big-message.png"));
+			toolIcons[0] = new ImageIcon(RoomControlPane.class.getResource("/resources/tool-big-message.png"));
 
-			toolModel = new IObjectTableModel ()
+			toolModel = new IObjectTableModel()
 			{
 				private String[] columnNames = new String[]
 				{
-					resources.getString ("aktario.tools")
+					resources.getString("aktario.tools")
 				};
 
 				private Class[] columnClasses = new Class[]
@@ -100,71 +100,71 @@ public class ToolControlPane extends SwingGUIPane
 					String.class
 				};
 
-				public int getColumnCount ()
+				public int getColumnCount()
 				{
 					return columnNames.length;
 				}
 
 				@Override
-				public String getColumnName (int col)
+				public String getColumnName(int col)
 				{
 					return columnNames[col];
 				}
 
 				@Override
-				public Class getColumnClass (int col)
+				public Class getColumnClass(int col)
 				{
 					return columnClasses[col];
 				}
 
 				@Override
-				public int getRowCount ()
+				public int getRowCount()
 				{
 					return 1;
 				}
 
 				@Override
-				public boolean isCellEditable (int row, int column)
+				public boolean isCellEditable(int row, int column)
 				{
 					return false;
 				}
 
-				public Object getValueAt (int row, int col)
+				public Object getValueAt(int row, int col)
 				{
 					return "Nachrichten";
 				}
 
 				@Override
-				public void setValueAt (Object value, int row, int col)
+				public void setValueAt(Object value, int row, int col)
 				{
 				}
 			};
-			toolTable.setModel (toolModel);
+			toolTable.setModel(toolModel);
 
-			toolTable.getColumnModel ().getColumn (0).setCellRenderer (new DefaultTableCellRenderer ()
+			toolTable.getColumnModel().getColumn(0).setCellRenderer(new DefaultTableCellRenderer()
 			{
 				@Override
-				public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected,
+				public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 								boolean hasFocus, int row, int column)
 				{
-					super.getTableCellRendererComponent (table, value, isSelected, hasFocus, row, column);
+					super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-					setIcon (toolIcons[0]);
+					setIcon(toolIcons[0]);
 
 					return this;
 				}
 			});
 
-			toolTable.setShowGrid (false);
-			toolTable.setRowHeight (Math.max (toolTable.getRowHeight () + 4, toolIcons[0].getIconHeight () + 4));
-			toolScrollPane.getColumnHeader ().setVisible (false);
+			toolTable.setShowGrid(false);
+			toolTable.setRowHeight(Math.max(toolTable.getRowHeight() + 4, toolIcons[0].getIconHeight() + 4));
+			toolScrollPane.getColumnHeader().setVisible(false);
 
-			getDisplay ().setIcon (new ImageIcon (ToolControlPane.class.getResource ("/resources/tool.png")));
+			getDisplay().setIcon(new ImageIcon(ToolControlPane.class.getResource("/resources/tool.png")));
 		}
 		catch (Exception x)
 		{
-			Log.logError ("client", "ToolNavigator.initGUI", x.toString ());
-			x.printStackTrace ();
+			Log.logError("client", "ToolNavigator.initGUI", x.toString());
+			x.printStackTrace();
 		}
 	}
 
@@ -172,16 +172,16 @@ public class ToolControlPane extends SwingGUIPane
 	 * Load the gui values from the data object attributes.
 	 */
 	@Override
-	public void loadFromObject (IObject iobject)
+	public void loadFromObject(IObject iobject)
 	{
-		toolTable.revalidate ();
+		toolTable.revalidate();
 	}
 
 	/**
 	 * Store the current gui values into the data object attributes.
 	 */
 	@Override
-	public void storeToObject (IObject iobject)
+	public void storeToObject(IObject iobject)
 	{
 	}
 
@@ -191,9 +191,9 @@ public class ToolControlPane extends SwingGUIPane
 	 * @return The gui pane clone.
 	 */
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		return new ToolControlPane ();
+		return new ToolControlPane();
 	}
 
 	/**
@@ -201,8 +201,8 @@ public class ToolControlPane extends SwingGUIPane
 	 *
 	 * @return The sample oject.
 	 */
-	public IObject getSampleObject ()
+	public IObject getSampleObject()
 	{
-		return new AktarioUserRegistry ();
+		return new AktarioUserRegistry();
 	}
 }

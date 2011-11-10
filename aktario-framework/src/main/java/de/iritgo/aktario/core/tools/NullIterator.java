@@ -32,7 +32,7 @@ public class NullIterator implements Iterator
 	/**
 	 * Create a new null iterator.
 	 */
-	public NullIterator ()
+	public NullIterator()
 	{
 	}
 
@@ -41,7 +41,7 @@ public class NullIterator implements Iterator
 	 *
 	 * @return False.
 	 */
-	public boolean hasNext ()
+	public boolean hasNext()
 	{
 		return false;
 	}
@@ -49,16 +49,16 @@ public class NullIterator implements Iterator
 	/**
 	 * The null iterator returns no values.
 	 */
-	public Object next ()
+	public Object next()
 	{
-		throw new NoSuchElementException ();
+		throw new NoSuchElementException();
 	}
 
 	/**
 	 * Nothing to remove.
 	 */
-	public void remove ()
+	public void remove()
 	{
-		throw new UnsupportedOperationException ();
+		throw new UnsupportedOperationException();
 	}
 }

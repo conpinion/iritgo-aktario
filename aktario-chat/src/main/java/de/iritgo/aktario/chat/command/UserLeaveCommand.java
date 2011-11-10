@@ -37,39 +37,39 @@ public class UserLeaveCommand extends Command
 
 	private AppContext appContext;
 
-	public UserLeaveCommand ()
+	public UserLeaveCommand()
 	{
 		channel = - 1;
 	}
 
-	public UserLeaveCommand (int channel)
+	public UserLeaveCommand(int channel)
 	{
 		this.channel = channel;
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		appContext = AppContext.instance ();
-		this.userName = appContext.getUser ().getName ();
+		appContext = AppContext.instance();
+		this.userName = appContext.getUser().getName();
 
-		double channelNumber = appContext.getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = appContext.getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
 		if (channel == - 1)
 		{
-			channel = chatManager.getCurrentChannel ().intValue ();
+			channel = chatManager.getCurrentChannel().intValue();
 		}
 
-		UserLeaveServerAction userLeaveServerAction = new UserLeaveServerAction (userName, channel);
+		UserLeaveServerAction userLeaveServerAction = new UserLeaveServerAction(userName, channel);
 
-		userLeaveServerAction.setTransceiver (clientTransceiver);
+		userLeaveServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (userLeaveServerAction);
+		ActionTools.sendToServer(userLeaveServerAction);
 	}
 }

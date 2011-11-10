@@ -56,16 +56,16 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param guiPaneId The id of the new gui pane.
 	 */
-	public GUIPane (String guiPaneId, String onScreenUniqueId)
+	public GUIPane(String guiPaneId, String onScreenUniqueId)
 	{
-		super (guiPaneId);
+		super(guiPaneId);
 		this.onScreenUniqueId = onScreenUniqueId;
 	}
 
 	/**
 	 * Set the current onScreen unique id of the guipane.
 	 */
-	public void setOnScreenUniqueId (String onScreenUniqueId)
+	public void setOnScreenUniqueId(String onScreenUniqueId)
 	{
 		this.onScreenUniqueId = onScreenUniqueId;
 	}
@@ -75,7 +75,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The OnScreenUniqueId.
 	 */
-	public String getOnScreenUniqueId ()
+	public String getOnScreenUniqueId()
 	{
 		return onScreenUniqueId;
 	}
@@ -83,7 +83,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	/**
 	 * Set the IOject to display.
 	 */
-	public void setObject (IObject iObject)
+	public void setObject(IObject iObject)
 	{
 		this.iObject = iObject;
 	}
@@ -93,7 +93,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The IObject.
 	 */
-	public IObject getObject ()
+	public IObject getObject()
 	{
 		return iObject;
 	}
@@ -103,10 +103,10 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param display The new display.
 	 */
-	public void setIDisplay (IDisplay display)
+	public void setIDisplay(IDisplay display)
 	{
 		this.display = display;
-		setIDisplayImpl (display);
+		setIDisplayImpl(display);
 	}
 
 	/**
@@ -114,14 +114,14 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param display The new display.
 	 */
-	public abstract void setIDisplayImpl (IDisplay display);
+	public abstract void setIDisplayImpl(IDisplay display);
 
 	/**
 	 * Get the display.
 	 *
 	 * @return The display.
 	 */
-	public IDisplay getDisplay ()
+	public IDisplay getDisplay()
 	{
 		return display;
 	}
@@ -131,7 +131,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param sessionContext The new session context.
 	 */
-	public void setSessionContext (SessionContext sessionContext)
+	public void setSessionContext(SessionContext sessionContext)
 	{
 		this.sessionContext = sessionContext;
 	}
@@ -141,7 +141,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The session context.
 	 */
-	public SessionContext getSessionContext ()
+	public SessionContext getSessionContext()
 	{
 		return sessionContext;
 	}
@@ -149,16 +149,16 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	/**
 	 * Register-Proxy-Event-Listener.
 	 */
-	public void registerProxyEventListener ()
+	public void registerProxyEventListener()
 	{
-		Engine.instance ().getProxyEventRegistry ().addEventListener (iObject, this);
+		Engine.instance().getProxyEventRegistry().addEventListener(iObject, this);
 	}
 
 	/**
 	 * Initialize the gui. Subclasses should override this method to create a
 	 * custom gui.
 	 */
-	public void initGUI ()
+	public void initGUI()
 	{
 	}
 
@@ -167,31 +167,31 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param event The proxy event.
 	 */
-	public void proxyEvent (IObjectProxyEvent event)
+	public void proxyEvent(IObjectProxyEvent event)
 	{
 		if (iObject == null)
 		{
 			return;
 		}
 
-		if (event.isWaitingForNewObject ())
+		if (event.isWaitingForNewObject())
 		{
-			waitingForNewObject ();
+			waitingForNewObject();
 		}
 		else
 		{
-			waitingForNewObjectFinished ();
+			waitingForNewObjectFinished();
 		}
 	}
 
 	/**
 	 * Load the gui values from the data object attributes.
 	 */
-	public void loadFromObject ()
+	public void loadFromObject()
 	{
 		if (iObject != null)
 		{
-			loadFromObject (iObject);
+			loadFromObject(iObject);
 		}
 	}
 
@@ -200,11 +200,11 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param transaction The transaction object.
 	 */
-	public void storeToObject ()
+	public void storeToObject()
 	{
 		if (iObject != null)
 		{
-			storeToObject (iObject);
+			storeToObject(iObject);
 		}
 	}
 
@@ -212,19 +212,19 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 * Load the gui values from the data object attributes.
 	 * @param iObject The iobject.
 	 */
-	public abstract void loadFromObject (IObject iObject);
+	public abstract void loadFromObject(IObject iObject);
 
 	/**
 	 * Store the current gui values into the data object attributes.
 	 * @param iObject The iobject.
 	 */
-	public abstract void storeToObject (IObject iObject);
+	public abstract void storeToObject(IObject iObject);
 
 	/**
 	 * This method is called when the gui pane starts waiting
 	 * for the attributes of it's iobject.
 	 */
-	public void waitingForNewObject ()
+	public void waitingForNewObject()
 	{
 	}
 
@@ -232,7 +232,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 * This method is called when the attributes of the gui pane's
 	 * iobject are received.
 	 */
-	public void waitingForNewObjectFinished ()
+	public void waitingForNewObjectFinished()
 	{
 	}
 
@@ -241,27 +241,27 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The gui pane clone.
 	 */
-	public abstract GUIPane cloneGUIPane ();
+	public abstract GUIPane cloneGUIPane();
 
 	/**
 	 * Close the display.
 	 */
-	public void close ()
+	public void close()
 	{
 		if (iObject != null)
 		{
-			Engine.instance ().getProxyEventRegistry ().removeEventListener (iObject, this);
+			Engine.instance().getProxyEventRegistry().removeEventListener(iObject, this);
 		}
 	}
 
 	/**
 	 * Close the display.
 	 */
-	public void systemClose ()
+	public void systemClose()
 	{
 		if (iObject != null)
 		{
-			Engine.instance ().getProxyEventRegistry ().removeEventListener (iObject, this);
+			Engine.instance().getProxyEventRegistry().removeEventListener(iObject, this);
 		}
 	}
 
@@ -271,9 +271,9 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param title The new title.
 	 */
-	public void setTitle (String title)
+	public void setTitle(String title)
 	{
-		display.setTitle (title);
+		display.setTitle(title);
 	}
 
 	/**
@@ -281,9 +281,9 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The gui pane title.
 	 */
-	public String getTitle ()
+	public String getTitle()
 	{
-		return display.getTitle ();
+		return display.getTitle();
 	}
 
 	/**
@@ -291,12 +291,12 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @return The resources.
 	 */
-	public ResourceService getResources ()
+	public ResourceService getResources()
 	{
-		return Engine.instance ().getResourceService ();
+		return Engine.instance().getResourceService();
 	}
 
-	protected IObject getIObject ()
+	protected IObject getIObject()
 	{
 		if (iObject == null)
 		{
@@ -304,7 +304,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 		}
 
 		// Set the object in a transaction state.
-		Engine.instance ().getBaseRegistry ().get (iObject.getUniqueId (), iObject.getTypeId ());
+		Engine.instance().getBaseRegistry().get(iObject.getUniqueId(), iObject.getTypeId());
 
 		return iObject;
 	}
@@ -314,7 +314,7 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param content The new content pane.
 	 */
-	public void setContentPane (Object content)
+	public void setContentPane(Object content)
 	{
 	}
 
@@ -323,17 +323,17 @@ public abstract class GUIPane extends BaseObject implements IObjectProxyListener
 	 *
 	 * @param content The new content pane.
 	 */
-	public Component getContentPane ()
+	public Component getContentPane()
 	{
 		return null;
 	}
 
-	protected void setProperties (Properties properties)
+	protected void setProperties(Properties properties)
 	{
 		this.properties = properties;
 	}
 
-	public Properties getProperties ()
+	public Properties getProperties()
 	{
 		return properties;
 	}

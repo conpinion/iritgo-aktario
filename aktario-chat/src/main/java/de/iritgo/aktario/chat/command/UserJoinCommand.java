@@ -36,13 +36,13 @@ public class UserJoinCommand extends Command
 
 	private AppContext appContext;
 
-	public UserJoinCommand ()
+	public UserJoinCommand()
 	{
 	}
 
-	public UserJoinCommand (String channel, String userName)
+	public UserJoinCommand(String channel, String userName)
 	{
-		appContext = AppContext.instance ();
+		appContext = AppContext.instance();
 		this.userName = userName;
 		this.channel = channel;
 	}
@@ -52,10 +52,10 @@ public class UserJoinCommand extends Command
 	 *
 	 * @param channel
 	 */
-	public UserJoinCommand (String channel)
+	public UserJoinCommand(String channel)
 	{
-		appContext = AppContext.instance ();
-		this.userName = appContext.getUser ().getName ();
+		appContext = AppContext.instance();
+		this.userName = appContext.getUser().getName();
 		this.channel = channel;
 	}
 
@@ -65,28 +65,28 @@ public class UserJoinCommand extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		double channelNumber = appContext.getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		double channelNumber = appContext.getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		UserJoinServerAction userJoinServerAction = new UserJoinServerAction (userName, channel);
+		UserJoinServerAction userJoinServerAction = new UserJoinServerAction(userName, channel);
 
-		userJoinServerAction.setTransceiver (clientTransceiver);
+		userJoinServerAction.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (userJoinServerAction);
+		ActionTools.sendToServer(userJoinServerAction);
 	}
 
 	@Override
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
-		return appContext.isConnectedWithServer ();
+		return appContext.isConnectedWithServer();
 	}
 }

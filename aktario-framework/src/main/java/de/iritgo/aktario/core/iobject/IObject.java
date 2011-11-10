@@ -37,73 +37,73 @@ public interface IObject
 	 *
 	 * @return The unique id.
 	 */
-	public long getUniqueId ();
+	public long getUniqueId();
 
 	/**
 	 * Set the id of the iritgo object.
 	 *
 	 * @param uniqueId The new unique id.
 	 */
-	public void setUniqueId (long uniqueId);
+	public void setUniqueId(long uniqueId);
 
 	/**
 	 * Get the type id of the iritgo object.
 	 *
 	 * @return The type id.
 	 */
-	public String getTypeId ();
+	public String getTypeId();
 
 	/**
 	 * Set the id of the iritgo object.
 	 *
 	 * @param typeId The new type
 	 */
-	public void setTypeId (String typeId);
+	public void setTypeId(String typeId);
 
 	/**
 	 * Create a new instance of the iritgo object.
 	 *
 	 * @return The fresh instance.
 	 */
-	public IObject create ();
+	public IObject create();
 
 	/**
 	 * Read the object attributes from an input stream.
 	 *
 	 * @param stream The input stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException;
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException;
 
 	/**
 	 * Write the object attributes to an output stream.
 	 *
 	 * @param stream The output stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException;
+	public void writeObject(OutputStream stream) throws IOException;
 
 	/**
 	 * Check wether this is a valid object or not.
 	 *
 	 * @return True for a valid object.
 	 */
-	public boolean isValid ();
+	public boolean isValid();
 
 	/**
 	 * Serialize the object type information on this object
 	 * @param iObject TODO
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject);
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject);
 
 	/**
 	 * Read Serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject);
+	public IObject readTypeInformations(InputStream stream, IObject iObject);
 
 	/**
 	 * Return a dump form the current object.
 	 *
 	 * @return String The current dump
 	 */
-	public String dump ();
+	public String dump();
 }

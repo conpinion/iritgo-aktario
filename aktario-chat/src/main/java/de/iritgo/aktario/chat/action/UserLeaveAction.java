@@ -34,12 +34,12 @@ public class UserLeaveAction extends FrameworkAction
 
 	private int channel;
 
-	public UserLeaveAction ()
+	public UserLeaveAction()
 	{
-		super ();
+		super();
 	}
 
-	public UserLeaveAction (String userName, int channel, long userUniqueId)
+	public UserLeaveAction(String userName, int channel, long userUniqueId)
 	{
 		this.channel = channel;
 		this.userName = userName;
@@ -47,36 +47,36 @@ public class UserLeaveAction extends FrameworkAction
 	}
 
 	@Override
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.userleave";
 	}
 
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
 
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		channel = stream.readInt ();
+		userName = stream.readUTF();
+		channel = stream.readInt();
 	}
 
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeInt (channel);
+		stream.writeUTF(userName);
+		stream.writeInt(channel);
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
-		chatManager.leaveChannel (new Integer (channel), userUniqueId, userName);
+		chatManager.leaveChannel(new Integer(channel), userUniqueId, userName);
 	}
 }

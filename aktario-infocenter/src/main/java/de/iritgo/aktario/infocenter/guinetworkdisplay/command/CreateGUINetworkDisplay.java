@@ -35,24 +35,24 @@ public class CreateGUINetworkDisplay extends CommonInfoCenterCommand
 	 * Standard constructor
 	 *
 	 */
-	public CreateGUINetworkDisplay ()
+	public CreateGUINetworkDisplay()
 	{
-		super ("createguinetworkdisplay");
+		super("createguinetworkdisplay");
 	}
 
 	/**
 	 * EditPrototype
 	 */
-	public void perform ()
+	public void perform()
 	{
-		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance ().getManagerRegistry ().getManager (
+		InfoCenterManager infoCenterManager = (InfoCenterManager) Engine.instance().getManagerRegistry().getManager(
 						"infocenter");
 
-		NetworkDisplay networkDisplay = new NetworkDisplay ();
+		NetworkDisplay networkDisplay = new NetworkDisplay();
 
-		networkDisplay.setInfoStoreFile ("FILE");
+		networkDisplay.setInfoStoreFile("FILE");
 
-		infoCenterManager.getInfoCenterRegistry ().addDisplay (networkDisplay, context);
-		infoCenterManager.getInfoCenterRegistry ().addDisplay (category, networkDisplay.getId (), context, user);
+		infoCenterManager.getInfoCenterRegistry().addDisplay(networkDisplay, context);
+		infoCenterManager.getInfoCenterRegistry().addDisplay(category, networkDisplay.getId(), context, user);
 	}
 }

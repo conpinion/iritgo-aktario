@@ -38,16 +38,16 @@ public class AktarioPlugin extends FrameworkPlugin
 	 * @param engine The system engine.
 	 */
 	@Override
-	public void init (Engine engine)
+	public void init(Engine engine)
 	{
-		registerApplications ();
-		super.init (engine);
+		registerApplications();
+		super.init(engine);
 	}
 
 	/**
 	 * Register all collaboration applications in this method.
 	 */
-	public void registerApplications ()
+	public void registerApplications()
 	{
 	}
 
@@ -59,8 +59,8 @@ public class AktarioPlugin extends FrameworkPlugin
 	 * @param The application icon (resource key).
 	 * @param guiPaneId The id of the main gui pane.
 	 */
-	protected void registerApplication (String id, String nameKey, String iconKey, String guiPaneId)
+	protected void registerApplication(String id, String nameKey, String iconKey, String guiPaneId)
 	{
-		Application.add (new Application (id, this, nameKey, iconKey, guiPaneId));
+		Application.add(new Application(id, this, nameKey, iconKey, guiPaneId));
 	}
 }

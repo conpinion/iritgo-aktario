@@ -33,9 +33,9 @@ public class ApplicationData extends DataObject
 	/**
 	 * Create a new lesson object.
 	 */
-	public ApplicationData ()
+	public ApplicationData()
 	{
-		this ("ApplicationData");
+		this("ApplicationData");
 	}
 
 	/**
@@ -43,8 +43,8 @@ public class ApplicationData extends DataObject
 	 *
 	 * @param typeId The type id of the lesson.
 	 */
-	public ApplicationData (String typeId)
+	public ApplicationData(String typeId)
 	{
-		super (typeId);
+		super(typeId);
 	}
 }

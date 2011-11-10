@@ -38,19 +38,19 @@ public class IAction extends AbstractAction
 	/** */
 	private static final long serialVersionUID = 1L;
 
-	public IAction ()
+	public IAction()
 	{
 	}
 
-	public IAction (String name)
+	public IAction(String name)
 	{
-		setName (name);
+		setName(name);
 	}
 
-	public IAction (String name, ImageIcon icon)
+	public IAction(String name, ImageIcon icon)
 	{
-		setName (name);
-		setIcon (icon);
+		setName(name);
+		setIcon(icon);
 	}
 
 	/**
@@ -58,10 +58,10 @@ public class IAction extends AbstractAction
 	 *
 	 * @param icon The new image icon
 	 */
-	public void setIcon (ImageIcon icon)
+	public void setIcon(ImageIcon icon)
 	{
-		setSmallIcon (icon);
-		setLargeIcon (icon);
+		setSmallIcon(icon);
+		setLargeIcon(icon);
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class IAction extends AbstractAction
 	 *
 	 * @param icon The new image icon
 	 */
-	public void setSmallIcon (ImageIcon icon)
+	public void setSmallIcon(ImageIcon icon)
 	{
-		putValue (Action.SMALL_ICON, icon);
+		putValue(Action.SMALL_ICON, icon);
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class IAction extends AbstractAction
 	 *
 	 * @return The small icon
 	 */
-	public ImageIcon getSmallIcon ()
+	public ImageIcon getSmallIcon()
 	{
-		return (ImageIcon) getValue (Action.SMALL_ICON);
+		return (ImageIcon) getValue(Action.SMALL_ICON);
 	}
 
 	/**
@@ -89,9 +89,9 @@ public class IAction extends AbstractAction
 	 *
 	 * @param icon The new image icon
 	 */
-	public void setLargeIcon (ImageIcon icon)
+	public void setLargeIcon(ImageIcon icon)
 	{
-		putValue (Action.LARGE_ICON_KEY, icon);
+		putValue(Action.LARGE_ICON_KEY, icon);
 	}
 
 	/**
@@ -99,9 +99,9 @@ public class IAction extends AbstractAction
 	 *
 	 * @return The large icon
 	 */
-	public ImageIcon getLargeIcon ()
+	public ImageIcon getLargeIcon()
 	{
-		return (ImageIcon) getValue (Action.LARGE_ICON_KEY);
+		return (ImageIcon) getValue(Action.LARGE_ICON_KEY);
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class IAction extends AbstractAction
 	 *
 	 * @param name The new action name
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
-		putValue (Action.NAME, Engine.instance ().getResourceService ().getStringWithoutException (name));
+		putValue(Action.NAME, Engine.instance().getResourceService().getStringWithoutException(name));
 	}
 
 	/**
@@ -120,28 +120,28 @@ public class IAction extends AbstractAction
 	 *
 	 * @return The action name
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return (String) getValue (Action.NAME);
+		return (String) getValue(Action.NAME);
 	}
 
-	public void setToolTipText (String toolTipText)
+	public void setToolTipText(String toolTipText)
 	{
-		putValue (Action.SHORT_DESCRIPTION, Engine.instance ().getResourceService ().getStringWithoutException (
-						toolTipText));
+		putValue(Action.SHORT_DESCRIPTION, Engine.instance().getResourceService()
+						.getStringWithoutException(toolTipText));
 	}
 
 	/** A list of procedures that are invoked before calling the action handler */
-	protected List<Procedure1<IActionEvent>> actionInterceptors = new LinkedList ();
+	protected List<Procedure1<IActionEvent>> actionInterceptors = new LinkedList();
 
-	public void addActionInterceptor (Procedure1<IActionEvent> proc)
+	public void addActionInterceptor(Procedure1<IActionEvent> proc)
 	{
-		actionInterceptors.add (proc);
+		actionInterceptors.add(proc);
 	}
 
-	public void removeActionInterceptor (Procedure1<IActionEvent> proc)
+	public void removeActionInterceptor(Procedure1<IActionEvent> proc)
 	{
-		actionInterceptors.remove (proc);
+		actionInterceptors.remove(proc);
 	}
 
 	/**
@@ -150,14 +150,14 @@ public class IAction extends AbstractAction
 	 *
 	 * @param e The action event
 	 */
-	public void actionPerformed (ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
-		IActionEvent event = new IActionEvent (e);
+		IActionEvent event = new IActionEvent(e);
 		for (Procedure1<IActionEvent> proc : actionInterceptors)
 		{
-			proc.execute (event);
+			proc.execute(event);
 		}
-		action (event);
+		action(event);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class IAction extends AbstractAction
 	 *
 	 * @param e The action event.
 	 */
-	public void action (IActionEvent event)
+	public void action(IActionEvent event)
 	{
 	}
 

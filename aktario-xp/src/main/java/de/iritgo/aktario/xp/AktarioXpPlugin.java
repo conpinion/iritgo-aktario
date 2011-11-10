@@ -34,39 +34,39 @@ public class AktarioXpPlugin extends AktarioPlugin
 	/**
 	 * Register all data objects in this method.
 	 */
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new SoftwareReviewData ());
+		registerDataObject(new SoftwareReviewData());
 	}
 
 	/**
 	 * Register all actions in this method.
 	 */
-	protected void registerActions ()
+	protected void registerActions()
 	{
-		registerAction (new RemoteControlCodeAction ());
-		registerAction (new RemoteControlCodeServerAction ());
+		registerAction(new RemoteControlCodeAction());
+		registerAction(new RemoteControlCodeServerAction());
 	}
 
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new XPManager ());
+		registerManager(Plugin.SERVER, new XPManager());
 	}
 
 	/**
 	 * Register all gui panes in this method.
 	 */
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (new SoftwareReviewPane ());
+		registerGUIPane(new SoftwareReviewPane());
 	}
 
 	/**
 	 * Register all collaboration applications in this method.
 	 */
-	public void registerApplications ()
+	public void registerApplications()
 	{
-		registerApplication ("aktario.xp.SoftwareReview", "aktario.softwareReview", "/resources/xp.png",
+		registerApplication("aktario.xp.SoftwareReview", "aktario.softwareReview", "/resources/xp.png",
 						"SoftwareReviewPane");
 	}
 }

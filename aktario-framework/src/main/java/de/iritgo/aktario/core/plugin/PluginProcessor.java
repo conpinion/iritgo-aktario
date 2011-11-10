@@ -42,111 +42,111 @@ public class PluginProcessor
 
 	private List sortedPlugins;
 
-	public PluginProcessor (List plugins)
+	public PluginProcessor(List plugins)
 	{
 		this.plugins = plugins;
-		initedPlugins = new LinkedList ();
+		initedPlugins = new LinkedList();
 	}
 
-	public void doPlugins (PluginProcess process, int direction)
+	public void doPlugins(PluginProcess process, int direction)
 	{
-		sortedPlugins = generateSortedList ();
+		sortedPlugins = generateSortedList();
 
 		if (direction == FORWARD)
 		{
-			Iterator i = sortedPlugins.iterator ();
+			Iterator i = sortedPlugins.iterator();
 
-			while (i.hasNext ())
+			while (i.hasNext())
 			{
-				doPlugin (process, (PluginContext) i.next ());
+				doPlugin(process, (PluginContext) i.next());
 			}
 		}
 		else
 		{
-			ListIterator i = sortedPlugins.listIterator (sortedPlugins.size ());
+			ListIterator i = sortedPlugins.listIterator(sortedPlugins.size());
 
-			while (i.hasPrevious ())
+			while (i.hasPrevious())
 			{
-				doPlugin (process, (PluginContext) i.previous ());
+				doPlugin(process, (PluginContext) i.previous());
 			}
 		}
 	}
 
-	public void doPlugin (PluginProcess process, PluginContext pluginContext)
+	public void doPlugin(PluginProcess process, PluginContext pluginContext)
 	{
-		Thread.currentThread ().setContextClassLoader (pluginContext.getClassLoader ());
+		Thread.currentThread().setContextClassLoader(pluginContext.getClassLoader());
 
-		Plugin plugin = pluginContext.getPlugin ();
+		Plugin plugin = pluginContext.getPlugin();
 
-		process.doPlugin (plugin);
-		initedPlugins.add (plugin.getName ());
+		process.doPlugin(plugin);
+		initedPlugins.add(plugin.getName());
 
-		ClassLoader parentloader = pluginContext.getClassLoader ().getParent ();
+		ClassLoader parentloader = pluginContext.getClassLoader().getParent();
 
-		Thread.currentThread ().setContextClassLoader (parentloader);
+		Thread.currentThread().setContextClassLoader(parentloader);
 	}
 
-	public LinkedList generateSortedList ()
+	public LinkedList generateSortedList()
 	{
 		int lastDiv = - 1;
 
-		initedPlugins.add ("FIRST");
+		initedPlugins.add("FIRST");
 
-		int pluginsSize = plugins.size () + 1;
-		LinkedList sortedList = new LinkedList ();
+		int pluginsSize = plugins.size() + 1;
+		LinkedList sortedList = new LinkedList();
 
 		while (true)
 		{
-			if (lastDiv == (pluginsSize - (initedPlugins.size ())))
+			if (lastDiv == (pluginsSize - (initedPlugins.size())))
 			{
-				initedPlugins.add ("LAST");
+				initedPlugins.add("LAST");
 			}
 
-			lastDiv = pluginsSize - (initedPlugins.size ());
+			lastDiv = pluginsSize - (initedPlugins.size());
 
-			if (pluginsSize == initedPlugins.size ())
+			if (pluginsSize == initedPlugins.size())
 			{
 				return sortedList;
 			}
 
-			Iterator i = plugins.iterator ();
+			Iterator i = plugins.iterator();
 
-			while (i.hasNext ())
+			while (i.hasNext())
 			{
-				PluginContext pluginContext = (PluginContext) i.next ();
+				PluginContext pluginContext = (PluginContext) i.next();
 
-				Thread.currentThread ().setContextClassLoader (pluginContext.getClassLoader ());
+				Thread.currentThread().setContextClassLoader(pluginContext.getClassLoader());
 
-				Plugin plugin = pluginContext.getPlugin ();
+				Plugin plugin = pluginContext.getPlugin();
 
-				if (! checkIsDependencyOK (plugin.getDependency ()))
+				if (! checkIsDependencyOK(plugin.getDependency()))
 				{
 					continue;
 				}
 
 				// True if plugin allready initialized...
-				if (initedPlugins.contains (plugin.getName ()))
+				if (initedPlugins.contains(plugin.getName()))
 				{
 					continue;
 				}
 
-				sortedList.add (pluginContext);
-				initedPlugins.add (plugin.getName ());
+				sortedList.add(pluginContext);
+				initedPlugins.add(plugin.getName());
 
-				ClassLoader parentloader = pluginContext.getClassLoader ().getParent ();
+				ClassLoader parentloader = pluginContext.getClassLoader().getParent();
 
-				Thread.currentThread ().setContextClassLoader (parentloader);
+				Thread.currentThread().setContextClassLoader(parentloader);
 			}
 		}
 	}
 
-	public boolean checkIsDependencyOK (String dependency)
+	public boolean checkIsDependencyOK(String dependency)
 	{
-		StringTokenizer st = new StringTokenizer (dependency, ",");
+		StringTokenizer st = new StringTokenizer(dependency, ",");
 
-		while (st.hasMoreTokens ())
+		while (st.hasMoreTokens())
 		{
-			if (! initedPlugins.contains (st.nextToken ()))
+			if (! initedPlugins.contains(st.nextToken()))
 			{
 				return false;
 			}

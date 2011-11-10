@@ -40,39 +40,39 @@ public class ChatClientManager extends ChatManager
 	@SuppressWarnings("unused")
 	private String displayId;
 
-	public ChatClientManager ()
+	public ChatClientManager()
 	{
-		super ("chat.client", Client.instance ().getUserRegistry ());
+		super("chat.client", Client.instance().getUserRegistry());
 	}
 
-	public ChatClientManager (String displayId)
+	public ChatClientManager(String displayId)
 	{
-		this ();
+		this();
 		this.displayId = displayId;
 	}
 
-	public void joinChannel (String channelName, long chatter, String chatterName)
+	public void joinChannel(String channelName, long chatter, String chatterName)
 	{
-		if (getUserName (chatter) == null)
+		if (getUserName(chatter) == null)
 		{
-			UserRegistry userRegistry = Client.instance ().getUserRegistry ();
+			UserRegistry userRegistry = Client.instance().getUserRegistry();
 
-			userRegistry.addUser (new User (chatterName, "", chatter, "", 0));
+			userRegistry.addUser(new User(chatterName, "", chatter, "", 0));
 		}
 
 		try
 		{
-			super.joinChannel (channelName, chatter);
+			super.joinChannel(channelName, chatter);
 		}
 		catch (UserAllreadyJoindException x)
 		{
 		}
 
-		ChatGUI chatGUI = getChatGUI ();
+		ChatGUI chatGUI = getChatGUI();
 
 		if (chatGUI != null)
 		{
-			chatGUI.joinChannel (channelName, chatterName);
+			chatGUI.joinChannel(channelName, chatterName);
 		}
 	}
 
@@ -83,143 +83,143 @@ public class ChatClientManager extends ChatManager
 	 * @param chatter The useruniqueid
 	 */
 	@Override
-	public void leaveChannel (Integer channelId, long chatter)
+	public void leaveChannel(Integer channelId, long chatter)
 	{
-		ChatChannel chatChannel = (ChatChannel) chatChannels.get (channelId);
+		ChatChannel chatChannel = (ChatChannel) chatChannels.get(channelId);
 
 		if (chatChannel != null)
 		{
-			chatChannel.removeChatter (new Long (chatter));
+			chatChannel.removeChatter(new Long(chatter));
 
-			UserRegistry userRegistry = Client.instance ().getUserRegistry ();
-			User user = userRegistry.getUser (chatter);
+			UserRegistry userRegistry = Client.instance().getUserRegistry();
+			User user = userRegistry.getUser(chatter);
 
 			if (user == null)
 			{
 				return;
 			}
 
-			if (user.getUniqueId () == chatter)
+			if (user.getUniqueId() == chatter)
 			{
-				chatChannels.remove (channelId);
+				chatChannels.remove(channelId);
 			}
 		}
 	}
 
-	public void leaveChannel (Integer channelId, long chatter, String chatterName)
+	public void leaveChannel(Integer channelId, long chatter, String chatterName)
 	{
-		Engine.instance ().getFlowControl ().ruleSuccess ("shutdown.in.progress." + getTypeId ());
+		Engine.instance().getFlowControl().ruleSuccess("shutdown.in.progress." + getTypeId());
 
-		ChatGUI chatGUI = getChatGUI ();
+		ChatGUI chatGUI = getChatGUI();
 
 		if (chatGUI != null)
 		{
-			chatGUI.leaveChannel (channelId, chatterName);
+			chatGUI.leaveChannel(channelId, chatterName);
 		}
 
-		leaveChannel (channelId, chatter);
+		leaveChannel(channelId, chatter);
 	}
 
-	public void messageChannel (String message, int channelId, long chatter, String chatterName)
+	public void messageChannel(String message, int channelId, long chatter, String chatterName)
 	{
-		super.messageChannel (message, channelId, chatter);
+		super.messageChannel(message, channelId, chatter);
 
-		ChatGUI chatGUI = getChatGUI ();
+		ChatGUI chatGUI = getChatGUI();
 
 		if (chatGUI != null)
 		{
-			chatGUI.addMessage (message, channelId, chatterName);
+			chatGUI.addMessage(message, channelId, chatterName);
 		}
 	}
 
-	private ChatGUI getChatGUI ()
+	private ChatGUI getChatGUI()
 	{
-		IDesktopManager displayManager = Client.instance ().getClientGUI ().getDesktopManager ();
-		IDisplay display = displayManager.getDisplay ("common.chatview");
+		IDesktopManager displayManager = Client.instance().getClientGUI().getDesktopManager();
+		IDisplay display = displayManager.getDisplay("common.chatview");
 
 		if (display != null)
 		{
-			return (ChatGUI) display.getGUIPane ();
+			return (ChatGUI) display.getGUIPane();
 		}
 
 		return null;
 	}
 
-	private String getUserName (long userId)
+	private String getUserName(long userId)
 	{
-		UserRegistry userRegistry = Client.instance ().getUserRegistry ();
-		User user = userRegistry.getUser (userId);
+		UserRegistry userRegistry = Client.instance().getUserRegistry();
+		User user = userRegistry.getUser(userId);
 
 		if (user != null)
 		{
-			return user.getName ();
+			return user.getName();
 		}
 
 		return null;
 	}
 
-	public Integer getCurrentChannel ()
+	public Integer getCurrentChannel()
 	{
-		ChatGUI chatGUI = getChatGUI ();
+		ChatGUI chatGUI = getChatGUI();
 
 		if (chatGUI != null)
 		{
-			return chatGUI.getCurrentChannel ();
+			return chatGUI.getCurrentChannel();
 		}
 
-		return new Integer (- 1);
+		return new Integer(- 1);
 	}
 
 	/**
 	 * This client close all open channels
 	 */
-	public void doShutdownNotify ()
+	public void doShutdownNotify()
 	{
-		closeAllChannels ();
+		closeAllChannels();
 	}
 
 	/**
 	 * This client close all open channels
 	 */
-	public void closeAllChannels ()
+	public void closeAllChannels()
 	{
-		if (! AppContext.instance ().isUserLoggedIn ())
+		if (! AppContext.instance().isUserLoggedIn())
 		{
 			return;
 		}
 
-		Object lockObject = AppContext.instance ().getLockObject ();
+		Object lockObject = AppContext.instance().getLockObject();
 
 		synchronized (lockObject)
 		{
 			int channels = 0;
 
-			for (Iterator i = getChatChannelIterator (); i.hasNext ();)
+			for (Iterator i = getChatChannelIterator(); i.hasNext();)
 			{
 				ChatChannel channel = null;
 
 				try
 				{
-					channel = (ChatChannel) i.next ();
+					channel = (ChatChannel) i.next();
 				}
 				catch (Exception x)
 				{
-					x.printStackTrace ();
+					x.printStackTrace();
 
 					continue;
 				}
 
-				UserLeaveCommand userLeaveCommand = new UserLeaveCommand (channel.getChannelId ());
+				UserLeaveCommand userLeaveCommand = new UserLeaveCommand(channel.getChannelId());
 
-				IritgoEngine.instance ().getAsyncCommandProcessor ().perform (userLeaveCommand);
+				IritgoEngine.instance().getAsyncCommandProcessor().perform(userLeaveCommand);
 				++channels;
 			}
 
 			if (channels != 0)
 			{
-				FlowControl flowControll = Engine.instance ().getFlowControl ();
+				FlowControl flowControll = Engine.instance().getFlowControl();
 
-				flowControll.add (new CountingFlowRule ("shutdown.in.progress." + getTypeId (), channels));
+				flowControll.add(new CountingFlowRule("shutdown.in.progress." + getTypeId(), channels));
 			}
 		}
 	}

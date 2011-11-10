@@ -40,18 +40,17 @@ public class ActionTools
 	 *
 	 * @param action The action to execute.
 	 */
-	public static void sendToServer (Action action)
+	public static void sendToServer(Action action)
 	{
-		if (action.getTransceiver () == null)
+		if (action.getTransceiver() == null)
 		{
-			ClientTransceiver ct = new ClientTransceiver (AppContext.instance ().getChannelNumber ());
+			ClientTransceiver ct = new ClientTransceiver(AppContext.instance().getChannelNumber());
 
-			ct.addReceiver (AppContext.instance ().getChannelNumber ());
-			action.setTransceiver (ct);
+			ct.addReceiver(AppContext.instance().getChannelNumber());
+			action.setTransceiver(ct);
 		}
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Client.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Client.SendEntryNetworkActionProcessor").perform(action);
 	}
 
 	/**
@@ -60,28 +59,9 @@ public class ActionTools
 	 *
 	 * @param action The action to execute.
 	 */
-	public static void sendToClient (Action action)
+	public static void sendToClient(Action action)
 	{
-		Engine.instance ().getActionProcessorRegistry ().get ("Server.SendEntryNetworkActionProcessor")
-						.perform (action);
-	}
-
-	/**
-	 * Perform an action via the processor that sends actions from the server
-	 * to the client.
-	 *
-	 * @param action The action to execute.
-	 * @param user The user to send.
-	 */
-	public static void sendToClient (User user, Action action)
-	{
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
-
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
-		action.setTransceiver (clientTransceiver);
-
-		Engine.instance ().getActionProcessorRegistry ().get ("Server.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Server.SendEntryNetworkActionProcessor").perform(action);
 	}
 
 	/**
@@ -91,17 +71,33 @@ public class ActionTools
 	 * @param action The action to execute.
 	 * @param user The user to send.
 	 */
-	public static void sendToClient (long userUniqueId, Action action)
+	public static void sendToClient(User user, Action action)
 	{
-		User user = Server.instance ().getUserRegistry ().getUser (userUniqueId);
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		clientTransceiver.addReceiver(user.getNetworkChannel());
+		action.setTransceiver(clientTransceiver);
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
-		action.setTransceiver (clientTransceiver);
+		Engine.instance().getActionProcessorRegistry().get("Server.SendEntryNetworkActionProcessor").perform(action);
+	}
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Server.SendEntryNetworkActionProcessor")
-						.perform (action);
+	/**
+	 * Perform an action via the processor that sends actions from the server
+	 * to the client.
+	 *
+	 * @param action The action to execute.
+	 * @param user The user to send.
+	 */
+	public static void sendToClient(long userUniqueId, Action action)
+	{
+		User user = Server.instance().getUserRegistry().getUser(userUniqueId);
+
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
+
+		clientTransceiver.addReceiver(user.getNetworkChannel());
+		action.setTransceiver(clientTransceiver);
+
+		Engine.instance().getActionProcessorRegistry().get("Server.SendEntryNetworkActionProcessor").perform(action);
 	}
 
 	/**
@@ -111,27 +107,26 @@ public class ActionTools
 	 * @param user The user name to send.
 	 * @param action The action to execute.
 	 */
-	public static void sendToClient (String userName, Action action)
+	public static void sendToClient(String userName, Action action)
 	{
-		User user = Server.instance ().getUserRegistry ().getUser (userName);
+		User user = Server.instance().getUserRegistry().getUser(userName);
 
 		if (user == null)
 		{
 			return;
 		}
 
-		if (! user.isOnline ())
+		if (! user.isOnline())
 		{
 			return;
 		}
 
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
-		action.setTransceiver (clientTransceiver);
+		clientTransceiver.addReceiver(user.getNetworkChannel());
+		action.setTransceiver(clientTransceiver);
 
-		Engine.instance ().getActionProcessorRegistry ().get ("Server.SendEntryNetworkActionProcessor")
-						.perform (action);
+		Engine.instance().getActionProcessorRegistry().get("Server.SendEntryNetworkActionProcessor").perform(action);
 	}
 
 	/**
@@ -139,19 +134,18 @@ public class ActionTools
 	 *
 	 * @param action The action to execute.
 	 */
-	public static void sendServerBroadcast (Action action)
+	public static void sendServerBroadcast(Action action)
 	{
-		ClientTransceiver clientTransceiver = new ClientTransceiver (- 1);
+		ClientTransceiver clientTransceiver = new ClientTransceiver(- 1);
 
-		for (Iterator i = Server.instance ().getUserRegistry ().onlineUserIterator (); i.hasNext ();)
+		for (Iterator i = Server.instance().getUserRegistry().onlineUserIterator(); i.hasNext();)
 		{
-			User userToSend = (User) i.next ();
+			User userToSend = (User) i.next();
 
-			clientTransceiver.addReceiver (userToSend.getNetworkChannel ());
+			clientTransceiver.addReceiver(userToSend.getNetworkChannel());
 		}
 
-		action.setTransceiver (clientTransceiver);
-		Engine.instance ().getActionProcessorRegistry ().get ("Server.SendEntryNetworkActionProcessor")
-						.perform (action);
+		action.setTransceiver(clientTransceiver);
+		Engine.instance().getActionProcessorRegistry().get("Server.SendEntryNetworkActionProcessor").perform(action);
 	}
 }

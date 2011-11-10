@@ -36,7 +36,7 @@ import java.util.Date;
  */
 public class NetworkDisplay implements InfoCenterDisplay
 {
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat ("D");
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("D");
 
 	private String infoStoreFile;
 
@@ -44,13 +44,13 @@ public class NetworkDisplay implements InfoCenterDisplay
 
 	private LineNumberReader reader;
 
-	private String month = simpleDateFormat.format (new Date ());
+	private String month = simpleDateFormat.format(new Date());
 
 	/**
 	 * Constructor
 	 *
 	 */
-	public NetworkDisplay ()
+	public NetworkDisplay()
 	{
 	}
 
@@ -59,7 +59,7 @@ public class NetworkDisplay implements InfoCenterDisplay
 	 *
 	 * @param infoStoreFile The filename
 	 */
-	public void setInfoStoreFile (String infoStoreFile)
+	public void setInfoStoreFile(String infoStoreFile)
 	{
 		this.infoStoreFile = infoStoreFile;
 	}
@@ -68,7 +68,7 @@ public class NetworkDisplay implements InfoCenterDisplay
 	 * Get the Id of the Logger
 	 *
 	 */
-	public String getId ()
+	public String getId()
 	{
 		return "network.display";
 	}
@@ -78,7 +78,7 @@ public class NetworkDisplay implements InfoCenterDisplay
 	 *
 	 * @param category
 	 */
-	public void init (String category, int context, User user)
+	public void init(String category, int context, User user)
 	{
 		//Thats dont work, you can use different clients
 		// 		String lastLoggedIn = simpleDateFormat.format (user.getLoggedOutDate ());
@@ -102,24 +102,24 @@ public class NetworkDisplay implements InfoCenterDisplay
 	 * release
 	 *
 	 */
-	public void release ()
+	public void release()
 	{
 	}
 
 	/**
 	 * Info
 	 */
-	public void info (User user, int context, String category, String icon, String message, String guiPaneId,
+	public void info(User user, int context, String category, String icon, String message, String guiPaneId,
 					long uniqueId, String iObjectTypeId, int level)
 	{
-		ClientTransceiver clientTransceiver = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver clientTransceiver = new ClientTransceiver(user.getNetworkChannel());
 
-		clientTransceiver.addReceiver (user.getNetworkChannel ());
+		clientTransceiver.addReceiver(user.getNetworkChannel());
 
-		InfoCenterAction action = new InfoCenterAction (context, category, icon, message, guiPaneId, uniqueId,
+		InfoCenterAction action = new InfoCenterAction(context, category, icon, message, guiPaneId, uniqueId,
 						iObjectTypeId, level);
 
-		action.setTransceiver (clientTransceiver);
-		ActionTools.sendToClient (action);
+		action.setTransceiver(clientTransceiver);
+		ActionTools.sendToClient(action);
 	}
 }

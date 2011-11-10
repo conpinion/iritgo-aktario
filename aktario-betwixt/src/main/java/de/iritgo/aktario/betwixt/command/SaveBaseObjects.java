@@ -46,16 +46,16 @@ public class SaveBaseObjects extends Command
 {
 	private String path;
 
-	public SaveBaseObjects ()
+	public SaveBaseObjects()
 	{
-		super ("savebaseobjects");
-		path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator () + "data"
-						+ Engine.instance ().getFileSeparator ();
+		super("savebaseobjects");
+		path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator() + "data"
+						+ Engine.instance().getFileSeparator();
 	}
 
-	public SaveBaseObjects (String path)
+	public SaveBaseObjects(String path)
 	{
-		this ();
+		this();
 		this.path = path;
 	}
 
@@ -65,126 +65,127 @@ public class SaveBaseObjects extends Command
 	 * @param properties The properties.
 	 */
 	@Override
-	public void setProperties (Properties properties)
+	public void setProperties(Properties properties)
 	{
-		path = (String) properties.get ("path");
+		path = (String) properties.get("path");
 
 		if (path == null)
 		{
-			path = Engine.instance ().getSystemDir () + Engine.instance ().getFileSeparator ();
+			path = Engine.instance().getSystemDir() + Engine.instance().getFileSeparator();
 		}
 	}
 
 	@Override
-	public void perform ()
+	public void perform()
 	{
 		BeanWriter writer = null;
 
-		BaseRegistry baseRegistry = Engine.instance ().getBaseRegistry ();
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		BaseRegistry baseRegistry = Engine.instance().getBaseRegistry();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
 			try
 			{
-				User user = (User) i.next ();
+				User user = (User) i.next();
 
-				writer = new BeanWriter (new BufferedOutputStream (new FileOutputStream (path + user.getTypeId () + "."
-								+ user.getUniqueId ())));
+				writer = new BeanWriter(new BufferedOutputStream(new FileOutputStream(path + user.getTypeId() + "."
+								+ user.getUniqueId())));
 
-				writer.getXMLIntrospector ().setAttributesForPrimitives (true);
-				writer.enablePrettyPrint ();
+				writer.getXMLIntrospector().setAttributesForPrimitives(true);
+				writer.enablePrettyPrint();
 				//				writer.getBindingConfiguration ().setMapIDs (false);
-				writer.write (user);
-				writer.close ();
+				writer.write(user);
+				writer.close();
 			}
 			catch (Exception x)
 			{
-				x.printStackTrace ();
+				x.printStackTrace();
 			}
 		}
 
-		for (Iterator i = baseRegistry.iterator (); i.hasNext ();)
+		for (Iterator i = baseRegistry.iterator(); i.hasNext();)
 		{
 			try
 			{
-				BaseObject baseObject = (BaseObject) i.next ();
+				BaseObject baseObject = (BaseObject) i.next();
 
 				if (baseObject instanceof DataObject)
 				{
 					DataObject dataObject = (DataObject) baseObject;
 
-					writer = new BeanWriter (new BufferedOutputStream (new FileOutputStream (path
-									+ baseObject.getTypeId () + "." + baseObject.getUniqueId ())));
-					writer.getXMLIntrospector ().setAttributesForPrimitives (true);
-					writer.enablePrettyPrint ();
+					writer = new BeanWriter(new BufferedOutputStream(new FileOutputStream(path + baseObject.getTypeId()
+									+ "." + baseObject.getUniqueId())));
+					writer.getXMLIntrospector().setAttributesForPrimitives(true);
+					writer.enablePrettyPrint();
 
 					//					writer.getBindingConfiguration ().setMapIDs (false);
-					BaseObjectMapping save = new BaseObjectMapping ();
+					BaseObjectMapping save = new BaseObjectMapping();
 
-					for (Iterator j = dataObject.getAttributes ().keySet ().iterator (); j.hasNext ();)
+					for (Iterator j = dataObject.getAttributes().keySet().iterator(); j.hasNext();)
 					{
-						String key = (String) j.next ();
-						Object object = dataObject.getAttribute (key);
+						String key = (String) j.next();
+						Object object = dataObject.getAttribute(key);
 
 						// SCHEISSE (SHIT) (BULLSHIT)
 						if (object instanceof Integer)
 						{
-							save.addInteger (new Context (key, String.valueOf (object)));
+							save.addInteger(new Context(key, String.valueOf(object)));
 						}
 
 						if (object instanceof Long)
 						{
-							save.addLong (new Context (key, String.valueOf (object)));
+							save.addLong(new Context(key, String.valueOf(object)));
 						}
 
 						if (object instanceof Double)
 						{
-							save.addDouble (new Context (key, String.valueOf (object)));
+							save.addDouble(new Context(key, String.valueOf(object)));
 						}
 
 						if (object instanceof String)
 						{
-							save.addString (new Context (key, (String) object));
+							save.addString(new Context(key, (String) object));
 						}
 
 						if (object instanceof IObjectList)
 						{
 							IObjectList proxyLinkedList = (IObjectList) object;
-							Context context = new Context (key, proxyLinkedList.getOwner ().getTypeId (), String
-											.valueOf (proxyLinkedList.getOwner ().getUniqueId ()));
+							Context context = new Context(key, proxyLinkedList.getOwner().getTypeId(), String
+											.valueOf(proxyLinkedList.getOwner().getUniqueId()));
 
-							for (Iterator l = proxyLinkedList.iterator (); l.hasNext ();)
+							for (Iterator l = proxyLinkedList.iterator(); l.hasNext();)
 							{
-								BaseObject pObject = (BaseObject) l.next ();
+								BaseObject pObject = (BaseObject) l.next();
 
-								context.addChild (new Context (pObject.getTypeId (), String.valueOf (pObject
-												.getUniqueId ())));
+								context
+												.addChild(new Context(pObject.getTypeId(), String.valueOf(pObject
+																.getUniqueId())));
 							}
 
-							save.addProxyLinkedList (context);
+							save.addProxyLinkedList(context);
 						}
 
 						if (object instanceof DataObject)
 						{
-							save.addDataObject (new Context (key, String.valueOf (object)));
+							save.addDataObject(new Context(key, String.valueOf(object)));
 						}
 					}
 
-					save.setId (dataObject.getTypeId ());
-					save.setUniqueId (dataObject.getUniqueId ());
+					save.setId(dataObject.getTypeId());
+					save.setUniqueId(dataObject.getUniqueId());
 
-					writer.write (save);
+					writer.write(save);
 				}
 			}
 			catch (Exception x)
 			{
-				x.printStackTrace ();
+				x.printStackTrace();
 			}
 
 			try
 			{
-				writer.close ();
+				writer.close();
 			}
 			catch (Exception x)
 			{

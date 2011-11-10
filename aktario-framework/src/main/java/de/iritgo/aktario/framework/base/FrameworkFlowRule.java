@@ -43,24 +43,24 @@ public class FrameworkFlowRule extends FlowRule
 	 * @param successCommand successCommand id.
 	 * @param failureCommand failureCommand id.
 	 */
-	public FrameworkFlowRule (String id, Command successCommand, Command failureCommand)
+	public FrameworkFlowRule(String id, Command successCommand, Command failureCommand)
 	{
-		super (id);
+		super(id);
 		this.successCommand = successCommand;
 		this.failureCommand = failureCommand;
 		completeState = true;
 	}
 
 	@Override
-	public void success ()
+	public void success()
 	{
-		IritgoEngine.instance ().getAsyncCommandProcessor ().perform (successCommand);
+		IritgoEngine.instance().getAsyncCommandProcessor().perform(successCommand);
 	}
 
 	@Override
-	public void failure ()
+	public void failure()
 	{
-		IritgoEngine.instance ().getAsyncCommandProcessor ().perform (failureCommand);
+		IritgoEngine.instance().getAsyncCommandProcessor().perform(failureCommand);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class FrameworkFlowRule extends FlowRule
 	 *
 	 * @return True if the rule has succeeded.
 	 */
-	public void setCompleteState (Boolean state)
+	public void setCompleteState(Boolean state)
 	{
 		completeState = state;
 	}
@@ -79,7 +79,7 @@ public class FrameworkFlowRule extends FlowRule
 	 * @return True if the rule has succeeded.
 	 */
 	@Override
-	public boolean isCompleted ()
+	public boolean isCompleted()
 	{
 		return completeState;
 	}

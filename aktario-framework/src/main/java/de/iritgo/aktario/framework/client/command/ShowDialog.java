@@ -55,9 +55,9 @@ public class ShowDialog extends Command
 	 *
 	 * @param guiPaneId The GUIPane to show.
 	 */
-	public ShowDialog (String guiPaneId)
+	public ShowDialog(String guiPaneId)
 	{
-		init (guiPaneId, guiPaneId, null, null);
+		init(guiPaneId, guiPaneId, null, null);
 	}
 
 	/**
@@ -65,9 +65,9 @@ public class ShowDialog extends Command
 	 *
 	 * @deprecated
 	 */
-	public ShowDialog (String guiPaneId, long unqiueId)
+	public ShowDialog(String guiPaneId, long unqiueId)
 	{
-		this (guiPaneId, guiPaneId, unqiueId, null);
+		this(guiPaneId, guiPaneId, unqiueId, null);
 	}
 
 	/**
@@ -76,9 +76,9 @@ public class ShowDialog extends Command
 	 * @param guiPaneId The GUIPane to show.
 	 * @param prototypeable A data object prototype.
 	 */
-	public ShowDialog (String guiPaneId, IObject prototypeable)
+	public ShowDialog(String guiPaneId, IObject prototypeable)
 	{
-		init (guiPaneId, guiPaneId, prototypeable, null);
+		init(guiPaneId, guiPaneId, prototypeable, null);
 	}
 
 	/**
@@ -87,34 +87,34 @@ public class ShowDialog extends Command
 	 * @param guiPaneId The GUIPane to show.
 	 * @param unqiueId The id of the data object
 	 */
-	public ShowDialog (String guiPaneId, String onScreenUniqueId, long unqiueId, String typeId)
+	public ShowDialog(String guiPaneId, String onScreenUniqueId, long unqiueId, String typeId)
 	{
-		GUIPane guiPane = GUIPaneRegistry.instance ().create (guiPaneId);
+		GUIPane guiPane = GUIPaneRegistry.instance().create(guiPaneId);
 
-		IObject prototypeable = (IObject) Engine.instance ().getBaseRegistry ().get (unqiueId, typeId);
+		IObject prototypeable = (IObject) Engine.instance().getBaseRegistry().get(unqiueId, typeId);
 
 		if (prototypeable == null)
 		{
 			try
 			{
-				prototypeable = Engine.instance ().getIObjectFactory ().newInstance (typeId);
+				prototypeable = Engine.instance().getIObjectFactory().newInstance(typeId);
 			}
 			catch (NoSuchIObjectException e)
 			{
 				return;
 			}
 
-			prototypeable.setUniqueId (unqiueId);
-			Engine.instance ().getBaseRegistry ().add ((BaseObject) prototypeable);
+			prototypeable.setUniqueId(unqiueId);
+			Engine.instance().getBaseRegistry().add((BaseObject) prototypeable);
 
-			FrameworkProxy appProxy = new FrameworkProxy (prototypeable);
+			FrameworkProxy appProxy = new FrameworkProxy(prototypeable);
 
-			appProxy.setSampleRealObject ((IObject) prototypeable);
-			Engine.instance ().getProxyRegistry ().addProxy (appProxy, prototypeable.getTypeId ());
+			appProxy.setSampleRealObject((IObject) prototypeable);
+			Engine.instance().getProxyRegistry().addProxy(appProxy, prototypeable.getTypeId());
 		}
 
 		// TODO: Release after init?
-		init (guiPaneId, onScreenUniqueId, prototypeable, null);
+		init(guiPaneId, onScreenUniqueId, prototypeable, null);
 	}
 
 	/**
@@ -123,9 +123,9 @@ public class ShowDialog extends Command
 	 * @param guiPaneId The GUIPane to show.
 	 * @param sessionContext The session context.
 	 */
-	public ShowDialog (String guiPaneId, SessionContext sessionContext)
+	public ShowDialog(String guiPaneId, SessionContext sessionContext)
 	{
-		init (guiPaneId, guiPaneId, null, sessionContext);
+		init(guiPaneId, guiPaneId, null, sessionContext);
 	}
 
 	/**
@@ -135,15 +135,15 @@ public class ShowDialog extends Command
 	 * @param prototypeable A data object prototype.
 	 * @param sessionContext The session context.
 	 */
-	public ShowDialog (String guiPaneId, IObject prototypeable, SessionContext sessionContext)
+	public ShowDialog(String guiPaneId, IObject prototypeable, SessionContext sessionContext)
 	{
-		init (guiPaneId, guiPaneId, prototypeable, sessionContext);
+		init(guiPaneId, guiPaneId, prototypeable, sessionContext);
 	}
 
 	/**
 	 * Display the IWindow-Pane.
 	 */
-	public void perform ()
+	public void perform()
 	{
 		//		try
 		//		{
@@ -151,22 +151,22 @@ public class ShowDialog extends Command
 		//			{
 		//				public void run ()
 		//				{
-		final IDialog dialog = new IDialog (guiPaneId, onScreenUniqueId);
+		final IDialog dialog = new IDialog(guiPaneId, onScreenUniqueId);
 
-		dialog.setProperties (properties);
+		dialog.setProperties(properties);
 
 		if (prototypeable == null)
 		{
-			dialog.initGUI (guiPaneId, guiPaneId, sessionContext);
+			dialog.initGUI(guiPaneId, guiPaneId, sessionContext);
 		}
 		else
 		{
-			dialog.initGUI (guiPaneId, onScreenUniqueId, prototypeable, sessionContext);
+			dialog.initGUI(guiPaneId, onScreenUniqueId, prototypeable, sessionContext);
 		}
 
-		Client.instance ().getClientGUI ().getDesktopManager ().addDisplay (dialog);
+		Client.instance().getClientGUI().getDesktopManager().addDisplay(dialog);
 
-		dialog.show ();
+		dialog.show();
 
 		//				}
 		//			});
@@ -179,12 +179,12 @@ public class ShowDialog extends Command
 		//		}
 	}
 
-	public boolean canPerform ()
+	public boolean canPerform()
 	{
 		return true;
 	}
 
-	private void init (String guiPaneId, String onScreenUniqueId, IObject prototypeable, SessionContext sessionContext)
+	private void init(String guiPaneId, String onScreenUniqueId, IObject prototypeable, SessionContext sessionContext)
 	{
 		this.guiPaneId = guiPaneId;
 		this.onScreenUniqueId = onScreenUniqueId;

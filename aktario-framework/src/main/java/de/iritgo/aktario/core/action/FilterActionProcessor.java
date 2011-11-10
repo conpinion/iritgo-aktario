@@ -36,11 +36,11 @@ public class FilterActionProcessor extends NetworkActionProcessor
 {
 	private List filterChannels;
 
-	public FilterActionProcessor (String typeId, Channel channel,
+	public FilterActionProcessor(String typeId, Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super (typeId, channel, parentNetworkActionProcessor);
-		filterChannels = new LinkedList ();
+		super(typeId, channel, parentNetworkActionProcessor);
+		filterChannels = new LinkedList();
 	}
 
 	/**
@@ -50,16 +50,16 @@ public class FilterActionProcessor extends NetworkActionProcessor
 	 * @param transceiver The transceiver for this action.
 	 */
 	@Override
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
-		Double channel = new Double (((ClientTransceiver) transceiver).getSender ());
+		Double channel = new Double(((ClientTransceiver) transceiver).getSender());
 
-		if ((channel.doubleValue () >= 0) && (filterChannels.contains (channel)))
+		if ((channel.doubleValue() >= 0) && (filterChannels.contains(channel)))
 		{
 			return;
 		}
 
-		super.perform (action, transceiver);
+		super.perform(action, transceiver);
 	}
 
 	/**
@@ -67,9 +67,9 @@ public class FilterActionProcessor extends NetworkActionProcessor
 	 *
 	 * @param channel The channel.
 	 */
-	public void addChannelToFilter (Double channel)
+	public void addChannelToFilter(Double channel)
 	{
-		filterChannels.add (channel);
+		filterChannels.add(channel);
 	}
 
 	/**
@@ -78,10 +78,10 @@ public class FilterActionProcessor extends NetworkActionProcessor
 	 * @param channel The new channel.
 	 */
 	@Override
-	public void channelClosed (Channel channel)
+	public void channelClosed(Channel channel)
 	{
-		filterChannels.remove (channel);
-		super.channelClosed (channel);
+		filterChannels.remove(channel);
+		super.channelClosed(channel);
 	}
 
 	/**
@@ -90,11 +90,11 @@ public class FilterActionProcessor extends NetworkActionProcessor
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		FilterActionProcessor clone = new FilterActionProcessor (typeId, channel, parentNetworkActionProcessor);
+		FilterActionProcessor clone = new FilterActionProcessor(typeId, channel, parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}

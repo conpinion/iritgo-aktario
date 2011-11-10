@@ -31,17 +31,17 @@ import de.iritgo.aktario.core.AktarioPlugin;
 public class LPDPlugin extends AktarioPlugin
 {
 	@Override
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
 	}
 
 	@Override
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
 	}
 
 	@Override
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
 		/* Deactivated this plugin...
 		if (! IritgoEngine.instance ().isServer ())
@@ -52,7 +52,7 @@ public class LPDPlugin extends AktarioPlugin
 	}
 
 	@Override
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
 	}
 }

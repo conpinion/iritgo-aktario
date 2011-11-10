@@ -42,19 +42,19 @@ public class GetUserRole extends Command
 	/**
 	 * Create a new command.
 	 */
-	public GetUserRole ()
+	public GetUserRole()
 	{
-		super ("GetUserRole");
+		super("GetUserRole");
 	}
 
 	/**
 	 * Perform the command.
 	 */
 	@Override
-	public Object performWithResult ()
+	public Object performWithResult()
 	{
-		AktarioUser user = ((AktarioClientManager) Engine.instance ().getManager ("aktarioclient")).getUser ();
+		AktarioUser user = ((AktarioClientManager) Engine.instance().getManager("aktarioclient")).getUser();
 
-		return new Integer (user.getRole ());
+		return new Integer(user.getRole());
 	}
 }

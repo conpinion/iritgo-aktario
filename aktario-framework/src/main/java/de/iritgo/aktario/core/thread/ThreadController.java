@@ -38,10 +38,10 @@ public class ThreadController extends ThreadPoolExecutor
 
 	private static int POOL_THREAD_TIMEOUT = 60 * 10;
 
-	public ThreadController (@SuppressWarnings("unused") int corePoolSize)
+	public ThreadController(@SuppressWarnings("unused") int corePoolSize)
 	{
-		super (CORE_THREAD_SIZE, MAX_THREAD_SIZE, POOL_THREAD_TIMEOUT, TimeUnit.SECONDS, new SynchronousQueue (true),
-						Executors.defaultThreadFactory ());
+		super(CORE_THREAD_SIZE, MAX_THREAD_SIZE, POOL_THREAD_TIMEOUT, TimeUnit.SECONDS, new SynchronousQueue(true),
+						Executors.defaultThreadFactory());
 	}
 
 	/**
@@ -49,45 +49,45 @@ public class ThreadController extends ThreadPoolExecutor
 	 *
 	 * @param threadable The Threadable Object
 	 */
-	public void add (Threadable threadable)
+	public void add(Threadable threadable)
 	{
-		Log.logVerbose ("thread", "ThreadController", "Threadable added: " + threadable.getName ());
-		Log.logInfo ("thread", "ThreadController", "Active threads: " + getActiveCount () + " Pool size: "
-						+ getPoolSize ());
+		Log.logVerbose("thread", "ThreadController", "Threadable added: " + threadable.getName());
+		Log.logInfo("thread", "ThreadController", "Active threads: " + getActiveCount() + " Pool size: "
+						+ getPoolSize());
 
 		try
 		{
-			execute (threadable);
+			execute(threadable);
 		}
 		catch (Exception x)
 		{
-			Log.logVerbose ("thread", "ThreadController", "Can not add Threadable! " + threadable.getName ());
+			Log.logVerbose("thread", "ThreadController", "Can not add Threadable! " + threadable.getName());
 		}
 	}
 
 	@Override
-	protected void afterExecute (Runnable r, Throwable t)
+	protected void afterExecute(Runnable r, Throwable t)
 	{
 		Threadable threadable = (Threadable) r;
 
 		try
 		{
-			if (threadable.getState () == Threadable.FREE)
+			if (threadable.getState() == Threadable.FREE)
 			{
-				execute (threadable);
+				execute(threadable);
 			}
-			else if (threadable.getState () == Threadable.RUNNING)
+			else if (threadable.getState() == Threadable.RUNNING)
 			{
-				execute (threadable);
+				execute(threadable);
 			}
 			else
 			{
-				Log.logInfo ("thread", "ThreadController", "Thread removed: " + threadable.getName ());
+				Log.logInfo("thread", "ThreadController", "Thread removed: " + threadable.getName());
 			}
 		}
 		catch (Exception x)
 		{
-			Log.logVerbose ("thread", "ThreadController", "Can not add Threadable! " + threadable.getName ());
+			Log.logVerbose("thread", "ThreadController", "Can not add Threadable! " + threadable.getName());
 		}
 	}
 
@@ -96,37 +96,37 @@ public class ThreadController extends ThreadPoolExecutor
 	 *
 	 * @return True if all threads are successfully killed.
 	 */
-	public boolean release ()
+	public boolean release()
 	{
-		System.out.println ("[Iritgo] Terminating all threads");
+		System.out.println("[Iritgo] Terminating all threads");
 
-		shutdown ();
-		shutdownNow ();
+		shutdown();
+		shutdownNow();
 
-		while (! isTerminated ())
+		while (! isTerminated())
 		{
 			try
 			{
-				Thread.sleep (500);
+				Thread.sleep(500);
 			}
 			catch (Exception x)
 			{
 			}
 		}
 
-		System.out.println ("[Iritgo] All threads terminated");
+		System.out.println("[Iritgo] All threads terminated");
 
 		return true;
 	}
 
-	public void notifySlotFree ()
+	public void notifySlotFree()
 	{
 	}
 
 	/**
 	 * Add a ThreadSlot.
 	 */
-	public void addSlot ()
+	public void addSlot()
 	{
 		// 		setCorePoolSize (getCorePoolSize () + 1);
 		// 		Log.logDebug (
@@ -138,8 +138,8 @@ public class ThreadController extends ThreadPoolExecutor
 	 *
 	 * @return The available slots
 	 */
-	public int getAvailableSlots ()
+	public int getAvailableSlots()
 	{
-		return getCorePoolSize () - getActiveCount ();
+		return getCorePoolSize() - getActiveCount();
 	}
 }

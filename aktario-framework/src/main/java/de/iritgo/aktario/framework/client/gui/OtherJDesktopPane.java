@@ -31,25 +31,25 @@ public class OtherJDesktopPane extends JDesktopPane
 {
 	private OtherFrame otherFrame;
 
-	public OtherJDesktopPane (OtherFrame otherFrame)
+	public OtherJDesktopPane(OtherFrame otherFrame)
 	{
-		super ();
+		super();
 		this.otherFrame = otherFrame;
 	}
 
-	public OtherFrame getOtherFrame ()
+	public OtherFrame getOtherFrame()
 	{
 		return otherFrame;
 	}
 
-	public void closeAll ()
+	public void closeAll()
 	{
-		otherFrame.close ();
+		otherFrame.close();
 	}
 
-	protected void addImpl (Component comp, Object constraints, int index)
+	protected void addImpl(Component comp, Object constraints, int index)
 	{
-		otherFrame.windowAdded (comp);
-		super.addImpl (comp, constraints, index);
+		otherFrame.windowAdded(comp);
+		super.addImpl(comp, constraints, index);
 	}
 }

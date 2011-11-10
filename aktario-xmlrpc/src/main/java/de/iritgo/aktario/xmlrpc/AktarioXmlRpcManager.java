@@ -53,79 +53,79 @@ public class AktarioXmlRpcManager extends BaseObject implements Manager
 	/**
 	 * Create a new AktarioXmlRpcManager.
 	 */
-	public AktarioXmlRpcManager ()
+	public AktarioXmlRpcManager()
 	{
-		super ("AktarioXmlRpcManager");
-		xmlRpcCommands = new HashMap<String, String> ();
+		super("AktarioXmlRpcManager");
+		xmlRpcCommands = new HashMap<String, String>();
 	}
 
 	/**
 	 * Initialize the AktarioXmlRpcManager.
 	 */
-	public void init ()
+	public void init()
 	{
-		simpleUrlServer = new SimpleUrlServer ();
-		simpleUrlServer.init ();
+		simpleUrlServer = new SimpleUrlServer();
+		simpleUrlServer.init();
 
-		addXmlRpcCommand ("testCommand", "test.aktario-xmlrpc.testKillCommand");
-		addXmlRpcCommand ("kill", "aktario-xmlrpc.killCommand");
+		addXmlRpcCommand("testCommand", "test.aktario-xmlrpc.testKillCommand");
+		addXmlRpcCommand("kill", "aktario-xmlrpc.killCommand");
 
-		String portString = AppContext.instance ().getString ("xmlrpcport");
+		String portString = AppContext.instance().getString("xmlrpcport");
 
-		if (StringTools.isEmpty (portString))
+		if (StringTools.isEmpty(portString))
 		{
 			return;
 		}
 
-		int port = NumberTools.toInt (portString, - 1);
+		int port = NumberTools.toInt(portString, - 1);
 
 		try
 		{
-			XmlRpc.setDebug (false);
-			webServer = new WebServer (port, InetAddress.getByName ("127.0.0.1"));
-			webServer.setParanoid (true);
-			webServer.acceptClient ("127.0.0.1");
-			webServer.addHandler ("$default", new XmlRpcHandler ()
+			XmlRpc.setDebug(false);
+			webServer = new WebServer(port, InetAddress.getByName("127.0.0.1"));
+			webServer.setParanoid(true);
+			webServer.acceptClient("127.0.0.1");
+			webServer.addHandler("$default", new XmlRpcHandler()
 			{
 				@SuppressWarnings("unchecked")
-				public Object execute (String method, Vector params)
+				public Object execute(String method, Vector params)
 				{
 					Object res = null;
 
-					String commandName = (String) xmlRpcCommands.get (method);
+					String commandName = (String) xmlRpcCommands.get(method);
 
 					if (commandName != null)
 					{
-						res = CommandTools.performAsync (commandName, params);
+						res = CommandTools.performAsync(commandName, params);
 					}
 					else
 					{
-						Log.logError ("AktarioXmlRpcManager", "execute", "Trying to execute unknown command '"
+						Log.logError("AktarioXmlRpcManager", "execute", "Trying to execute unknown command '"
 										+ commandName + "'");
 					}
 
-					return res == null ? new Integer (1) : res;
+					return res == null ? new Integer(1) : res;
 				}
 			});
 
-			webServer.start ();
+			webServer.start();
 		}
 		catch (Exception x)
 		{
-			Log.logError ("AktarioXmlRpcManager", "init", "Unable to initialize XML/RPC server: " + x);
+			Log.logError("AktarioXmlRpcManager", "init", "Unable to initialize XML/RPC server: " + x);
 		}
 	}
 
 	/**
 	 * Free all client manager resources.
 	 */
-	public void unload ()
+	public void unload()
 	{
-		simpleUrlServer.shutdown ();
+		simpleUrlServer.shutdown();
 
 		if (webServer != null)
 		{
-			webServer.shutdown ();
+			webServer.shutdown();
 		}
 	}
 
@@ -135,8 +135,8 @@ public class AktarioXmlRpcManager extends BaseObject implements Manager
 	 * @param xmlRpcName The xmlrpc method name.
 	 * @param commandName The command name.
 	 */
-	public void addXmlRpcCommand (String xmlRpcName, String commandName)
+	public void addXmlRpcCommand(String xmlRpcName, String commandName)
 	{
-		xmlRpcCommands.put (xmlRpcName, commandName);
+		xmlRpcCommands.put(xmlRpcName, commandName);
 	}
 }

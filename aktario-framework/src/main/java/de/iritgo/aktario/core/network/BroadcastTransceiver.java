@@ -33,8 +33,8 @@ public class BroadcastTransceiver implements Transceiver
 	 *
 	 * @return Transceiver.
 	 */
-	public Transceiver cloneTransceiver ()
+	public Transceiver cloneTransceiver()
 	{
-		return new BroadcastTransceiver ();
+		return new BroadcastTransceiver();
 	}
 }

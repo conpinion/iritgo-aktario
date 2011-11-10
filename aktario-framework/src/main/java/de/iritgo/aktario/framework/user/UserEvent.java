@@ -45,7 +45,7 @@ public class UserEvent implements Event
 	 *
 	 * @param user The userobject.
 	 */
-	public UserEvent (User user)
+	public UserEvent(User user)
 	{
 		this.user = user;
 	}
@@ -55,7 +55,7 @@ public class UserEvent implements Event
 	 *
 	 * @param user The userobject.
 	 */
-	public UserEvent (User user, int logged)
+	public UserEvent(User user, int logged)
 	{
 		this.user = user;
 		this.logged = logged;
@@ -64,31 +64,31 @@ public class UserEvent implements Event
 	/**
 	 *
 	 */
-	public UserEvent (User user, int logged, String plainPassword)
+	public UserEvent(User user, int logged, String plainPassword)
 	{
-		this (user, logged);
+		this(user, logged);
 		this.plainPassword = plainPassword;
 	}
 
 	/**
 	 * @return The plainPassword.
 	 */
-	public String getPlainPassword ()
+	public String getPlainPassword()
 	{
 		return plainPassword;
 	}
 
-	public boolean isLoggedIn ()
+	public boolean isLoggedIn()
 	{
 		return logged == USER_LOGGED_IN;
 	}
 
-	public boolean isLoggedOut ()
+	public boolean isLoggedOut()
 	{
 		return logged == USER_LOGGED_OUT;
 	}
 
-	public User getUser ()
+	public User getUser()
 	{
 		return user;
 	}

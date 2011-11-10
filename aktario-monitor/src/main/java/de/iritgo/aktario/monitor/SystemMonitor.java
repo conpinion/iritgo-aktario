@@ -33,63 +33,63 @@ public class SystemMonitor extends DataObject
 	/**
 	 * Create a new system monitor object.
 	 */
-	public SystemMonitor ()
+	public SystemMonitor()
 	{
-		super ("SystemMonitor");
-		addAttribute ("registeredUsers", 0);
-		addAttribute ("onlineUsers", 0);
-		addAttribute ("workingThreads", 0);
-		addAttribute ("freeThreads", 0);
-		addAttribute ("freeRam", new Long (0));
+		super("SystemMonitor");
+		addAttribute("registeredUsers", 0);
+		addAttribute("onlineUsers", 0);
+		addAttribute("workingThreads", 0);
+		addAttribute("freeThreads", 0);
+		addAttribute("freeRam", new Long(0));
 	}
 
-	public void setRegisteredUsers (int registeredUsers)
+	public void setRegisteredUsers(int registeredUsers)
 	{
-		setAttribute ("registeredUsers", registeredUsers);
+		setAttribute("registeredUsers", registeredUsers);
 	}
 
-	public int getRegisteredUsers ()
+	public int getRegisteredUsers()
 	{
-		return getIntAttribute ("registeredUsers");
+		return getIntAttribute("registeredUsers");
 	}
 
-	public void setOnlineUsers (int onlineUsers)
+	public void setOnlineUsers(int onlineUsers)
 	{
-		setAttribute ("onlineUsers", onlineUsers);
+		setAttribute("onlineUsers", onlineUsers);
 	}
 
-	public int getOnlineUsers ()
+	public int getOnlineUsers()
 	{
-		return getIntAttribute ("onlineUsers");
+		return getIntAttribute("onlineUsers");
 	}
 
-	public void setWorkingThreads (int workingThreads)
+	public void setWorkingThreads(int workingThreads)
 	{
-		setAttribute ("workingThreads", workingThreads);
+		setAttribute("workingThreads", workingThreads);
 	}
 
-	public int getWorkingThreads ()
+	public int getWorkingThreads()
 	{
-		return getIntAttribute ("workingThreads");
+		return getIntAttribute("workingThreads");
 	}
 
-	public void setFreeThreads (int freeThreads)
+	public void setFreeThreads(int freeThreads)
 	{
-		setAttribute ("freeThreads", freeThreads);
+		setAttribute("freeThreads", freeThreads);
 	}
 
-	public int getFreeThreads ()
+	public int getFreeThreads()
 	{
-		return getIntAttribute ("freeThreads");
+		return getIntAttribute("freeThreads");
 	}
 
-	public void setFreeRam (long freeRam)
+	public void setFreeRam(long freeRam)
 	{
-		setAttribute ("freeRam", freeRam);
+		setAttribute("freeRam", freeRam);
 	}
 
-	public long getFreeRam ()
+	public long getFreeRam()
 	{
-		return getLongAttribute ("freeRam");
+		return getLongAttribute("freeRam");
 	}
 }

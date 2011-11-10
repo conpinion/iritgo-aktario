@@ -26,38 +26,38 @@ import java.util.List;
 
 public class Configuration
 {
-	private NetworkConfig network = new NetworkConfig ();
+	private NetworkConfig network = new NetworkConfig();
 
-	private ThreadPoolConfig threadPool = new ThreadPoolConfig ();
+	private ThreadPoolConfig threadPool = new ThreadPoolConfig();
 
-	private List<DatasourceConfig> dataSources = new ArrayList<DatasourceConfig> ();
+	private List<DatasourceConfig> dataSources = new ArrayList<DatasourceConfig>();
 
-	public List<DatasourceConfig> getDataSources ()
+	public List<DatasourceConfig> getDataSources()
 	{
 		return dataSources;
 	}
 
-	public void addDataSource (DatasourceConfig dataSource)
+	public void addDataSource(DatasourceConfig dataSource)
 	{
-		dataSources.add (dataSource);
+		dataSources.add(dataSource);
 	}
 
-	public NetworkConfig getNetwork ()
+	public NetworkConfig getNetwork()
 	{
 		return network;
 	}
 
-	public void setNetwork (NetworkConfig network)
+	public void setNetwork(NetworkConfig network)
 	{
 		this.network = network;
 	}
 
-	public ThreadPoolConfig getThreadPool ()
+	public ThreadPoolConfig getThreadPool()
 	{
 		return threadPool;
 	}
 
-	public void setThreadPool (ThreadPoolConfig threadPool)
+	public void setThreadPool(ThreadPoolConfig threadPool)
 	{
 		this.threadPool = threadPool;
 	}

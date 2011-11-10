@@ -38,67 +38,67 @@ public class FileTransferManager extends BaseObject implements Manager
 
 	private int waitForNextSend;
 
-	public FileTransferManager ()
+	public FileTransferManager()
 	{
-		super ("FileTransferManager");
+		super("FileTransferManager");
 	}
 
-	public void init ()
+	public void init()
 	{
-		fileTransferContexts = new HashMap ();
-		fileTransferServices = new HashMap ();
+		fileTransferContexts = new HashMap();
+		fileTransferServices = new HashMap();
 
-		registerDefaultServices ();
+		registerDefaultServices();
 	}
 
-	public void startFileTransfer (@SuppressWarnings("unused") String fileId, Properties fileTransferProperties)
+	public void startFileTransfer(@SuppressWarnings("unused") String fileId, Properties fileTransferProperties)
 	{
-		FileTransferService fileTransferService = (FileTransferService) fileTransferServices
-						.get (fileTransferProperties.getProperty ("service", "default"));
+		FileTransferService fileTransferService = (FileTransferService) fileTransferServices.get(fileTransferProperties
+						.getProperty("service", "default"));
 
 		if (fileTransferService == null)
 		{
 			return;
 		}
 
-		FileTransferContext fileTransferContext = new FileTransferContext (fileTransferService.clone (),
+		FileTransferContext fileTransferContext = new FileTransferContext(fileTransferService.clone(),
 						fileTransferProperties);
 
-		fileTransferContexts.put (fileTransferContext.getFileId (), fileTransferContext);
-		fileTransferContext.startFileTransfer ();
+		fileTransferContexts.put(fileTransferContext.getFileId(), fileTransferContext);
+		fileTransferContext.startFileTransfer();
 	}
 
-	public int fileTransfer (String fileId, byte[] data)
+	public int fileTransfer(String fileId, byte[] data)
 	{
-		FileTransferContext fileTransferContext = (FileTransferContext) fileTransferContexts.get (fileId);
+		FileTransferContext fileTransferContext = (FileTransferContext) fileTransferContexts.get(fileId);
 
-		return fileTransferContext.fileTransfer (data);
+		return fileTransferContext.fileTransfer(data);
 	}
 
-	public void endFileTransfer (String fileId)
+	public void endFileTransfer(String fileId)
 	{
-		FileTransferContext fileTransferContext = (FileTransferContext) fileTransferContexts.get (fileId);
+		FileTransferContext fileTransferContext = (FileTransferContext) fileTransferContexts.get(fileId);
 
-		fileTransferContext.endFileTransfer ();
+		fileTransferContext.endFileTransfer();
 	}
 
-	private void registerDefaultServices ()
+	private void registerDefaultServices()
 	{
-		fileTransferServices.put ("client2client", new Client2ClientService ());
-		fileTransferServices.put ("client2server", new Client2ServerService ());
+		fileTransferServices.put("client2client", new Client2ClientService());
+		fileTransferServices.put("client2server", new Client2ServerService());
 	}
 
-	public int getWaitForNextSend ()
+	public int getWaitForNextSend()
 	{
 		return waitForNextSend;
 	}
 
-	public void setWaitForNextSend (int waitForNextSend)
+	public void setWaitForNextSend(int waitForNextSend)
 	{
 		this.waitForNextSend = waitForNextSend;
 	}
 
-	public void unload ()
+	public void unload()
 	{
 		fileTransferContexts = null;
 		fileTransferServices = null;

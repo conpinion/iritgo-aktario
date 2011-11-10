@@ -36,33 +36,33 @@ public class MonitorPlugin extends FrameworkPlugin
 	/**
 	 * Register all commands in this method.
 	 */
-	protected void registerCommands ()
+	protected void registerCommands()
 	{
-		registerCommand (new ShowSystemMonitor ());
+		registerCommand(new ShowSystemMonitor());
 	}
 
 	/**
 	 * Register all data objects in this method.
 	 */
-	protected void registerDataObjects ()
+	protected void registerDataObjects()
 	{
-		registerDataObject (new SystemMonitor ());
+		registerDataObject(new SystemMonitor());
 	}
 
 	/**
 	 * Register all gui panes in this method.
 	 */
-	protected void registerGUIPanes ()
+	protected void registerGUIPanes()
 	{
-		registerGUIPane (Plugin.CLIENT, new SystemMonitorGUIPane ());
+		registerGUIPane(Plugin.CLIENT, new SystemMonitorGUIPane());
 	}
 
 	/**
 	 * Register all managers in this method.
 	 */
-	protected void registerManagers ()
+	protected void registerManagers()
 	{
-		registerManager (Plugin.SERVER, new SystemMonitorManager ());
+		registerManager(Plugin.SERVER, new SystemMonitorManager());
 
 		//		registerManager (Plugin.CLIENT, new InfoCenterClientManager());
 	}

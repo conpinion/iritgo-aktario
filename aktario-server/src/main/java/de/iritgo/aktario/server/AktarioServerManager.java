@@ -36,26 +36,26 @@ public class AktarioServerManager extends BaseObject implements Manager
 	/**
 	 * Create a new AktarioServerManager.
 	 */
-	public AktarioServerManager ()
+	public AktarioServerManager()
 	{
-		super ("server");
+		super("server");
 	}
 
 	/**
 	 * Initialize the manager.
 	 */
-	public void init ()
+	public void init()
 	{
-		CommandTools.performSimple ("persist.LoadAllUsers", new Object[]
+		CommandTools.performSimple("persist.LoadAllUsers", new Object[]
 		{});
 
-		Server.instance ().createDefaultNetworkProcessingSystem ();
+		Server.instance().createDefaultNetworkProcessingSystem();
 	}
 
 	/**
 	 * Unload the manager from the system.
 	 */
-	public void unload ()
+	public void unload()
 	{
 	}
 }

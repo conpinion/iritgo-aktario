@@ -52,28 +52,28 @@ public class CadenceManager extends Threadable implements UserListener, Shutdown
 	/**
 	 * Standard constructor
 	 */
-	public CadenceManager ()
+	public CadenceManager()
 	{
-		super ("turn");
-		turnContextRegistry = new CadeneContextRegistry ();
+		super("turn");
+		turnContextRegistry = new CadeneContextRegistry();
 
-		((ShutdownManager) Engine.instance ().getManagerRegistry ().getManager ("shutdown")).addObserver (this);
+		((ShutdownManager) Engine.instance().getManagerRegistry().getManager("shutdown")).addObserver(this);
 
-		Engine.instance ().getEventRegistry ().addListener ("User", this);
+		Engine.instance().getEventRegistry().addListener("User", this);
 		currentMilli = 0;
 		addTurnDelay = 0;
 	}
 
-	public void run ()
+	public void run()
 	{
-		setState (Threadable.FREE);
+		setState(Threadable.FREE);
 
-		long c = System.currentTimeMillis ();
+		long c = System.currentTimeMillis();
 		long diff = c - tmpTime;
 
 		tmpTime = c;
 
-		int add = Math.round (diff);
+		int add = Math.round(diff);
 
 		if (add == 0)
 		{
@@ -82,20 +82,20 @@ public class CadenceManager extends Threadable implements UserListener, Shutdown
 
 		synchronized (turnContextRegistry)
 		{
-			for (Iterator i = turnContextRegistry.getTurnContextIterator (); i.hasNext ();)
+			for (Iterator i = turnContextRegistry.getTurnContextIterator(); i.hasNext();)
 			{
-				CadenceContext turnContext = (CadenceContext) i.next ();
+				CadenceContext turnContext = (CadenceContext) i.next();
 
-				if ((! turnContext.isTurnFired ()) && (currentMilli >= (turnContext.getPingTime () + addTurnDelay)))
+				if ((! turnContext.isTurnFired()) && (currentMilli >= (turnContext.getPingTime() + addTurnDelay)))
 				{
-					turnContext.turn ();
+					turnContext.turn();
 				}
 			}
 		}
 
 		if (currentMilli >= (TURN_INTERVAL + addTurnDelay))
 		{
-			long c2 = System.currentTimeMillis ();
+			long c2 = System.currentTimeMillis();
 			long diff2 = c2 - tmpTime2;
 
 			tmpTime2 = c;
@@ -106,18 +106,18 @@ public class CadenceManager extends Threadable implements UserListener, Shutdown
 			}
 			else
 			{
-				addTurnDelay = addTurnDelay + (TURN_INTERVAL - Math.round (diff2));
+				addTurnDelay = addTurnDelay + (TURN_INTERVAL - Math.round(diff2));
 			}
 
 			currentMilli = 0;
 
-			for (Iterator i = turnContextRegistry.getTurnContextIterator (); i.hasNext ();)
+			for (Iterator i = turnContextRegistry.getTurnContextIterator(); i.hasNext();)
 			{
-				CadenceContext turnContext = (CadenceContext) i.next ();
+				CadenceContext turnContext = (CadenceContext) i.next();
 
-				if (turnContext.isTurnFired ())
+				if (turnContext.isTurnFired())
 				{
-					turnContext.reset ();
+					turnContext.reset();
 				}
 				else
 				{
@@ -127,7 +127,7 @@ public class CadenceManager extends Threadable implements UserListener, Shutdown
 
 		try
 		{
-			Thread.sleep (DELAY_INTERVAL);
+			Thread.sleep(DELAY_INTERVAL);
 		}
 		catch (InterruptedException x)
 		{
@@ -141,27 +141,27 @@ public class CadenceManager extends Threadable implements UserListener, Shutdown
 	 *
 	 * @param event The EventOject.
 	 */
-	public void userEvent (UserEvent event)
+	public void userEvent(UserEvent event)
 	{
 		synchronized (turnContextRegistry)
 		{
-			turnContextRegistry.add (new CadenceContext (event.getUser ()));
+			turnContextRegistry.add(new CadenceContext(event.getUser()));
 		}
 	}
 
-	public void onShutdown ()
+	public void onShutdown()
 	{
 		synchronized (turnContextRegistry)
 		{
-			turnContextRegistry.clear ();
+			turnContextRegistry.clear();
 		}
 	}
 
-	public void onUserLogoff (User user)
+	public void onUserLogoff(User user)
 	{
 		synchronized (turnContextRegistry)
 		{
-			turnContextRegistry.remove (user);
+			turnContextRegistry.remove(user);
 		}
 	}
 }

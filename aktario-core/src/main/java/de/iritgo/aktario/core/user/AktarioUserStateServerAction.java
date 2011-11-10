@@ -44,9 +44,9 @@ public class AktarioUserStateServerAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public AktarioUserStateServerAction ()
+	public AktarioUserStateServerAction()
 	{
-		setTypeId ("AktarioUserStateServerAction");
+		setTypeId("AktarioUserStateServerAction");
 	}
 
 	/**
@@ -54,62 +54,62 @@ public class AktarioUserStateServerAction extends FrameworkAction
 	 *
 	 * @param user The requesting user.
 	 */
-	public AktarioUserStateServerAction (User user)
+	public AktarioUserStateServerAction(User user)
 	{
-		this ();
-		this.userId = user.getUniqueId ();
+		this();
+		this.userId = user.getUniqueId();
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
+		userId = stream.readLong();
 	}
 
 	/**
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
+		stream.writeLong(userId);
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		AktarioUserManager userManager = (AktarioUserManager) Engine.instance ().getManager ("AktarioUserManager");
-		User user = userRegistry.getUser (userId);
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		AktarioUserManager userManager = (AktarioUserManager) Engine.instance().getManager("AktarioUserManager");
+		User user = userRegistry.getUser(userId);
 
-		ClientTransceiver ct = new ClientTransceiver (user.getNetworkChannel ());
+		ClientTransceiver ct = new ClientTransceiver(user.getNetworkChannel());
 
 		if (user == null)
 		{
 			return;
 		}
 
-		ct.addReceiver (user.getNetworkChannel ());
+		ct.addReceiver(user.getNetworkChannel());
 
-		AktarioUserStateAction action = new AktarioUserStateAction (true);
+		AktarioUserStateAction action = new AktarioUserStateAction(true);
 
-		for (Iterator i = userRegistry.userIterator (); i.hasNext ();)
+		for (Iterator i = userRegistry.userIterator(); i.hasNext();)
 		{
-			User aUser = (User) i.next ();
+			User aUser = (User) i.next();
 
-			if (aUser.isOnline ())
+			if (aUser.isOnline())
 			{
-				action.addUser (userManager.getUserRegistry ().getUserByName (aUser.getName ()));
+				action.addUser(userManager.getUserRegistry().getUserByName(aUser.getName()));
 			}
 		}
 
-		action.setTransceiver (ct);
-		ActionTools.sendToClient (action);
+		action.setTransceiver(ct);
+		ActionTools.sendToClient(action);
 	}
 }

@@ -46,74 +46,74 @@ public class StoreUser extends Command
 	/**
 	 * Create a new <code>StoreUser</code> command.
 	 */
-	public StoreUser ()
+	public StoreUser()
 	{
-		super ("persist.StoreUser");
+		super("persist.StoreUser");
 	}
 
 	/**
 	 * Perform the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		if (properties.get ("id") == null)
+		if (properties.get("id") == null)
 		{
-			Log.logError ("persist", "StoreUser", "Missing unique id for the user to store");
+			Log.logError("persist", "StoreUser", "Missing unique id for the user to store");
 
 			return;
 		}
 
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		long userId = ((Long) properties.get ("id")).longValue ();
-		User user = userRegistry.getUser (userId);
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		long userId = ((Long) properties.get("id")).longValue();
+		User user = userRegistry.getUser(userId);
 
 		if (user == null)
 		{
-			Log.logError ("persist", "StoreUser", "Unable to find user with id " + userId);
+			Log.logError("persist", "StoreUser", "Unable to find user with id " + userId);
 
 			return;
 		}
 
-		JDBCManager jdbcManager = (JDBCManager) Engine.instance ().getManager ("persist.JDBCManager");
-		DataSource dataSource = jdbcManager.getDefaultDataSource ();
+		JDBCManager jdbcManager = (JDBCManager) Engine.instance().getManager("persist.JDBCManager");
+		DataSource dataSource = jdbcManager.getDefaultDataSource();
 
 		Connection connection = null;
 		PreparedStatement stmt = null;
 
 		try
 		{
-			connection = dataSource.getConnection ();
+			connection = dataSource.getConnection();
 
-			stmt = connection.prepareStatement ("delete from IritgoUser where id=?");
-			stmt.setLong (1, userId);
-			stmt.execute ();
-			stmt.close ();
+			stmt = connection.prepareStatement("delete from IritgoUser where id=?");
+			stmt.setLong(1, userId);
+			stmt.execute();
+			stmt.close();
 
 			String userSql = "insert into IritgoUser (id, name, password, email) " + " values (?, ?, ?, ?)";
 
-			stmt = connection.prepareStatement (userSql);
-			stmt.setLong (1, userId);
-			stmt.setString (2, user.getName ());
-			stmt.setString (3, user.getPassword ());
-			stmt.setString (4, user.getEmail ());
-			stmt.execute ();
-			stmt.close ();
+			stmt = connection.prepareStatement(userSql);
+			stmt.setLong(1, userId);
+			stmt.setString(2, user.getName());
+			stmt.setString(3, user.getPassword());
+			stmt.setString(4, user.getEmail());
+			stmt.execute();
+			stmt.close();
 
-			stmt = connection.prepareStatement ("delete from IritgoNamedObjects where userId=?");
-			stmt.setLong (1, userId);
-			stmt.execute ();
-			stmt.close ();
+			stmt = connection.prepareStatement("delete from IritgoNamedObjects where userId=?");
+			stmt.setLong(1, userId);
+			stmt.execute();
+			stmt.close();
 
-			Log.logVerbose ("persist", "StoreUser", "INSERT USER " + userId + " |" + userSql + "|");
+			Log.logVerbose("persist", "StoreUser", "INSERT USER " + userId + " |" + userSql + "|");
 		}
 		catch (SQLException x)
 		{
-			Log.logError ("persist", "StoreUser", "Error while storing user with id " + userId + ": " + x);
+			Log.logError("persist", "StoreUser", "Error while storing user with id " + userId + ": " + x);
 		}
 		finally
 		{
-			DbUtils.closeQuietly (stmt);
-			DbUtils.closeQuietly (connection);
+			DbUtils.closeQuietly(stmt);
+			DbUtils.closeQuietly(connection);
 		}
 	}
 }

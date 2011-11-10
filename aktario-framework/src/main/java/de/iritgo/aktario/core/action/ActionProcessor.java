@@ -35,14 +35,14 @@ public interface ActionProcessor
 	 *
 	 * @return The processor type id
 	 */
-	public String getTypeId ();
+	public String getTypeId();
 
 	/**
 	 * Perform an action.
 	 *
 	 * @param action The action to perform.
 	 */
-	public void perform (Action action);
+	public void perform(Action action);
 
 	/**
 	 * Perform an action with a transceiver.
@@ -50,15 +50,15 @@ public interface ActionProcessor
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver);
+	public void perform(Action action, Transceiver transceiver);
 
 	/**
 	 * Close a action processor
 	 */
-	public void close ();
+	public void close();
 
 	/**
 	 * Clone a processor
 	 */
-	public Object clone ();
+	public Object clone();
 }

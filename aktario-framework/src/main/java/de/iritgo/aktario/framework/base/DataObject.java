@@ -56,10 +56,10 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 *
 	 * @param typeId The type id of the data object.
 	 */
-	public DataObject (String typeId)
+	public DataObject(String typeId)
 	{
-		super (typeId);
-		attributes = new LinkedHashMap ();
+		super(typeId);
+		attributes = new LinkedHashMap();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 *
 	 * @return The data object attributes.
 	 */
-	public Map getAttributes ()
+	public Map getAttributes()
 	{
 		return attributes;
 	}
@@ -77,7 +77,7 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 *
 	 * @param attributes The new attributes.
 	 */
-	public void setAttributes (Map attributes)
+	public void setAttributes(Map attributes)
 	{
 		this.attributes = attributes;
 	}
@@ -87,9 +87,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 *
 	 * @return The data object attributes.
 	 */
-	public int getNumAttributes ()
+	public int getNumAttributes()
 	{
-		return attributes.size ();
+		return attributes.size();
 	}
 
 	/**
@@ -98,9 +98,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, int value)
+	public void addAttribute(String name, int value)
 	{
-		attributes.put (name, new Integer (value));
+		attributes.put(name, new Integer(value));
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, long value)
+	public void addAttribute(String name, long value)
 	{
-		attributes.put (name, new Long (value));
+		attributes.put(name, new Long(value));
 	}
 
 	/**
@@ -120,9 +120,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, boolean value)
+	public void addAttribute(String name, boolean value)
 	{
-		attributes.put (name, new Integer (value ? 1 : 0));
+		attributes.put(name, new Integer(value ? 1 : 0));
 	}
 
 	/**
@@ -131,9 +131,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, float value)
+	public void addAttribute(String name, float value)
 	{
-		attributes.put (name, new Float (value));
+		attributes.put(name, new Float(value));
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, double value)
+	public void addAttribute(String name, double value)
 	{
-		attributes.put (name, new Double (value));
+		attributes.put(name, new Double(value));
 	}
 
 	/**
@@ -153,9 +153,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, Date value)
+	public void addAttribute(String name, Date value)
 	{
-		setAttribute (name, value.getTime ());
+		setAttribute(name, value.getTime());
 	}
 
 	/**
@@ -164,9 +164,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, DataObject value)
+	public void addAttribute(String name, DataObject value)
 	{
-		attributes.put (name, value);
+		attributes.put(name, value);
 	}
 
 	/**
@@ -175,9 +175,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param value The default attribute value.
 	 */
-	public void addAttribute (String name, Object value)
+	public void addAttribute(String name, Object value)
 	{
-		attributes.put (name, value);
+		attributes.put(name, value);
 	}
 
 	/**
@@ -186,15 +186,15 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute name.
 	 * @param klass The class of the list items.
 	 */
-	public void addAttribute (String name, Class klass)
+	public void addAttribute(String name, Class klass)
 	{
 		try
 		{
-			setAttribute (name, new IObjectList (name, new FrameworkProxy ((IObject) klass.newInstance ()), this));
+			setAttribute(name, new IObjectList(name, new FrameworkProxy((IObject) klass.newInstance()), this));
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "DataObject.addAttribute", "Unable to create list item prototype: " + x, Log.ERROR);
+			Log.log("system", "DataObject.addAttribute", "Unable to create list item prototype: " + x, Log.ERROR);
 		}
 	}
 
@@ -204,9 +204,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param object The attribute value.
 	 */
-	public void setAttribute (String name, Object object)
+	public void setAttribute(String name, Object object)
 	{
-		attributes.put (name, object);
+		attributes.put(name, object);
 	}
 
 	/**
@@ -215,9 +215,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void setAttribute (String name, float value)
+	public void setAttribute(String name, float value)
 	{
-		attributes.put (name, new Float (value));
+		attributes.put(name, new Float(value));
 	}
 
 	/**
@@ -226,9 +226,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void setAttribute (String name, int value)
+	public void setAttribute(String name, int value)
 	{
-		attributes.put (name, new Integer (value));
+		attributes.put(name, new Integer(value));
 	}
 
 	/**
@@ -237,9 +237,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void setAttribute (String name, boolean value)
+	public void setAttribute(String name, boolean value)
 	{
-		attributes.put (name, new Integer (value ? 1 : 0));
+		attributes.put(name, new Integer(value ? 1 : 0));
 	}
 
 	/**
@@ -248,9 +248,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void setAttribute (String name, double value)
+	public void setAttribute(String name, double value)
 	{
-		attributes.put (name, new Double (value));
+		attributes.put(name, new Double(value));
 	}
 
 	/**
@@ -259,9 +259,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param value The attribute value.
 	 */
-	public void setAttribute (String name, long value)
+	public void setAttribute(String name, long value)
 	{
-		attributes.put (name, new Long (value));
+		attributes.put(name, new Long(value));
 	}
 
 	/**
@@ -270,9 +270,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param object The attribute value.
 	 */
-	public void setAttribute (String name, DataObject object)
+	public void setAttribute(String name, DataObject object)
 	{
-		attributes.put (name, object);
+		attributes.put(name, object);
 	}
 
 	/**
@@ -281,9 +281,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @param object The attribute value.
 	 */
-	public void setAttribute (String name, Date object)
+	public void setAttribute(String name, Date object)
 	{
-		setAttribute (name, object.getTime ());
+		setAttribute(name, object.getTime());
 	}
 
 	/**
@@ -292,9 +292,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public Object getAttribute (String name)
+	public Object getAttribute(String name)
 	{
-		return attributes.get (name);
+		return attributes.get(name);
 	}
 
 	/**
@@ -303,9 +303,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public Date getDateAttribute (String name)
+	public Date getDateAttribute(String name)
 	{
-		return new Date (((Long) attributes.get (name)).longValue ());
+		return new Date(((Long) attributes.get(name)).longValue());
 	}
 
 	/**
@@ -314,9 +314,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public int getIntAttribute (String name)
+	public int getIntAttribute(String name)
 	{
-		return ((Integer) attributes.get (name)).intValue ();
+		return ((Integer) attributes.get(name)).intValue();
 	}
 
 	/**
@@ -325,9 +325,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public boolean getBooleanAttribute (String name)
+	public boolean getBooleanAttribute(String name)
 	{
-		return getIntAttribute (name) == 1;
+		return getIntAttribute(name) == 1;
 	}
 
 	/**
@@ -336,9 +336,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public String getStringAttribute (String name)
+	public String getStringAttribute(String name)
 	{
-		return (String) attributes.get (name);
+		return (String) attributes.get(name);
 	}
 
 	/**
@@ -347,9 +347,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public double getDoubleAttribute (String name)
+	public double getDoubleAttribute(String name)
 	{
-		return ((Double) attributes.get (name)).doubleValue ();
+		return ((Double) attributes.get(name)).doubleValue();
 	}
 
 	/**
@@ -358,9 +358,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public long getLongAttribute (String name)
+	public long getLongAttribute(String name)
 	{
-		return ((Long) attributes.get (name)).longValue ();
+		return ((Long) attributes.get(name)).longValue();
 	}
 
 	/**
@@ -369,9 +369,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public IObjectList getIObjectListAttribute (String name)
+	public IObjectList getIObjectListAttribute(String name)
 	{
-		return ((IObjectList) attributes.get (name));
+		return ((IObjectList) attributes.get(name));
 	}
 
 	/**
@@ -380,9 +380,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public IObjectList getListAttribute (String name)
+	public IObjectList getListAttribute(String name)
 	{
-		return getIObjectListAttribute (name);
+		return getIObjectListAttribute(name);
 	}
 
 	/**
@@ -391,79 +391,79 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param name The attribute key.
 	 * @return The attribute value.
 	 */
-	public DataObject getDataObjectAttribute (String name)
+	public DataObject getDataObjectAttribute(String name)
 	{
-		return (DataObject) attributes.get (name);
+		return (DataObject) attributes.get(name);
 	}
 
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
-		int attributeSize = dataStream.readInt ();
+		int attributeSize = dataStream.readInt();
 
-		addNewAttributesIfNecessary (dataStream, attributeSize);
+		addNewAttributesIfNecessary(dataStream, attributeSize);
 
-		uniqueId = dataStream.readLong ();
+		uniqueId = dataStream.readLong();
 
 		int q = 0;
 
-		for (Iterator i = attributes.keySet ().iterator (); i.hasNext () && (q < attributeSize);)
+		for (Iterator i = attributes.keySet().iterator(); i.hasNext() && (q < attributeSize);)
 		{
 			++q;
 
-			String key = (String) i.next ();
+			String key = (String) i.next();
 
-			Object object = attributes.get (key);
+			Object object = attributes.get(key);
 
 			if (object instanceof Integer)
 			{
-				setAttribute (key, new Integer (dataStream.readInt ()));
+				setAttribute(key, new Integer(dataStream.readInt()));
 
 				continue;
 			}
 
 			if (object instanceof String)
 			{
-				setAttribute (key, new String (dataStream.readUTF ()));
+				setAttribute(key, new String(dataStream.readUTF()));
 
 				continue;
 			}
 
 			if (object instanceof Long)
 			{
-				setAttribute (key, new Long (dataStream.readLong ()));
+				setAttribute(key, new Long(dataStream.readLong()));
 
 				continue;
 			}
 
 			if (object instanceof Float)
 			{
-				setAttribute (key, new Float (dataStream.readFloat ()));
+				setAttribute(key, new Float(dataStream.readFloat()));
 
 				continue;
 			}
 
 			if (object instanceof Double)
 			{
-				setAttribute (key, new Double (dataStream.readDouble ()));
+				setAttribute(key, new Double(dataStream.readDouble()));
 
 				continue;
 			}
 
 			if (object instanceof IObjectList)
 			{
-				((IObjectList) object).readObject (stream);
+				((IObjectList) object).readObject(stream);
 
 				continue;
 			}
 
 			if (object instanceof DataObject)
 			{
-				((DataObject) object).readObject (stream);
+				((DataObject) object).readObject(stream);
 
 				// 				IObjectProxy existsProxy =
 				// 					(IObjectProxy) Engine.getEngine ().getProxyRegistry ().getProxy (getUniqueId ());
@@ -475,8 +475,8 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 				continue;
 			}
 
-			Log.log ("network", "DataObject.readObject", "Unknown attribute in data object:"
-							+ object.getClass ().getName (), Log.FATAL);
+			Log.log("network", "DataObject.readObject", "Unknown attribute in data object:"
+							+ object.getClass().getName(), Log.FATAL);
 		}
 	}
 
@@ -486,69 +486,69 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void addNewAttributesIfNecessary (DataInputStream dataStream, int attributeSize)
+	private void addNewAttributesIfNecessary(DataInputStream dataStream, int attributeSize)
 	{
-		if (attributeSize != ((DynIObjectFactory) Engine.instance ().getIObjectFactory ())
-						.getDataObjectAttributeSize (getTypeId ()))
+		if (attributeSize != ((DynIObjectFactory) Engine.instance().getIObjectFactory())
+						.getDataObjectAttributeSize(getTypeId()))
 		{
-			System.out.println ("addNewAttributesIfNecessary");
-			attributes.clear ();
-			readTypeInformations (dataStream, this);
+			System.out.println("addNewAttributesIfNecessary");
+			attributes.clear();
+			readTypeInformations(dataStream, this);
 		}
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (OutputStream stream) throws IOException
+	public void writeObject(OutputStream stream) throws IOException
 	{
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
-		dataStream.writeInt (attributes.size ());
+		dataStream.writeInt(attributes.size());
 
-		sendNewAttributesIfNecessary (dataStream);
+		sendNewAttributesIfNecessary(dataStream);
 
-		dataStream.writeLong (uniqueId);
+		dataStream.writeLong(uniqueId);
 
-		for (Iterator i = attributes.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = attributes.keySet().iterator(); i.hasNext();)
 		{
-			String key = (String) i.next ();
+			String key = (String) i.next();
 
-			Object object = attributes.get (key);
+			Object object = attributes.get(key);
 
 			if (object instanceof Integer)
 			{
-				writeAttribute (dataStream, (Integer) object);
+				writeAttribute(dataStream, (Integer) object);
 			}
 
 			if (object instanceof String)
 			{
-				writeAttribute (dataStream, (String) object);
+				writeAttribute(dataStream, (String) object);
 			}
 
 			if (object instanceof Long)
 			{
-				writeAttribute (dataStream, (Long) object);
+				writeAttribute(dataStream, (Long) object);
 			}
 
 			if (object instanceof Float)
 			{
-				writeAttribute (dataStream, (Float) object);
+				writeAttribute(dataStream, (Float) object);
 			}
 
 			if (object instanceof Double)
 			{
-				writeAttribute (dataStream, (Double) object);
+				writeAttribute(dataStream, (Double) object);
 			}
 
 			if (object instanceof IObjectList)
 			{
-				writeAttribute (dataStream, (IObjectList) object);
+				writeAttribute(dataStream, (IObjectList) object);
 			}
 
 			if (object instanceof DataObject)
 			{
-				writeAttribute (dataStream, (DataObject) object);
+				writeAttribute(dataStream, (DataObject) object);
 			}
 		}
 	}
@@ -557,88 +557,88 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @param dataStream
 	 * @throws IOException
 	 */
-	private void sendNewAttributesIfNecessary (DataOutputStream dataStream)
+	private void sendNewAttributesIfNecessary(DataOutputStream dataStream)
 	{
-		if (getNumAttributes () != ((DynIObjectFactory) Engine.instance ().getIObjectFactory ())
-						.getDataObjectAttributeSize (getTypeId ()))
+		if (getNumAttributes() != ((DynIObjectFactory) Engine.instance().getIObjectFactory())
+						.getDataObjectAttributeSize(getTypeId()))
 		{
-			System.out.println ("sendNewAttributesIfNecessary: "
-							+ getNumAttributes ()
+			System.out.println("sendNewAttributesIfNecessary: "
+							+ getNumAttributes()
 							+ ":"
-							+ ((DynIObjectFactory) Engine.instance ().getIObjectFactory ())
-											.getDataObjectAttributeSize (getTypeId ()));
-			writeTypeInformations (dataStream, null);
+							+ ((DynIObjectFactory) Engine.instance().getIObjectFactory())
+											.getDataObjectAttributeSize(getTypeId()));
+			writeTypeInformations(dataStream, null);
 		}
 	}
 
-	private void writeAttribute (DataOutputStream stream, Integer integer) throws IOException
+	private void writeAttribute(DataOutputStream stream, Integer integer) throws IOException
 	{
-		stream.writeInt (integer.intValue ());
+		stream.writeInt(integer.intValue());
 	}
 
-	private void writeAttribute (DataOutputStream stream, String string) throws IOException
+	private void writeAttribute(DataOutputStream stream, String string) throws IOException
 	{
-		stream.writeUTF (string);
+		stream.writeUTF(string);
 	}
 
-	private void writeAttribute (DataOutputStream stream, Long longAttribute) throws IOException
+	private void writeAttribute(DataOutputStream stream, Long longAttribute) throws IOException
 	{
-		stream.writeLong (longAttribute.longValue ());
+		stream.writeLong(longAttribute.longValue());
 	}
 
-	private void writeAttribute (DataOutputStream stream, Float floatAttribute) throws IOException
+	private void writeAttribute(DataOutputStream stream, Float floatAttribute) throws IOException
 	{
-		stream.writeFloat (floatAttribute.floatValue ());
+		stream.writeFloat(floatAttribute.floatValue());
 	}
 
-	private void writeAttribute (DataOutputStream stream, Double doubleAttribute) throws IOException
+	private void writeAttribute(DataOutputStream stream, Double doubleAttribute) throws IOException
 	{
-		stream.writeDouble (doubleAttribute.doubleValue ());
+		stream.writeDouble(doubleAttribute.doubleValue());
 	}
 
-	private void writeAttribute (OutputStream stream, IObjectList proxyLinkedList) throws IOException
+	private void writeAttribute(OutputStream stream, IObjectList proxyLinkedList) throws IOException
 	{
-		proxyLinkedList.writeObject (stream);
+		proxyLinkedList.writeObject(stream);
 	}
 
-	private void writeAttribute (OutputStream stream, DataObject dataObject) throws IOException
+	private void writeAttribute(OutputStream stream, DataObject dataObject) throws IOException
 	{
-		if (getNumAttributes () != ((DynIObjectFactory) Engine.instance ().getIObjectFactory ())
-						.getDataObjectAttributeSize (getTypeId ()))
+		if (getNumAttributes() != ((DynIObjectFactory) Engine.instance().getIObjectFactory())
+						.getDataObjectAttributeSize(getTypeId()))
 		{
-			dataObject.writeObject (stream);
+			dataObject.writeObject(stream);
 		}
 	}
 
 	/**
 	 * Create a instance of the iritgo object.
 	 */
-	public IObject create ()
+	public IObject create()
 	{
 		try
 		{
-			IObject newProt = (IObject) this.getClass ().newInstance ();
+			IObject newProt = (IObject) this.getClass().newInstance();
 
-			newProt.setTypeId (getTypeId ());
+			newProt.setTypeId(getTypeId());
 
 			return newProt;
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "DataObject:create", "Cannot create class: " + toString (), Log.FATAL);
+			Log.log("system", "DataObject:create", "Cannot create class: " + toString(), Log.FATAL);
 		}
 
 		return null;
 	}
 
-	public void update ()
+	public void update()
 	{
-		CommandTools.performSimple (new de.iritgo.aktario.framework.client.command.EditIObject (this));
+		CommandTools.performSimple(new de.iritgo.aktario.framework.client.command.EditIObject(this));
 	}
 
-	public void markAsInvalid ()
+	public void markAsInvalid()
 	{
-		((IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (getUniqueId (), getTypeId ())).reset ();
+		((IObjectProxy) Engine.instance().getProxyRegistry().getProxy(getUniqueId(), getTypeId())).reset();
 	}
 
 	/**
@@ -647,31 +647,30 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @return boolean The valid state of this object
 	 */
 	@Override
-	public boolean isValid ()
+	public boolean isValid()
 	{
 		if (uniqueId == 0)
 		{
 			return false;
 		}
 
-		IObjectProxy iObjectProxy = Engine.instance ().getProxyRegistry ().getProxy (getUniqueId (), getTypeId ());
+		IObjectProxy iObjectProxy = Engine.instance().getProxyRegistry().getProxy(getUniqueId(), getTypeId());
 
-		return iObjectProxy == null ? false : iObjectProxy.isUpToDate ();
+		return iObjectProxy == null ? false : iObjectProxy.isUpToDate();
 	}
 
-	public void waitForTransfer ()
+	public void waitForTransfer()
 	{
 		while (true)
 		{
-			if (((IObjectProxy) Engine.instance ().getProxyRegistry ().getProxy (getUniqueId (), getTypeId ()))
-							.isUpToDate ())
+			if (((IObjectProxy) Engine.instance().getProxyRegistry().getProxy(getUniqueId(), getTypeId())).isUpToDate())
 			{
 				break;
 			}
 
 			try
 			{
-				Thread.sleep (100);
+				Thread.sleep(100);
 			}
 			catch (InterruptedException x)
 			{
@@ -682,32 +681,32 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	/**
 	 * Serialize the object type information on this object
 	 */
-	public IObject writeTypeInformations (OutputStream stream, IObject iObject)
+	public IObject writeTypeInformations(OutputStream stream, IObject iObject)
 	{
-		DataOutputStream dataStream = new DataOutputStream (stream);
+		DataOutputStream dataStream = new DataOutputStream(stream);
 
 		try
 		{
-			dataStream.writeInt (attributes.size ());
+			dataStream.writeInt(attributes.size());
 
-			for (Iterator i = attributes.keySet ().iterator (); i.hasNext ();)
+			for (Iterator i = attributes.keySet().iterator(); i.hasNext();)
 			{
-				String key = (String) i.next ();
+				String key = (String) i.next();
 
-				Object object = attributes.get (key);
+				Object object = attributes.get(key);
 
-				dataStream.writeUTF (object.getClass ().getName ());
-				dataStream.writeUTF (key);
+				dataStream.writeUTF(object.getClass().getName());
+				dataStream.writeUTF(key);
 
-				if (object.getClass ().getPackage ().getName ().indexOf ("java.lang") < 0)
+				if (object.getClass().getPackage().getName().indexOf("java.lang") < 0)
 				{
-					((IObject) object).writeTypeInformations (stream, this);
+					((IObject) object).writeTypeInformations(stream, this);
 				}
 			}
 		}
 		catch (IOException x)
 		{
-			Log.log ("system", "DataObject:sendNewAttributesIfNecessary", "Error (wti): " + x, Log.FATAL);
+			Log.log("system", "DataObject:sendNewAttributesIfNecessary", "Error (wti): " + x, Log.FATAL);
 		}
 
 		return this;
@@ -717,42 +716,42 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * Read serialize type information a given stream
 	 * and do some things...
 	 */
-	public IObject readTypeInformations (InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject)
 	{
-		DataInputStream dataStream = new DataInputStream (stream);
+		DataInputStream dataStream = new DataInputStream(stream);
 
 		String objectType = "";
 		String attributeName = "";
 
 		try
 		{
-			int attributeSize = dataStream.readInt ();
+			int attributeSize = dataStream.readInt();
 
 			Object object = null;
 
 			for (int i = 0; i < attributeSize; ++i)
 			{
-				objectType = dataStream.readUTF ();
-				attributeName = dataStream.readUTF ();
+				objectType = dataStream.readUTF();
+				attributeName = dataStream.readUTF();
 
-				if (objectType.indexOf ("java.lang") >= 0)
+				if (objectType.indexOf("java.lang") >= 0)
 				{
-					object = Class.forName (objectType).newInstance ();
+					object = Class.forName(objectType).newInstance();
 				}
 				else
 				{
-					object = Class.forName (objectType).newInstance ();
-					((IObject) object).readTypeInformations (stream, this);
+					object = Class.forName(objectType).newInstance();
+					((IObject) object).readTypeInformations(stream, this);
 				}
 
-				addAttribute (attributeName, object);
+				addAttribute(attributeName, object);
 			}
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace ();
-			Log.log ("network", "DataObject.readObject", "Unknown attribute in data object:" + typeId + "."
-							+ objectType + "." + attributeName, Log.FATAL);
+			x.printStackTrace();
+			Log.log("network", "DataObject.readObject", "Unknown attribute in data object:" + typeId + "." + objectType
+							+ "." + attributeName, Log.FATAL);
 		}
 
 		return this;
@@ -763,9 +762,9 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 *
 	 * @return The new attribute map
 	 */
-	public Map cloneAttributesDescription ()
+	public Map cloneAttributesDescription()
 	{
-		return new LinkedHashMap (getAttributes ());
+		return new LinkedHashMap(getAttributes());
 	}
 
 	/**
@@ -774,15 +773,15 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	 * @return String The current dump
 	 */
 	@Override
-	public String dump ()
+	public String dump()
 	{
 		String dump = "";
 
-		for (Iterator i = attributes.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = attributes.keySet().iterator(); i.hasNext();)
 		{
-			String key = (String) i.next ();
+			String key = (String) i.next();
 
-			Object object = attributes.get (key);
+			Object object = attributes.get(key);
 
 			dump += key + ":" + object + "\n";
 		}
@@ -791,8 +790,8 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	}
 
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return super.toString () + "[id=" + uniqueId + ",type=" + typeId + "]";
+		return super.toString() + "[id=" + uniqueId + ",type=" + typeId + "]";
 	}
 }

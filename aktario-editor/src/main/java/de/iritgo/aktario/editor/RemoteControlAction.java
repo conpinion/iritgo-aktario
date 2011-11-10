@@ -117,9 +117,9 @@ public class RemoteControlAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public RemoteControlAction ()
+	public RemoteControlAction()
 	{
-		setTypeId ("EditorRC");
+		setTypeId("EditorRC");
 	}
 
 	/**
@@ -127,31 +127,31 @@ public class RemoteControlAction extends FrameworkAction
 	 *
 	 * @param serverAction The server action that triggers this client action.
 	 */
-	public RemoteControlAction (RemoteControlServerAction serverAction)
+	public RemoteControlAction(RemoteControlServerAction serverAction)
 	{
-		this ();
-		this.userId = serverAction.getUserId ();
-		this.control = serverAction.getControl ();
-		this.dot = serverAction.getDot ();
-		this.mark = serverAction.getMark ();
-		this.fileName = serverAction.getFileName ();
-		this.firstLine = serverAction.getFirstLine ();
-		this.firstColumn = serverAction.getFirstColumn ();
-		this.view = serverAction.getView ();
-		this.keyCode = serverAction.getKeyCode ();
-		this.keyChar = serverAction.getKeyChar ();
-		this.keyModifiers = serverAction.getKeyModifiers ();
-		this.text = serverAction.getText ();
+		this();
+		this.userId = serverAction.getUserId();
+		this.control = serverAction.getControl();
+		this.dot = serverAction.getDot();
+		this.mark = serverAction.getMark();
+		this.fileName = serverAction.getFileName();
+		this.firstLine = serverAction.getFirstLine();
+		this.firstColumn = serverAction.getFirstColumn();
+		this.view = serverAction.getView();
+		this.keyCode = serverAction.getKeyCode();
+		this.keyChar = serverAction.getKeyChar();
+		this.keyModifiers = serverAction.getKeyModifiers();
+		this.text = serverAction.getText();
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		userId = stream.readLong ();
-		control = stream.readInt ();
+		userId = stream.readLong();
+		control = stream.readInt();
 
 		switch (control)
 		{
@@ -159,47 +159,47 @@ public class RemoteControlAction extends FrameworkAction
 				break;
 
 			case CONTROL_TEXT_INSERT:
-				text = stream.readUTF ();
+				text = stream.readUTF();
 
 				break;
 
 			case CONTROL_CARET:
-				dot = stream.readInt ();
-				mark = stream.readInt ();
+				dot = stream.readInt();
+				mark = stream.readInt();
 
 				break;
 
 			case CONTROL_FILE:
 			case CONTROL_FILE_NAME:
 			case CONTROL_URL:
-				fileName = stream.readUTF ();
+				fileName = stream.readUTF();
 
 				break;
 
 			case CONTROL_SCROLL:
-				firstLine = stream.readInt ();
-				firstColumn = stream.readInt ();
+				firstLine = stream.readInt();
+				firstColumn = stream.readInt();
 
 				break;
 
 			case CONTROL_VIEW:
-				view = stream.readInt ();
+				view = stream.readInt();
 
 				break;
 
 			case CONTROL_KEY_PRESS:
 			case CONTROL_KEY_RELEASE:
 			case CONTROL_KEY_TYPE:
-				keyCode = stream.readInt ();
-				keyChar = stream.readChar ();
-				keyModifiers = stream.readInt ();
+				keyCode = stream.readInt();
+				keyChar = stream.readChar();
+				keyModifiers = stream.readInt();
 
 				break;
 
 			case CONTROL_FILE_TREE_EXPAND:
 			case CONTROL_FILE_TREE_COLLAPSE:
 			case CONTROL_FILE_TREE_SELECTION:
-				fileName = stream.readUTF ();
+				fileName = stream.readUTF();
 
 				break;
 		}
@@ -209,10 +209,10 @@ public class RemoteControlAction extends FrameworkAction
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeLong (userId);
-		stream.writeInt (control);
+		stream.writeLong(userId);
+		stream.writeInt(control);
 
 		switch (control)
 		{
@@ -220,47 +220,47 @@ public class RemoteControlAction extends FrameworkAction
 				break;
 
 			case CONTROL_TEXT_INSERT:
-				stream.writeUTF (text);
+				stream.writeUTF(text);
 
 				break;
 
 			case CONTROL_CARET:
-				stream.writeInt (dot);
-				stream.writeInt (mark);
+				stream.writeInt(dot);
+				stream.writeInt(mark);
 
 				break;
 
 			case CONTROL_FILE:
 			case CONTROL_FILE_NAME:
 			case CONTROL_URL:
-				stream.writeUTF (fileName);
+				stream.writeUTF(fileName);
 
 				break;
 
 			case CONTROL_SCROLL:
-				stream.writeInt (firstLine);
-				stream.writeInt (firstColumn);
+				stream.writeInt(firstLine);
+				stream.writeInt(firstColumn);
 
 				break;
 
 			case CONTROL_VIEW:
-				stream.writeInt (view);
+				stream.writeInt(view);
 
 				break;
 
 			case CONTROL_KEY_PRESS:
 			case CONTROL_KEY_RELEASE:
 			case CONTROL_KEY_TYPE:
-				stream.writeInt (keyCode);
-				stream.writeChar (keyChar);
-				stream.writeInt (keyModifiers);
+				stream.writeInt(keyCode);
+				stream.writeChar(keyChar);
+				stream.writeInt(keyModifiers);
 
 				break;
 
 			case CONTROL_FILE_TREE_EXPAND:
 			case CONTROL_FILE_TREE_COLLAPSE:
 			case CONTROL_FILE_TREE_SELECTION:
-				stream.writeUTF (fileName);
+				stream.writeUTF(fileName);
 
 				break;
 		}
@@ -270,9 +270,9 @@ public class RemoteControlAction extends FrameworkAction
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		ApplicationPane appPane = (ApplicationPane) AppContext.instance ().getObject ("applicationPane");
+		ApplicationPane appPane = (ApplicationPane) AppContext.instance().getObject("applicationPane");
 
 		if (appPane == null || ! (appPane instanceof EditorPane))
 		{
@@ -294,72 +294,72 @@ public class RemoteControlAction extends FrameworkAction
 			switch (control)
 			{
 				case CONTROL_TEXT_CLEAR:
-					pane.controlTextClear ();
+					pane.controlTextClear();
 
 					break;
 
 				case CONTROL_TEXT_INSERT:
-					pane.controlTextInsert (text);
+					pane.controlTextInsert(text);
 
 					break;
 
 				case CONTROL_CARET:
-					pane.controlCaret (dot, mark);
+					pane.controlCaret(dot, mark);
 
 					break;
 
 				case CONTROL_FILE:
-					pane.controlFile (fileName);
+					pane.controlFile(fileName);
 
 					break;
 
 				case CONTROL_FILE_NAME:
-					pane.controlFileName (fileName);
+					pane.controlFileName(fileName);
 
 					break;
 
 				case CONTROL_SCROLL:
-					pane.controlScroll (firstLine, firstColumn);
+					pane.controlScroll(firstLine, firstColumn);
 
 					break;
 
 				case CONTROL_URL:
-					pane.controlUrl (fileName);
+					pane.controlUrl(fileName);
 
 					break;
 
 				case CONTROL_VIEW:
-					pane.controlView (view);
+					pane.controlView(view);
 
 					break;
 
 				case CONTROL_KEY_PRESS:
-					pane.controlKeyPress (keyCode, keyChar, keyModifiers);
+					pane.controlKeyPress(keyCode, keyChar, keyModifiers);
 
 					break;
 
 				case CONTROL_KEY_RELEASE:
-					pane.controlKeyRelease (keyCode, keyChar, keyModifiers);
+					pane.controlKeyRelease(keyCode, keyChar, keyModifiers);
 
 					break;
 
 				case CONTROL_KEY_TYPE:
-					pane.controlKeyType (keyCode, keyChar, keyModifiers);
+					pane.controlKeyType(keyCode, keyChar, keyModifiers);
 
 					break;
 
 				case CONTROL_FILE_TREE_EXPAND:
-					pane.controlFileTreeExpansion (fileName, true);
+					pane.controlFileTreeExpansion(fileName, true);
 
 					break;
 
 				case CONTROL_FILE_TREE_COLLAPSE:
-					pane.controlFileTreeExpansion (fileName, false);
+					pane.controlFileTreeExpansion(fileName, false);
 
 					break;
 
 				case CONTROL_FILE_TREE_SELECTION:
-					pane.controlFileTreeSelection (fileName);
+					pane.controlFileTreeSelection(fileName);
 
 					break;
 			}

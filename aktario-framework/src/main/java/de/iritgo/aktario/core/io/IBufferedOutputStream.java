@@ -33,27 +33,27 @@ public class IBufferedOutputStream extends BufferedOutputStream
 	/**
 	 * Creates a IBufferedOutputStream and saves its argument, the output stream in, for later use.
 	 */
-	public IBufferedOutputStream (OutputStream in)
+	public IBufferedOutputStream(OutputStream in)
 	{
-		super (in);
+		super(in);
 	}
 
 	/**
 	 * Creates a BufferedOutputStream with the specified buffer size, and saves
 	 * its argument, the output stream in, for later use.
 	 */
-	public IBufferedOutputStream (OutputStream in, int size)
+	public IBufferedOutputStream(OutputStream in, int size)
 	{
-		super (in, size);
+		super(in, size);
 	}
 
 	/**
 	 * Close the stream and free all resources.
 	 */
 	@Override
-	public void close () throws IOException
+	public void close() throws IOException
 	{
-		super.close ();
+		super.close();
 
 		buf = null;
 	}

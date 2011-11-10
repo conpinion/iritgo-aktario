@@ -52,18 +52,18 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	/**
 	 * Default constructor
 	 */
-	public ThreadNetworkActionProcessor (String typeId, Channel channel,
+	public ThreadNetworkActionProcessor(String typeId, Channel channel,
 					NetworkActionProcessorInterface parentNetworkActionProcessor)
 	{
-		super (typeId);
+		super(typeId);
 
-		channelProcessorMapping = new HashMap ();
-		channelProcessors = new LinkedList ();
+		channelProcessorMapping = new HashMap();
+		channelProcessors = new LinkedList();
 		this.channel = channel;
 		this.parentNetworkActionProcessor = parentNetworkActionProcessor;
-		actions = new LinkedList ();
-		listLock = new Object ();
-		Engine.instance ().getThreadService ().add (this);
+		actions = new LinkedList();
+		listLock = new Object();
+		Engine.instance().getThreadService().add(this);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param channel The network channel
 	 */
-	public void setChannel (Channel channel)
+	public void setChannel(Channel channel)
 	{
 		this.channel = channel;
 	}
@@ -79,7 +79,7 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	/**
 	 * Init a network action processor
 	 */
-	public void init ()
+	public void init()
 	{
 	}
 
@@ -88,24 +88,24 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param channel The new channel.
 	 */
-	public void newChannelCreated (Channel channel)
+	public void newChannelCreated(Channel channel)
 	{
-		for (Iterator i = channelProcessorMapping.values ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.values().iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).newChannelCreated (channel);
+				((NetworkActionProcessorInterface) i.next()).newChannelCreated(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).newChannelCreated (channel);
+				((NetworkActionProcessorInterface) i.next()).newChannelCreated(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -118,24 +118,24 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param channel The new channel.
 	 */
-	public void channelClosed (Channel channel)
+	public void channelClosed(Channel channel)
 	{
-		for (Iterator i = channelProcessorMapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.keySet().iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) channelProcessorMapping.get (i.next ())).channelClosed (channel);
+				((NetworkActionProcessorInterface) channelProcessorMapping.get(i.next())).channelClosed(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((NetworkActionProcessorInterface) i.next ()).channelClosed (channel);
+				((NetworkActionProcessorInterface) i.next()).channelClosed(channel);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -147,31 +147,31 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * Checks the List and Processing the actions.
 	 */
 	@Override
-	public void run ()
+	public void run()
 	{
 		Action action = null;
 
 		synchronized (listLock)
 		{
-			if (actions.size () > 0)
+			if (actions.size() > 0)
 			{
-				action = (Action) actions.get (0);
-				actions.remove (action);
+				action = (Action) actions.get(0);
+				actions.remove(action);
 			}
 		}
 
 		if (action != null)
 		{
-			performAction (action, action.getTransceiver ());
+			performAction(action, action.getTransceiver());
 		}
 
 		synchronized (listLock)
 		{
-			if ((actions.size () == 0))
+			if ((actions.size() == 0))
 			{
 				try
 				{
-					listLock.wait ();
+					listLock.wait();
 				}
 				catch (InterruptedException x)
 				{
@@ -185,9 +185,9 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param action The action to perform.
 	 */
-	public void perform (Action action)
+	public void perform(Action action)
 	{
-		perform (action, action.getTransceiver ());
+		perform(action, action.getTransceiver());
 	}
 
 	/**
@@ -196,12 +196,12 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void perform (Action action, Transceiver transceiver)
+	public void perform(Action action, Transceiver transceiver)
 	{
 		synchronized (listLock)
 		{
-			actions.add (action);
-			listLock.notify ();
+			actions.add(action);
+			listLock.notify();
 		}
 	}
 
@@ -211,13 +211,13 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * @param action The action to perform.
 	 * @param transceiver The transceiver for this action.
 	 */
-	public void performAction (Action action, Transceiver transceiver)
+	public void performAction(Action action, Transceiver transceiver)
 	{
-		Channel channel = ((ClientTransceiver) transceiver).getConnectedChannel ();
+		Channel channel = ((ClientTransceiver) transceiver).getConnectedChannel();
 
-		if (channelProcessorMapping.get (channel) != null)
+		if (channelProcessorMapping.get(channel) != null)
 		{
-			((ActionProcessor) channelProcessorMapping.get (channel)).perform (action, transceiver);
+			((ActionProcessor) channelProcessorMapping.get(channel)).perform(action, transceiver);
 		}
 
 		// 		for (Iterator i = channelProcessorMapping.keySet ().iterator (); i.hasNext ();)
@@ -229,11 +229,11 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 		// 					action, transceiver);
 		// 			}
 		// 		}
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				((ActionProcessor) i.next ()).perform (action, transceiver);
+				((ActionProcessor) i.next()).perform(action, transceiver);
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -247,9 +247,9 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * @param channel The channel.
 	 * @param actionProcessor The action processor.
 	 */
-	public void addOutput (Channel channel, ActionProcessor actionProcessor)
+	public void addOutput(Channel channel, ActionProcessor actionProcessor)
 	{
-		channelProcessorMapping.put (channel, actionProcessor);
+		channelProcessorMapping.put(channel, actionProcessor);
 	}
 
 	/**
@@ -257,9 +257,9 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param channel The channel.
 	 */
-	public void removeOutput (Channel channel)
+	public void removeOutput(Channel channel)
 	{
-		channelProcessorMapping.remove (channel);
+		channelProcessorMapping.remove(channel);
 	}
 
 	/**
@@ -267,9 +267,9 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param actionProcessor The action processor
 	 */
-	public void addOutput (ActionProcessor actionProcessor)
+	public void addOutput(ActionProcessor actionProcessor)
 	{
-		channelProcessors.add (actionProcessor);
+		channelProcessors.add(actionProcessor);
 	}
 
 	/**
@@ -277,14 +277,14 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 *
 	 * @param actionProcessor The action processor.
 	 */
-	public void removeOutput (ActionProcessor actionProcessor)
+	public void removeOutput(ActionProcessor actionProcessor)
 	{
-		channelProcessors.remove (actionProcessor);
+		channelProcessors.remove(actionProcessor);
 	}
 
-	public boolean actionsInProcess ()
+	public boolean actionsInProcess()
 	{
-		return actions.size () > 0;
+		return actions.size() > 0;
 	}
 
 	/**
@@ -293,37 +293,37 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * @return NetworkActionProcessor
 	 */
 	@Override
-	public Object clone ()
+	public Object clone()
 	{
-		ThreadNetworkActionProcessor clone = new ThreadNetworkActionProcessor (typeId, channel,
+		ThreadNetworkActionProcessor clone = new ThreadNetworkActionProcessor(typeId, channel,
 						parentNetworkActionProcessor);
 
-		cloneOutputs (clone);
+		cloneOutputs(clone);
 
 		return clone;
 	}
 
-	public void cloneOutputs (NetworkActionProcessorInterface clone)
+	public void cloneOutputs(NetworkActionProcessorInterface clone)
 	{
-		for (Iterator i = channelProcessorMapping.keySet ().iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessorMapping.keySet().iterator(); i.hasNext();)
 		{
 			try
 			{
-				Channel channel = (Channel) i.next ();
+				Channel channel = (Channel) i.next();
 
-				clone.addOutput (channel, (ActionProcessor) ((ActionProcessor) channelProcessorMapping.get (channel))
-								.clone ());
+				clone.addOutput(channel, (ActionProcessor) ((ActionProcessor) channelProcessorMapping.get(channel))
+								.clone());
 			}
 			catch (ClassCastException nothingToDo)
 			{
 			}
 		}
 
-		for (Iterator i = channelProcessors.iterator (); i.hasNext ();)
+		for (Iterator i = channelProcessors.iterator(); i.hasNext();)
 		{
 			try
 			{
-				clone.addOutput ((ActionProcessor) ((ActionProcessor) i.next ()).clone ());
+				clone.addOutput((ActionProcessor) ((ActionProcessor) i.next()).clone());
 			}
 			catch (ClassCastException nothingToDo)
 			{
@@ -335,31 +335,31 @@ public class ThreadNetworkActionProcessor extends Threadable implements ActionPr
 	 * Called from the ThreadController to close this Thread.
 	 */
 	@Override
-	public void dispose ()
+	public void dispose()
 	{
 		synchronized (listLock)
 		{
 			if (channel != null)
 			{
-				System.out.println ("Dispose ThreadNetworkActionProcessor for channel: "
-								+ channel.getChannelNumber ()
+				System.out.println("Dispose ThreadNetworkActionProcessor for channel: "
+								+ channel.getChannelNumber()
 								+ ":"
-								+ ((channel.getCustomerContextObject () != null ? channel.getCustomerContextObject ()
-												.toString () : "-")));
+								+ ((channel.getCustomerContextObject() != null ? channel.getCustomerContextObject()
+												.toString() : "-")));
 			}
 			else
-				System.out.println ("Dispose ThreadNetworkActionProcessor... ");
+				System.out.println("Dispose ThreadNetworkActionProcessor... ");
 
-			setState (Threadable.CLOSING);
-			listLock.notify ();
+			setState(Threadable.CLOSING);
+			listLock.notify();
 		}
 	}
 
 	/**
 	 * Close a network action processor
 	 */
-	public void close ()
+	public void close()
 	{
-		dispose ();
+		dispose();
 	}
 }

@@ -41,23 +41,23 @@ public class ImageComponent extends Canvas
 	/**
 	 * Standard constructor
 	 */
-	public ImageComponent (String fname)
+	public ImageComponent(String fname)
 	{
-		super ();
+		super();
 
-		image = getToolkit ().getImage (fname);
+		image = getToolkit().getImage(fname);
 
-		MediaTracker mt = new MediaTracker (this);
+		MediaTracker mt = new MediaTracker(this);
 
-		mt.addImage (image, 0);
+		mt.addImage(image, 0);
 
 		try
 		{
-			mt.waitForAll ();
+			mt.waitForAll();
 		}
 		catch (InterruptedException e)
 		{
-			Log.log ("resources", "ImageComponent.ImageComponent", "Image: " + fname + " not found!", Log.WARN);
+			Log.log("resources", "ImageComponent.ImageComponent", "Image: " + fname + " not found!", Log.WARN);
 		}
 	}
 
@@ -66,26 +66,26 @@ public class ImageComponent extends Canvas
 	 *
 	 * @return The Image.
 	 */
-	public Image getImage ()
+	public Image getImage()
 	{
 		return image;
 	}
 
 	@Override
-	public void paint (Graphics g)
+	public void paint(Graphics g)
 	{
-		g.drawImage (image, 1, 1, this);
+		g.drawImage(image, 1, 1, this);
 	}
 
 	@Override
-	public Dimension getPreferredSize ()
+	public Dimension getPreferredSize()
 	{
-		return new Dimension (image.getWidth (this), image.getHeight (this));
+		return new Dimension(image.getWidth(this), image.getHeight(this));
 	}
 
 	@Override
-	public Dimension getMinimumSize ()
+	public Dimension getMinimumSize()
 	{
-		return new Dimension (image.getWidth (this), image.getHeight (this));
+		return new Dimension(image.getWidth(this), image.getHeight(this));
 	}
 }

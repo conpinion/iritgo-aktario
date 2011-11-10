@@ -36,16 +36,16 @@ public class StringContext extends BaseObject
 	 *
 	 * @param string the string
 	 */
-	public StringContext (String id, String string)
+	public StringContext(String id, String string)
 	{
-		super (id);
+		super(id);
 		this.string = string;
 	}
 
 	/**
 	 * Get the string
 	 */
-	public String getString ()
+	public String getString()
 	{
 		return string;
 	}

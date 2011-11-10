@@ -46,17 +46,17 @@ public class RegisterNewUserServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserServerAction ()
+	public RegisterNewUserServerAction()
 	{
-		super (- 1);
+		super(- 1);
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public RegisterNewUserServerAction (String userName, String email)
+	public RegisterNewUserServerAction(String userName, String email)
 	{
-		super (- 1);
+		super(- 1);
 
 		this.userName = userName;
 		this.email = email;
@@ -65,7 +65,7 @@ public class RegisterNewUserServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Get the id of the iritgo object.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "server.action.registernewuser";
 	}
@@ -73,7 +73,7 @@ public class RegisterNewUserServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Get the UserName.
 	 */
-	public String getUserName ()
+	public String getUserName()
 	{
 		return userName;
 	}
@@ -81,52 +81,52 @@ public class RegisterNewUserServerAction extends NetworkFrameworkServerAction
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		userName = stream.readUTF ();
-		email = stream.readUTF ();
+		userName = stream.readUTF();
+		email = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeUTF (userName);
-		stream.writeUTF (email);
+		stream.writeUTF(userName);
+		stream.writeUTF(email);
 	}
 
-	public FrameworkAction getAction (ClientTransceiver clientTransceiver)
+	public FrameworkAction getAction(ClientTransceiver clientTransceiver)
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
 
-		IDGenerator g = Server.instance ().getApplicationIdGenerator ();
+		IDGenerator g = Server.instance().getApplicationIdGenerator();
 
-		long userUniqueId = g.getUniqueId ();
+		long userUniqueId = g.getUniqueId();
 
 		//TODO: Generate a temp password!
 		String password = "nix";
 
-		User user = new User (userName, email, userUniqueId, password, clientTransceiver.getSender ());
+		User user = new User(userName, email, userUniqueId, password, clientTransceiver.getSender());
 
-		clientTransceiver.addReceiver (clientTransceiver.getSender ());
+		clientTransceiver.addReceiver(clientTransceiver.getSender());
 
-		if (userRegistry.getUser (userName) != null)
+		if (userRegistry.getUser(userName) != null)
 		{
-			return (FrameworkAction) new RegisterNewUserFailureAction (RegisterNewUserFailureAction.userNAME_INUSE);
+			return (FrameworkAction) new RegisterNewUserFailureAction(RegisterNewUserFailureAction.userNAME_INUSE);
 		}
 
-		if (userRegistry.getUserByEMail (email) != null)
+		if (userRegistry.getUserByEMail(email) != null)
 		{
-			return (FrameworkAction) new RegisterNewUserFailureAction (RegisterNewUserFailureAction.EMAIL_INUSE);
+			return (FrameworkAction) new RegisterNewUserFailureAction(RegisterNewUserFailureAction.EMAIL_INUSE);
 		}
 
-		userRegistry.addUser (user);
+		userRegistry.addUser(user);
 
-		Engine.instance ().getBaseRegistry ().add (user);
+		Engine.instance().getBaseRegistry().add(user);
 
-		Engine.instance ().getEventRegistry ().fire ("newuser", new NewUserEvent (user));
+		Engine.instance().getEventRegistry().fire("newuser", new NewUserEvent(user));
 
-		return (FrameworkAction) new RegisterNewUserAction (userName, email, userUniqueId, password);
+		return (FrameworkAction) new RegisterNewUserAction(userName, email, userUniqueId, password);
 	}
 }

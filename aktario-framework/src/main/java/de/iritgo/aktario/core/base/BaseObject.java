@@ -44,15 +44,15 @@ public class BaseObject
 	 * Create a new BaseObject and initialize the
 	 * type id with the class name.
 	 */
-	public BaseObject ()
+	public BaseObject()
 	{
 		try
 		{
-			typeId = this.getClass ().getName ();
+			typeId = this.getClass().getName();
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "BaseObject", "Cannot determine class.", Log.FATAL);
+			Log.log("system", "BaseObject", "Cannot determine class.", Log.FATAL);
 		}
 	}
 
@@ -61,9 +61,9 @@ public class BaseObject
 	 *
 	 * @param typeId The type id.
 	 */
-	public BaseObject (String typeId)
+	public BaseObject(String typeId)
 	{
-		this (typeId, 0);
+		this(typeId, 0);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class BaseObject
 	 * @param typeId The type id.
 	 * @param uniqueId The unique id.
 	 */
-	public BaseObject (String typeId, long uniqueId)
+	public BaseObject(String typeId, long uniqueId)
 	{
 		this.typeId = typeId;
 		this.uniqueId = uniqueId;
@@ -83,7 +83,7 @@ public class BaseObject
 	 *
 	 * @return The unique id.
 	 */
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}
@@ -93,7 +93,7 @@ public class BaseObject
 	 *
 	 * @param uniqueId The new unique id.
 	 */
-	public void setUniqueId (long uniqueId)
+	public void setUniqueId(long uniqueId)
 	{
 		this.uniqueId = uniqueId;
 	}
@@ -103,7 +103,7 @@ public class BaseObject
 	 *
 	 * @return The type id.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return typeId;
 	}
@@ -113,7 +113,7 @@ public class BaseObject
 	 *
 	 * @param typeId The new type id.
 	 */
-	public void setTypeId (String typeId)
+	public void setTypeId(String typeId)
 	{
 		this.typeId = typeId;
 	}
@@ -123,7 +123,7 @@ public class BaseObject
 	 *
 	 * @return True for a valid object.
 	 */
-	public boolean isValid ()
+	public boolean isValid()
 	{
 		return true;
 	}
@@ -133,8 +133,8 @@ public class BaseObject
 	 *
 	 * @return String The current dump
 	 */
-	public String dump ()
+	public String dump()
 	{
-		return toString ();
+		return toString();
 	}
 }

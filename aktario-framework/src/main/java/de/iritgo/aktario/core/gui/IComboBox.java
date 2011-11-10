@@ -32,13 +32,13 @@ public class IComboBox extends JComboBox
 	/** */
 	private static final long serialVersionUID = 1L;
 
-	public IComboBox ()
+	public IComboBox()
 	{
-		super ();
+		super();
 	}
 
-	public IComboBox (Vector vector)
+	public IComboBox(Vector vector)
 	{
-		super (vector);
+		super(vector);
 	}
 }

@@ -46,25 +46,25 @@ public class UserLoginAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public UserLoginAction ()
+	public UserLoginAction()
 	{
-		super (- 1);
-		user = new User ();
+		super(- 1);
+		user = new User();
 	}
 
 	/**
 	 * Standard constructor
 	 */
-	public UserLoginAction (User user)
+	public UserLoginAction(User user)
 	{
-		super (user.getUniqueId ());
+		super(user.getUniqueId());
 		this.user = user;
 	}
 
 	/**
 	 * Get the id of the iritgo object.
 	 */
-	public String getTypeId ()
+	public String getTypeId()
 	{
 		return "action.userlogin";
 	}
@@ -72,17 +72,17 @@ public class UserLoginAction extends FrameworkAction
 	/**
 	 * Get the UserName.
 	 */
-	public String getUserName ()
+	public String getUserName()
 	{
-		return user.getName ();
+		return user.getName();
 	}
 
-	public void setAppId (String appId)
+	public void setAppId(String appId)
 	{
 		this.appId = appId;
 	}
 
-	public String getAppId ()
+	public String getAppId()
 	{
 		return appId;
 	}
@@ -90,46 +90,46 @@ public class UserLoginAction extends FrameworkAction
 	/**
 	 * Read the attributes from the given stream.
 	 */
-	public void readObject (FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
 	{
-		user.readObject (stream);
-		appId = stream.readUTF ();
+		user.readObject(stream);
+		appId = stream.readUTF();
 	}
 
 	/**
 	 * Write the attributes to the given stream.
 	 */
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		user.writeObject (stream);
-		stream.writeUTF (appId);
+		user.writeObject(stream);
+		stream.writeUTF(appId);
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
 		ClientTransceiver clientTransceiver = (ClientTransceiver) transceiver;
-		UserRegistry userRegistry = Client.instance ().getUserRegistry ();
+		UserRegistry userRegistry = Client.instance().getUserRegistry();
 
-		user.setNetworkChannel (clientTransceiver.getSender ());
-		user.setOnline (true);
+		user.setNetworkChannel(clientTransceiver.getSender());
+		user.setOnline(true);
 
-		userRegistry.addUser (user);
+		userRegistry.addUser(user);
 
-		AppContext appContext = AppContext.instance ();
+		AppContext appContext = AppContext.instance();
 
-		appContext.setUser (user);
-		appContext.setAppId (appId);
+		appContext.setUser(user);
+		appContext.setAppId(appId);
 
-		FrameworkProxy userProxy = new FrameworkProxy (user);
+		FrameworkProxy userProxy = new FrameworkProxy(user);
 
-		Engine.instance ().getProxyRegistry ().addProxy (userProxy, user.getTypeId ());
-		Engine.instance ().getBaseRegistry ().add (user);
+		Engine.instance().getProxyRegistry().addProxy(userProxy, user.getTypeId());
+		Engine.instance().getBaseRegistry().add(user);
 
-		Engine.instance ().getFlowControl ().ruleSuccess ("UserLogin");
+		Engine.instance().getFlowControl().ruleSuccess("UserLogin");
 
-		Engine.instance ().getEventRegistry ().fire ("User", new UserEvent (user, UserEvent.USER_LOGGED_IN));
+		Engine.instance().getEventRegistry().fire("User", new UserEvent(user, UserEvent.USER_LOGGED_IN));
 	}
 }

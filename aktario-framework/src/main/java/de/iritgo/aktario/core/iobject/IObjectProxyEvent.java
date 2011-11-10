@@ -33,38 +33,38 @@ public class IObjectProxyEvent implements Event
 
 	private IObject iObject;
 
-	public IObjectProxyEvent (IObject iObject, boolean waitingForNewObject)
+	public IObjectProxyEvent(IObject iObject, boolean waitingForNewObject)
 	{
-		this.uniqueId = iObject.getUniqueId ();
+		this.uniqueId = iObject.getUniqueId();
 		this.waitingForNewObject = waitingForNewObject;
-		this.iObjectTypeId = iObject.getTypeId ();
+		this.iObjectTypeId = iObject.getTypeId();
 		this.iObject = iObject;
 	}
 
-	public long getUniqueId ()
+	public long getUniqueId()
 	{
 		return uniqueId;
 	}
 
-	public String getIObjectTypeId ()
+	public String getIObjectTypeId()
 	{
 		return iObjectTypeId;
 	}
 
-	public IObject getObject ()
+	public IObject getObject()
 	{
 		return iObject;
 	}
 
-	public boolean isWaitingForNewObject ()
+	public boolean isWaitingForNewObject()
 	{
 		return waitingForNewObject;
 	}
 
 	@Override
-	public String toString ()
+	public String toString()
 	{
-		return super.toString () + "[uniqueId=" + uniqueId + ",iObjectTypeId=" + iObjectTypeId + ",iObject=" + iObject
+		return super.toString() + "[uniqueId=" + uniqueId + ",iObjectTypeId=" + iObjectTypeId + ",iObject=" + iObject
 						+ ",waitingForNewObject=" + waitingForNewObject + "]";
 	}
 }

@@ -35,9 +35,9 @@ public class FlowControl
 	/**
 	 * Create a new FlowControl.
 	 */
-	public FlowControl ()
+	public FlowControl()
 	{
-		rules = new HashMap ();
+		rules = new HashMap();
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class FlowControl
 	 *
 	 * @param rule The rule to add.
 	 */
-	public void add (FlowRule rule)
+	public void add(FlowRule rule)
 	{
-		rules.put (rule.getTypeId (), rule);
+		rules.put(rule.getTypeId(), rule);
 	}
 
 	/**
@@ -55,9 +55,9 @@ public class FlowControl
 	 *
 	 * @param id The id of the rule to remove.
 	 */
-	public FlowRule get (String id)
+	public FlowRule get(String id)
 	{
-		return (FlowRule) rules.get (id);
+		return (FlowRule) rules.get(id);
 	}
 
 	/**
@@ -65,9 +65,9 @@ public class FlowControl
 	 *
 	 * @param rule The rule to remove.
 	 */
-	public void remove (FlowRule rule)
+	public void remove(FlowRule rule)
 	{
-		rules.remove (rule.getTypeId ());
+		rules.remove(rule.getTypeId());
 	}
 
 	/**
@@ -76,21 +76,21 @@ public class FlowControl
 	 * @param id The id of the rule.
 	 * @param arg Optional success argument.
 	 */
-	public void ruleSuccess (String id, Object arg)
+	public void ruleSuccess(String id, Object arg)
 	{
-		FlowRule rule = (FlowRule) rules.get (id);
+		FlowRule rule = (FlowRule) rules.get(id);
 
 		if (rule == null)
 		{
 			return;
 		}
 
-		rule.success ();
-		rule.success (arg);
+		rule.success();
+		rule.success(arg);
 
-		if (rule.isCompleted ())
+		if (rule.isCompleted())
 		{
-			remove (rule);
+			remove(rule);
 		}
 	}
 
@@ -99,9 +99,9 @@ public class FlowControl
 	 *
 	 * @param id The id of the rule.
 	 */
-	public void ruleSuccess (String id)
+	public void ruleSuccess(String id)
 	{
-		ruleSuccess (id, null);
+		ruleSuccess(id, null);
 	}
 
 	/**
@@ -110,21 +110,21 @@ public class FlowControl
 	 * @param id The id of the rule.
 	 * @param arg Optional success argument.
 	 */
-	public void ruleFailure (String id, Object arg)
+	public void ruleFailure(String id, Object arg)
 	{
-		FlowRule rule = (FlowRule) rules.get (id);
+		FlowRule rule = (FlowRule) rules.get(id);
 
 		if (rule == null)
 		{
 			return;
 		}
 
-		rule.failure ();
-		rule.failure (arg);
+		rule.failure();
+		rule.failure(arg);
 
-		if (rule.isCompleted ())
+		if (rule.isCompleted())
 		{
-			remove (rule);
+			remove(rule);
 		}
 	}
 
@@ -133,9 +133,9 @@ public class FlowControl
 	 *
 	 * @param id The id of the rule.
 	 */
-	public void ruleFailure (String id)
+	public void ruleFailure(String id)
 	{
-		ruleFailure (id, null);
+		ruleFailure(id, null);
 	}
 
 	/**
@@ -144,16 +144,16 @@ public class FlowControl
 	 * @param id The id of the rule to check.
 	 * @return True if the rule exists.
 	 */
-	public boolean ruleExists (String id)
+	public boolean ruleExists(String id)
 	{
-		return rules.containsKey (id);
+		return rules.containsKey(id);
 	}
 
 	/**
 	 * Remove all rules from this flow control.
 	 */
-	public void clear ()
+	public void clear()
 	{
-		rules.clear ();
+		rules.clear();
 	}
 }

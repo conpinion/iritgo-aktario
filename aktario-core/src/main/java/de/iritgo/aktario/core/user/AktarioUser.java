@@ -46,18 +46,18 @@ public class AktarioUser extends DataObject
 	/**
 	 * Create a new AktarioUser.
 	 */
-	public AktarioUser ()
+	public AktarioUser()
 	{
-		super ("AktarioUser");
+		super("AktarioUser");
 
-		addAttribute ("name", "");
-		addAttribute ("fullName", "");
-		addAttribute ("password", "");
-		addAttribute ("email", "");
+		addAttribute("name", "");
+		addAttribute("fullName", "");
+		addAttribute("password", "");
+		addAttribute("email", "");
 
 		// 		addAttribute ("phoneNumber", "");
-		addAttribute ("role", ROLE_USER);
-		addAttribute ("rooms", Room.class);
+		addAttribute("role", ROLE_USER);
+		addAttribute("rooms", Room.class);
 	}
 
 	/**
@@ -65,10 +65,10 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param uniqueId The unique id of the new user.
 	 */
-	public AktarioUser (long uniqueId)
+	public AktarioUser(long uniqueId)
 	{
-		this ();
-		setUniqueId (uniqueId);
+		this();
+		setUniqueId(uniqueId);
 	}
 
 	/**
@@ -76,9 +76,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user name.
 	 */
-	public String getName ()
+	public String getName()
 	{
-		return getStringAttribute ("name");
+		return getStringAttribute("name");
 	}
 
 	/**
@@ -86,9 +86,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param name The new name.
 	 */
-	public void setName (String name)
+	public void setName(String name)
 	{
-		setAttribute ("name", name);
+		setAttribute("name", name);
 	}
 
 	/**
@@ -96,9 +96,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user phoneNumber.
 	 */
-	public String getPhoneNumber ()
+	public String getPhoneNumber()
 	{
-		return getStringAttribute ("phoneNumber");
+		return getStringAttribute("phoneNumber");
 	}
 
 	/**
@@ -106,9 +106,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param phoneNumber The new phoneNumber.
 	 */
-	public void setPhoneNumber (String phoneNumber)
+	public void setPhoneNumber(String phoneNumber)
 	{
-		setAttribute ("phoneNumber", phoneNumber);
+		setAttribute("phoneNumber", phoneNumber);
 	}
 
 	/**
@@ -116,9 +116,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user's full name.
 	 */
-	public String getFullName ()
+	public String getFullName()
 	{
-		return getStringAttribute ("fullName");
+		return getStringAttribute("fullName");
 	}
 
 	/**
@@ -126,9 +126,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param fullName The new full name.
 	 */
-	public void setFullName (String fullName)
+	public void setFullName(String fullName)
 	{
-		setAttribute ("fullName", fullName);
+		setAttribute("fullName", fullName);
 	}
 
 	/**
@@ -136,9 +136,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user's password.
 	 */
-	public String getPassword ()
+	public String getPassword()
 	{
-		return getStringAttribute ("password");
+		return getStringAttribute("password");
 	}
 
 	/**
@@ -146,9 +146,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param password The new password.
 	 */
-	public void setPassword (String password)
+	public void setPassword(String password)
 	{
-		setAttribute ("password", password);
+		setAttribute("password", password);
 	}
 
 	/**
@@ -156,9 +156,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user's email.
 	 */
-	public String getEmail ()
+	public String getEmail()
 	{
-		return getStringAttribute ("email");
+		return getStringAttribute("email");
 	}
 
 	/**
@@ -166,9 +166,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param email The new email.
 	 */
-	public void setEmail (String email)
+	public void setEmail(String email)
 	{
-		setAttribute ("email", email);
+		setAttribute("email", email);
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user's role.
 	 */
-	public int getRole ()
+	public int getRole()
 	{
-		return getIntAttribute ("role");
+		return getIntAttribute("role");
 	}
 
 	/**
@@ -186,9 +186,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param role The new role.
 	 */
-	public void setRole (int role)
+	public void setRole(int role)
 	{
-		setAttribute ("role", role);
+		setAttribute("role", role);
 	}
 
 	/**
@@ -196,15 +196,15 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The user's role as a string.
 	 */
-	public String getRoleString ()
+	public String getRoleString()
 	{
-		switch (getRole ())
+		switch (getRole())
 		{
 			case ROLE_ADMIN:
-				return Engine.instance ().getResourceService ().getString ("aktario.roleAdmin");
+				return Engine.instance().getResourceService().getString("aktario.roleAdmin");
 
 			case ROLE_USER:
-				return Engine.instance ().getResourceService ().getString ("aktario.roleUser");
+				return Engine.instance().getResourceService().getString("aktario.roleUser");
 
 			default:
 				return "---";
@@ -216,12 +216,12 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The Iritgo user id.
 	 */
-	public long getUserId ()
+	public long getUserId()
 	{
-		UserRegistry userRegistry = Server.instance ().getUserRegistry ();
-		User user = userRegistry.getUser (getName ());
+		UserRegistry userRegistry = Server.instance().getUserRegistry();
+		User user = userRegistry.getUser(getName());
 
-		return user != null ? user.getUniqueId () : - 1;
+		return user != null ? user.getUniqueId() : - 1;
 	}
 
 	/**
@@ -229,9 +229,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param room The room to add.
 	 */
-	public void addRoom (Room room)
+	public void addRoom(Room room)
 	{
-		getListAttribute ("rooms").add (room);
+		getListAttribute("rooms").add(room);
 	}
 
 	/**
@@ -240,9 +240,9 @@ public class AktarioUser extends DataObject
 	 * @param index The index of the room to retrieve.
 	 * @return The room at the specified index.
 	 */
-	public Room getRoom (int index)
+	public Room getRoom(int index)
 	{
-		return (Room) getListAttribute ("rooms").get (index);
+		return (Room) getListAttribute("rooms").get(index);
 	}
 
 	/**
@@ -250,9 +250,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @param room The room to remove.
 	 */
-	public void removeRoom (Room room)
+	public void removeRoom(Room room)
 	{
-		getListAttribute ("rooms").remove (room);
+		getListAttribute("rooms").remove(room);
 	}
 
 	/**
@@ -260,9 +260,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The room count.
 	 */
-	public int getRoomCount ()
+	public int getRoomCount()
 	{
-		return getListAttribute ("rooms").size ();
+		return getListAttribute("rooms").size();
 	}
 
 	/**
@@ -270,9 +270,9 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return The room list.
 	 */
-	public IObjectList getRooms ()
+	public IObjectList getRooms()
 	{
-		return getListAttribute ("rooms");
+		return getListAttribute("rooms");
 	}
 
 	/**
@@ -280,8 +280,8 @@ public class AktarioUser extends DataObject
 	 *
 	 * @return A room iterator.
 	 */
-	public Iterator roomIterator ()
+	public Iterator roomIterator()
 	{
-		return getListAttribute ("rooms").iterator ();
+		return getListAttribute("rooms").iterator();
 	}
 }

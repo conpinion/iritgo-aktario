@@ -28,13 +28,13 @@ import de.iritgo.aktario.framework.base.DataObject;
  */
 public class DynDataObject extends DataObject
 {
-	public DynDataObject ()
+	public DynDataObject()
 	{
-		super ("tmp");
+		super("tmp");
 	}
 
-	public DynDataObject (String typeId)
+	public DynDataObject(String typeId)
 	{
-		super (typeId);
+		super(typeId);
 	}
 }

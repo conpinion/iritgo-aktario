@@ -35,21 +35,21 @@ public class AddXmlRpcCommand extends Command
 	/**
 	 * Create a new AddXmlRpcCommand.
 	 */
-	public AddXmlRpcCommand ()
+	public AddXmlRpcCommand()
 	{
-		super ("aktario-xmlrpc.AddXmlRpcCommand");
+		super("aktario-xmlrpc.AddXmlRpcCommand");
 	}
 
 	/**
 	 * Execute the command.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		Object command = properties.get ("command");
+		Object command = properties.get("command");
 
 		if (command == null)
 		{
-			Log.logError ("AddXmlRpcCommand", "perform", "No command specified");
+			Log.logError("AddXmlRpcCommand", "perform", "No command specified");
 
 			return;
 		}
@@ -62,23 +62,23 @@ public class AddXmlRpcCommand extends Command
 		}
 		else if (command instanceof Command)
 		{
-			commandName = ((Command) command).getTypeId ();
+			commandName = ((Command) command).getTypeId();
 		}
 		else
 		{
-			Log.logError ("AddXmlRpcCommand", "perform", "Type of paramter 'command' must be 'String' or 'Command'");
+			Log.logError("AddXmlRpcCommand", "perform", "Type of paramter 'command' must be 'String' or 'Command'");
 
 			return;
 		}
 
-		String xmlRpcMethodName = (String) properties.get ("name");
+		String xmlRpcMethodName = (String) properties.get("name");
 
 		if (xmlRpcMethodName == null)
 		{
 			xmlRpcMethodName = commandName;
 		}
 
-		((AktarioXmlRpcManager) Engine.instance ().getManager ("AktarioXmlRpcManager")).addXmlRpcCommand (
+		((AktarioXmlRpcManager) Engine.instance().getManager("AktarioXmlRpcManager")).addXmlRpcCommand(
 						xmlRpcMethodName, commandName);
 	}
 }

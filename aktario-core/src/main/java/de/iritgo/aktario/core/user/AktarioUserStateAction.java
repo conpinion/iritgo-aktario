@@ -48,10 +48,10 @@ public class AktarioUserStateAction extends FrameworkAction
 	/**
 	 * Create a new action.
 	 */
-	public AktarioUserStateAction ()
+	public AktarioUserStateAction()
 	{
-		setTypeId ("AktarioUserStateAction");
-		userIds = new LinkedList ();
+		setTypeId("AktarioUserStateAction");
+		userIds = new LinkedList();
 	}
 
 	/**
@@ -59,9 +59,9 @@ public class AktarioUserStateAction extends FrameworkAction
 	 *
 	 * @param connected The connection state.
 	 */
-	public AktarioUserStateAction (boolean connected)
+	public AktarioUserStateAction(boolean connected)
 	{
-		this ();
+		this();
 		this.connected = connected;
 	}
 
@@ -71,10 +71,10 @@ public class AktarioUserStateAction extends FrameworkAction
 	 * @param user The user that has the specified state.
 	 * @param connected The connection state.
 	 */
-	public AktarioUserStateAction (AktarioUser user, boolean connected)
+	public AktarioUserStateAction(AktarioUser user, boolean connected)
 	{
-		this (connected);
-		addUser (user);
+		this(connected);
+		addUser(user);
 	}
 
 	/**
@@ -82,11 +82,11 @@ public class AktarioUserStateAction extends FrameworkAction
 	 *
 	 * @param user The user to add.
 	 */
-	public void addUser (AktarioUser user)
+	public void addUser(AktarioUser user)
 	{
 		if (user != null)
 		{
-			userIds.add (new Long (user.getUniqueId ()));
+			userIds.add(new Long(user.getUniqueId()));
 		}
 	}
 
@@ -94,47 +94,47 @@ public class AktarioUserStateAction extends FrameworkAction
 	 * Write the attributes to a stream.
 	 */
 	@Override
-	public void writeObject (FrameworkOutputStream stream) throws IOException
+	public void writeObject(FrameworkOutputStream stream) throws IOException
 	{
-		stream.writeInt (userIds.size ());
+		stream.writeInt(userIds.size());
 
-		for (Iterator i = userIds.iterator (); i.hasNext ();)
+		for (Iterator i = userIds.iterator(); i.hasNext();)
 		{
-			stream.writeLong (((Long) i.next ()).longValue ());
+			stream.writeLong(((Long) i.next()).longValue());
 		}
 
-		stream.writeBoolean (connected);
+		stream.writeBoolean(connected);
 	}
 
 	/**
 	 * Read the attributes from a stream.
 	 */
 	@Override
-	public void readObject (FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException
 	{
-		int numUsers = stream.readInt ();
+		int numUsers = stream.readInt();
 
 		for (int i = 0; i < numUsers; ++i)
 		{
-			userIds.add (new Long (stream.readLong ()));
+			userIds.add(new Long(stream.readLong()));
 		}
 
-		connected = stream.readBoolean ();
+		connected = stream.readBoolean();
 	}
 
 	/**
 	 * Perform the action.
 	 */
 	@Override
-	public void perform ()
+	public void perform()
 	{
-		if (userIds.size () > 0)
+		if (userIds.size() > 0)
 		{
-			Properties props = new Properties ();
+			Properties props = new Properties();
 
-			props.put ("userIds", userIds);
-			props.put ("connected", new Boolean (connected));
-			CommandTools.performSimple ("DisplayUserConnectionState", props);
+			props.put("userIds", userIds);
+			props.put("connected", new Boolean(connected));
+			CommandTools.performSimple("DisplayUserConnectionState", props);
 		}
 	}
 }

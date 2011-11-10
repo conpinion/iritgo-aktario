@@ -34,13 +34,13 @@ public class OnlineUserIterator implements Iterator
 
 	private boolean hasNext;
 
-	public OnlineUserIterator (Iterator iterator)
+	public OnlineUserIterator(Iterator iterator)
 	{
 		this.iterator = iterator;
-		user = getNextOnlineUser ();
+		user = getNextOnlineUser();
 	}
 
-	public boolean hasNext ()
+	public boolean hasNext()
 	{
 		if (user != null)
 		{
@@ -50,26 +50,26 @@ public class OnlineUserIterator implements Iterator
 		return false;
 	}
 
-	public Object next ()
+	public Object next()
 	{
 		User currentUser = user;
 
-		user = getNextOnlineUser ();
+		user = getNextOnlineUser();
 
 		return currentUser;
 	}
 
-	public void remove ()
+	public void remove()
 	{
 	}
 
-	private User getNextOnlineUser ()
+	private User getNextOnlineUser()
 	{
-		while (iterator.hasNext ())
+		while (iterator.hasNext())
 		{
-			User user = (User) iterator.next ();
+			User user = (User) iterator.next();
 
-			if (user.isOnline ())
+			if (user.isOnline())
 			{
 				return user;
 			}

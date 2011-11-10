@@ -32,16 +32,16 @@ public class UserKickAction extends FrameworkAction
 	/**
 	 * Standard constructor
 	 */
-	public UserKickAction ()
+	public UserKickAction()
 	{
 	}
 
 	/**
 	 * Perform the action.
 	 */
-	public void perform ()
+	public void perform()
 	{
-		IritgoEngine.instance ().shutdown ();
-		System.exit (0);
+		IritgoEngine.instance().shutdown();
+		System.exit(0);
 	}
 }

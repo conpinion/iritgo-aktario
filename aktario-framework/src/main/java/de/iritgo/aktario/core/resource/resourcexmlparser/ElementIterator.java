@@ -37,68 +37,68 @@ public class ElementIterator implements Iterator
 
 	private List elementList = null;
 
-	private LinkedList stack = new LinkedList ();
+	private LinkedList stack = new LinkedList();
 
 	private String path = "";
 
 	private ElementContainer elementContainer = null;
 
-	public ElementIterator (Element element)
+	public ElementIterator(Element element)
 	{
 		//		this.element = (Element) element.getChildren ().get (0);
 		this.element = (Element) element;
-		this.elementList = this.element.getChildren ();
-		elementContainer = new ElementContainer (this.element, 0, this.element.getAttribute ("treename").getValue ());
-		path = this.element.getAttribute ("treename").getValue ();
+		this.elementList = this.element.getChildren();
+		elementContainer = new ElementContainer(this.element, 0, this.element.getAttribute("treename").getValue());
+		path = this.element.getAttribute("treename").getValue();
 	}
 
-	public boolean hasNext ()
+	public boolean hasNext()
 	{
-		return (pos < elementList.size () || (stack.size () > 0));
+		return (pos < elementList.size() || (stack.size() > 0));
 	}
 
-	public Object next ()
+	public Object next()
 	{
-		if (pos < elementList.size ())
+		if (pos < elementList.size())
 		{
-			stack.addFirst (new ElementContainer (element, pos, path));
-			element = (Element) elementList.get (pos);
+			stack.addFirst(new ElementContainer(element, pos, path));
+			element = (Element) elementList.get(pos);
 
-			if (element.getAttribute ("treename") != null)
+			if (element.getAttribute("treename") != null)
 			{
-				path = path + "." + element.getAttribute ("treename").getValue ();
+				path = path + "." + element.getAttribute("treename").getValue();
 			}
 			else
 			{
 				path = path + ".classdev";
 			}
 
-			elementList = element.getChildren ();
+			elementList = element.getChildren();
 			pos = 0;
-			elementContainer = new ElementContainer (element, pos, path);
+			elementContainer = new ElementContainer(element, pos, path);
 
 			return elementContainer;
 		}
 
-		if ((stack.size () > 0) && (pos >= elementList.size ()))
+		if ((stack.size() > 0) && (pos >= elementList.size()))
 		{
-			elementContainer = (ElementContainer) stack.removeFirst ();
-			pos = elementContainer.getPos ();
-			path = elementContainer.getPath ();
+			elementContainer = (ElementContainer) stack.removeFirst();
+			pos = elementContainer.getPos();
+			path = elementContainer.getPath();
 			pos++;
-			element = elementContainer.getElement ();
-			elementList = element.getChildren ();
+			element = elementContainer.getElement();
+			elementList = element.getChildren();
 		}
 
 		return elementContainer;
 	}
 
-	public Object current ()
+	public Object current()
 	{
 		return elementContainer;
 	}
 
-	public void remove ()
+	public void remove()
 	{
 	}
 }

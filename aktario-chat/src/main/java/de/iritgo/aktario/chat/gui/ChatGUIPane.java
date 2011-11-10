@@ -61,173 +61,173 @@ public class ChatGUIPane extends SwingGUIPane implements ChatGUI
 	/** The current time. */
 	private Date currentTime;
 
-	public ChatGUIPane ()
+	public ChatGUIPane()
 	{
-		super ("common.chatview");
-		channelTabs = new HashMap ();
-		dateFormat = DateFormat.getTimeInstance (DateFormat.MEDIUM);
-		currentTime = new Date ();
+		super("common.chatview");
+		channelTabs = new HashMap();
+		dateFormat = DateFormat.getTimeInstance(DateFormat.MEDIUM);
+		currentTime = new Date();
 	}
 
 	@Override
-	public void initGUI ()
+	public void initGUI()
 	{
-		JPanel allPanel = new JPanel ();
+		JPanel allPanel = new JPanel();
 
-		allPanel.setLayout (new GridBagLayout ());
-		channels = new JTabbedPane ();
+		allPanel.setLayout(new GridBagLayout());
+		channels = new JTabbedPane();
 
-		allPanel.add (channels, createConstraints (0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
-		messageField = new JTextField ();
-		messageField.addActionListener (new CallbackActionListener (this, "onChatMessage"));
-		allPanel.add (messageField, createConstraints (0, 1, 1, 1, GridBagConstraints.BOTH, 0, 0, null));
+		allPanel.add(channels, createConstraints(0, 0, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		messageField = new JTextField();
+		messageField.addActionListener(new CallbackActionListener(this, "onChatMessage"));
+		allPanel.add(messageField, createConstraints(0, 1, 1, 1, GridBagConstraints.BOTH, 0, 0, null));
 
-		content.add (allPanel, createConstraints (0, 1, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
+		content.add(allPanel, createConstraints(0, 1, 1, 1, GridBagConstraints.BOTH, 100, 100, null));
 		tabCount = 0;
-		ShowChatter.setChatterIsVisible ();
+		ShowChatter.setChatterIsVisible();
 
-		getDisplay ().setIcon (new ImageIcon (ChatGUIPane.class.getResource ("/resources/chat.png")));
+		getDisplay().setIcon(new ImageIcon(ChatGUIPane.class.getResource("/resources/chat.png")));
 
-		Long appInstanceId = (Long) getDisplay ().getProperties ().get ("aktario.applicationInstanceId");
+		Long appInstanceId = (Long) getDisplay().getProperties().get("aktario.applicationInstanceId");
 
-		AppContext.instance ().put ("applicationPane", this);
-		AppContext.instance ().put ("applicationPane." + appInstanceId, this);
+		AppContext.instance().put("applicationPane", this);
+		AppContext.instance().put("applicationPane." + appInstanceId, this);
 
-		UserJoinCommand userJoinCommand = new UserJoinCommand ("System", AppContext.instance ().getUser ().getName ());
+		UserJoinCommand userJoinCommand = new UserJoinCommand("System", AppContext.instance().getUser().getName());
 
-		IritgoEngine.instance ().getAsyncCommandProcessor ().perform (userJoinCommand);
+		IritgoEngine.instance().getAsyncCommandProcessor().perform(userJoinCommand);
 	}
 
 	@Override
-	public void loadFromObject (IObject iObject)
+	public void loadFromObject(IObject iObject)
 	{
 		/* empty */
 	}
 
 	@Override
-	public void storeToObject (IObject iObject)
+	public void storeToObject(IObject iObject)
 	{
 		/* empty */
 	}
 
-	public void joinChannel (String channelId, String user)
+	public void joinChannel(String channelId, String user)
 	{
-		TabChatView tabChatView = (TabChatView) channelTabs.get (new Integer (channelId.hashCode ()));
+		TabChatView tabChatView = (TabChatView) channelTabs.get(new Integer(channelId.hashCode()));
 
 		if (tabChatView != null)
 		{
-			MessageFormat mf = new MessageFormat (Engine.instance ().getResourceService ().getStringWithoutException (
+			MessageFormat mf = new MessageFormat(Engine.instance().getResourceService().getStringWithoutException(
 							"chat.userjoind"));
 
-			tabChatView.addUser (user);
-			tabChatView.chatMessage (user, mf.format (new Object[]
+			tabChatView.addUser(user);
+			tabChatView.chatMessage(user, mf.format(new Object[]
 			{
 				user
-			}, new StringBuffer (), null).toString ());
+			}, new StringBuffer(), null).toString());
 
 			return;
 		}
 
-		tabChatView = new TabChatView ();
+		tabChatView = new TabChatView();
 
-		channelTabs.put (new Integer (channelId.hashCode ()), tabChatView);
-		channels.addTab (channelId, tabChatView.createTabChatView (tabCount, channelId));
-		channels.revalidate ();
+		channelTabs.put(new Integer(channelId.hashCode()), tabChatView);
+		channels.addTab(channelId, tabChatView.createTabChatView(tabCount, channelId));
+		channels.revalidate();
 		++tabCount;
 	}
 
-	public void leaveChannel (Integer channelId, String user)
+	public void leaveChannel(Integer channelId, String user)
 	{
-		TabChatView tabChatView = (TabChatView) channelTabs.get (channelId);
+		TabChatView tabChatView = (TabChatView) channelTabs.get(channelId);
 
 		if (tabChatView == null)
 		{
 			return;
 		}
 
-		MessageFormat mf = new MessageFormat (Engine.instance ().getResourceService ().getStringWithoutException (
+		MessageFormat mf = new MessageFormat(Engine.instance().getResourceService().getStringWithoutException(
 						"chat.userleave"));
 
-		tabChatView.chatMessage (user, mf.format (new Object[]
+		tabChatView.chatMessage(user, mf.format(new Object[]
 		{
 			user
-		}, new StringBuffer (), null).toString ());
+		}, new StringBuffer(), null).toString());
 
-		if (user.equals ("") || AppContext.instance ().getUser ().getName ().equals (user))
+		if (user.equals("") || AppContext.instance().getUser().getName().equals(user))
 		{
-			channels.removeTabAt (channels.indexOfTab (tabChatView.getTabName ()));
-			channelTabs.remove (channelId);
+			channels.removeTabAt(channels.indexOfTab(tabChatView.getTabName()));
+			channelTabs.remove(channelId);
 			--tabCount;
 
 			return;
 		}
 
-		tabChatView.removeUser (user);
+		tabChatView.removeUser(user);
 	}
 
-	public void addMessage (String message, int channelId, String user)
+	public void addMessage(String message, int channelId, String user)
 	{
-		TabChatView tabChatView = (TabChatView) channelTabs.get (new Integer (channelId));
+		TabChatView tabChatView = (TabChatView) channelTabs.get(new Integer(channelId));
 
-		currentTime.setTime (System.currentTimeMillis ());
-		tabChatView.chatMessage (user, "[" + dateFormat.format (currentTime) + "] " + user + ": " + message);
+		currentTime.setTime(System.currentTimeMillis());
+		tabChatView.chatMessage(user, "[" + dateFormat.format(currentTime) + "] " + user + ": " + message);
 	}
 
 	/**
 	 * Register a new User.
 	 */
-	public void onChatMessage (@SuppressWarnings("unused") ActionEvent event)
+	public void onChatMessage(@SuppressWarnings("unused") ActionEvent event)
 	{
-		String message = messageField.getText ();
+		String message = messageField.getText();
 
-		messageField.setText ("");
+		messageField.setText("");
 
-		int index = channels.getSelectedIndex ();
+		int index = channels.getSelectedIndex();
 
 		String channel = "System";
 
 		if (index >= 0)
 		{
-			channel = channels.getTitleAt (index);
+			channel = channels.getTitleAt(index);
 		}
 
-		UserChatCommand userChatCommand = new UserChatCommand (message, channel.hashCode (), AppContext.instance ()
-						.getUser ().getName ());
+		UserChatCommand userChatCommand = new UserChatCommand(message, channel.hashCode(), AppContext.instance()
+						.getUser().getName());
 
-		IritgoEngine.instance ().getAsyncCommandProcessor ().perform (userChatCommand);
+		IritgoEngine.instance().getAsyncCommandProcessor().perform(userChatCommand);
 	}
 
 	@Override
-	public void close ()
+	public void close()
 	{
-		ChatClientManager chatManager = (ChatClientManager) Engine.instance ().getManagerRegistry ().getManager (
+		ChatClientManager chatManager = (ChatClientManager) Engine.instance().getManagerRegistry().getManager(
 						"chat.client");
 
-		chatManager.closeAllChannels ();
-		super.close ();
-		ShowChatter.setChatterIsNotVisible ();
+		chatManager.closeAllChannels();
+		super.close();
+		ShowChatter.setChatterIsNotVisible();
 
-		Long appInstanceId = (Long) getDisplay ().getProperties ().get ("aktario.applicationInstanceId");
+		Long appInstanceId = (Long) getDisplay().getProperties().get("aktario.applicationInstanceId");
 
-		AppContext.instance ().remove ("applicationPane");
-		AppContext.instance ().remove ("applicationPane." + appInstanceId);
+		AppContext.instance().remove("applicationPane");
+		AppContext.instance().remove("applicationPane." + appInstanceId);
 	}
 
 	@Override
-	public void systemClose ()
+	public void systemClose()
 	{
-		close ();
+		close();
 	}
 
-	public Integer getCurrentChannel ()
+	public Integer getCurrentChannel()
 	{
-		return new Integer (channels.getTitleAt (channels.getSelectedIndex ()).hashCode ());
+		return new Integer(channels.getTitleAt(channels.getSelectedIndex()).hashCode());
 	}
 
 	@Override
-	public GUIPane cloneGUIPane ()
+	public GUIPane cloneGUIPane()
 	{
-		ChatGUIPane registerNewUserGUIPane = new ChatGUIPane ();
+		ChatGUIPane registerNewUserGUIPane = new ChatGUIPane();
 
 		return registerNewUserGUIPane;
 	}

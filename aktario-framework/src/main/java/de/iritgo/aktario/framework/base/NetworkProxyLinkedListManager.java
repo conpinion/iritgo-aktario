@@ -41,10 +41,10 @@ public class NetworkProxyLinkedListManager extends BaseObject implements IObject
 	/**
 	 * Constructor
 	 */
-	public NetworkProxyLinkedListManager ()
+	public NetworkProxyLinkedListManager()
 	{
-		super ("networkproxylinkedlistmanager");
-		Engine.instance ().getEventRegistry ().addListener ("proxylinkedlistupdate", this);
+		super("networkproxylinkedlistmanager");
+		Engine.instance().getEventRegistry().addListener("proxylinkedlistupdate", this);
 	}
 
 	/**
@@ -52,46 +52,46 @@ public class NetworkProxyLinkedListManager extends BaseObject implements IObject
 	 *
 	 * @param event The EventOject.
 	 */
-	public void iObjectListEvent (IObjectListEvent event)
+	public void iObjectListEvent(IObjectListEvent event)
 	{
 		// TODO: Function to remove a object from list
-		IObject newProt = event.getObject ();
-		double channelNumber = AppContext.instance ().getChannelNumber ();
-		ClientTransceiver clientTransceiver = new ClientTransceiver (channelNumber);
+		IObject newProt = event.getObject();
+		double channelNumber = AppContext.instance().getChannelNumber();
+		ClientTransceiver clientTransceiver = new ClientTransceiver(channelNumber);
 
-		if (event.getType () == IObjectListEvent.REMOVE)
+		if (event.getType() == IObjectListEvent.REMOVE)
 		{
-			ProxyLinkedListRemoveServerAction action = new ProxyLinkedListRemoveServerAction (event.getOwnerObject ()
-							.getUniqueId (), event.getOwnerObject ().getTypeId (), event.getListAttribute (), newProt);
+			ProxyLinkedListRemoveServerAction action = new ProxyLinkedListRemoveServerAction(event.getOwnerObject()
+							.getUniqueId(), event.getOwnerObject().getTypeId(), event.getListAttribute(), newProt);
 
-			clientTransceiver.addReceiver (clientTransceiver.getSender ());
+			clientTransceiver.addReceiver(clientTransceiver.getSender());
 
-			action.setTransceiver (clientTransceiver);
+			action.setTransceiver(clientTransceiver);
 
-			ActionTools.sendToServer (action);
+			ActionTools.sendToServer(action);
 
 			return;
 		}
 
-		if (newProt.getUniqueId () > 0)
+		if (newProt.getUniqueId() > 0)
 		{
 			//Ist kein lokales erzeugtes neues object
 			return;
 		}
 
-		long newUniqueId = newProt.getUniqueId ();
+		long newUniqueId = newProt.getUniqueId();
 
-		((User) AppContext.instance ().getUser ())
-						.putNewObjectsMapping (new Long (newUniqueId), new Long (newUniqueId));
+		((User) AppContext.instance().getUser()).putNewObjectsMapping(new Long(newUniqueId), new Long(newUniqueId));
 
 		// Ya, its a brand new object, and now we transfer it to the server
-		clientTransceiver.addReceiver (channelNumber);
+		clientTransceiver.addReceiver(channelNumber);
 
-		ProxyLinkedListAddServerAction action = new ProxyLinkedListAddServerAction (event.getOwnerObject ()
-						.getUniqueId (), event.getOwnerObject ().getTypeId (), event.getListAttribute (), newProt);
+		ProxyLinkedListAddServerAction action = new ProxyLinkedListAddServerAction(
+						event.getOwnerObject().getUniqueId(), event.getOwnerObject().getTypeId(), event
+										.getListAttribute(), newProt);
 
-		action.setTransceiver (clientTransceiver);
+		action.setTransceiver(clientTransceiver);
 
-		ActionTools.sendToServer (action);
+		ActionTools.sendToServer(action);
 	}
 }

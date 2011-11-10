@@ -51,176 +51,174 @@ public class UserLoginHelper
 {
 	/**
 	 */
-	public static boolean login (final UserLoginPane loginPane, final String server, final String username,
+	public static boolean login(final UserLoginPane loginPane, final String server, final String username,
 					final String password, final boolean remember, final boolean autoLogin)
 	{
-		AppContext.instance ().setServerIP (server);
+		AppContext.instance().setServerIP(server);
 
-		connectAndGo (username, password, loginPane);
+		connectAndGo(username, password, loginPane);
 
-		final FlowControl flowControl = Engine.instance ().getFlowControl ();
+		final FlowControl flowControl = Engine.instance().getFlowControl();
 
-		flowControl.add (new FrameworkFlowRule ("UserLogin", null, null)
+		flowControl.add(new FrameworkFlowRule("UserLogin", null, null)
 		{
 			@Override
-			public void success ()
+			public void success()
 			{
-				flowControl.clear ();
+				flowControl.clear();
 
-				AktarioGUI gui = (AktarioGUI) Client.instance ().getClientGUI ();
+				AktarioGUI gui = (AktarioGUI) Client.instance().getClientGUI();
 
-				new Thread (new Runnable ()
+				new Thread(new Runnable()
 				{
-					public void run ()
+					public void run()
 					{
 						try
 						{
-							InputStream input = new URL ("http://" + server + "/autoupdate.jar").openStream ();
-							String workingDirPath = Engine.instance ().getSystemDir ();
+							InputStream input = new URL("http://" + server + "/autoupdate.jar").openStream();
+							String workingDirPath = Engine.instance().getSystemDir();
 
-							IOUtils.copy (input, FileUtils.openOutputStream (new File (workingDirPath
-											+ System.getProperty ("file.separator") + "autoupdate.jar")));
+							IOUtils.copy(input, FileUtils.openOutputStream(new File(workingDirPath
+											+ System.getProperty("file.separator") + "autoupdate.jar")));
 						}
 						catch (Exception x)
 						{
 						}
 					};
-				}).start ();
+				}).start();
 
-				gui.show ();
-				gui.setStatusUser (username + "@" + server);
-				Engine.instance ().getSystemProperties ().setProperty ("lastlogin", username + "@" + server);
+				gui.show();
+				gui.setStatusUser(username + "@" + server);
+				Engine.instance().getSystemProperties().setProperty("lastlogin", username + "@" + server);
 
 				if (loginPane != null)
 				{
 					if (remember)
 					{
-						loginPane.rememberAccount ();
+						loginPane.rememberAccount();
 					}
 					else
 					{
-						loginPane.removeAccount ();
+						loginPane.removeAccount();
 					}
 
 					if (autoLogin)
 					{
-						loginPane.rememberAutoLogin ();
+						loginPane.rememberAutoLogin();
 					}
 				}
 			}
 
 			@Override
-			public void failure (Object arg)
+			public void failure(Object arg)
 			{
-				int failure = ((Integer) arg).intValue ();
+				int failure = ((Integer) arg).intValue();
 
-				Client.instance ().getNetworkService ().closeAllChannels ();
+				Client.instance().getNetworkService().closeAllChannels();
 
 				if (failure == UserLoginFailureAction.USER_ALREADY_ONLINE)
 				{
-					setCompleteState (false);
-					Properties props = new Properties ();
-					props.put ("failure", arg);
-					Command cmd = new ShowDialog ("AktarioUserLoginFailureDialog");
-					cmd.setProperties (props);
-					CommandTools.performSimple (cmd);
+					setCompleteState(false);
+					Properties props = new Properties();
+					props.put("failure", arg);
+					Command cmd = new ShowDialog("AktarioUserLoginFailureDialog");
+					cmd.setProperties(props);
+					CommandTools.performSimple(cmd);
 					try
 					{
-						Thread.sleep (10000);
+						Thread.sleep(10000);
 					}
 					catch (Exception x)
 					{
 					}
-					connectAndGo (username, password, loginPane);
+					connectAndGo(username, password, loginPane);
 					return;
 				}
 
 				if (failure == UserLoginFailureAction.LOGIN_NOT_ALLOWED)
 				{
-					setCompleteState (false);
-					Properties props = new Properties ();
-					props.put ("failure", arg);
-					Command cmd = new ShowDialog ("AktarioUserLoginFailureDialog");
-					cmd.setProperties (props);
-					CommandTools.performSimple (cmd);
+					setCompleteState(false);
+					Properties props = new Properties();
+					props.put("failure", arg);
+					Command cmd = new ShowDialog("AktarioUserLoginFailureDialog");
+					cmd.setProperties(props);
+					CommandTools.performSimple(cmd);
 					return;
 				}
 
 				if (failure == UserLoginFailureAction.BAD_USERNAME_OR_PASSWORD)
 				{
-					setCompleteState (false);
-					Properties props = new Properties ();
-					props.put ("failure", arg);
-					Command cmd = new ShowDialog ("AktarioUserLoginFailureDialog");
-					cmd.setProperties (props);
-					CommandTools.performSimple (cmd);
+					setCompleteState(false);
+					Properties props = new Properties();
+					props.put("failure", arg);
+					Command cmd = new ShowDialog("AktarioUserLoginFailureDialog");
+					cmd.setProperties(props);
+					CommandTools.performSimple(cmd);
 					return;
 				}
 			}
 		});
 
-		flowControl.add (new FrameworkFlowRule ("WrongVersion", null, null)
+		flowControl.add(new FrameworkFlowRule("WrongVersion", null, null)
 		{
 			@Override
-			public void success ()
+			public void success()
 			{
-				flowControl.clear ();
-				Client.instance ().getNetworkService ().closeAllChannels ();
+				flowControl.clear();
+				Client.instance().getNetworkService().closeAllChannels();
 
-				JOptionPane.showMessageDialog (loginPane != null ? loginPane.getPanel () : null, Engine.instance ()
-								.getResourceService ().getStringWithoutException ("wrongClientVersion"), Engine
-								.instance ().getResourceService ().getStringWithoutException ("systemMessage"),
+				JOptionPane.showMessageDialog(loginPane != null ? loginPane.getPanel() : null, Engine.instance()
+								.getResourceService().getStringWithoutException("wrongClientVersion"), Engine
+								.instance().getResourceService().getStringWithoutException("systemMessage"),
 								JOptionPane.OK_OPTION);
 
 				try
 				{
-					String workingDirPath = Engine.instance ().getSystemDir ();
+					String workingDirPath = Engine.instance().getSystemDir();
 
-					if (workingDirPath.endsWith ("\\"))
+					if (workingDirPath.endsWith("\\"))
 					{
-						workingDirPath = workingDirPath.substring (0, workingDirPath.length () - 1);
+						workingDirPath = workingDirPath.substring(0, workingDirPath.length() - 1);
 					}
 
 					@SuppressWarnings("unused")
-					Process proc = Runtime.getRuntime ().exec (
-									"java" + " -jar \"" + workingDirPath + Engine.instance ().getFileSeparator ()
-													+ "autoupdate.jar\" http://"
-													+ AppContext.instance ().getServerIP () + "/update.jar" + " \""
-													+ workingDirPath + "\"");
+					Process proc = Runtime.getRuntime().exec(
+									"java" + " -jar \"" + workingDirPath + Engine.instance().getFileSeparator()
+													+ "autoupdate.jar\" http://" + AppContext.instance().getServerIP()
+													+ "/update.jar" + " \"" + workingDirPath + "\"");
 				}
 				catch (Exception x)
 				{
-					JOptionPane.showMessageDialog (loginPane != null ? loginPane.getPanel () : null, x.toString (),
+					JOptionPane.showMessageDialog(loginPane != null ? loginPane.getPanel() : null, x.toString(),
 									"Iritgo", JOptionPane.OK_OPTION);
 				}
 
-				System.exit (0);
+				System.exit(0);
 			}
 		});
 
 		return false;
 	}
 
-	static private void connectAndGo (String username, String password, final UserLoginPane loginPane)
+	static private void connectAndGo(String username, String password, final UserLoginPane loginPane)
 	{
-		CommandTools.performAsync (new ConnectToServer ());
-		CommandTools.performAsync (new UserLogin (username, password));
+		CommandTools.performAsync(new ConnectToServer());
+		CommandTools.performAsync(new UserLogin(username, password));
 
-		CommandTools.performAsync (new Command ()
+		CommandTools.performAsync(new Command()
 		{
 			@Override
-			public void perform ()
+			public void perform()
 			{
 				try
 				{
-					SwingUtilities.invokeAndWait (new Runnable ()
+					SwingUtilities.invokeAndWait(new Runnable()
 					{
-						public void run ()
+						public void run()
 						{
-							JOptionPane.showMessageDialog (loginPane != null ? loginPane.getPanel () : null,
-											Engine.instance ().getResourceService ().getString (
-															"aktario.serverNotAvailable"), Engine.instance ()
-															.getResourceService ().getString ("app.title"),
+							JOptionPane.showMessageDialog(loginPane != null ? loginPane.getPanel() : null, Engine
+											.instance().getResourceService().getString("aktario.serverNotAvailable"),
+											Engine.instance().getResourceService().getString("app.title"),
 											JOptionPane.OK_OPTION);
 						}
 					});
@@ -232,13 +230,13 @@ public class UserLoginHelper
 				{
 				}
 
-				CommandTools.performAsync (new ShowDialog ("AktarioUserLoginDialog"));
+				CommandTools.performAsync(new ShowDialog("AktarioUserLoginDialog"));
 			}
 
 			@Override
-			public boolean canPerform ()
+			public boolean canPerform()
 			{
-				return AppContext.instance ().isConnectedWithServer () == false;
+				return AppContext.instance().isConnectedWithServer() == false;
 			}
 		});
 	}

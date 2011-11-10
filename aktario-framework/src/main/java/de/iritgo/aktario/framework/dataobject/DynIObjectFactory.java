@@ -48,24 +48,22 @@ public class DynIObjectFactory extends AbstractIObjectFactory
 	/**
 	 * Create a new <code>DynIObjectFactory</code>.
 	 */
-	public DynIObjectFactory ()
+	public DynIObjectFactory()
 	{
-		iObjectPrototypes = new TreeMap ();
-		dynIObjectPrototypes = new TreeMap ();
-		dataObjectAttributeSizes = new HashMap ();
+		iObjectPrototypes = new TreeMap();
+		dynIObjectPrototypes = new TreeMap();
+		dataObjectAttributeSizes = new HashMap();
 	}
 
-	public int getDataObjectAttributeSize (String typeId)
+	public int getDataObjectAttributeSize(String typeId)
 	{
 		try
 		{
-			return ((Integer) dataObjectAttributeSizes.get (typeId)).intValue ();
+			return ((Integer) dataObjectAttributeSizes.get(typeId)).intValue();
 		}
 		catch (Exception x)
 		{
-			Log
-							.log ("system", "getDataObjectAttributeSize", "Can not retrieve attribute size in: "
-											+ typeId, Log.FATAL);
+			Log.log("system", "getDataObjectAttributeSize", "Can not retrieve attribute size in: " + typeId, Log.FATAL);
 		}
 
 		return 0;
@@ -76,23 +74,23 @@ public class DynIObjectFactory extends AbstractIObjectFactory
 	 *
 	 * @param object The prototype object to add.
 	 */
-	public void register (IObject object)
+	public void register(IObject object)
 	{
 		if (object instanceof DynDataObject)
 		{
-			dynIObjectPrototypes.put (object.getTypeId (), object);
+			dynIObjectPrototypes.put(object.getTypeId(), object);
 		}
 		else
 		{
-			iObjectPrototypes.put (object.getTypeId (), object);
+			iObjectPrototypes.put(object.getTypeId(), object);
 		}
 
 		if (object instanceof DataObject)
 		{
-			dataObjectAttributeSizes.put (object.getTypeId (), new Integer (((DataObject) object).getNumAttributes ()));
+			dataObjectAttributeSizes.put(object.getTypeId(), new Integer(((DataObject) object).getNumAttributes()));
 		}
 
-		Engine.instance ().getEventRegistry ().fire ("iobjectregisterd", new IObjectRegisteredEvent (object));
+		Engine.instance().getEventRegistry().fire("iobjectregisterd", new IObjectRegisteredEvent(object));
 	}
 
 	/**
@@ -100,10 +98,10 @@ public class DynIObjectFactory extends AbstractIObjectFactory
 	 *
 	 * @param object The prototype object to remove.
 	 */
-	public void remove (IObject object)
+	public void remove(IObject object)
 	{
-		iObjectPrototypes.remove (object.getTypeId ());
-		dynIObjectPrototypes.remove (object.getTypeId ());
+		iObjectPrototypes.remove(object.getTypeId());
+		dynIObjectPrototypes.remove(object.getTypeId());
 	}
 
 	/**
@@ -112,13 +110,13 @@ public class DynIObjectFactory extends AbstractIObjectFactory
 	 * @param typeId The type to check.
 	 * @return True if the factory can generate the specified type.
 	 */
-	public boolean contains (String typeId)
+	public boolean contains(String typeId)
 	{
-		boolean result = iObjectPrototypes.containsKey (typeId);
+		boolean result = iObjectPrototypes.containsKey(typeId);
 
 		if (result == false)
 		{
-			return dynIObjectPrototypes.containsKey (typeId) == true ? true : false;
+			return dynIObjectPrototypes.containsKey(typeId) == true ? true : false;
 		}
 
 		return true;
@@ -129,36 +127,36 @@ public class DynIObjectFactory extends AbstractIObjectFactory
 	 *
 	 * @param typeId The type id of the object to create.
 	 */
-	public IObject newInstance (String typeId) throws NoSuchIObjectException
+	public IObject newInstance(String typeId) throws NoSuchIObjectException
 	{
-		IObject prototype = (IObject) iObjectPrototypes.get (typeId);
+		IObject prototype = (IObject) iObjectPrototypes.get(typeId);
 
 		try
 		{
-			Object dynPrototype = dynIObjectPrototypes.get (typeId);
+			Object dynPrototype = dynIObjectPrototypes.get(typeId);
 
 			if (dynPrototype != null)
 			{
-				DynDataObject dynDataObject = (DynDataObject) dynPrototype.getClass ().newInstance ();
+				DynDataObject dynDataObject = (DynDataObject) dynPrototype.getClass().newInstance();
 
-				dynDataObject.setTypeId (typeId);
-				dynDataObject.setAttributes (((DynDataObject) dynPrototype).cloneAttributesDescription ());
+				dynDataObject.setTypeId(typeId);
+				dynDataObject.setAttributes(((DynDataObject) dynPrototype).cloneAttributesDescription());
 
 				return dynDataObject;
 			}
 
 			if (prototype == null)
 			{
-				Log.log ("system", "PrototypeFactory.newInstance", "Type is not registred: " + typeId, Log.FATAL);
+				Log.log("system", "PrototypeFactory.newInstance", "Type is not registred: " + typeId, Log.FATAL);
 
-				throw new NoSuchIObjectException (typeId);
+				throw new NoSuchIObjectException(typeId);
 			}
 
-			return (IObject) prototype.getClass ().newInstance ();
+			return (IObject) prototype.getClass().newInstance();
 		}
 		catch (Exception x)
 		{
-			Log.log ("system", "PrototypeFactory.newInstance", "Cannot determine classname.", Log.FATAL);
+			Log.log("system", "PrototypeFactory.newInstance", "Cannot determine classname.", Log.FATAL);
 		}
 
 		return null;

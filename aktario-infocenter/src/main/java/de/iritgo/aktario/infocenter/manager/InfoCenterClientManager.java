@@ -29,25 +29,25 @@ public class InfoCenterClientManager extends BaseObject implements Manager
 {
 	private GUIDisplay guiDisplay;
 
-	public InfoCenterClientManager ()
+	public InfoCenterClientManager()
 	{
-		super ("system-infocenterclient");
+		super("system-infocenterclient");
 	}
 
-	public void init ()
-	{
-	}
-
-	public void unload ()
+	public void init()
 	{
 	}
 
-	public GUIDisplay getGUIDisplay ()
+	public void unload()
+	{
+	}
+
+	public GUIDisplay getGUIDisplay()
 	{
 		return guiDisplay;
 	}
 
-	public void setGUIDisplay (GUIDisplay guiDisplay)
+	public void setGUIDisplay(GUIDisplay guiDisplay)
 	{
 		this.guiDisplay = guiDisplay;
 	}

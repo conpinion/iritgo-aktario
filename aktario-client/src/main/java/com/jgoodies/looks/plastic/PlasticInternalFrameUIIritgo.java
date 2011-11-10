@@ -30,22 +30,22 @@ import javax.swing.plaf.ComponentUI;
  */
 public final class PlasticInternalFrameUIIritgo extends PlasticInternalFrameUI
 {
-	public PlasticInternalFrameUIIritgo (JInternalFrame b)
+	public PlasticInternalFrameUIIritgo(JInternalFrame b)
 	{
-		super (b);
+		super(b);
 	}
 
-	public static ComponentUI createUI (JComponent c)
+	public static ComponentUI createUI(JComponent c)
 	{
-		return new PlasticInternalFrameUIIritgo ((JInternalFrame) c);
+		return new PlasticInternalFrameUIIritgo((JInternalFrame) c);
 	}
 
 	@Override
-	protected JComponent createNorthPane (JInternalFrame w)
+	protected JComponent createNorthPane(JInternalFrame w)
 	{
-		if (! w.getTitle ().equals ("$$$ IRITGO-HIDE $$$"))
+		if (! w.getTitle().equals("$$$ IRITGO-HIDE $$$"))
 		{
-			return new PlasticInternalFrameTitlePane (w);
+			return new PlasticInternalFrameTitlePane(w);
 		}
 
 		return null;

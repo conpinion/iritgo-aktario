@@ -26,16 +26,16 @@ import de.iritgo.aktario.core.manager.Manager;
 
 public class BetwixtManager extends BaseObject implements Manager
 {
-	public BetwixtManager ()
+	public BetwixtManager()
 	{
-		super ("persist-betwixt");
+		super("persist-betwixt");
 	}
 
-	public void init ()
+	public void init()
 	{
 	}
 
-	public void unload ()
+	public void unload()
 	{
 	}
 }
