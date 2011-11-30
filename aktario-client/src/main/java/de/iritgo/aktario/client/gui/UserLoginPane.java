@@ -129,7 +129,7 @@ public class UserLoginPane extends SwingGUIPane
 		{
 			display.close();
 
-			UserLoginHelper.login(loginPane, server.getText(), username.getText(), new String(password.getPassword()),
+			UserLoginHelper.login(loginPane, StringTools.trim (server.getText()), username.getText(), new String(password.getPassword()),
 							remember.isSelected(), autoLogin.isSelected());
 		}
 	};
@@ -200,7 +200,7 @@ public class UserLoginPane extends SwingGUIPane
 
 						username.setText(item.userName);
 						password.setText(item.password);
-						server.setText(item.server);
+						server.setText(StringTools.trim(item.server));
 					}
 				}
 			});
