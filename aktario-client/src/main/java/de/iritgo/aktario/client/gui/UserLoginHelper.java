@@ -31,6 +31,8 @@ import de.iritgo.aktario.framework.client.command.ShowDialog;
 import de.iritgo.aktario.framework.client.command.UserLogin;
 import de.iritgo.aktario.framework.command.CommandTools;
 import de.iritgo.aktario.framework.user.action.UserLoginFailureAction;
+import de.iritgo.simplelife.string.*;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import javax.swing.JOptionPane;
