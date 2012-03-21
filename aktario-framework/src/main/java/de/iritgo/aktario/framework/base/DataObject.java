@@ -28,15 +28,14 @@ import de.iritgo.aktario.core.iobject.IObjectProxy;
 import de.iritgo.aktario.core.logger.Log;
 import de.iritgo.aktario.framework.command.CommandTools;
 import de.iritgo.aktario.framework.dataobject.DynIObjectFactory;
+import de.iritgo.simplelife.data.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -398,8 +397,10 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		DataInputStream dataStream = new DataInputStream(stream);
 
@@ -411,13 +412,22 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 
 		int q = 0;
 
+		List<Tuple2<String, Object>> tmpList = new ArrayList<Tuple2<String,Object>> ();
+
 		for (Iterator i = attributes.keySet().iterator(); i.hasNext() && (q < attributeSize);)
 		{
 			++q;
 
 			String key = (String) i.next();
-
 			Object object = attributes.get(key);
+
+			tmpList.add(new Tuple2 (key, object));
+		}
+
+		for (Tuple2<String,Object> tuple : tmpList)
+		{
+			String key = tuple.get1();
+			Object object = tuple.get2();
 
 			if (object instanceof Integer)
 			{
@@ -483,15 +493,17 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	/**
 	 * @param dataStream
 	 * @param attributeSize
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void addNewAttributesIfNecessary(DataInputStream dataStream, int attributeSize)
+	private void addNewAttributesIfNecessary(DataInputStream dataStream, int attributeSize) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		if (attributeSize != ((DynIObjectFactory) Engine.instance().getIObjectFactory())
 						.getDataObjectAttributeSize(getTypeId()))
 		{
-			System.out.println("addNewAttributesIfNecessary");
+			System.out.println("!!!! *** addNewAttributesIfNecessary");
 			attributes.clear();
 			readTypeInformations(dataStream, this);
 		}
@@ -715,24 +727,35 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 	/**
 	 * Read serialize type information a given stream
 	 * and do some things...
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public IObject readTypeInformations(InputStream stream, IObject iObject)
+	public IObject readTypeInformations(InputStream stream, IObject iObject) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		DataInputStream dataStream = new DataInputStream(stream);
 
 		String objectType = "";
 		String attributeName = "";
 
-		try
-		{
 			int attributeSize = dataStream.readInt();
 
 			Object object = null;
+
+			List<Tuple2<String, String>> tmpList = new ArrayList<Tuple2<String,String>> ();
 
 			for (int i = 0; i < attributeSize; ++i)
 			{
 				objectType = dataStream.readUTF();
 				attributeName = dataStream.readUTF();
+				tmpList.add(new Tuple2 (attributeName, objectType));
+			}
+
+			for (Tuple2<String, String> tuple : tmpList)
+			{
+				attributeName = tuple.get1();
+				objectType = tuple.get2();
 
 				if (objectType.indexOf("java.lang") >= 0)
 				{
@@ -746,13 +769,6 @@ public class DataObject extends BaseObject implements IObject, DataObjectInterfa
 
 				addAttribute(attributeName, object);
 			}
-		}
-		catch (Exception x)
-		{
-			x.printStackTrace();
-			Log.log("network", "DataObject.readObject", "Unknown attribute in data object:" + typeId + "." + objectType
-							+ "." + attributeName, Log.FATAL);
-		}
 
 		return this;
 	}

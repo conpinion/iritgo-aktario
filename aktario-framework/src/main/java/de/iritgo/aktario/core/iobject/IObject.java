@@ -71,8 +71,11 @@ public interface IObject
 	 * Read the object attributes from an input stream.
 	 *
 	 * @param stream The input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException;
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException;
 
 	/**
 	 * Write the object attributes to an output stream.
@@ -97,8 +100,12 @@ public interface IObject
 	/**
 	 * Read Serialize type information a given stream
 	 * and do some things...
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public IObject readTypeInformations(InputStream stream, IObject iObject);
+	public IObject readTypeInformations(InputStream stream, IObject iObject) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 	/**
 	 * Return a dump form the current object.

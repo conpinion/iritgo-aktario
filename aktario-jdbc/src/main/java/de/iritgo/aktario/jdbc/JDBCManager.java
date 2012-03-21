@@ -289,7 +289,7 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 			Log.logVerbose("persist", "JDBCManager", "CREATED " + object.getTypeId() + ":" + object.getUniqueId()
 							+ " |" + sql + "|");
 
-			stmt.close();
+			DbUtils.closeQuietly(stmt);
 
 			if (owner != null)
 			{
@@ -310,8 +310,8 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 		}
 		catch (Exception x)
 		{
-			// 			Log.logError (
-			// 				"persist", "JDBCManager", "Error while creating new database record: " + x);
+			Log.logError (
+					"persist", "JDBCManager", "Error while creating new database record: " + x);
 		}
 		finally
 		{
@@ -346,6 +346,7 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 
 			stmt = connection.prepareStatement(sql);
 			stmt.execute();
+			DbUtils.closeQuietly(stmt);
 
 			sql = "delete from " + object.getTypeId() + " where id=" + object.getUniqueId();
 
@@ -355,7 +356,6 @@ public class JDBCManager extends BaseObject implements Manager, IObjectListListe
 			Log.logVerbose("persist", "JDBCManager", "Removed " + object.getTypeId() + ":" + object.getUniqueId()
 							+ " |" + sql + "|");
 
-			stmt.close();
 		}
 		catch (Exception x)
 		{

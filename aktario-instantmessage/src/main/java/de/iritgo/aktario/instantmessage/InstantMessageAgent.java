@@ -325,8 +325,10 @@ public class InstantMessageAgent extends DataObject implements Agent
 	 * Read the object attributes from an input stream.
 	 *
 	 * @param stream The input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		super.readObject(stream);
 	}

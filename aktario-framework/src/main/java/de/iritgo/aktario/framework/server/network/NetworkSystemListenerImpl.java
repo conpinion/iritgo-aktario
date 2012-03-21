@@ -56,7 +56,7 @@ public class NetworkSystemListenerImpl extends NetworkSystemAdapter
 		connectedChannel.flush();
 	}
 
-	public void connectionTerminated(NetworkService networkBase, Channel connectedChannel)
+	public void connectionTerminated (NetworkService networkBase, Channel connectedChannel)
 	{
 		connectedChannel.setState(Threadable.CLOSING);
 

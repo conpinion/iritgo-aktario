@@ -82,9 +82,12 @@ public class ProxyAction extends FrameworkAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
 	@Override
-	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 		iObjectUniqueId = stream.readLong();
 		iObjectTypeId = stream.readUTF();
@@ -172,6 +175,12 @@ public class ProxyAction extends FrameworkAction
 		}
 		catch (ClassNotFoundException x)
 		{
+			x.printStackTrace();
+		} catch (InstantiationException x) {
+			x.printStackTrace();
+		} catch (IllegalAccessException x) {
+			x.printStackTrace();
+		} catch (NoSuchIObjectException x) {
 			x.printStackTrace();
 		}
 	}

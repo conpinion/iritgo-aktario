@@ -172,7 +172,6 @@ public class JDBCIDGenerator extends BaseObject implements IDGenerator
 			id = Long.parseLong((String) res[0]);
 
 			free = 0;
-
 			Log.logDebug("persist", "JDBCIDGenerator", "Successfully loaded the generator state (id=" + id + ")");
 		}
 		catch (Exception x)

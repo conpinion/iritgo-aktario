@@ -69,9 +69,11 @@ public class EditIObjectServerAction extends FrameworkServerAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
 	@Override
-	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		try
 		{
@@ -168,6 +170,12 @@ public class EditIObjectServerAction extends FrameworkServerAction
 		}
 		catch (ClassNotFoundException x)
 		{
+		} catch (InstantiationException x) {
+			x.printStackTrace();
+		} catch (IllegalAccessException x) {
+			x.printStackTrace();
+		} catch (NoSuchIObjectException x) {
+			x.printStackTrace();
 		}
 
 		return null;

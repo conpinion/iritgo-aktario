@@ -89,8 +89,10 @@ public class UserLoginAction extends FrameworkAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		user.readObject(stream);
 		appId = stream.readUTF();

@@ -21,7 +21,7 @@ package de.iritgo.aktario.core.network;
 
 
 import de.iritgo.aktario.core.action.Action;
-import de.iritgo.aktario.core.iobject.NoSuchIObjectException;
+import de.iritgo.aktario.core.iobject.*;
 import de.iritgo.aktario.core.logger.Log;
 import de.iritgo.aktario.core.thread.Threadable;
 import java.io.EOFException;
@@ -30,11 +30,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
+import org.apache.mina.core.session.*;
+
 
 /**
  *
  */
-public class Channel extends Threadable
+public class Channel
 {
 	static public int NETWORK_OK = 0;
 
@@ -44,11 +46,7 @@ public class Channel extends Threadable
 
 	static public int NETWORK_ERROR_CLOSING = 3;
 
-	private Socket socket = null;
-
 	private NetworkService networkService = null;
-
-	private StreamOrganizer streamOrganizer;
 
 	private double channelNumber;
 
@@ -70,16 +68,23 @@ public class Channel extends Threadable
 	 */
 	private boolean aliveCheckSent;
 
+	private IoSession session;
+
 	/**
 	 * Standard constructor
 	 *
 	 * @param socket The Socket for input/output action
 	 * @param networkService Networkbase for storge received objects
 	 */
-	public Channel(Socket socket, NetworkService networkService) throws IOException
+	public Channel(NetworkService networkService, IoSession session) throws IOException
 	{
-		super("Channel:" + (networkService.getNumChannels()));
-		init(socket, networkService, networkService.getNumChannels());
+		this.session = session;
+		init(networkService, networkService.getNumChannels());
+	}
+
+	public Channel(NetworkService networkService) throws IOException
+	{
+		init(networkService, networkService.getNumChannels());
 	}
 
 	/**
@@ -89,10 +94,9 @@ public class Channel extends Threadable
 	 * @param networkService Networkbase for storge received objects
 	 * @param channelNumber The ChannelNumber
 	 */
-	public Channel(Socket socket, NetworkService networkService, double channelNumber) throws IOException
+	public Channel(NetworkService networkService, double channelNumber) throws IOException
 	{
-		super("channel" + channelNumber);
-		init(socket, networkService, channelNumber);
+		init(networkService, channelNumber);
 	}
 
 	/**
@@ -102,16 +106,14 @@ public class Channel extends Threadable
 	 * @param Networkbase for storge received objects
 	 * @param The ChannelNumber
 	 */
-	private void init(Socket socket, NetworkService networkService, double channelNumber) throws IOException
+	private void init(NetworkService networkService, double channelNumber) throws IOException
 	{
-		this.socket = socket;
 		this.networkService = networkService;
 		this.channelNumber = channelNumber;
 
 		numReceivedObjects = 0;
 		numSendObjects = 0;
 		connectionState = NETWORK_OK;
-		streamOrganizer = networkService.getDefaultStreamOrganizer(socket);
 	}
 
 	/**
@@ -158,26 +160,21 @@ public class Channel extends Threadable
 	 * Wait for a Object.
 	 *
 	 */
-	@Override
-	public void run()
+	public void received (Object message)
 	{
-		Object object = null;
+		Object object = message;
 
-		setState(Threadable.RUNNING);
-
-		while (getState() == Threadable.RUNNING)
 		{
-			try
-			{
+//			try
+//			{
 				if (connectionState != NETWORK_OK)
 				{
 					Log.logWarn("network", "Channel", "A network error occurred. Closing connection");
-					setState(Threadable.CLOSING);
 
 					return;
 				}
 
-				object = streamOrganizer.receive();
+//				object = streamOrganizer.receive();
 
 				if (object == null)
 				{
@@ -192,63 +189,63 @@ public class Channel extends Threadable
 
 				++numReceivedObjects;
 				networkService.callReceiveNetworkActionProcessor((Action) object, this);
-			}
-			catch (SocketTimeoutException x)
-			{
-				Log.logDebug("network", "Channel", "SocketTimeoutException");
-				networkService.fireError(this, x);
-			}
-			catch (NoSuchIObjectException x)
-			{
-				Log.logError("network", "Channel", "NoSuchPrototypeRegisteredException: " + x);
-				object = null;
-				setConnectionState(NETWORK_ERROR);
-				networkService.fireError(this, x);
-				networkService.fireConnectionTerminated(this);
-
-				return;
-			}
-			catch (ClassNotFoundException x)
-			{
-				Log.logError("network", "Channel", "ClassNotFoundException");
-				setConnectionState(NETWORK_ERROR);
-				networkService.fireError(this, x);
-				networkService.fireConnectionTerminated(this);
-
-				return;
-			}
-			catch (EOFException x)
-			{
-				Log.logDebug("network", "Channel", "EOFException (ConnectionClosed?!)");
-				setConnectionState(NETWORK_CLOSE);
-				setState(Threadable.CLOSING);
-				networkService.fireError(this, x);
-				networkService.fireConnectionTerminated(this);
-
-				return;
-			}
-			catch (SocketException x)
-			{
-				Log.logDebug("network", "Channel", "SocketClosed.");
-				setConnectionState(NETWORK_CLOSE);
-				setState(Threadable.CLOSING);
-				networkService.fireError(this, x);
-				networkService.fireConnectionTerminated(this);
-
-				return;
-			}
-			catch (IOException x)
-			{
-				setState(Threadable.CLOSING);
-				Log.logError("network", "Channel", "IOException: " + x);
-				x.printStackTrace();
-
-				setConnectionState(NETWORK_ERROR);
-				networkService.fireError(this, x);
-				networkService.fireConnectionTerminated(this);
-
-				return;
-			}
+//			}
+//			catch (SocketTimeoutException x)
+//			{
+//				Log.logDebug("network", "Channel", "SocketTimeoutException");
+//				networkService.fireError(this, x);
+//			}
+//			catch (NoSuchIObjectException x)
+//			{
+//				Log.logError("network", "Channel", "NoSuchPrototypeRegisteredException: " + x);
+//				object = null;
+//				setConnectionState(NETWORK_ERROR);
+//				networkService.fireError(this, x);
+//				networkService.fireConnectionTerminated(this);
+//
+//				return;
+//			}
+//			catch (ClassNotFoundException x)
+//			{
+//				Log.logError("network", "Channel", "ClassNotFoundException");
+//				setConnectionState(NETWORK_ERROR);
+//				networkService.fireError(this, x);
+//				networkService.fireConnectionTerminated(this);
+//
+//				return;
+//			}
+//			catch (EOFException x)
+//			{
+//				Log.logDebug("network", "Channel", "EOFException (ConnectionClosed?!)");
+//				setConnectionState(NETWORK_CLOSE);
+//				setState(Threadable.CLOSING);
+//				networkService.fireError(this, x);
+//				networkService.fireConnectionTerminated(this);
+//
+//				return;
+//			}
+//			catch (SocketException x)
+//			{
+//				Log.logDebug("network", "Channel", "SocketClosed.");
+//				setConnectionState(NETWORK_CLOSE);
+//				setState(Threadable.CLOSING);
+//				networkService.fireError(this, x);
+//				networkService.fireConnectionTerminated(this);
+//
+//				return;
+//			}
+//			catch (IOException x)
+//			{
+//				setState(Threadable.CLOSING);
+//				Log.logError("network", "Channel", "IOException: " + x);
+//				x.printStackTrace();
+//
+//				setConnectionState(NETWORK_ERROR);
+//				networkService.fireError(this, x);
+//				networkService.fireConnectionTerminated(this);
+//
+//				return;
+//			}
 		}
 
 		return;
@@ -261,17 +258,20 @@ public class Channel extends Threadable
 	 */
 	public void send(Object object)
 	{
-		try
-		{
+//		System.out.println("Send-Message: " + ((IObject) object).getTypeId() + ":" + ((IObject) object).getUniqueId());
+		session.write(object);
+
+//		try
+//		{
 			Log.logDebug("network", "Channel", "Sending Object (Channel:" + channelNumber + "):" + object);
 
 			++numSendObjects;
-			streamOrganizer.send(object);
-		}
-		catch (IOException e)
-		{
-			Log.logError("network", "Channel", "Serializeable?" + e);
-		}
+//			streamOrganizer.send(object);
+//		}
+//		catch (IOException e)
+//		{
+//			Log.logError("network", "Channel", "Serializeable?" + e);
+//		}
 	}
 
 	/**
@@ -297,22 +297,21 @@ public class Channel extends Threadable
 	/**
 	 * Close this Channel
 	 */
-	@Override
 	public void dispose()
 	{
-		setState(Threadable.CLOSING);
 		connectionState = NETWORK_CLOSE;
+		session.close (false);
 
-		try
-		{
-			streamOrganizer.flush();
-			streamOrganizer.close();
-		}
-		catch (IOException x)
-		{
-			Log.logError("network", "Channel", x.toString());
-			setConnectionState(NETWORK_ERROR_CLOSING);
-		}
+//		try
+//		{
+//			streamOrganizer.flush();
+//			streamOrganizer.close();
+//		}
+//		catch (IOException x)
+//		{
+//			Log.logError("network", "Channel", x.toString());
+//			setConnectionState(NETWORK_ERROR_CLOSING);
+//		}
 	}
 
 	/**
@@ -360,29 +359,6 @@ public class Channel extends Threadable
 	 */
 	public void flush()
 	{
-		try
-		{
-			streamOrganizer.flush();
-		}
-		catch (IOException x)
-		{
-			Log.logError("network", "Channel", x.toString());
-		}
-	}
-
-	/**
-	 * Set a new stream organizer for this connected channel
-	 *
-	 * @param streamOrganizer The stream organizer.
-	 */
-	public void setStreamOrganizer(StreamOrganizer streamOrganizer) throws IOException
-	{
-		if (streamOrganizer != null)
-		{
-			streamOrganizer.flush();
-		}
-
-		this.streamOrganizer = streamOrganizer.create(socket);
 	}
 
 	/**
@@ -403,5 +379,18 @@ public class Channel extends Threadable
 	public void setAliveCheckSent(boolean aliveCheckSent)
 	{
 		this.aliveCheckSent = aliveCheckSent;
+	}
+
+	public double getChannelId()
+	{
+		return channelNumber;
+	}
+
+	public void setState(int closing) {
+	}
+
+	public void setSession (IoSession session)
+	{
+		this.session = session;
 	}
 }

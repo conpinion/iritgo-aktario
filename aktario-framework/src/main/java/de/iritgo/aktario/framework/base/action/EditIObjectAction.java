@@ -23,10 +23,10 @@ package de.iritgo.aktario.framework.base.action;
 import de.iritgo.aktario.core.Engine;
 import de.iritgo.aktario.core.iobject.IObject;
 import de.iritgo.aktario.core.iobject.IObjectProxy;
+import de.iritgo.simplelife.data.*;
+
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -105,12 +105,19 @@ public class EditIObjectAction extends FrameworkAction
 
 		int size = stream.readInt();
 
+		List<Tuple2<Long, String>> tmpList = new ArrayList<Tuple2<Long, String>> ();
+
 		for (int i = 0; i < size; ++i)
+		{
+			tmpList.add(new Tuple2(stream.readLong(), stream.readUTF()));
+		}
+
+		for (Tuple2<Long, String> tuple : tmpList)
 		{
 			Helper helper = new Helper();
 
-			helper.uniqueId = stream.readLong();
-			helper.typeId = stream.readUTF();
+			helper.uniqueId = tuple.get1 ();
+			helper.typeId = tuple.get2 ();
 			iObjects.add(helper);
 		}
 	}

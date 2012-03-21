@@ -257,9 +257,11 @@ public class ScriptAgent extends DataObject implements Agent
 	 * Read the object attributes from an input stream.
 	 *
 	 * @param stream The input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
 	@Override
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		super.readObject(stream);
 		interpreter = (AgentInterpreter) new ObjectInputStream(stream).readObject();

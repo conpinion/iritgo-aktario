@@ -20,11 +20,10 @@
 package de.iritgo.aktario.framework.dataobject;
 
 
-import de.iritgo.aktario.core.Engine;
-import de.iritgo.aktario.framework.base.action.FrameworkAction;
-import de.iritgo.aktario.framework.base.action.FrameworkInputStream;
-import de.iritgo.aktario.framework.base.action.FrameworkOutputStream;
-import java.io.IOException;
+import java.io.*;
+
+import de.iritgo.aktario.core.*;
+import de.iritgo.aktario.framework.base.action.*;
 
 
 /**
@@ -55,8 +54,12 @@ public class AnnounceDynDataObjectResponse extends FrameworkAction
 	 * Read the attributes from the a stream.
 	 *
 	 * @param stream The stream to read from.
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(FrameworkInputStream stream) throws IOException
+	@Override
+	public void readObject(FrameworkInputStream stream) throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		String dynDataObjectTypeId = stream.readUTF();
 

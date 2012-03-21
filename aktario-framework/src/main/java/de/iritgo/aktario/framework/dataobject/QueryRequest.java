@@ -22,8 +22,7 @@ package de.iritgo.aktario.framework.dataobject;
 
 import de.iritgo.aktario.core.Engine;
 import de.iritgo.aktario.core.base.BaseObject;
-import de.iritgo.aktario.core.iobject.IObject;
-import de.iritgo.aktario.core.iobject.IObjectProxy;
+import de.iritgo.aktario.core.iobject.*;
 import de.iritgo.aktario.core.logger.Log;
 import de.iritgo.aktario.core.network.ClientTransceiver;
 import de.iritgo.aktario.framework.action.ActionTools;
@@ -67,21 +66,19 @@ public class QueryRequest extends NetworkFrameworkServerAction
 	 * Read the attributes from the a stream.
 	 *
 	 * @param stream The stream to read from.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
+	 * @throws NoSuchIObjectException
 	 */
-	public void readObject(FrameworkInputStream stream) throws IOException
+	@Override
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
-		try
-		{
-			queryTypeId = stream.readUTF();
-			queryUniqueId = stream.readLong();
+		queryTypeId = stream.readUTF();
+		queryUniqueId = stream.readLong();
 
-			abstractQuery = (AbstractQuery) Engine.instance().getIObjectFactory().newInstance(queryTypeId);
-			abstractQuery.readObject(stream);
-		}
-		catch (Exception x)
-		{
-			Log.log("network", "QueryRequest.readObject", "Unknown query error:" + abstractQuery, Log.FATAL);
-		}
+		abstractQuery = (AbstractQuery) Engine.instance().getIObjectFactory().newInstance(queryTypeId);
+		abstractQuery.readObject(stream);
 	}
 
 	/**

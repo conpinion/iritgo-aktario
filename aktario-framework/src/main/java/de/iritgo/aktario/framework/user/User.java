@@ -252,8 +252,10 @@ public class User extends DataObject implements IObject
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		super.readObject(stream);
 

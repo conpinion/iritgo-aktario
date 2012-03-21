@@ -23,8 +23,14 @@ package de.iritgo.aktario.core.network;
 import de.iritgo.aktario.core.logger.Log;
 import de.iritgo.aktario.core.thread.Threadable;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+
+import org.apache.mina.core.future.*;
+import org.apache.mina.core.service.*;
+import org.apache.mina.core.session.*;
+import org.apache.mina.filter.codec.*;
+import org.apache.mina.filter.codec.textline.*;
+import org.apache.mina.transport.socket.nio.*;
 
 
 /**
@@ -32,7 +38,7 @@ import java.net.Socket;
  * on a tcp port. If a connection is established, it creates a new connected channel
  * and adds it to the NetworkService.
  */
-public class ChannelFactory extends Threadable
+public class ChannelFactory implements ProtocolCodecFactory
 {
 	/** The hostname of the system on which the server runs. */
 	@SuppressWarnings("unused")
@@ -42,13 +48,10 @@ public class ChannelFactory extends Threadable
 	@SuppressWarnings("unused")
 	private int port;
 
-	/** The server socket. */
-	private ServerSocket serverSocket;
+    private ProtocolEncoder encoder;
+    private ProtocolDecoder decoder;
 
-	/** The network service. */
-	private NetworkService networkService;
-
-	/**
+    /**
 	 * Create a new ChannelFactory
 	 *
 	 * @param networkService The network service to use.
@@ -70,54 +73,78 @@ public class ChannelFactory extends Threadable
 	 */
 	public ChannelFactory(NetworkService networkService, String hostName, int port, int timeout) throws IOException
 	{
-		super("ServerSocket [" + (hostName == null ? "localhost" : hostName) + ":" + port + "]");
-
-		this.networkService = networkService;
 		this.port = port;
 		this.hostName = hostName;
 
-		serverSocket = new ServerSocket(port);
+		IoAcceptor acceptor = new NioSocketAcceptor(20);
 
-		serverSocket.setSoTimeout(timeout);
+        acceptor.getFilterChain().addLast( "protocol",
+        		new ProtocolCodecFilter(
+        				this));
+
+        acceptor.setHandler (new ChannelHandler (networkService));
+		acceptor.getSessionConfig ().setReadBufferSize (1024*512);
+        acceptor.getSessionConfig ().setIdleTime (IdleStatus.BOTH_IDLE, 120);
+
+        try
+        {
+			decoder = new ObjectStreamDecoder ();
+			encoder = new ObjectStreamEncoder ();
+		}
+        catch (Exception x)
+        {
+			x.printStackTrace();
+		}
+
+        acceptor.bind( new InetSocketAddress (port));
 	}
 
 	/**
-	 * Execute the Threadable.
+	 * Create a new ChannelFactory
 	 *
-	 * This method waits for connections on the server socket and creates new
-	 * ConnectedChannels if a connection was established.
+	 * @param networkService The network service to use.
+	 * @param hostName The name of the server host.
+	 * @param port The port on which to listen.
+	 * @param timeout The accept timeout.
 	 */
-	@Override
-	public void run()
+	public ChannelFactory(NetworkService networkService, Channel channel, String hostName, int port) throws IOException
 	{
-		try
-		{
-			Log.logVerbose("network", "ChannelFactory.run", "Waiting for Connections");
+		this.port = port;
+		this.hostName = hostName;
 
-			Socket s = serverSocket.accept();
+		IoConnector connector = new NioSocketConnector();
 
-			networkService.addConnectedChannel(new Channel(s, networkService));
-			Log.logDebug("network", "ChannelFactory.run", "Connection accepted");
+        connector.getFilterChain().addLast( "protocol",
+        		new ProtocolCodecFilter(
+        				this));
+
+        connector.setHandler (new ChannelHandler (networkService, channel));
+		connector.getSessionConfig ().setReadBufferSize (2048*1024);
+        connector.getSessionConfig ().setIdleTime (IdleStatus.BOTH_IDLE, 120);
+
+        try
+        {
+			decoder = new ObjectStreamDecoder ();
+			encoder = new ObjectStreamEncoder ();
 		}
-		catch (IOException e)
-		{
+        catch (Exception x)
+        {
+			x.printStackTrace();
 		}
 
-		setState(Threadable.FREE);
+        ConnectFuture future = connector.connect(new InetSocketAddress (hostName, port));
+        future.join ();
+        channel.setSession (future.getSession());
+
 	}
 
-	/**
-	 * Dispose this channel factory.
-	 */
-	@Override
-	public void dispose()
+	public ProtocolEncoder getEncoder(IoSession ioSession) throws Exception
 	{
-		try
-		{
-			serverSocket.close();
-		}
-		catch (IOException x)
-		{
-		}
+		return encoder;
+	}
+
+	public ProtocolDecoder getDecoder(IoSession ioSession) throws Exception
+	{
+		return decoder;
 	}
 }

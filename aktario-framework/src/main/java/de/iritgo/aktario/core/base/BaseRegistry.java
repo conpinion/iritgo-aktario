@@ -117,6 +117,9 @@ public class BaseRegistry
 	 */
 	synchronized public void remove(BaseObject object)
 	{
+		if (object == null)
+			return;
+
 		Map baseObjects = (Map) typeObjectMapping.get(object.getTypeId());
 
 		if (baseObjects == null)

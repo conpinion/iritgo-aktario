@@ -37,6 +37,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.mina.core.session.*;
+
 
 /**
  *
@@ -54,8 +56,6 @@ public class NetworkService extends BaseObject
 	private HashMap channelList;
 
 	private double numChannels;
-
-	private StreamOrganizer defaultStreamOrganizer;
 
 	@SuppressWarnings("unused")
 	private List objects;
@@ -97,7 +97,6 @@ public class NetworkService extends BaseObject
 			reveiveNetworkActionProcessor.newChannelCreated(channel);
 		}
 
-		threadService.add(channel);
 		numChannels++;
 		fireConnectionEstablished(channel);
 	}
@@ -110,7 +109,7 @@ public class NetworkService extends BaseObject
 	 */
 	synchronized public void callReceiveNetworkActionProcessor(Action action, final Channel channel)
 	{
-		reveiveNetworkActionProcessor.perform(action, new ClientTransceiver(channel.getChannelNumber(), channel));
+		reveiveNetworkActionProcessor.perform(action, new ClientTransceiver(channel.getChannelId (), channel));
 	}
 
 	/**
@@ -241,41 +240,19 @@ public class NetworkService extends BaseObject
 		Log.logDebug("network", "NetworkService.connect", "Connecting to server on port " + port);
 
 		Channel channel = null;
+		try {
+			channel = new Channel(this);
+		} catch (IOException x) {
+			x.printStackTrace();
+		}
 
 		try
 		{
 			socket = null;
 
 			int i = 0;
+			new ChannelFactory (this, channel, name, port);
 
-			while ((socket == null) && (i < 10))
-			{
-				for (int j = 0; j < 10; ++j)
-				{
-					try
-					{
-						Thread.sleep(100);
-
-						if (connectObserver != null)
-						{
-							connectObserver.notice();
-						}
-					}
-					catch (InterruptedException e)
-					{
-					}
-				}
-
-				socket = new Socket(InetAddress.getByName(name), port);
-				++i;
-			}
-
-			if (socket == null)
-			{
-				return - 1;
-			}
-
-			channel = new Channel(socket, this);
 			addConnectedChannel(channel);
 		}
 
@@ -303,7 +280,6 @@ public class NetworkService extends BaseObject
 		try
 		{
 			channelFactory = new ChannelFactory(this, name, port, timeout);
-			threadService.add(channelFactory);
 		}
 		catch (Exception e)
 		{
@@ -481,69 +457,7 @@ public class NetworkService extends BaseObject
 		}
 	}
 
-	/**
-	 * The streamorganizer do the low level protocol for the communication
-	 *
-	 * @param s The socket with work the stream organizer.
-	 */
-	public StreamOrganizer getDefaultStreamOrganizer(Socket s) throws IOException
-	{
-		if (defaultStreamOrganizer != null)
-		{
-			return defaultStreamOrganizer.create(s);
-		}
-
-		return new ObjectStream(s);
-	}
-
-	/**
-	 * Set the default stream organizer.
-	 *
-	 * @param streamOrganizer StreamOrganizer The stream organizer
-	 */
-	public void setDefaultStreamOrganizer(StreamOrganizer streamOrganizer)
-	{
-		defaultStreamOrganizer = streamOrganizer;
-	}
-
-	/**
-	 * Set the a new stream organizer to a channel.
-	 *
-	 * @param streamOrganizer StreamOrganizer The stream organizer
-	 * @param channel ConnectChannelNumber The channel number.
-	 */
-	public void setStreamOrganizer(StreamOrganizer streamOrganizer, double channel)
-	{
-		Channel connectedChannel = null;
-
-		try
-		{
-			synchronized (channelList)
-			{
-				connectedChannel = (Channel) channelList.get(String.valueOf(channel));
-
-				if (connectedChannel == null)
-				{
-					Log.logFatal("network", "NetworkService.setStreamOrganizer", "Channel not found: " + channel);
-
-					return;
-				}
-
-				connectedChannel.setStreamOrganizer(streamOrganizer);
-			}
-		}
-		catch (IOException x)
-		{
-			Log.logFatal("network", "NetworkService.setStreamOrganizer", "Unable to set stream organizer for channel "
-							+ channel);
-		}
-	}
-
-	/**
-	 * Dispose this network service.
-	 */
 	public void dispose()
 	{
-		channelFactory.dispose();
 	}
 }

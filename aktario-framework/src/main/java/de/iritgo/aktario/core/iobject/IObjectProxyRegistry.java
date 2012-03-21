@@ -82,6 +82,9 @@ public class IObjectProxyRegistry
 	 */
 	public void removeProxy(IObjectProxy proxy, String typeId)
 	{
+		if (proxy == null)
+			return;
+
 		Map proxys = (Map) typeProxyMapping.get(typeId);
 
 		if (proxys == null)

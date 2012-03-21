@@ -20,6 +20,7 @@
 package de.iritgo.aktario.framework.base.action;
 
 
+import de.iritgo.aktario.core.iobject.*;
 import de.iritgo.aktario.core.network.ClientTransceiver;
 import de.iritgo.aktario.framework.action.ActionTools;
 import de.iritgo.aktario.framework.user.User;
@@ -51,9 +52,12 @@ public class NetworkFrameworkServerAction extends FrameworkServerAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
 	@Override
-	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 	}
 

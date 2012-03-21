@@ -145,30 +145,22 @@ public class IObjectProxy extends BaseObject implements IObject
 	 * @throws IOException In case of a read error.
 	 * @throws ClassNotFoundException If the object class could not be
 	 *             instantiated.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
-	public void update(DataInputStream stream) throws IOException, ClassNotFoundException
+	public void update(DataInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
-		try
-		{
-			setUpToDate(true);
-			updateRunning = false;
+		setUpToDate(true);
+		updateRunning = false;
 
-			IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
+		IObject object = (IObject) Engine.instance().getBaseRegistry().get(iObjectUniqueId, iObjectTypeId);
 
-			object.readObject(stream);
+		object.readObject(stream);
 
-			Engine.instance().getProxyEventRegistry().fire(object, new IObjectProxyEvent(object, false));
+		Engine.instance().getProxyEventRegistry().fire(object, new IObjectProxyEvent(object, false));
 
-			Engine.instance().getEventRegistry().fire("proxyisuptodate", new IObjectProxyEvent(object, false));
-		}
-		catch (IOException x)
-		{
-			throw new IOException();
-		}
-		catch (ClassNotFoundException x)
-		{
-			throw new ClassNotFoundException();
-		}
+		Engine.instance().getEventRegistry().fire("proxyisuptodate", new IObjectProxyEvent(object, false));
 	}
 
 	/**

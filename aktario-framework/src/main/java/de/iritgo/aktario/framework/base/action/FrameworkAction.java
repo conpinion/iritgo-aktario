@@ -22,6 +22,8 @@ package de.iritgo.aktario.framework.base.action;
 
 import de.iritgo.aktario.core.Engine;
 import de.iritgo.aktario.core.action.AbstractAction;
+import de.iritgo.aktario.core.iobject.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -62,9 +64,12 @@ public class FrameworkAction extends AbstractAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
 	@Override
-	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 		super.readObject(stream);
 		userUniqueId = stream.readLong();
@@ -84,9 +89,12 @@ public class FrameworkAction extends AbstractAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
 	public void readObject(@SuppressWarnings("unused") FrameworkInputStream stream)
-		throws IOException, ClassNotFoundException
+		throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 	}
 

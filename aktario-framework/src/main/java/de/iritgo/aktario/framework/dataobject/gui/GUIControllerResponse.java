@@ -61,8 +61,10 @@ public class GUIControllerResponse extends FrameworkAction
 	 * Read the attributes from the a stream.
 	 *
 	 * @param stream The stream to read from.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public void readObject(FrameworkInputStream stream) throws IOException
+	public void readObject(FrameworkInputStream stream) throws IOException, InstantiationException, IllegalAccessException
 	{
 		controllerTypeId = stream.readUTF();
 

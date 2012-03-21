@@ -23,15 +23,14 @@ package de.iritgo.aktario.core.iobject;
 import de.iritgo.aktario.core.Engine;
 import de.iritgo.aktario.core.base.BaseObject;
 import de.iritgo.aktario.core.logger.Log;
+import de.iritgo.simplelife.data.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -334,10 +333,23 @@ public class IObjectList extends LinkedList implements IObject
 
 			int newRecords = size - curSize;
 
+
+			// try to read all
+			List<Tuple2<String, Long>> readedData = new ArrayList<Tuple2<String, Long>> ();
+
 			for (int i = 0; i < newRecords; ++i)
 			{
 				String receivedTypeId = dataStream.readUTF();
 				long uniqueId = dataStream.readLong();
+				readedData.add (new Tuple2 (receivedTypeId, uniqueId));
+			}
+			// try create all
+			for (int i = 0; i < newRecords; ++i)
+			{
+				Tuple2<String, Long> data = readedData.get(i);
+				String receivedTypeId = data.get1 ();
+				long uniqueId = data.get2 ();
+
 				IObject prototype = null;
 
 				try

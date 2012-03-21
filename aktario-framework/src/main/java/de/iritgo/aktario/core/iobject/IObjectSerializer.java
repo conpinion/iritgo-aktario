@@ -54,36 +54,17 @@ public class IObjectSerializer extends BaseObject
 	 *   was transmitted.
 	 * @throws ClassNotFoundException Is thrown if an invalid type id
 	 *   was transmitted.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public IObject read(DataInputStream inputStream) throws IOException, NoSuchIObjectException, ClassNotFoundException
+	public IObject read(DataInputStream inputStream) throws IOException, NoSuchIObjectException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		IObject object = null;
-
-		classId = inputStream.readUTF();
-
-		if (classId.length() == 0)
-		{
-			Log.log("system", "Prototype.get", "ClassID is NULL", Log.FATAL);
-
-			return null;
-		}
+		String classId = inputStream.readUTF ();
 
 		object = Engine.instance().getIObjectFactory().newInstance(classId);
 
-		if (object == null)
-		{
-			return null;
-		}
-
 		object.readObject(inputStream);
-
-		if (! classId.equals(object.getTypeId()))
-		{
-			Log.log("system", "Prototype.get", "Wrong objecttype!!!!!", Log.FATAL);
-
-			return null;
-		}
-
 		return object;
 	}
 

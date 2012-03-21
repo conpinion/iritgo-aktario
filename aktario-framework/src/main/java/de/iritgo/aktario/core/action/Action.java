@@ -22,7 +22,7 @@ package de.iritgo.aktario.core.action;
 
 import de.iritgo.aktario.core.base.BaseObject;
 import de.iritgo.aktario.core.base.Transceiver;
-import de.iritgo.aktario.core.iobject.IObject;
+import de.iritgo.aktario.core.iobject.*;
 import de.iritgo.aktario.core.logger.Log;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -85,8 +85,11 @@ public class Action extends BaseObject implements IObject
 	 * Read the object attributes from an input stream.
 	 *
 	 * @param stream The input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
-	public void readObject(InputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(InputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 		readObject(new DataInputStream(stream));
 	}
@@ -105,8 +108,11 @@ public class Action extends BaseObject implements IObject
 	 * Read the object attributes from a data input stream.
 	 *
 	 * @param stream The input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
-	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 		uniqueId = stream.readLong();
 	}

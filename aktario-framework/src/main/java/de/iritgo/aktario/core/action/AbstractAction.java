@@ -24,6 +24,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import de.iritgo.aktario.core.iobject.*;
+
 
 /**
  * Absract base class for actions that provides some basic functionality.
@@ -93,9 +95,12 @@ public abstract class AbstractAction extends Action
 	 * Read the object attributes from a data input stream.
 	 *
 	 * @param stream The data input stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws NoSuchIObjectException
 	 */
 	@Override
-	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(DataInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchIObjectException
 	{
 		super.readObject(stream);
 		timeStamp = stream.readDouble();
