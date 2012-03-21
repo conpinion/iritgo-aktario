@@ -64,9 +64,11 @@ public class AgentTransferAction extends FrameworkAction
 
 	/**
 	 * Read the attributes from the given stream.
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
 	@Override
-	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException
+	public void readObject(FrameworkInputStream stream) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		currentTime = stream.readLong();
 
