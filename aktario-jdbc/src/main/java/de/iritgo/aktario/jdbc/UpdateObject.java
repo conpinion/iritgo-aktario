@@ -105,8 +105,8 @@ public class UpdateObject extends Command
 		}
 		catch (Exception x)
 		{
-			// 			Log.logError (
-			// 				"persist", "JDBCManager", "Error while creating new database record: " + x);
+			Log.logError (
+					"persist", "JDBCManager", "Error while creating new database record: " + x);
 		}
 		finally
 		{
