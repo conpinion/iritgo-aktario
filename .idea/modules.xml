@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/iritgo-aktario.iml" filepath="$PROJECT_DIR$/iritgo-aktario.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-betwixt/iritgo-aktario-betwixt.iml" filepath="$PROJECT_DIR$/aktario-betwixt/iritgo-aktario-betwixt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-buddylist/iritgo-aktario-buddylist.iml" filepath="$PROJECT_DIR$/aktario-buddylist/iritgo-aktario-buddylist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-chat/iritgo-aktario-chat.iml" filepath="$PROJECT_DIR$/aktario-chat/iritgo-aktario-chat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-chatter/iritgo-aktario-chatter.iml" filepath="$PROJECT_DIR$/aktario-chatter/iritgo-aktario-chatter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-client/iritgo-aktario-client.iml" filepath="$PROJECT_DIR$/aktario-client/iritgo-aktario-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-core/iritgo-aktario-core.iml" filepath="$PROJECT_DIR$/aktario-core/iritgo-aktario-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-editor/iritgo-aktario-editor.iml" filepath="$PROJECT_DIR$/aktario-editor/iritgo-aktario-editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-filetransfer/iritgo-aktario-filetransfer.iml" filepath="$PROJECT_DIR$/aktario-filetransfer/iritgo-aktario-filetransfer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-framework/iritgo-aktario-framework.iml" filepath="$PROJECT_DIR$/aktario-framework/iritgo-aktario-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-infocenter/iritgo-aktario-infocenter.iml" filepath="$PROJECT_DIR$/aktario-infocenter/iritgo-aktario-infocenter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-instantmessage/iritgo-aktario-instantmessage.iml" filepath="$PROJECT_DIR$/aktario-instantmessage/iritgo-aktario-instantmessage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-jdbc/iritgo-aktario-jdbc.iml" filepath="$PROJECT_DIR$/aktario-jdbc/iritgo-aktario-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-lpd/iritgo-aktario-lpd.iml" filepath="$PROJECT_DIR$/aktario-lpd/iritgo-aktario-lpd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-monitor/iritgo-aktario-monitor.iml" filepath="$PROJECT_DIR$/aktario-monitor/iritgo-aktario-monitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-participant/iritgo-aktario-participant.iml" filepath="$PROJECT_DIR$/aktario-participant/iritgo-aktario-participant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-server/iritgo-aktario-server.iml" filepath="$PROJECT_DIR$/aktario-server/iritgo-aktario-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-xmlrpc/iritgo-aktario-xmlrpc.iml" filepath="$PROJECT_DIR$/aktario-xmlrpc/iritgo-aktario-xmlrpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-xp/iritgo-aktario-xp.iml" filepath="$PROJECT_DIR$/aktario-xp/iritgo-aktario-xp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aktario-maven/maven-aktario-plugin.iml" filepath="$PROJECT_DIR$/aktario-maven/maven-aktario-plugin.iml" />
+    </modules>
+  </component>
+</project>
+
