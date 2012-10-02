@@ -1,0 +1,164 @@
+
+# /
+/target
+
+# /.idea/
+/.idea/workspace.xml
+/.idea/tasks.xml
+
+# /.settings/
+/.settings/org.eclipse.core.resources.prefs
+/.settings/org.eclipse.jdt.core.prefs
+/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-betwixt/
+/aktario-betwixt/target
+
+# /aktario-betwixt/.settings/
+/aktario-betwixt/.settings/org.eclipse.core.resources.prefs
+/aktario-betwixt/.settings/org.eclipse.jdt.core.prefs
+/aktario-betwixt/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-buddylist/
+/aktario-buddylist/target
+
+# /aktario-buddylist/.settings/
+/aktario-buddylist/.settings/org.eclipse.core.resources.prefs
+/aktario-buddylist/.settings/org.eclipse.jdt.core.prefs
+/aktario-buddylist/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-chat/
+/aktario-chat/target
+
+# /aktario-chat/.settings/
+/aktario-chat/.settings/org.eclipse.core.resources.prefs
+/aktario-chat/.settings/org.eclipse.jdt.core.prefs
+/aktario-chat/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-chatter/
+/aktario-chatter/target
+
+# /aktario-chatter/.settings/
+/aktario-chatter/.settings/org.eclipse.core.resources.prefs
+/aktario-chatter/.settings/org.eclipse.jdt.core.prefs
+/aktario-chatter/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-client/
+/aktario-client/target
+
+# /aktario-client/.settings/
+/aktario-client/.settings/org.eclipse.core.resources.prefs
+/aktario-client/.settings/org.eclipse.jdt.core.prefs
+/aktario-client/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-core/
+/aktario-core/target
+
+# /aktario-core/.settings/
+/aktario-core/.settings/org.eclipse.core.resources.prefs
+/aktario-core/.settings/org.eclipse.jdt.core.prefs
+/aktario-core/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-editor/
+/aktario-editor/target
+
+# /aktario-editor/.settings/
+/aktario-editor/.settings/org.eclipse.core.resources.prefs
+/aktario-editor/.settings/org.eclipse.jdt.core.prefs
+/aktario-editor/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-filetransfer/
+/aktario-filetransfer/target
+
+# /aktario-filetransfer/.settings/
+/aktario-filetransfer/.settings/org.eclipse.core.resources.prefs
+/aktario-filetransfer/.settings/org.eclipse.jdt.core.prefs
+/aktario-filetransfer/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-framework/
+/aktario-framework/target
+
+# /aktario-framework/.settings/
+/aktario-framework/.settings/org.eclipse.core.resources.prefs
+/aktario-framework/.settings/org.eclipse.jdt.core.prefs
+/aktario-framework/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-infocenter/
+/aktario-infocenter/target
+
+# /aktario-infocenter/.settings/
+/aktario-infocenter/.settings/org.eclipse.core.resources.prefs
+/aktario-infocenter/.settings/org.eclipse.jdt.core.prefs
+/aktario-infocenter/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-instantmessage/
+/aktario-instantmessage/target
+
+# /aktario-instantmessage/.settings/
+/aktario-instantmessage/.settings/org.eclipse.core.resources.prefs
+/aktario-instantmessage/.settings/org.eclipse.jdt.core.prefs
+/aktario-instantmessage/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-jdbc/
+/aktario-jdbc/target
+
+# /aktario-jdbc/.settings/
+/aktario-jdbc/.settings/org.eclipse.core.resources.prefs
+/aktario-jdbc/.settings/org.eclipse.jdt.core.prefs
+/aktario-jdbc/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-lpd/
+/aktario-lpd/target
+
+# /aktario-lpd/.settings/
+/aktario-lpd/.settings/org.eclipse.core.resources.prefs
+/aktario-lpd/.settings/org.eclipse.jdt.core.prefs
+/aktario-lpd/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-maven/
+/aktario-maven/target
+
+# /aktario-maven/.settings/
+/aktario-maven/.settings/org.eclipse.core.resources.prefs
+/aktario-maven/.settings/org.eclipse.jdt.core.prefs
+/aktario-maven/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-monitor/
+/aktario-monitor/target
+
+# /aktario-monitor/.settings/
+/aktario-monitor/.settings/org.eclipse.core.resources.prefs
+/aktario-monitor/.settings/org.eclipse.jdt.core.prefs
+/aktario-monitor/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-participant/
+/aktario-participant/target
+
+# /aktario-participant/.settings/
+/aktario-participant/.settings/org.eclipse.core.resources.prefs
+/aktario-participant/.settings/org.eclipse.jdt.core.prefs
+/aktario-participant/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-server/
+/aktario-server/target
+
+# /aktario-server/.settings/
+/aktario-server/.settings/org.eclipse.core.resources.prefs
+/aktario-server/.settings/org.eclipse.jdt.core.prefs
+/aktario-server/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-xmlrpc/
+/aktario-xmlrpc/target
+
+# /aktario-xmlrpc/.settings/
+/aktario-xmlrpc/.settings/org.eclipse.core.resources.prefs
+/aktario-xmlrpc/.settings/org.eclipse.jdt.core.prefs
+/aktario-xmlrpc/.settings/org.eclipse.m2e.core.prefs
+
+# /aktario-xp/
+/aktario-xp/target
+
+# /aktario-xp/.settings/
+/aktario-xp/.settings/org.eclipse.core.resources.prefs
+/aktario-xp/.settings/org.eclipse.jdt.core.prefs
+/aktario-xp/.settings/org.eclipse.m2e.core.prefs
