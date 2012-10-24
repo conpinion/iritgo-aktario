@@ -14,7 +14,7 @@ optMavenSettings=
 optBatchMode=
 
 shortOptions=c12h
-longOptions=format,site,settings:
+longOptions=format,site,settings:,batchmode
 
 options=("$(getopt -u -o $shortOptions --long $longOptions -- $@)")
 
