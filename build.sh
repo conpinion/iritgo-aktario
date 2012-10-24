@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo $@
+
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -71,7 +73,7 @@ then
 fi
 if [ ! -z "$optBatchMode" ]
 then
-	BUILD="$BUILD $optBatchMode"
+	BUILD="$BUILD --batchmode"
 fi
 
 shift $(($OPTIND - 1))
